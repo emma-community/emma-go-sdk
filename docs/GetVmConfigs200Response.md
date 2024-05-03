@@ -4,17 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TotalPages** | Pointer to **interface{}** |  | [optional] 
-**TotalElements** | Pointer to **interface{}** |  | [optional] 
-**Size** | Pointer to **interface{}** |  | [optional] 
+**TotalPages** | Pointer to **int32** |  | [optional] 
+**TotalElements** | Pointer to **int64** |  | [optional] 
+**Size** | Pointer to **int32** |  | [optional] 
 **Content** | Pointer to [**[]VmConfiguration**](VmConfiguration.md) |  | [optional] 
-**Number** | Pointer to **interface{}** |  | [optional] 
+**Number** | Pointer to **int32** |  | [optional] 
 **Sort** | Pointer to [**SortObject**](SortObject.md) |  | [optional] 
-**Last** | Pointer to **interface{}** |  | [optional] 
-**First** | Pointer to **interface{}** |  | [optional] 
-**NumberOfElements** | Pointer to **interface{}** |  | [optional] 
+**Last** | Pointer to **bool** |  | [optional] 
+**First** | Pointer to **bool** |  | [optional] 
+**NumberOfElements** | Pointer to **int32** |  | [optional] 
 **Pageable** | Pointer to [**PageableObject**](PageableObject.md) |  | [optional] 
-**Empty** | Pointer to **interface{}** |  | [optional] 
+**Empty** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -37,20 +37,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetTotalPages
 
-`func (o *GetVmConfigs200Response) GetTotalPages() interface{}`
+`func (o *GetVmConfigs200Response) GetTotalPages() int32`
 
 GetTotalPages returns the TotalPages field if non-nil, zero value otherwise.
 
 ### GetTotalPagesOk
 
-`func (o *GetVmConfigs200Response) GetTotalPagesOk() (*interface{}, bool)`
+`func (o *GetVmConfigs200Response) GetTotalPagesOk() (*int32, bool)`
 
 GetTotalPagesOk returns a tuple with the TotalPages field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotalPages
 
-`func (o *GetVmConfigs200Response) SetTotalPages(v interface{})`
+`func (o *GetVmConfigs200Response) SetTotalPages(v int32)`
 
 SetTotalPages sets TotalPages field to given value.
 
@@ -60,32 +60,22 @@ SetTotalPages sets TotalPages field to given value.
 
 HasTotalPages returns a boolean if a field has been set.
 
-### SetTotalPagesNil
-
-`func (o *GetVmConfigs200Response) SetTotalPagesNil(b bool)`
-
- SetTotalPagesNil sets the value for TotalPages to be an explicit nil
-
-### UnsetTotalPages
-`func (o *GetVmConfigs200Response) UnsetTotalPages()`
-
-UnsetTotalPages ensures that no value is present for TotalPages, not even an explicit nil
 ### GetTotalElements
 
-`func (o *GetVmConfigs200Response) GetTotalElements() interface{}`
+`func (o *GetVmConfigs200Response) GetTotalElements() int64`
 
 GetTotalElements returns the TotalElements field if non-nil, zero value otherwise.
 
 ### GetTotalElementsOk
 
-`func (o *GetVmConfigs200Response) GetTotalElementsOk() (*interface{}, bool)`
+`func (o *GetVmConfigs200Response) GetTotalElementsOk() (*int64, bool)`
 
 GetTotalElementsOk returns a tuple with the TotalElements field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTotalElements
 
-`func (o *GetVmConfigs200Response) SetTotalElements(v interface{})`
+`func (o *GetVmConfigs200Response) SetTotalElements(v int64)`
 
 SetTotalElements sets TotalElements field to given value.
 
@@ -95,32 +85,22 @@ SetTotalElements sets TotalElements field to given value.
 
 HasTotalElements returns a boolean if a field has been set.
 
-### SetTotalElementsNil
-
-`func (o *GetVmConfigs200Response) SetTotalElementsNil(b bool)`
-
- SetTotalElementsNil sets the value for TotalElements to be an explicit nil
-
-### UnsetTotalElements
-`func (o *GetVmConfigs200Response) UnsetTotalElements()`
-
-UnsetTotalElements ensures that no value is present for TotalElements, not even an explicit nil
 ### GetSize
 
-`func (o *GetVmConfigs200Response) GetSize() interface{}`
+`func (o *GetVmConfigs200Response) GetSize() int32`
 
 GetSize returns the Size field if non-nil, zero value otherwise.
 
 ### GetSizeOk
 
-`func (o *GetVmConfigs200Response) GetSizeOk() (*interface{}, bool)`
+`func (o *GetVmConfigs200Response) GetSizeOk() (*int32, bool)`
 
 GetSizeOk returns a tuple with the Size field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSize
 
-`func (o *GetVmConfigs200Response) SetSize(v interface{})`
+`func (o *GetVmConfigs200Response) SetSize(v int32)`
 
 SetSize sets Size field to given value.
 
@@ -130,16 +110,6 @@ SetSize sets Size field to given value.
 
 HasSize returns a boolean if a field has been set.
 
-### SetSizeNil
-
-`func (o *GetVmConfigs200Response) SetSizeNil(b bool)`
-
- SetSizeNil sets the value for Size to be an explicit nil
-
-### UnsetSize
-`func (o *GetVmConfigs200Response) UnsetSize()`
-
-UnsetSize ensures that no value is present for Size, not even an explicit nil
 ### GetContent
 
 `func (o *GetVmConfigs200Response) GetContent() []VmConfiguration`
@@ -167,20 +137,20 @@ HasContent returns a boolean if a field has been set.
 
 ### GetNumber
 
-`func (o *GetVmConfigs200Response) GetNumber() interface{}`
+`func (o *GetVmConfigs200Response) GetNumber() int32`
 
 GetNumber returns the Number field if non-nil, zero value otherwise.
 
 ### GetNumberOk
 
-`func (o *GetVmConfigs200Response) GetNumberOk() (*interface{}, bool)`
+`func (o *GetVmConfigs200Response) GetNumberOk() (*int32, bool)`
 
 GetNumberOk returns a tuple with the Number field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNumber
 
-`func (o *GetVmConfigs200Response) SetNumber(v interface{})`
+`func (o *GetVmConfigs200Response) SetNumber(v int32)`
 
 SetNumber sets Number field to given value.
 
@@ -190,16 +160,6 @@ SetNumber sets Number field to given value.
 
 HasNumber returns a boolean if a field has been set.
 
-### SetNumberNil
-
-`func (o *GetVmConfigs200Response) SetNumberNil(b bool)`
-
- SetNumberNil sets the value for Number to be an explicit nil
-
-### UnsetNumber
-`func (o *GetVmConfigs200Response) UnsetNumber()`
-
-UnsetNumber ensures that no value is present for Number, not even an explicit nil
 ### GetSort
 
 `func (o *GetVmConfigs200Response) GetSort() SortObject`
@@ -227,20 +187,20 @@ HasSort returns a boolean if a field has been set.
 
 ### GetLast
 
-`func (o *GetVmConfigs200Response) GetLast() interface{}`
+`func (o *GetVmConfigs200Response) GetLast() bool`
 
 GetLast returns the Last field if non-nil, zero value otherwise.
 
 ### GetLastOk
 
-`func (o *GetVmConfigs200Response) GetLastOk() (*interface{}, bool)`
+`func (o *GetVmConfigs200Response) GetLastOk() (*bool, bool)`
 
 GetLastOk returns a tuple with the Last field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLast
 
-`func (o *GetVmConfigs200Response) SetLast(v interface{})`
+`func (o *GetVmConfigs200Response) SetLast(v bool)`
 
 SetLast sets Last field to given value.
 
@@ -250,32 +210,22 @@ SetLast sets Last field to given value.
 
 HasLast returns a boolean if a field has been set.
 
-### SetLastNil
-
-`func (o *GetVmConfigs200Response) SetLastNil(b bool)`
-
- SetLastNil sets the value for Last to be an explicit nil
-
-### UnsetLast
-`func (o *GetVmConfigs200Response) UnsetLast()`
-
-UnsetLast ensures that no value is present for Last, not even an explicit nil
 ### GetFirst
 
-`func (o *GetVmConfigs200Response) GetFirst() interface{}`
+`func (o *GetVmConfigs200Response) GetFirst() bool`
 
 GetFirst returns the First field if non-nil, zero value otherwise.
 
 ### GetFirstOk
 
-`func (o *GetVmConfigs200Response) GetFirstOk() (*interface{}, bool)`
+`func (o *GetVmConfigs200Response) GetFirstOk() (*bool, bool)`
 
 GetFirstOk returns a tuple with the First field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFirst
 
-`func (o *GetVmConfigs200Response) SetFirst(v interface{})`
+`func (o *GetVmConfigs200Response) SetFirst(v bool)`
 
 SetFirst sets First field to given value.
 
@@ -285,32 +235,22 @@ SetFirst sets First field to given value.
 
 HasFirst returns a boolean if a field has been set.
 
-### SetFirstNil
-
-`func (o *GetVmConfigs200Response) SetFirstNil(b bool)`
-
- SetFirstNil sets the value for First to be an explicit nil
-
-### UnsetFirst
-`func (o *GetVmConfigs200Response) UnsetFirst()`
-
-UnsetFirst ensures that no value is present for First, not even an explicit nil
 ### GetNumberOfElements
 
-`func (o *GetVmConfigs200Response) GetNumberOfElements() interface{}`
+`func (o *GetVmConfigs200Response) GetNumberOfElements() int32`
 
 GetNumberOfElements returns the NumberOfElements field if non-nil, zero value otherwise.
 
 ### GetNumberOfElementsOk
 
-`func (o *GetVmConfigs200Response) GetNumberOfElementsOk() (*interface{}, bool)`
+`func (o *GetVmConfigs200Response) GetNumberOfElementsOk() (*int32, bool)`
 
 GetNumberOfElementsOk returns a tuple with the NumberOfElements field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNumberOfElements
 
-`func (o *GetVmConfigs200Response) SetNumberOfElements(v interface{})`
+`func (o *GetVmConfigs200Response) SetNumberOfElements(v int32)`
 
 SetNumberOfElements sets NumberOfElements field to given value.
 
@@ -320,16 +260,6 @@ SetNumberOfElements sets NumberOfElements field to given value.
 
 HasNumberOfElements returns a boolean if a field has been set.
 
-### SetNumberOfElementsNil
-
-`func (o *GetVmConfigs200Response) SetNumberOfElementsNil(b bool)`
-
- SetNumberOfElementsNil sets the value for NumberOfElements to be an explicit nil
-
-### UnsetNumberOfElements
-`func (o *GetVmConfigs200Response) UnsetNumberOfElements()`
-
-UnsetNumberOfElements ensures that no value is present for NumberOfElements, not even an explicit nil
 ### GetPageable
 
 `func (o *GetVmConfigs200Response) GetPageable() PageableObject`
@@ -357,20 +287,20 @@ HasPageable returns a boolean if a field has been set.
 
 ### GetEmpty
 
-`func (o *GetVmConfigs200Response) GetEmpty() interface{}`
+`func (o *GetVmConfigs200Response) GetEmpty() bool`
 
 GetEmpty returns the Empty field if non-nil, zero value otherwise.
 
 ### GetEmptyOk
 
-`func (o *GetVmConfigs200Response) GetEmptyOk() (*interface{}, bool)`
+`func (o *GetVmConfigs200Response) GetEmptyOk() (*bool, bool)`
 
 GetEmptyOk returns a tuple with the Empty field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetEmpty
 
-`func (o *GetVmConfigs200Response) SetEmpty(v interface{})`
+`func (o *GetVmConfigs200Response) SetEmpty(v bool)`
 
 SetEmpty sets Empty field to given value.
 
@@ -380,16 +310,6 @@ SetEmpty sets Empty field to given value.
 
 HasEmpty returns a boolean if a field has been set.
 
-### SetEmptyNil
-
-`func (o *GetVmConfigs200Response) SetEmptyNil(b bool)`
-
- SetEmptyNil sets the value for Empty to be an explicit nil
-
-### UnsetEmpty
-`func (o *GetVmConfigs200Response) UnsetEmpty()`
-
-UnsetEmpty ensures that no value is present for Empty, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

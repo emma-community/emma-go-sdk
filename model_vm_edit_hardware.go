@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -22,12 +22,12 @@ var _ MappedNullable = &VmEditHardware{}
 // VmEditHardware struct for VmEditHardware
 type VmEditHardware struct {
 	// Action with a virtual machine
-	Action interface{} `json:"action"`
-	VCpu   interface{} `json:"vCpu"`
+	Action string `json:"action"`
+	VCpu   int32  `json:"vCpu"`
 	// vCPU type
-	VCpuType interface{} `json:"vCpuType,omitempty"`
-	RamGb    interface{} `json:"ramGb"`
-	VolumeGb interface{} `json:"volumeGb"`
+	VCpuType *string `json:"vCpuType,omitempty"`
+	RamGb    int32   `json:"ramGb"`
+	VolumeGb int32   `json:"volumeGb"`
 }
 
 type _VmEditHardware VmEditHardware
@@ -36,7 +36,7 @@ type _VmEditHardware VmEditHardware
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVmEditHardware(action interface{}, vCpu interface{}, ramGb interface{}, volumeGb interface{}) *VmEditHardware {
+func NewVmEditHardware(action string, vCpu int32, ramGb int32, volumeGb int32) *VmEditHardware {
 	this := VmEditHardware{}
 	this.Action = action
 	this.VCpu = vCpu
@@ -54,10 +54,9 @@ func NewVmEditHardwareWithDefaults() *VmEditHardware {
 }
 
 // GetAction returns the Action field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmEditHardware) GetAction() interface{} {
+func (o *VmEditHardware) GetAction() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -66,24 +65,22 @@ func (o *VmEditHardware) GetAction() interface{} {
 
 // GetActionOk returns a tuple with the Action field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmEditHardware) GetActionOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Action) {
+func (o *VmEditHardware) GetActionOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Action, true
 }
 
 // SetAction sets field value
-func (o *VmEditHardware) SetAction(v interface{}) {
+func (o *VmEditHardware) SetAction(v string) {
 	o.Action = v
 }
 
 // GetVCpu returns the VCpu field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmEditHardware) GetVCpu() interface{} {
+func (o *VmEditHardware) GetVCpu() int32 {
 	if o == nil {
-		var ret interface{}
+		var ret int32
 		return ret
 	}
 
@@ -92,36 +89,34 @@ func (o *VmEditHardware) GetVCpu() interface{} {
 
 // GetVCpuOk returns a tuple with the VCpu field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmEditHardware) GetVCpuOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.VCpu) {
+func (o *VmEditHardware) GetVCpuOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.VCpu, true
 }
 
 // SetVCpu sets field value
-func (o *VmEditHardware) SetVCpu(v interface{}) {
+func (o *VmEditHardware) SetVCpu(v int32) {
 	o.VCpu = v
 }
 
-// GetVCpuType returns the VCpuType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmEditHardware) GetVCpuType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetVCpuType returns the VCpuType field value if set, zero value otherwise.
+func (o *VmEditHardware) GetVCpuType() string {
+	if o == nil || IsNil(o.VCpuType) {
+		var ret string
 		return ret
 	}
-	return o.VCpuType
+	return *o.VCpuType
 }
 
 // GetVCpuTypeOk returns a tuple with the VCpuType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmEditHardware) GetVCpuTypeOk() (*interface{}, bool) {
+func (o *VmEditHardware) GetVCpuTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.VCpuType) {
 		return nil, false
 	}
-	return &o.VCpuType, true
+	return o.VCpuType, true
 }
 
 // HasVCpuType returns a boolean if a field has been set.
@@ -133,16 +128,15 @@ func (o *VmEditHardware) HasVCpuType() bool {
 	return false
 }
 
-// SetVCpuType gets a reference to the given interface{} and assigns it to the VCpuType field.
-func (o *VmEditHardware) SetVCpuType(v interface{}) {
-	o.VCpuType = v
+// SetVCpuType gets a reference to the given string and assigns it to the VCpuType field.
+func (o *VmEditHardware) SetVCpuType(v string) {
+	o.VCpuType = &v
 }
 
 // GetRamGb returns the RamGb field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmEditHardware) GetRamGb() interface{} {
+func (o *VmEditHardware) GetRamGb() int32 {
 	if o == nil {
-		var ret interface{}
+		var ret int32
 		return ret
 	}
 
@@ -151,24 +145,22 @@ func (o *VmEditHardware) GetRamGb() interface{} {
 
 // GetRamGbOk returns a tuple with the RamGb field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmEditHardware) GetRamGbOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.RamGb) {
+func (o *VmEditHardware) GetRamGbOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.RamGb, true
 }
 
 // SetRamGb sets field value
-func (o *VmEditHardware) SetRamGb(v interface{}) {
+func (o *VmEditHardware) SetRamGb(v int32) {
 	o.RamGb = v
 }
 
 // GetVolumeGb returns the VolumeGb field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmEditHardware) GetVolumeGb() interface{} {
+func (o *VmEditHardware) GetVolumeGb() int32 {
 	if o == nil {
-		var ret interface{}
+		var ret int32
 		return ret
 	}
 
@@ -177,16 +169,15 @@ func (o *VmEditHardware) GetVolumeGb() interface{} {
 
 // GetVolumeGbOk returns a tuple with the VolumeGb field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmEditHardware) GetVolumeGbOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.VolumeGb) {
+func (o *VmEditHardware) GetVolumeGbOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.VolumeGb, true
 }
 
 // SetVolumeGb sets field value
-func (o *VmEditHardware) SetVolumeGb(v interface{}) {
+func (o *VmEditHardware) SetVolumeGb(v int32) {
 	o.VolumeGb = v
 }
 
@@ -200,21 +191,13 @@ func (o VmEditHardware) MarshalJSON() ([]byte, error) {
 
 func (o VmEditHardware) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.VCpu != nil {
-		toSerialize["vCpu"] = o.VCpu
-	}
-	if o.VCpuType != nil {
+	toSerialize["action"] = o.Action
+	toSerialize["vCpu"] = o.VCpu
+	if !IsNil(o.VCpuType) {
 		toSerialize["vCpuType"] = o.VCpuType
 	}
-	if o.RamGb != nil {
-		toSerialize["ramGb"] = o.RamGb
-	}
-	if o.VolumeGb != nil {
-		toSerialize["volumeGb"] = o.VolumeGb
-	}
+	toSerialize["ramGb"] = o.RamGb
+	toSerialize["volumeGb"] = o.VolumeGb
 	return toSerialize, nil
 }
 

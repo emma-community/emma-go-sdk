@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **interface{}** |  | 
+**Name** | **string** |  | 
 
 ## Methods
 
 ### NewSshKeyUpdate
 
-`func NewSshKeyUpdate(name interface{}, ) *SshKeyUpdate`
+`func NewSshKeyUpdate(name string, ) *SshKeyUpdate`
 
 NewSshKeyUpdate instantiates a new SshKeyUpdate object
 This constructor will assign default values to properties that have it defined,
@@ -27,34 +27,24 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetName
 
-`func (o *SshKeyUpdate) GetName() interface{}`
+`func (o *SshKeyUpdate) GetName() string`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *SshKeyUpdate) GetNameOk() (*interface{}, bool)`
+`func (o *SshKeyUpdate) GetNameOk() (*string, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *SshKeyUpdate) SetName(v interface{})`
+`func (o *SshKeyUpdate) SetName(v string)`
 
 SetName sets Name field to given value.
 
 
-### SetNameNil
-
-`func (o *SshKeyUpdate) SetNameNil(b bool)`
-
- SetNameNil sets the value for Name to be an explicit nil
-
-### UnsetName
-`func (o *SshKeyUpdate) UnsetName()`
-
-UnsetName ensures that no value is present for Name, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

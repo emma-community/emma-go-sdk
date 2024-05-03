@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -21,7 +21,7 @@ var _ MappedNullable = &SshKeyUpdate{}
 
 // SshKeyUpdate struct for SshKeyUpdate
 type SshKeyUpdate struct {
-	Name interface{} `json:"name"`
+	Name string `json:"name"`
 }
 
 type _SshKeyUpdate SshKeyUpdate
@@ -30,7 +30,7 @@ type _SshKeyUpdate SshKeyUpdate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSshKeyUpdate(name interface{}) *SshKeyUpdate {
+func NewSshKeyUpdate(name string) *SshKeyUpdate {
 	this := SshKeyUpdate{}
 	this.Name = name
 	return &this
@@ -45,10 +45,9 @@ func NewSshKeyUpdateWithDefaults() *SshKeyUpdate {
 }
 
 // GetName returns the Name field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *SshKeyUpdate) GetName() interface{} {
+func (o *SshKeyUpdate) GetName() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -57,16 +56,15 @@ func (o *SshKeyUpdate) GetName() interface{} {
 
 // GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SshKeyUpdate) GetNameOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Name) {
+func (o *SshKeyUpdate) GetNameOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Name, true
 }
 
 // SetName sets field value
-func (o *SshKeyUpdate) SetName(v interface{}) {
+func (o *SshKeyUpdate) SetName(v string) {
 	o.Name = v
 }
 
@@ -80,9 +78,7 @@ func (o SshKeyUpdate) MarshalJSON() ([]byte, error) {
 
 func (o SshKeyUpdate) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["name"] = o.Name
 	return toSerialize, nil
 }
 

@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -22,11 +22,11 @@ var _ MappedNullable = &VmTransfer{}
 // VmTransfer struct for VmTransfer
 type VmTransfer struct {
 	// Action with a virtual machine
-	Action interface{} `json:"action"`
+	Action string `json:"action"`
 	// Provider's data center ID
-	DataCenterId interface{} `json:"dataCenterId"`
+	DataCenterId string `json:"dataCenterId"`
 	// Keep original instance
-	IsKeepOriginalInstance interface{} `json:"isKeepOriginalInstance,omitempty"`
+	IsKeepOriginalInstance *bool `json:"isKeepOriginalInstance,omitempty"`
 }
 
 type _VmTransfer VmTransfer
@@ -35,10 +35,12 @@ type _VmTransfer VmTransfer
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVmTransfer(action interface{}, dataCenterId interface{}) *VmTransfer {
+func NewVmTransfer(action string, dataCenterId string) *VmTransfer {
 	this := VmTransfer{}
 	this.Action = action
 	this.DataCenterId = dataCenterId
+	var isKeepOriginalInstance bool = true
+	this.IsKeepOriginalInstance = &isKeepOriginalInstance
 	return &this
 }
 
@@ -47,14 +49,15 @@ func NewVmTransfer(action interface{}, dataCenterId interface{}) *VmTransfer {
 // but it doesn't guarantee that properties required by API are set
 func NewVmTransferWithDefaults() *VmTransfer {
 	this := VmTransfer{}
+	var isKeepOriginalInstance bool = true
+	this.IsKeepOriginalInstance = &isKeepOriginalInstance
 	return &this
 }
 
 // GetAction returns the Action field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmTransfer) GetAction() interface{} {
+func (o *VmTransfer) GetAction() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -63,24 +66,22 @@ func (o *VmTransfer) GetAction() interface{} {
 
 // GetActionOk returns a tuple with the Action field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmTransfer) GetActionOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Action) {
+func (o *VmTransfer) GetActionOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Action, true
 }
 
 // SetAction sets field value
-func (o *VmTransfer) SetAction(v interface{}) {
+func (o *VmTransfer) SetAction(v string) {
 	o.Action = v
 }
 
 // GetDataCenterId returns the DataCenterId field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmTransfer) GetDataCenterId() interface{} {
+func (o *VmTransfer) GetDataCenterId() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -89,36 +90,34 @@ func (o *VmTransfer) GetDataCenterId() interface{} {
 
 // GetDataCenterIdOk returns a tuple with the DataCenterId field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmTransfer) GetDataCenterIdOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.DataCenterId) {
+func (o *VmTransfer) GetDataCenterIdOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.DataCenterId, true
 }
 
 // SetDataCenterId sets field value
-func (o *VmTransfer) SetDataCenterId(v interface{}) {
+func (o *VmTransfer) SetDataCenterId(v string) {
 	o.DataCenterId = v
 }
 
-// GetIsKeepOriginalInstance returns the IsKeepOriginalInstance field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmTransfer) GetIsKeepOriginalInstance() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetIsKeepOriginalInstance returns the IsKeepOriginalInstance field value if set, zero value otherwise.
+func (o *VmTransfer) GetIsKeepOriginalInstance() bool {
+	if o == nil || IsNil(o.IsKeepOriginalInstance) {
+		var ret bool
 		return ret
 	}
-	return o.IsKeepOriginalInstance
+	return *o.IsKeepOriginalInstance
 }
 
 // GetIsKeepOriginalInstanceOk returns a tuple with the IsKeepOriginalInstance field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmTransfer) GetIsKeepOriginalInstanceOk() (*interface{}, bool) {
+func (o *VmTransfer) GetIsKeepOriginalInstanceOk() (*bool, bool) {
 	if o == nil || IsNil(o.IsKeepOriginalInstance) {
 		return nil, false
 	}
-	return &o.IsKeepOriginalInstance, true
+	return o.IsKeepOriginalInstance, true
 }
 
 // HasIsKeepOriginalInstance returns a boolean if a field has been set.
@@ -130,9 +129,9 @@ func (o *VmTransfer) HasIsKeepOriginalInstance() bool {
 	return false
 }
 
-// SetIsKeepOriginalInstance gets a reference to the given interface{} and assigns it to the IsKeepOriginalInstance field.
-func (o *VmTransfer) SetIsKeepOriginalInstance(v interface{}) {
-	o.IsKeepOriginalInstance = v
+// SetIsKeepOriginalInstance gets a reference to the given bool and assigns it to the IsKeepOriginalInstance field.
+func (o *VmTransfer) SetIsKeepOriginalInstance(v bool) {
+	o.IsKeepOriginalInstance = &v
 }
 
 func (o VmTransfer) MarshalJSON() ([]byte, error) {
@@ -145,13 +144,9 @@ func (o VmTransfer) MarshalJSON() ([]byte, error) {
 
 func (o VmTransfer) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.DataCenterId != nil {
-		toSerialize["dataCenterId"] = o.DataCenterId
-	}
-	if o.IsKeepOriginalInstance != nil {
+	toSerialize["action"] = o.Action
+	toSerialize["dataCenterId"] = o.DataCenterId
+	if !IsNil(o.IsKeepOriginalInstance) {
 		toSerialize["isKeepOriginalInstance"] = o.IsKeepOriginalInstance
 	}
 	return toSerialize, nil

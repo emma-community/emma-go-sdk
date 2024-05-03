@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -21,8 +21,8 @@ var _ MappedNullable = &Credentials{}
 
 // Credentials struct for Credentials
 type Credentials struct {
-	ClientId     interface{} `json:"clientId"`
-	ClientSecret interface{} `json:"clientSecret"`
+	ClientId     string `json:"clientId"`
+	ClientSecret string `json:"clientSecret"`
 }
 
 type _Credentials Credentials
@@ -31,7 +31,7 @@ type _Credentials Credentials
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCredentials(clientId interface{}, clientSecret interface{}) *Credentials {
+func NewCredentials(clientId string, clientSecret string) *Credentials {
 	this := Credentials{}
 	this.ClientId = clientId
 	this.ClientSecret = clientSecret
@@ -47,10 +47,9 @@ func NewCredentialsWithDefaults() *Credentials {
 }
 
 // GetClientId returns the ClientId field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *Credentials) GetClientId() interface{} {
+func (o *Credentials) GetClientId() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -59,24 +58,22 @@ func (o *Credentials) GetClientId() interface{} {
 
 // GetClientIdOk returns a tuple with the ClientId field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Credentials) GetClientIdOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.ClientId) {
+func (o *Credentials) GetClientIdOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.ClientId, true
 }
 
 // SetClientId sets field value
-func (o *Credentials) SetClientId(v interface{}) {
+func (o *Credentials) SetClientId(v string) {
 	o.ClientId = v
 }
 
 // GetClientSecret returns the ClientSecret field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *Credentials) GetClientSecret() interface{} {
+func (o *Credentials) GetClientSecret() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -85,16 +82,15 @@ func (o *Credentials) GetClientSecret() interface{} {
 
 // GetClientSecretOk returns a tuple with the ClientSecret field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Credentials) GetClientSecretOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.ClientSecret) {
+func (o *Credentials) GetClientSecretOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.ClientSecret, true
 }
 
 // SetClientSecret sets field value
-func (o *Credentials) SetClientSecret(v interface{}) {
+func (o *Credentials) SetClientSecret(v string) {
 	o.ClientSecret = v
 }
 
@@ -108,12 +104,8 @@ func (o Credentials) MarshalJSON() ([]byte, error) {
 
 func (o Credentials) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.ClientId != nil {
-		toSerialize["clientId"] = o.ClientId
-	}
-	if o.ClientSecret != nil {
-		toSerialize["clientSecret"] = o.ClientSecret
-	}
+	toSerialize["clientId"] = o.ClientId
+	toSerialize["clientSecret"] = o.ClientSecret
 	return toSerialize, nil
 }
 

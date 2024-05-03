@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Action** | **interface{}** | Action with a virtual machine | 
+**Action** | **string** | Action with a virtual machine | 
 
 ## Methods
 
 ### NewVmStart
 
-`func NewVmStart(action interface{}, ) *VmStart`
+`func NewVmStart(action string, ) *VmStart`
 
 NewVmStart instantiates a new VmStart object
 This constructor will assign default values to properties that have it defined,
@@ -27,34 +27,24 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetAction
 
-`func (o *VmStart) GetAction() interface{}`
+`func (o *VmStart) GetAction() string`
 
 GetAction returns the Action field if non-nil, zero value otherwise.
 
 ### GetActionOk
 
-`func (o *VmStart) GetActionOk() (*interface{}, bool)`
+`func (o *VmStart) GetActionOk() (*string, bool)`
 
 GetActionOk returns a tuple with the Action field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAction
 
-`func (o *VmStart) SetAction(v interface{})`
+`func (o *VmStart) SetAction(v string)`
 
 SetAction sets Action field to given value.
 
 
-### SetActionNil
-
-`func (o *VmStart) SetActionNil(b bool)`
-
- SetActionNil sets the value for Action to be an explicit nil
-
-### UnsetAction
-`func (o *VmStart) UnsetAction()`
-
-UnsetAction ensures that no value is present for Action, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

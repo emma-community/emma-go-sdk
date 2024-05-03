@@ -27,7 +27,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
@@ -95,7 +95,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
@@ -141,7 +141,7 @@ Other parameters are passed through a pointer to a apiGetVmsRequest struct via t
 
 ## VmActions
 
-> interface{} VmActions(ctx, vmId).VmActionsRequest(vmActionsRequest).Execute()
+> Vm VmActions(ctx, vmId).VmActionsRequest(vmActionsRequest).Execute()
 
 Perform actions with a virtual machine
 
@@ -154,12 +154,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
 	vmId := int32(56) // int32 | Virtual machine ID
-	vmActionsRequest := openapiclient.VmActions_request{VmClone: openapiclient.NewVmClone(interface{}(clone), interface{}(vm-default-name))} // VmActionsRequest |  (optional)
+	vmActionsRequest := openapiclient.VmActions_request{VmClone: openapiclient.NewVmClone("clone", "vm-default-name")} // VmActionsRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -168,7 +168,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VirtualMachinesAPI.VmActions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VmActions`: interface{}
+	// response from `VmActions`: Vm
 	fmt.Fprintf(os.Stdout, "Response from `VirtualMachinesAPI.VmActions`: %v\n", resp)
 }
 ```
@@ -193,7 +193,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**interface{}**
+[**Vm**](Vm.md)
 
 ### Authorization
 
@@ -224,11 +224,11 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
-	vmCreate := *openapiclient.NewVmCreate(interface{}(vm-test1), interface{}(aws-us-west-1), interface{}(5), interface{}(multi-cloud), interface{}(shared), interface{}(2), interface{}(1), interface{}(ssd), interface{}(16), interface{}(124)) // VmCreate |  (optional)
+	vmCreate := *openapiclient.NewVmCreate("vm-test1", "aws-us-west-1", int32(5), "multi-cloud", "shared", int32(2), int32(1), "ssd", int32(16), int32(124)) // VmCreate |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -288,7 +288,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {

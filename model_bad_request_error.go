@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -21,8 +21,8 @@ var _ MappedNullable = &BadRequestError{}
 
 // BadRequestError struct for BadRequestError
 type BadRequestError struct {
-	Code    interface{} `json:"code"`
-	Message interface{} `json:"message"`
+	Code    string `json:"code"`
+	Message string `json:"message"`
 }
 
 type _BadRequestError BadRequestError
@@ -31,7 +31,7 @@ type _BadRequestError BadRequestError
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBadRequestError(code interface{}, message interface{}) *BadRequestError {
+func NewBadRequestError(code string, message string) *BadRequestError {
 	this := BadRequestError{}
 	this.Code = code
 	this.Message = message
@@ -47,10 +47,9 @@ func NewBadRequestErrorWithDefaults() *BadRequestError {
 }
 
 // GetCode returns the Code field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *BadRequestError) GetCode() interface{} {
+func (o *BadRequestError) GetCode() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -59,24 +58,22 @@ func (o *BadRequestError) GetCode() interface{} {
 
 // GetCodeOk returns a tuple with the Code field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BadRequestError) GetCodeOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Code) {
+func (o *BadRequestError) GetCodeOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Code, true
 }
 
 // SetCode sets field value
-func (o *BadRequestError) SetCode(v interface{}) {
+func (o *BadRequestError) SetCode(v string) {
 	o.Code = v
 }
 
 // GetMessage returns the Message field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *BadRequestError) GetMessage() interface{} {
+func (o *BadRequestError) GetMessage() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -85,16 +82,15 @@ func (o *BadRequestError) GetMessage() interface{} {
 
 // GetMessageOk returns a tuple with the Message field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BadRequestError) GetMessageOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Message) {
+func (o *BadRequestError) GetMessageOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Message, true
 }
 
 // SetMessage sets field value
-func (o *BadRequestError) SetMessage(v interface{}) {
+func (o *BadRequestError) SetMessage(v string) {
 	o.Message = v
 }
 
@@ -108,12 +104,8 @@ func (o BadRequestError) MarshalJSON() ([]byte, error) {
 
 func (o BadRequestError) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Code != nil {
-		toSerialize["code"] = o.Code
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
+	toSerialize["code"] = o.Code
+	toSerialize["message"] = o.Message
 	return toSerialize, nil
 }
 

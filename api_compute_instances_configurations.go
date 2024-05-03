@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -24,29 +24,29 @@ type ComputeInstancesConfigurationsAPIService service
 type ApiGetSpotConfigsRequest struct {
 	ctx              context.Context
 	ApiService       *ComputeInstancesConfigurationsAPIService
-	providerId       *interface{}
+	providerId       *int32
 	locationId       *int32
-	dataCenterId     *interface{}
-	cloudNetworkType *interface{}
-	vCpuType         *interface{}
-	vCpu             *interface{}
-	vCpuMin          *interface{}
-	vCpuMax          *interface{}
-	ramGb            *interface{}
-	ramGbMin         *interface{}
-	ramGbMax         *interface{}
-	volumeGb         *interface{}
-	volumeGbMin      *interface{}
-	volumeGbMax      *interface{}
-	volumeType       *interface{}
-	priceMin         *interface{}
-	priceMax         *interface{}
-	page             *interface{}
-	size             *interface{}
+	dataCenterId     *string
+	cloudNetworkType *string
+	vCpuType         *string
+	vCpu             *int32
+	vCpuMin          *int32
+	vCpuMax          *int32
+	ramGb            *int32
+	ramGbMin         *int32
+	ramGbMax         *int32
+	volumeGb         *int32
+	volumeGbMin      *int32
+	volumeGbMax      *int32
+	volumeType       *string
+	priceMin         *float32
+	priceMax         *float32
+	page             *int32
+	size             *int32
 }
 
 // Provider ID
-func (r ApiGetSpotConfigsRequest) ProviderId(providerId interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) ProviderId(providerId int32) ApiGetSpotConfigsRequest {
 	r.providerId = &providerId
 	return r
 }
@@ -58,103 +58,103 @@ func (r ApiGetSpotConfigsRequest) LocationId(locationId int32) ApiGetSpotConfigs
 }
 
 // Data center ID
-func (r ApiGetSpotConfigsRequest) DataCenterId(dataCenterId interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) DataCenterId(dataCenterId string) ApiGetSpotConfigsRequest {
 	r.dataCenterId = &dataCenterId
 	return r
 }
 
 // Cloud network type
-func (r ApiGetSpotConfigsRequest) CloudNetworkType(cloudNetworkType interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) CloudNetworkType(cloudNetworkType string) ApiGetSpotConfigsRequest {
 	r.cloudNetworkType = &cloudNetworkType
 	return r
 }
 
 // Compute instance vCPU type
-func (r ApiGetSpotConfigsRequest) VCpuType(vCpuType interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) VCpuType(vCpuType string) ApiGetSpotConfigsRequest {
 	r.vCpuType = &vCpuType
 	return r
 }
 
 // Compute instance vCPU
-func (r ApiGetSpotConfigsRequest) VCpu(vCpu interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) VCpu(vCpu int32) ApiGetSpotConfigsRequest {
 	r.vCpu = &vCpu
 	return r
 }
 
 // Compute instance vCPU minimum
-func (r ApiGetSpotConfigsRequest) VCpuMin(vCpuMin interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) VCpuMin(vCpuMin int32) ApiGetSpotConfigsRequest {
 	r.vCpuMin = &vCpuMin
 	return r
 }
 
 // Compute instance vCPU maximum
-func (r ApiGetSpotConfigsRequest) VCpuMax(vCpuMax interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) VCpuMax(vCpuMax int32) ApiGetSpotConfigsRequest {
 	r.vCpuMax = &vCpuMax
 	return r
 }
 
 // Compute instance RAM (GB)
-func (r ApiGetSpotConfigsRequest) RamGb(ramGb interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) RamGb(ramGb int32) ApiGetSpotConfigsRequest {
 	r.ramGb = &ramGb
 	return r
 }
 
 // Compute instance RAM (GB) minimum
-func (r ApiGetSpotConfigsRequest) RamGbMin(ramGbMin interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) RamGbMin(ramGbMin int32) ApiGetSpotConfigsRequest {
 	r.ramGbMin = &ramGbMin
 	return r
 }
 
 // Compute instance RAM (GB) maximum
-func (r ApiGetSpotConfigsRequest) RamGbMax(ramGbMax interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) RamGbMax(ramGbMax int32) ApiGetSpotConfigsRequest {
 	r.ramGbMax = &ramGbMax
 	return r
 }
 
 // Compute instance volume (GB)
-func (r ApiGetSpotConfigsRequest) VolumeGb(volumeGb interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) VolumeGb(volumeGb int32) ApiGetSpotConfigsRequest {
 	r.volumeGb = &volumeGb
 	return r
 }
 
 // Compute instance volume minimum (GB)
-func (r ApiGetSpotConfigsRequest) VolumeGbMin(volumeGbMin interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) VolumeGbMin(volumeGbMin int32) ApiGetSpotConfigsRequest {
 	r.volumeGbMin = &volumeGbMin
 	return r
 }
 
 // Compute instance volume maximun (GB)
-func (r ApiGetSpotConfigsRequest) VolumeGbMax(volumeGbMax interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) VolumeGbMax(volumeGbMax int32) ApiGetSpotConfigsRequest {
 	r.volumeGbMax = &volumeGbMax
 	return r
 }
 
 // Compute instance volume type
-func (r ApiGetSpotConfigsRequest) VolumeType(volumeType interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) VolumeType(volumeType string) ApiGetSpotConfigsRequest {
 	r.volumeType = &volumeType
 	return r
 }
 
 // Instance price minimum
-func (r ApiGetSpotConfigsRequest) PriceMin(priceMin interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) PriceMin(priceMin float32) ApiGetSpotConfigsRequest {
 	r.priceMin = &priceMin
 	return r
 }
 
 // Instance price maximum
-func (r ApiGetSpotConfigsRequest) PriceMax(priceMax interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) PriceMax(priceMax float32) ApiGetSpotConfigsRequest {
 	r.priceMax = &priceMax
 	return r
 }
 
 // Page number
-func (r ApiGetSpotConfigsRequest) Page(page interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) Page(page int32) ApiGetSpotConfigsRequest {
 	r.page = &page
 	return r
 }
 
 // Query size
-func (r ApiGetSpotConfigsRequest) Size(size interface{}) ApiGetSpotConfigsRequest {
+func (r ApiGetSpotConfigsRequest) Size(size int32) ApiGetSpotConfigsRequest {
 	r.size = &size
 	return r
 }
@@ -344,29 +344,29 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 type ApiGetVmConfigsRequest struct {
 	ctx              context.Context
 	ApiService       *ComputeInstancesConfigurationsAPIService
-	providerId       *interface{}
+	providerId       *int32
 	locationId       *int32
-	dataCenterId     *interface{}
-	cloudNetworkType *interface{}
-	vCpuType         *interface{}
-	vCpu             *interface{}
-	vCpuMin          *interface{}
-	vCpuMax          *interface{}
-	ramGb            *interface{}
-	ramGbMin         *interface{}
-	ramGbMax         *interface{}
-	volumeGb         *interface{}
-	volumeGbMin      *interface{}
-	volumeGbMax      *interface{}
-	volumeType       *interface{}
-	priceMin         *interface{}
-	priceMax         *interface{}
-	page             *interface{}
-	size             *interface{}
+	dataCenterId     *string
+	cloudNetworkType *string
+	vCpuType         *string
+	vCpu             *int32
+	vCpuMin          *int32
+	vCpuMax          *int32
+	ramGb            *int32
+	ramGbMin         *int32
+	ramGbMax         *int32
+	volumeGb         *int32
+	volumeGbMin      *int32
+	volumeGbMax      *int32
+	volumeType       *string
+	priceMin         *float32
+	priceMax         *float32
+	page             *int32
+	size             *int32
 }
 
 // Provider ID
-func (r ApiGetVmConfigsRequest) ProviderId(providerId interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) ProviderId(providerId int32) ApiGetVmConfigsRequest {
 	r.providerId = &providerId
 	return r
 }
@@ -378,103 +378,103 @@ func (r ApiGetVmConfigsRequest) LocationId(locationId int32) ApiGetVmConfigsRequ
 }
 
 // Data center ID
-func (r ApiGetVmConfigsRequest) DataCenterId(dataCenterId interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) DataCenterId(dataCenterId string) ApiGetVmConfigsRequest {
 	r.dataCenterId = &dataCenterId
 	return r
 }
 
 // Cloud network type
-func (r ApiGetVmConfigsRequest) CloudNetworkType(cloudNetworkType interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) CloudNetworkType(cloudNetworkType string) ApiGetVmConfigsRequest {
 	r.cloudNetworkType = &cloudNetworkType
 	return r
 }
 
 // Compute instance vCPU type
-func (r ApiGetVmConfigsRequest) VCpuType(vCpuType interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) VCpuType(vCpuType string) ApiGetVmConfigsRequest {
 	r.vCpuType = &vCpuType
 	return r
 }
 
 // Compute instance vCPU
-func (r ApiGetVmConfigsRequest) VCpu(vCpu interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) VCpu(vCpu int32) ApiGetVmConfigsRequest {
 	r.vCpu = &vCpu
 	return r
 }
 
 // Compute instance vCPU minimum
-func (r ApiGetVmConfigsRequest) VCpuMin(vCpuMin interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) VCpuMin(vCpuMin int32) ApiGetVmConfigsRequest {
 	r.vCpuMin = &vCpuMin
 	return r
 }
 
 // Compute instance vCPU maximum
-func (r ApiGetVmConfigsRequest) VCpuMax(vCpuMax interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) VCpuMax(vCpuMax int32) ApiGetVmConfigsRequest {
 	r.vCpuMax = &vCpuMax
 	return r
 }
 
 // Compute instance RAM (GB)
-func (r ApiGetVmConfigsRequest) RamGb(ramGb interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) RamGb(ramGb int32) ApiGetVmConfigsRequest {
 	r.ramGb = &ramGb
 	return r
 }
 
 // Compute instance RAM (GB) minimum
-func (r ApiGetVmConfigsRequest) RamGbMin(ramGbMin interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) RamGbMin(ramGbMin int32) ApiGetVmConfigsRequest {
 	r.ramGbMin = &ramGbMin
 	return r
 }
 
 // Compute instance RAM (GB) maximum
-func (r ApiGetVmConfigsRequest) RamGbMax(ramGbMax interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) RamGbMax(ramGbMax int32) ApiGetVmConfigsRequest {
 	r.ramGbMax = &ramGbMax
 	return r
 }
 
 // Compute instance volume (GB)
-func (r ApiGetVmConfigsRequest) VolumeGb(volumeGb interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) VolumeGb(volumeGb int32) ApiGetVmConfigsRequest {
 	r.volumeGb = &volumeGb
 	return r
 }
 
 // Compute instance volume minimum (GB)
-func (r ApiGetVmConfigsRequest) VolumeGbMin(volumeGbMin interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) VolumeGbMin(volumeGbMin int32) ApiGetVmConfigsRequest {
 	r.volumeGbMin = &volumeGbMin
 	return r
 }
 
 // Compute instance volume maximun (GB)
-func (r ApiGetVmConfigsRequest) VolumeGbMax(volumeGbMax interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) VolumeGbMax(volumeGbMax int32) ApiGetVmConfigsRequest {
 	r.volumeGbMax = &volumeGbMax
 	return r
 }
 
 // Compute instance volume type
-func (r ApiGetVmConfigsRequest) VolumeType(volumeType interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) VolumeType(volumeType string) ApiGetVmConfigsRequest {
 	r.volumeType = &volumeType
 	return r
 }
 
 // Instance price minimum
-func (r ApiGetVmConfigsRequest) PriceMin(priceMin interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) PriceMin(priceMin float32) ApiGetVmConfigsRequest {
 	r.priceMin = &priceMin
 	return r
 }
 
 // Instance price maximum
-func (r ApiGetVmConfigsRequest) PriceMax(priceMax interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) PriceMax(priceMax float32) ApiGetVmConfigsRequest {
 	r.priceMax = &priceMax
 	return r
 }
 
 // Page number
-func (r ApiGetVmConfigsRequest) Page(page interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) Page(page int32) ApiGetVmConfigsRequest {
 	r.page = &page
 	return r
 }
 
 // Query size
-func (r ApiGetVmConfigsRequest) Size(size interface{}) ApiGetVmConfigsRequest {
+func (r ApiGetVmConfigsRequest) Size(size int32) ApiGetVmConfigsRequest {
 	r.size = &size
 	return r
 }

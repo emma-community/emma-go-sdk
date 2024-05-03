@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,9 +19,9 @@ var _ MappedNullable = &SortObject{}
 
 // SortObject struct for SortObject
 type SortObject struct {
-	Empty    interface{} `json:"empty,omitempty"`
-	Unsorted interface{} `json:"unsorted,omitempty"`
-	Sorted   interface{} `json:"sorted,omitempty"`
+	Empty    *bool `json:"empty,omitempty"`
+	Unsorted *bool `json:"unsorted,omitempty"`
+	Sorted   *bool `json:"sorted,omitempty"`
 }
 
 // NewSortObject instantiates a new SortObject object
@@ -41,23 +41,22 @@ func NewSortObjectWithDefaults() *SortObject {
 	return &this
 }
 
-// GetEmpty returns the Empty field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SortObject) GetEmpty() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetEmpty returns the Empty field value if set, zero value otherwise.
+func (o *SortObject) GetEmpty() bool {
+	if o == nil || IsNil(o.Empty) {
+		var ret bool
 		return ret
 	}
-	return o.Empty
+	return *o.Empty
 }
 
 // GetEmptyOk returns a tuple with the Empty field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SortObject) GetEmptyOk() (*interface{}, bool) {
+func (o *SortObject) GetEmptyOk() (*bool, bool) {
 	if o == nil || IsNil(o.Empty) {
 		return nil, false
 	}
-	return &o.Empty, true
+	return o.Empty, true
 }
 
 // HasEmpty returns a boolean if a field has been set.
@@ -69,28 +68,27 @@ func (o *SortObject) HasEmpty() bool {
 	return false
 }
 
-// SetEmpty gets a reference to the given interface{} and assigns it to the Empty field.
-func (o *SortObject) SetEmpty(v interface{}) {
-	o.Empty = v
+// SetEmpty gets a reference to the given bool and assigns it to the Empty field.
+func (o *SortObject) SetEmpty(v bool) {
+	o.Empty = &v
 }
 
-// GetUnsorted returns the Unsorted field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SortObject) GetUnsorted() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetUnsorted returns the Unsorted field value if set, zero value otherwise.
+func (o *SortObject) GetUnsorted() bool {
+	if o == nil || IsNil(o.Unsorted) {
+		var ret bool
 		return ret
 	}
-	return o.Unsorted
+	return *o.Unsorted
 }
 
 // GetUnsortedOk returns a tuple with the Unsorted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SortObject) GetUnsortedOk() (*interface{}, bool) {
+func (o *SortObject) GetUnsortedOk() (*bool, bool) {
 	if o == nil || IsNil(o.Unsorted) {
 		return nil, false
 	}
-	return &o.Unsorted, true
+	return o.Unsorted, true
 }
 
 // HasUnsorted returns a boolean if a field has been set.
@@ -102,28 +100,27 @@ func (o *SortObject) HasUnsorted() bool {
 	return false
 }
 
-// SetUnsorted gets a reference to the given interface{} and assigns it to the Unsorted field.
-func (o *SortObject) SetUnsorted(v interface{}) {
-	o.Unsorted = v
+// SetUnsorted gets a reference to the given bool and assigns it to the Unsorted field.
+func (o *SortObject) SetUnsorted(v bool) {
+	o.Unsorted = &v
 }
 
-// GetSorted returns the Sorted field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SortObject) GetSorted() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetSorted returns the Sorted field value if set, zero value otherwise.
+func (o *SortObject) GetSorted() bool {
+	if o == nil || IsNil(o.Sorted) {
+		var ret bool
 		return ret
 	}
-	return o.Sorted
+	return *o.Sorted
 }
 
 // GetSortedOk returns a tuple with the Sorted field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SortObject) GetSortedOk() (*interface{}, bool) {
+func (o *SortObject) GetSortedOk() (*bool, bool) {
 	if o == nil || IsNil(o.Sorted) {
 		return nil, false
 	}
-	return &o.Sorted, true
+	return o.Sorted, true
 }
 
 // HasSorted returns a boolean if a field has been set.
@@ -135,9 +132,9 @@ func (o *SortObject) HasSorted() bool {
 	return false
 }
 
-// SetSorted gets a reference to the given interface{} and assigns it to the Sorted field.
-func (o *SortObject) SetSorted(v interface{}) {
-	o.Sorted = v
+// SetSorted gets a reference to the given bool and assigns it to the Sorted field.
+func (o *SortObject) SetSorted(v bool) {
+	o.Sorted = &v
 }
 
 func (o SortObject) MarshalJSON() ([]byte, error) {
@@ -150,13 +147,13 @@ func (o SortObject) MarshalJSON() ([]byte, error) {
 
 func (o SortObject) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Empty != nil {
+	if !IsNil(o.Empty) {
 		toSerialize["empty"] = o.Empty
 	}
-	if o.Unsorted != nil {
+	if !IsNil(o.Unsorted) {
 		toSerialize["unsorted"] = o.Unsorted
 	}
-	if o.Sorted != nil {
+	if !IsNil(o.Sorted) {
 		toSerialize["sorted"] = o.Sorted
 	}
 	return toSerialize, nil

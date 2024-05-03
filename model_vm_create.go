@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -22,27 +22,27 @@ var _ MappedNullable = &VmCreate{}
 // VmCreate struct for VmCreate
 type VmCreate struct {
 	// Virtual machine name
-	Name interface{} `json:"name"`
+	Name string `json:"name"`
 	// Provider's data center ID
-	DataCenterId interface{} `json:"dataCenterId"`
+	DataCenterId string `json:"dataCenterId"`
 	// Operating system ID
-	OsId interface{} `json:"osId"`
+	OsId int32 `json:"osId"`
 	// Cloud network type
-	CloudNetworkType interface{} `json:"cloudNetworkType"`
+	CloudNetworkType string `json:"cloudNetworkType"`
 	// vCPU type
-	VCpuType interface{} `json:"vCpuType"`
+	VCpuType string `json:"vCpuType"`
 	// Number of virtual Central Processing Units (vCPUs)
-	VCpu interface{} `json:"vCpu"`
+	VCpu int32 `json:"vCpu"`
 	// Capacity of RAM in gigabytes
-	RamGb interface{} `json:"ramGb"`
+	RamGb int32 `json:"ramGb"`
 	// Volume type
-	VolumeType interface{} `json:"volumeType"`
+	VolumeType string `json:"volumeType"`
 	// Capacity of volume in gigabytes
-	VolumeGb interface{} `json:"volumeGb"`
+	VolumeGb int32 `json:"volumeGb"`
 	// SSH-key ID
-	SshKeyId interface{} `json:"sshKeyId"`
+	SshKeyId int32 `json:"sshKeyId"`
 	// Security group ID
-	SecurityGroupId interface{} `json:"securityGroupId,omitempty"`
+	SecurityGroupId *int32 `json:"securityGroupId,omitempty"`
 }
 
 type _VmCreate VmCreate
@@ -51,7 +51,7 @@ type _VmCreate VmCreate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVmCreate(name interface{}, dataCenterId interface{}, osId interface{}, cloudNetworkType interface{}, vCpuType interface{}, vCpu interface{}, ramGb interface{}, volumeType interface{}, volumeGb interface{}, sshKeyId interface{}) *VmCreate {
+func NewVmCreate(name string, dataCenterId string, osId int32, cloudNetworkType string, vCpuType string, vCpu int32, ramGb int32, volumeType string, volumeGb int32, sshKeyId int32) *VmCreate {
 	this := VmCreate{}
 	this.Name = name
 	this.DataCenterId = dataCenterId
@@ -75,10 +75,9 @@ func NewVmCreateWithDefaults() *VmCreate {
 }
 
 // GetName returns the Name field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetName() interface{} {
+func (o *VmCreate) GetName() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -87,24 +86,22 @@ func (o *VmCreate) GetName() interface{} {
 
 // GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetNameOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Name) {
+func (o *VmCreate) GetNameOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Name, true
 }
 
 // SetName sets field value
-func (o *VmCreate) SetName(v interface{}) {
+func (o *VmCreate) SetName(v string) {
 	o.Name = v
 }
 
 // GetDataCenterId returns the DataCenterId field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetDataCenterId() interface{} {
+func (o *VmCreate) GetDataCenterId() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -113,24 +110,22 @@ func (o *VmCreate) GetDataCenterId() interface{} {
 
 // GetDataCenterIdOk returns a tuple with the DataCenterId field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetDataCenterIdOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.DataCenterId) {
+func (o *VmCreate) GetDataCenterIdOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.DataCenterId, true
 }
 
 // SetDataCenterId sets field value
-func (o *VmCreate) SetDataCenterId(v interface{}) {
+func (o *VmCreate) SetDataCenterId(v string) {
 	o.DataCenterId = v
 }
 
 // GetOsId returns the OsId field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetOsId() interface{} {
+func (o *VmCreate) GetOsId() int32 {
 	if o == nil {
-		var ret interface{}
+		var ret int32
 		return ret
 	}
 
@@ -139,24 +134,22 @@ func (o *VmCreate) GetOsId() interface{} {
 
 // GetOsIdOk returns a tuple with the OsId field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetOsIdOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.OsId) {
+func (o *VmCreate) GetOsIdOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.OsId, true
 }
 
 // SetOsId sets field value
-func (o *VmCreate) SetOsId(v interface{}) {
+func (o *VmCreate) SetOsId(v int32) {
 	o.OsId = v
 }
 
 // GetCloudNetworkType returns the CloudNetworkType field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetCloudNetworkType() interface{} {
+func (o *VmCreate) GetCloudNetworkType() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -165,24 +158,22 @@ func (o *VmCreate) GetCloudNetworkType() interface{} {
 
 // GetCloudNetworkTypeOk returns a tuple with the CloudNetworkType field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetCloudNetworkTypeOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.CloudNetworkType) {
+func (o *VmCreate) GetCloudNetworkTypeOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.CloudNetworkType, true
 }
 
 // SetCloudNetworkType sets field value
-func (o *VmCreate) SetCloudNetworkType(v interface{}) {
+func (o *VmCreate) SetCloudNetworkType(v string) {
 	o.CloudNetworkType = v
 }
 
 // GetVCpuType returns the VCpuType field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetVCpuType() interface{} {
+func (o *VmCreate) GetVCpuType() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -191,24 +182,22 @@ func (o *VmCreate) GetVCpuType() interface{} {
 
 // GetVCpuTypeOk returns a tuple with the VCpuType field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetVCpuTypeOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.VCpuType) {
+func (o *VmCreate) GetVCpuTypeOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.VCpuType, true
 }
 
 // SetVCpuType sets field value
-func (o *VmCreate) SetVCpuType(v interface{}) {
+func (o *VmCreate) SetVCpuType(v string) {
 	o.VCpuType = v
 }
 
 // GetVCpu returns the VCpu field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetVCpu() interface{} {
+func (o *VmCreate) GetVCpu() int32 {
 	if o == nil {
-		var ret interface{}
+		var ret int32
 		return ret
 	}
 
@@ -217,24 +206,22 @@ func (o *VmCreate) GetVCpu() interface{} {
 
 // GetVCpuOk returns a tuple with the VCpu field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetVCpuOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.VCpu) {
+func (o *VmCreate) GetVCpuOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.VCpu, true
 }
 
 // SetVCpu sets field value
-func (o *VmCreate) SetVCpu(v interface{}) {
+func (o *VmCreate) SetVCpu(v int32) {
 	o.VCpu = v
 }
 
 // GetRamGb returns the RamGb field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetRamGb() interface{} {
+func (o *VmCreate) GetRamGb() int32 {
 	if o == nil {
-		var ret interface{}
+		var ret int32
 		return ret
 	}
 
@@ -243,24 +230,22 @@ func (o *VmCreate) GetRamGb() interface{} {
 
 // GetRamGbOk returns a tuple with the RamGb field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetRamGbOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.RamGb) {
+func (o *VmCreate) GetRamGbOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.RamGb, true
 }
 
 // SetRamGb sets field value
-func (o *VmCreate) SetRamGb(v interface{}) {
+func (o *VmCreate) SetRamGb(v int32) {
 	o.RamGb = v
 }
 
 // GetVolumeType returns the VolumeType field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetVolumeType() interface{} {
+func (o *VmCreate) GetVolumeType() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -269,24 +254,22 @@ func (o *VmCreate) GetVolumeType() interface{} {
 
 // GetVolumeTypeOk returns a tuple with the VolumeType field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetVolumeTypeOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.VolumeType) {
+func (o *VmCreate) GetVolumeTypeOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.VolumeType, true
 }
 
 // SetVolumeType sets field value
-func (o *VmCreate) SetVolumeType(v interface{}) {
+func (o *VmCreate) SetVolumeType(v string) {
 	o.VolumeType = v
 }
 
 // GetVolumeGb returns the VolumeGb field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetVolumeGb() interface{} {
+func (o *VmCreate) GetVolumeGb() int32 {
 	if o == nil {
-		var ret interface{}
+		var ret int32
 		return ret
 	}
 
@@ -295,24 +278,22 @@ func (o *VmCreate) GetVolumeGb() interface{} {
 
 // GetVolumeGbOk returns a tuple with the VolumeGb field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetVolumeGbOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.VolumeGb) {
+func (o *VmCreate) GetVolumeGbOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.VolumeGb, true
 }
 
 // SetVolumeGb sets field value
-func (o *VmCreate) SetVolumeGb(v interface{}) {
+func (o *VmCreate) SetVolumeGb(v int32) {
 	o.VolumeGb = v
 }
 
 // GetSshKeyId returns the SshKeyId field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmCreate) GetSshKeyId() interface{} {
+func (o *VmCreate) GetSshKeyId() int32 {
 	if o == nil {
-		var ret interface{}
+		var ret int32
 		return ret
 	}
 
@@ -321,36 +302,34 @@ func (o *VmCreate) GetSshKeyId() interface{} {
 
 // GetSshKeyIdOk returns a tuple with the SshKeyId field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetSshKeyIdOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.SshKeyId) {
+func (o *VmCreate) GetSshKeyIdOk() (*int32, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.SshKeyId, true
 }
 
 // SetSshKeyId sets field value
-func (o *VmCreate) SetSshKeyId(v interface{}) {
+func (o *VmCreate) SetSshKeyId(v int32) {
 	o.SshKeyId = v
 }
 
-// GetSecurityGroupId returns the SecurityGroupId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmCreate) GetSecurityGroupId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetSecurityGroupId returns the SecurityGroupId field value if set, zero value otherwise.
+func (o *VmCreate) GetSecurityGroupId() int32 {
+	if o == nil || IsNil(o.SecurityGroupId) {
+		var ret int32
 		return ret
 	}
-	return o.SecurityGroupId
+	return *o.SecurityGroupId
 }
 
 // GetSecurityGroupIdOk returns a tuple with the SecurityGroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCreate) GetSecurityGroupIdOk() (*interface{}, bool) {
+func (o *VmCreate) GetSecurityGroupIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.SecurityGroupId) {
 		return nil, false
 	}
-	return &o.SecurityGroupId, true
+	return o.SecurityGroupId, true
 }
 
 // HasSecurityGroupId returns a boolean if a field has been set.
@@ -362,9 +341,9 @@ func (o *VmCreate) HasSecurityGroupId() bool {
 	return false
 }
 
-// SetSecurityGroupId gets a reference to the given interface{} and assigns it to the SecurityGroupId field.
-func (o *VmCreate) SetSecurityGroupId(v interface{}) {
-	o.SecurityGroupId = v
+// SetSecurityGroupId gets a reference to the given int32 and assigns it to the SecurityGroupId field.
+func (o *VmCreate) SetSecurityGroupId(v int32) {
+	o.SecurityGroupId = &v
 }
 
 func (o VmCreate) MarshalJSON() ([]byte, error) {
@@ -377,37 +356,17 @@ func (o VmCreate) MarshalJSON() ([]byte, error) {
 
 func (o VmCreate) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
-	if o.DataCenterId != nil {
-		toSerialize["dataCenterId"] = o.DataCenterId
-	}
-	if o.OsId != nil {
-		toSerialize["osId"] = o.OsId
-	}
-	if o.CloudNetworkType != nil {
-		toSerialize["cloudNetworkType"] = o.CloudNetworkType
-	}
-	if o.VCpuType != nil {
-		toSerialize["vCpuType"] = o.VCpuType
-	}
-	if o.VCpu != nil {
-		toSerialize["vCpu"] = o.VCpu
-	}
-	if o.RamGb != nil {
-		toSerialize["ramGb"] = o.RamGb
-	}
-	if o.VolumeType != nil {
-		toSerialize["volumeType"] = o.VolumeType
-	}
-	if o.VolumeGb != nil {
-		toSerialize["volumeGb"] = o.VolumeGb
-	}
-	if o.SshKeyId != nil {
-		toSerialize["sshKeyId"] = o.SshKeyId
-	}
-	if o.SecurityGroupId != nil {
+	toSerialize["name"] = o.Name
+	toSerialize["dataCenterId"] = o.DataCenterId
+	toSerialize["osId"] = o.OsId
+	toSerialize["cloudNetworkType"] = o.CloudNetworkType
+	toSerialize["vCpuType"] = o.VCpuType
+	toSerialize["vCpu"] = o.VCpu
+	toSerialize["ramGb"] = o.RamGb
+	toSerialize["volumeType"] = o.VolumeType
+	toSerialize["volumeGb"] = o.VolumeGb
+	toSerialize["sshKeyId"] = o.SshKeyId
+	if !IsNil(o.SecurityGroupId) {
 		toSerialize["securityGroupId"] = o.SecurityGroupId
 	}
 	return toSerialize, nil

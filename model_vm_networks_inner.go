@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,10 +19,10 @@ var _ MappedNullable = &VmNetworksInner{}
 
 // VmNetworksInner struct for VmNetworksInner
 type VmNetworksInner struct {
-	Id            interface{} `json:"id,omitempty"`
-	Ip            interface{} `json:"ip,omitempty"`
-	NetworkTypeId interface{} `json:"networkTypeId,omitempty"`
-	NetworkType   interface{} `json:"networkType,omitempty"`
+	Id            *int32  `json:"id,omitempty"`
+	Ip            *string `json:"ip,omitempty"`
+	NetworkTypeId *int32  `json:"networkTypeId,omitempty"`
+	NetworkType   *string `json:"networkType,omitempty"`
 }
 
 // NewVmNetworksInner instantiates a new VmNetworksInner object
@@ -42,23 +42,22 @@ func NewVmNetworksInnerWithDefaults() *VmNetworksInner {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmNetworksInner) GetId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *VmNetworksInner) GetId() int32 {
+	if o == nil || IsNil(o.Id) {
+		var ret int32
 		return ret
 	}
-	return o.Id
+	return *o.Id
 }
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmNetworksInner) GetIdOk() (*interface{}, bool) {
+func (o *VmNetworksInner) GetIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
 // HasId returns a boolean if a field has been set.
@@ -70,28 +69,27 @@ func (o *VmNetworksInner) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given interface{} and assigns it to the Id field.
-func (o *VmNetworksInner) SetId(v interface{}) {
-	o.Id = v
+// SetId gets a reference to the given int32 and assigns it to the Id field.
+func (o *VmNetworksInner) SetId(v int32) {
+	o.Id = &v
 }
 
-// GetIp returns the Ip field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmNetworksInner) GetIp() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetIp returns the Ip field value if set, zero value otherwise.
+func (o *VmNetworksInner) GetIp() string {
+	if o == nil || IsNil(o.Ip) {
+		var ret string
 		return ret
 	}
-	return o.Ip
+	return *o.Ip
 }
 
 // GetIpOk returns a tuple with the Ip field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmNetworksInner) GetIpOk() (*interface{}, bool) {
+func (o *VmNetworksInner) GetIpOk() (*string, bool) {
 	if o == nil || IsNil(o.Ip) {
 		return nil, false
 	}
-	return &o.Ip, true
+	return o.Ip, true
 }
 
 // HasIp returns a boolean if a field has been set.
@@ -103,28 +101,27 @@ func (o *VmNetworksInner) HasIp() bool {
 	return false
 }
 
-// SetIp gets a reference to the given interface{} and assigns it to the Ip field.
-func (o *VmNetworksInner) SetIp(v interface{}) {
-	o.Ip = v
+// SetIp gets a reference to the given string and assigns it to the Ip field.
+func (o *VmNetworksInner) SetIp(v string) {
+	o.Ip = &v
 }
 
-// GetNetworkTypeId returns the NetworkTypeId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmNetworksInner) GetNetworkTypeId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetNetworkTypeId returns the NetworkTypeId field value if set, zero value otherwise.
+func (o *VmNetworksInner) GetNetworkTypeId() int32 {
+	if o == nil || IsNil(o.NetworkTypeId) {
+		var ret int32
 		return ret
 	}
-	return o.NetworkTypeId
+	return *o.NetworkTypeId
 }
 
 // GetNetworkTypeIdOk returns a tuple with the NetworkTypeId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmNetworksInner) GetNetworkTypeIdOk() (*interface{}, bool) {
+func (o *VmNetworksInner) GetNetworkTypeIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.NetworkTypeId) {
 		return nil, false
 	}
-	return &o.NetworkTypeId, true
+	return o.NetworkTypeId, true
 }
 
 // HasNetworkTypeId returns a boolean if a field has been set.
@@ -136,28 +133,27 @@ func (o *VmNetworksInner) HasNetworkTypeId() bool {
 	return false
 }
 
-// SetNetworkTypeId gets a reference to the given interface{} and assigns it to the NetworkTypeId field.
-func (o *VmNetworksInner) SetNetworkTypeId(v interface{}) {
-	o.NetworkTypeId = v
+// SetNetworkTypeId gets a reference to the given int32 and assigns it to the NetworkTypeId field.
+func (o *VmNetworksInner) SetNetworkTypeId(v int32) {
+	o.NetworkTypeId = &v
 }
 
-// GetNetworkType returns the NetworkType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmNetworksInner) GetNetworkType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetNetworkType returns the NetworkType field value if set, zero value otherwise.
+func (o *VmNetworksInner) GetNetworkType() string {
+	if o == nil || IsNil(o.NetworkType) {
+		var ret string
 		return ret
 	}
-	return o.NetworkType
+	return *o.NetworkType
 }
 
 // GetNetworkTypeOk returns a tuple with the NetworkType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmNetworksInner) GetNetworkTypeOk() (*interface{}, bool) {
+func (o *VmNetworksInner) GetNetworkTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.NetworkType) {
 		return nil, false
 	}
-	return &o.NetworkType, true
+	return o.NetworkType, true
 }
 
 // HasNetworkType returns a boolean if a field has been set.
@@ -169,9 +165,9 @@ func (o *VmNetworksInner) HasNetworkType() bool {
 	return false
 }
 
-// SetNetworkType gets a reference to the given interface{} and assigns it to the NetworkType field.
-func (o *VmNetworksInner) SetNetworkType(v interface{}) {
-	o.NetworkType = v
+// SetNetworkType gets a reference to the given string and assigns it to the NetworkType field.
+func (o *VmNetworksInner) SetNetworkType(v string) {
+	o.NetworkType = &v
 }
 
 func (o VmNetworksInner) MarshalJSON() ([]byte, error) {
@@ -184,16 +180,16 @@ func (o VmNetworksInner) MarshalJSON() ([]byte, error) {
 
 func (o VmNetworksInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.Ip != nil {
+	if !IsNil(o.Ip) {
 		toSerialize["ip"] = o.Ip
 	}
-	if o.NetworkTypeId != nil {
+	if !IsNil(o.NetworkTypeId) {
 		toSerialize["networkTypeId"] = o.NetworkTypeId
 	}
-	if o.NetworkType != nil {
+	if !IsNil(o.NetworkType) {
 		toSerialize["networkType"] = o.NetworkType
 	}
 	return toSerialize, nil

@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,11 +19,11 @@ var _ MappedNullable = &VmDisksInner{}
 
 // VmDisksInner struct for VmDisksInner
 type VmDisksInner struct {
-	Id         interface{} `json:"id,omitempty"`
-	SizeGb     interface{} `json:"sizeGb,omitempty"`
-	TypeId     interface{} `json:"typeId,omitempty"`
-	Type       interface{} `json:"type,omitempty"`
-	IsBootable interface{} `json:"isBootable,omitempty"`
+	Id         *int32  `json:"id,omitempty"`
+	SizeGb     *int32  `json:"sizeGb,omitempty"`
+	TypeId     *int32  `json:"typeId,omitempty"`
+	Type       *string `json:"type,omitempty"`
+	IsBootable *bool   `json:"isBootable,omitempty"`
 }
 
 // NewVmDisksInner instantiates a new VmDisksInner object
@@ -43,23 +43,22 @@ func NewVmDisksInnerWithDefaults() *VmDisksInner {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDisksInner) GetId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *VmDisksInner) GetId() int32 {
+	if o == nil || IsNil(o.Id) {
+		var ret int32
 		return ret
 	}
-	return o.Id
+	return *o.Id
 }
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDisksInner) GetIdOk() (*interface{}, bool) {
+func (o *VmDisksInner) GetIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
 // HasId returns a boolean if a field has been set.
@@ -71,28 +70,27 @@ func (o *VmDisksInner) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given interface{} and assigns it to the Id field.
-func (o *VmDisksInner) SetId(v interface{}) {
-	o.Id = v
+// SetId gets a reference to the given int32 and assigns it to the Id field.
+func (o *VmDisksInner) SetId(v int32) {
+	o.Id = &v
 }
 
-// GetSizeGb returns the SizeGb field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDisksInner) GetSizeGb() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetSizeGb returns the SizeGb field value if set, zero value otherwise.
+func (o *VmDisksInner) GetSizeGb() int32 {
+	if o == nil || IsNil(o.SizeGb) {
+		var ret int32
 		return ret
 	}
-	return o.SizeGb
+	return *o.SizeGb
 }
 
 // GetSizeGbOk returns a tuple with the SizeGb field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDisksInner) GetSizeGbOk() (*interface{}, bool) {
+func (o *VmDisksInner) GetSizeGbOk() (*int32, bool) {
 	if o == nil || IsNil(o.SizeGb) {
 		return nil, false
 	}
-	return &o.SizeGb, true
+	return o.SizeGb, true
 }
 
 // HasSizeGb returns a boolean if a field has been set.
@@ -104,28 +102,27 @@ func (o *VmDisksInner) HasSizeGb() bool {
 	return false
 }
 
-// SetSizeGb gets a reference to the given interface{} and assigns it to the SizeGb field.
-func (o *VmDisksInner) SetSizeGb(v interface{}) {
-	o.SizeGb = v
+// SetSizeGb gets a reference to the given int32 and assigns it to the SizeGb field.
+func (o *VmDisksInner) SetSizeGb(v int32) {
+	o.SizeGb = &v
 }
 
-// GetTypeId returns the TypeId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDisksInner) GetTypeId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetTypeId returns the TypeId field value if set, zero value otherwise.
+func (o *VmDisksInner) GetTypeId() int32 {
+	if o == nil || IsNil(o.TypeId) {
+		var ret int32
 		return ret
 	}
-	return o.TypeId
+	return *o.TypeId
 }
 
 // GetTypeIdOk returns a tuple with the TypeId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDisksInner) GetTypeIdOk() (*interface{}, bool) {
+func (o *VmDisksInner) GetTypeIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.TypeId) {
 		return nil, false
 	}
-	return &o.TypeId, true
+	return o.TypeId, true
 }
 
 // HasTypeId returns a boolean if a field has been set.
@@ -137,28 +134,27 @@ func (o *VmDisksInner) HasTypeId() bool {
 	return false
 }
 
-// SetTypeId gets a reference to the given interface{} and assigns it to the TypeId field.
-func (o *VmDisksInner) SetTypeId(v interface{}) {
-	o.TypeId = v
+// SetTypeId gets a reference to the given int32 and assigns it to the TypeId field.
+func (o *VmDisksInner) SetTypeId(v int32) {
+	o.TypeId = &v
 }
 
-// GetType returns the Type field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDisksInner) GetType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetType returns the Type field value if set, zero value otherwise.
+func (o *VmDisksInner) GetType() string {
+	if o == nil || IsNil(o.Type) {
+		var ret string
 		return ret
 	}
-	return o.Type
+	return *o.Type
 }
 
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDisksInner) GetTypeOk() (*interface{}, bool) {
+func (o *VmDisksInner) GetTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
-	return &o.Type, true
+	return o.Type, true
 }
 
 // HasType returns a boolean if a field has been set.
@@ -170,28 +166,27 @@ func (o *VmDisksInner) HasType() bool {
 	return false
 }
 
-// SetType gets a reference to the given interface{} and assigns it to the Type field.
-func (o *VmDisksInner) SetType(v interface{}) {
-	o.Type = v
+// SetType gets a reference to the given string and assigns it to the Type field.
+func (o *VmDisksInner) SetType(v string) {
+	o.Type = &v
 }
 
-// GetIsBootable returns the IsBootable field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDisksInner) GetIsBootable() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetIsBootable returns the IsBootable field value if set, zero value otherwise.
+func (o *VmDisksInner) GetIsBootable() bool {
+	if o == nil || IsNil(o.IsBootable) {
+		var ret bool
 		return ret
 	}
-	return o.IsBootable
+	return *o.IsBootable
 }
 
 // GetIsBootableOk returns a tuple with the IsBootable field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDisksInner) GetIsBootableOk() (*interface{}, bool) {
+func (o *VmDisksInner) GetIsBootableOk() (*bool, bool) {
 	if o == nil || IsNil(o.IsBootable) {
 		return nil, false
 	}
-	return &o.IsBootable, true
+	return o.IsBootable, true
 }
 
 // HasIsBootable returns a boolean if a field has been set.
@@ -203,9 +198,9 @@ func (o *VmDisksInner) HasIsBootable() bool {
 	return false
 }
 
-// SetIsBootable gets a reference to the given interface{} and assigns it to the IsBootable field.
-func (o *VmDisksInner) SetIsBootable(v interface{}) {
-	o.IsBootable = v
+// SetIsBootable gets a reference to the given bool and assigns it to the IsBootable field.
+func (o *VmDisksInner) SetIsBootable(v bool) {
+	o.IsBootable = &v
 }
 
 func (o VmDisksInner) MarshalJSON() ([]byte, error) {
@@ -218,19 +213,19 @@ func (o VmDisksInner) MarshalJSON() ([]byte, error) {
 
 func (o VmDisksInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.SizeGb != nil {
+	if !IsNil(o.SizeGb) {
 		toSerialize["sizeGb"] = o.SizeGb
 	}
-	if o.TypeId != nil {
+	if !IsNil(o.TypeId) {
 		toSerialize["typeId"] = o.TypeId
 	}
-	if o.Type != nil {
+	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type
 	}
-	if o.IsBootable != nil {
+	if !IsNil(o.IsBootable) {
 		toSerialize["isBootable"] = o.IsBootable
 	}
 	return toSerialize, nil

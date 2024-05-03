@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,17 +19,17 @@ var _ MappedNullable = &GetVmConfigs200Response{}
 
 // GetVmConfigs200Response struct for GetVmConfigs200Response
 type GetVmConfigs200Response struct {
-	TotalPages       interface{}       `json:"totalPages,omitempty"`
-	TotalElements    interface{}       `json:"totalElements,omitempty"`
-	Size             interface{}       `json:"size,omitempty"`
+	TotalPages       *int32            `json:"totalPages,omitempty"`
+	TotalElements    *int64            `json:"totalElements,omitempty"`
+	Size             *int32            `json:"size,omitempty"`
 	Content          []VmConfiguration `json:"content,omitempty"`
-	Number           interface{}       `json:"number,omitempty"`
+	Number           *int32            `json:"number,omitempty"`
 	Sort             *SortObject       `json:"sort,omitempty"`
-	Last             interface{}       `json:"last,omitempty"`
-	First            interface{}       `json:"first,omitempty"`
-	NumberOfElements interface{}       `json:"numberOfElements,omitempty"`
+	Last             *bool             `json:"last,omitempty"`
+	First            *bool             `json:"first,omitempty"`
+	NumberOfElements *int32            `json:"numberOfElements,omitempty"`
 	Pageable         *PageableObject   `json:"pageable,omitempty"`
-	Empty            interface{}       `json:"empty,omitempty"`
+	Empty            *bool             `json:"empty,omitempty"`
 }
 
 // NewGetVmConfigs200Response instantiates a new GetVmConfigs200Response object
@@ -49,23 +49,22 @@ func NewGetVmConfigs200ResponseWithDefaults() *GetVmConfigs200Response {
 	return &this
 }
 
-// GetTotalPages returns the TotalPages field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetVmConfigs200Response) GetTotalPages() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetTotalPages returns the TotalPages field value if set, zero value otherwise.
+func (o *GetVmConfigs200Response) GetTotalPages() int32 {
+	if o == nil || IsNil(o.TotalPages) {
+		var ret int32
 		return ret
 	}
-	return o.TotalPages
+	return *o.TotalPages
 }
 
 // GetTotalPagesOk returns a tuple with the TotalPages field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetVmConfigs200Response) GetTotalPagesOk() (*interface{}, bool) {
+func (o *GetVmConfigs200Response) GetTotalPagesOk() (*int32, bool) {
 	if o == nil || IsNil(o.TotalPages) {
 		return nil, false
 	}
-	return &o.TotalPages, true
+	return o.TotalPages, true
 }
 
 // HasTotalPages returns a boolean if a field has been set.
@@ -77,28 +76,27 @@ func (o *GetVmConfigs200Response) HasTotalPages() bool {
 	return false
 }
 
-// SetTotalPages gets a reference to the given interface{} and assigns it to the TotalPages field.
-func (o *GetVmConfigs200Response) SetTotalPages(v interface{}) {
-	o.TotalPages = v
+// SetTotalPages gets a reference to the given int32 and assigns it to the TotalPages field.
+func (o *GetVmConfigs200Response) SetTotalPages(v int32) {
+	o.TotalPages = &v
 }
 
-// GetTotalElements returns the TotalElements field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetVmConfigs200Response) GetTotalElements() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetTotalElements returns the TotalElements field value if set, zero value otherwise.
+func (o *GetVmConfigs200Response) GetTotalElements() int64 {
+	if o == nil || IsNil(o.TotalElements) {
+		var ret int64
 		return ret
 	}
-	return o.TotalElements
+	return *o.TotalElements
 }
 
 // GetTotalElementsOk returns a tuple with the TotalElements field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetVmConfigs200Response) GetTotalElementsOk() (*interface{}, bool) {
+func (o *GetVmConfigs200Response) GetTotalElementsOk() (*int64, bool) {
 	if o == nil || IsNil(o.TotalElements) {
 		return nil, false
 	}
-	return &o.TotalElements, true
+	return o.TotalElements, true
 }
 
 // HasTotalElements returns a boolean if a field has been set.
@@ -110,28 +108,27 @@ func (o *GetVmConfigs200Response) HasTotalElements() bool {
 	return false
 }
 
-// SetTotalElements gets a reference to the given interface{} and assigns it to the TotalElements field.
-func (o *GetVmConfigs200Response) SetTotalElements(v interface{}) {
-	o.TotalElements = v
+// SetTotalElements gets a reference to the given int64 and assigns it to the TotalElements field.
+func (o *GetVmConfigs200Response) SetTotalElements(v int64) {
+	o.TotalElements = &v
 }
 
-// GetSize returns the Size field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetVmConfigs200Response) GetSize() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetSize returns the Size field value if set, zero value otherwise.
+func (o *GetVmConfigs200Response) GetSize() int32 {
+	if o == nil || IsNil(o.Size) {
+		var ret int32
 		return ret
 	}
-	return o.Size
+	return *o.Size
 }
 
 // GetSizeOk returns a tuple with the Size field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetVmConfigs200Response) GetSizeOk() (*interface{}, bool) {
+func (o *GetVmConfigs200Response) GetSizeOk() (*int32, bool) {
 	if o == nil || IsNil(o.Size) {
 		return nil, false
 	}
-	return &o.Size, true
+	return o.Size, true
 }
 
 // HasSize returns a boolean if a field has been set.
@@ -143,9 +140,9 @@ func (o *GetVmConfigs200Response) HasSize() bool {
 	return false
 }
 
-// SetSize gets a reference to the given interface{} and assigns it to the Size field.
-func (o *GetVmConfigs200Response) SetSize(v interface{}) {
-	o.Size = v
+// SetSize gets a reference to the given int32 and assigns it to the Size field.
+func (o *GetVmConfigs200Response) SetSize(v int32) {
+	o.Size = &v
 }
 
 // GetContent returns the Content field value if set, zero value otherwise.
@@ -180,23 +177,22 @@ func (o *GetVmConfigs200Response) SetContent(v []VmConfiguration) {
 	o.Content = v
 }
 
-// GetNumber returns the Number field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetVmConfigs200Response) GetNumber() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetNumber returns the Number field value if set, zero value otherwise.
+func (o *GetVmConfigs200Response) GetNumber() int32 {
+	if o == nil || IsNil(o.Number) {
+		var ret int32
 		return ret
 	}
-	return o.Number
+	return *o.Number
 }
 
 // GetNumberOk returns a tuple with the Number field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetVmConfigs200Response) GetNumberOk() (*interface{}, bool) {
+func (o *GetVmConfigs200Response) GetNumberOk() (*int32, bool) {
 	if o == nil || IsNil(o.Number) {
 		return nil, false
 	}
-	return &o.Number, true
+	return o.Number, true
 }
 
 // HasNumber returns a boolean if a field has been set.
@@ -208,9 +204,9 @@ func (o *GetVmConfigs200Response) HasNumber() bool {
 	return false
 }
 
-// SetNumber gets a reference to the given interface{} and assigns it to the Number field.
-func (o *GetVmConfigs200Response) SetNumber(v interface{}) {
-	o.Number = v
+// SetNumber gets a reference to the given int32 and assigns it to the Number field.
+func (o *GetVmConfigs200Response) SetNumber(v int32) {
+	o.Number = &v
 }
 
 // GetSort returns the Sort field value if set, zero value otherwise.
@@ -245,23 +241,22 @@ func (o *GetVmConfigs200Response) SetSort(v SortObject) {
 	o.Sort = &v
 }
 
-// GetLast returns the Last field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetVmConfigs200Response) GetLast() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetLast returns the Last field value if set, zero value otherwise.
+func (o *GetVmConfigs200Response) GetLast() bool {
+	if o == nil || IsNil(o.Last) {
+		var ret bool
 		return ret
 	}
-	return o.Last
+	return *o.Last
 }
 
 // GetLastOk returns a tuple with the Last field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetVmConfigs200Response) GetLastOk() (*interface{}, bool) {
+func (o *GetVmConfigs200Response) GetLastOk() (*bool, bool) {
 	if o == nil || IsNil(o.Last) {
 		return nil, false
 	}
-	return &o.Last, true
+	return o.Last, true
 }
 
 // HasLast returns a boolean if a field has been set.
@@ -273,28 +268,27 @@ func (o *GetVmConfigs200Response) HasLast() bool {
 	return false
 }
 
-// SetLast gets a reference to the given interface{} and assigns it to the Last field.
-func (o *GetVmConfigs200Response) SetLast(v interface{}) {
-	o.Last = v
+// SetLast gets a reference to the given bool and assigns it to the Last field.
+func (o *GetVmConfigs200Response) SetLast(v bool) {
+	o.Last = &v
 }
 
-// GetFirst returns the First field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetVmConfigs200Response) GetFirst() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetFirst returns the First field value if set, zero value otherwise.
+func (o *GetVmConfigs200Response) GetFirst() bool {
+	if o == nil || IsNil(o.First) {
+		var ret bool
 		return ret
 	}
-	return o.First
+	return *o.First
 }
 
 // GetFirstOk returns a tuple with the First field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetVmConfigs200Response) GetFirstOk() (*interface{}, bool) {
+func (o *GetVmConfigs200Response) GetFirstOk() (*bool, bool) {
 	if o == nil || IsNil(o.First) {
 		return nil, false
 	}
-	return &o.First, true
+	return o.First, true
 }
 
 // HasFirst returns a boolean if a field has been set.
@@ -306,28 +300,27 @@ func (o *GetVmConfigs200Response) HasFirst() bool {
 	return false
 }
 
-// SetFirst gets a reference to the given interface{} and assigns it to the First field.
-func (o *GetVmConfigs200Response) SetFirst(v interface{}) {
-	o.First = v
+// SetFirst gets a reference to the given bool and assigns it to the First field.
+func (o *GetVmConfigs200Response) SetFirst(v bool) {
+	o.First = &v
 }
 
-// GetNumberOfElements returns the NumberOfElements field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetVmConfigs200Response) GetNumberOfElements() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetNumberOfElements returns the NumberOfElements field value if set, zero value otherwise.
+func (o *GetVmConfigs200Response) GetNumberOfElements() int32 {
+	if o == nil || IsNil(o.NumberOfElements) {
+		var ret int32
 		return ret
 	}
-	return o.NumberOfElements
+	return *o.NumberOfElements
 }
 
 // GetNumberOfElementsOk returns a tuple with the NumberOfElements field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetVmConfigs200Response) GetNumberOfElementsOk() (*interface{}, bool) {
+func (o *GetVmConfigs200Response) GetNumberOfElementsOk() (*int32, bool) {
 	if o == nil || IsNil(o.NumberOfElements) {
 		return nil, false
 	}
-	return &o.NumberOfElements, true
+	return o.NumberOfElements, true
 }
 
 // HasNumberOfElements returns a boolean if a field has been set.
@@ -339,9 +332,9 @@ func (o *GetVmConfigs200Response) HasNumberOfElements() bool {
 	return false
 }
 
-// SetNumberOfElements gets a reference to the given interface{} and assigns it to the NumberOfElements field.
-func (o *GetVmConfigs200Response) SetNumberOfElements(v interface{}) {
-	o.NumberOfElements = v
+// SetNumberOfElements gets a reference to the given int32 and assigns it to the NumberOfElements field.
+func (o *GetVmConfigs200Response) SetNumberOfElements(v int32) {
+	o.NumberOfElements = &v
 }
 
 // GetPageable returns the Pageable field value if set, zero value otherwise.
@@ -376,23 +369,22 @@ func (o *GetVmConfigs200Response) SetPageable(v PageableObject) {
 	o.Pageable = &v
 }
 
-// GetEmpty returns the Empty field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetVmConfigs200Response) GetEmpty() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetEmpty returns the Empty field value if set, zero value otherwise.
+func (o *GetVmConfigs200Response) GetEmpty() bool {
+	if o == nil || IsNil(o.Empty) {
+		var ret bool
 		return ret
 	}
-	return o.Empty
+	return *o.Empty
 }
 
 // GetEmptyOk returns a tuple with the Empty field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetVmConfigs200Response) GetEmptyOk() (*interface{}, bool) {
+func (o *GetVmConfigs200Response) GetEmptyOk() (*bool, bool) {
 	if o == nil || IsNil(o.Empty) {
 		return nil, false
 	}
-	return &o.Empty, true
+	return o.Empty, true
 }
 
 // HasEmpty returns a boolean if a field has been set.
@@ -404,9 +396,9 @@ func (o *GetVmConfigs200Response) HasEmpty() bool {
 	return false
 }
 
-// SetEmpty gets a reference to the given interface{} and assigns it to the Empty field.
-func (o *GetVmConfigs200Response) SetEmpty(v interface{}) {
-	o.Empty = v
+// SetEmpty gets a reference to the given bool and assigns it to the Empty field.
+func (o *GetVmConfigs200Response) SetEmpty(v bool) {
+	o.Empty = &v
 }
 
 func (o GetVmConfigs200Response) MarshalJSON() ([]byte, error) {
@@ -419,37 +411,37 @@ func (o GetVmConfigs200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetVmConfigs200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.TotalPages != nil {
+	if !IsNil(o.TotalPages) {
 		toSerialize["totalPages"] = o.TotalPages
 	}
-	if o.TotalElements != nil {
+	if !IsNil(o.TotalElements) {
 		toSerialize["totalElements"] = o.TotalElements
 	}
-	if o.Size != nil {
+	if !IsNil(o.Size) {
 		toSerialize["size"] = o.Size
 	}
 	if !IsNil(o.Content) {
 		toSerialize["content"] = o.Content
 	}
-	if o.Number != nil {
+	if !IsNil(o.Number) {
 		toSerialize["number"] = o.Number
 	}
 	if !IsNil(o.Sort) {
 		toSerialize["sort"] = o.Sort
 	}
-	if o.Last != nil {
+	if !IsNil(o.Last) {
 		toSerialize["last"] = o.Last
 	}
-	if o.First != nil {
+	if !IsNil(o.First) {
 		toSerialize["first"] = o.First
 	}
-	if o.NumberOfElements != nil {
+	if !IsNil(o.NumberOfElements) {
 		toSerialize["numberOfElements"] = o.NumberOfElements
 	}
 	if !IsNil(o.Pageable) {
 		toSerialize["pageable"] = o.Pageable
 	}
-	if o.Empty != nil {
+	if !IsNil(o.Empty) {
 		toSerialize["empty"] = o.Empty
 	}
 	return toSerialize, nil

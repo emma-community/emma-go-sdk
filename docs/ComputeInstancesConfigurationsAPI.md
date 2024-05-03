@@ -24,29 +24,29 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
-	providerId := TODO // interface{} | Provider ID (optional)
+	providerId := int32(5) // int32 | Provider ID (optional)
 	locationId := int32(6) // int32 | Location ID (optional)
-	dataCenterId := TODO // interface{} | Data center ID (optional)
-	cloudNetworkType := TODO // interface{} | Cloud network type (optional)
-	vCpuType := TODO // interface{} | Compute instance vCPU type (optional)
-	vCpu := TODO // interface{} | Compute instance vCPU (optional)
-	vCpuMin := TODO // interface{} | Compute instance vCPU minimum (optional)
-	vCpuMax := TODO // interface{} | Compute instance vCPU maximum (optional)
-	ramGb := TODO // interface{} | Compute instance RAM (GB) (optional)
-	ramGbMin := TODO // interface{} | Compute instance RAM (GB) minimum (optional)
-	ramGbMax := TODO // interface{} | Compute instance RAM (GB) maximum (optional)
-	volumeGb := TODO // interface{} | Compute instance volume (GB) (optional)
-	volumeGbMin := TODO // interface{} | Compute instance volume minimum (GB) (optional)
-	volumeGbMax := TODO // interface{} | Compute instance volume maximun (GB) (optional)
-	volumeType := TODO // interface{} | Compute instance volume type (optional)
-	priceMin := TODO // interface{} | Instance price minimum (optional)
-	priceMax := TODO // interface{} | Instance price maximum (optional)
-	page := TODO // interface{} | Page number (optional)
-	size := TODO // interface{} | Query size (optional)
+	dataCenterId := "aws-us-west-1" // string | Data center ID (optional)
+	cloudNetworkType := "multi-cloud" // string | Cloud network type (optional)
+	vCpuType := "Standard" // string | Compute instance vCPU type (optional)
+	vCpu := int32(4) // int32 | Compute instance vCPU (optional)
+	vCpuMin := int32(1) // int32 | Compute instance vCPU minimum (optional)
+	vCpuMax := int32(8) // int32 | Compute instance vCPU maximum (optional)
+	ramGb := int32(16) // int32 | Compute instance RAM (GB) (optional)
+	ramGbMin := int32(8) // int32 | Compute instance RAM (GB) minimum (optional)
+	ramGbMax := int32(32) // int32 | Compute instance RAM (GB) maximum (optional)
+	volumeGb := int32(500) // int32 | Compute instance volume (GB) (optional)
+	volumeGbMin := int32(250) // int32 | Compute instance volume minimum (GB) (optional)
+	volumeGbMax := int32(1000) // int32 | Compute instance volume maximun (GB) (optional)
+	volumeType := "ssd" // string | Compute instance volume type (optional)
+	priceMin := float32(8.14) // float32 | Instance price minimum (optional)
+	priceMax := float32(8.14) // float32 | Instance price maximum (optional)
+	page := int32(0) // int32 | Page number (optional)
+	size := int32(100) // int32 | Query size (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -71,25 +71,25 @@ Other parameters are passed through a pointer to a apiGetSpotConfigsRequest stru
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **providerId** | [**interface{}**](interface{}.md) | Provider ID | 
+ **providerId** | **int32** | Provider ID | 
  **locationId** | **int32** | Location ID | 
- **dataCenterId** | [**interface{}**](interface{}.md) | Data center ID | 
- **cloudNetworkType** | [**interface{}**](interface{}.md) | Cloud network type | 
- **vCpuType** | [**interface{}**](interface{}.md) | Compute instance vCPU type | 
- **vCpu** | [**interface{}**](interface{}.md) | Compute instance vCPU | 
- **vCpuMin** | [**interface{}**](interface{}.md) | Compute instance vCPU minimum | 
- **vCpuMax** | [**interface{}**](interface{}.md) | Compute instance vCPU maximum | 
- **ramGb** | [**interface{}**](interface{}.md) | Compute instance RAM (GB) | 
- **ramGbMin** | [**interface{}**](interface{}.md) | Compute instance RAM (GB) minimum | 
- **ramGbMax** | [**interface{}**](interface{}.md) | Compute instance RAM (GB) maximum | 
- **volumeGb** | [**interface{}**](interface{}.md) | Compute instance volume (GB) | 
- **volumeGbMin** | [**interface{}**](interface{}.md) | Compute instance volume minimum (GB) | 
- **volumeGbMax** | [**interface{}**](interface{}.md) | Compute instance volume maximun (GB) | 
- **volumeType** | [**interface{}**](interface{}.md) | Compute instance volume type | 
- **priceMin** | [**interface{}**](interface{}.md) | Instance price minimum | 
- **priceMax** | [**interface{}**](interface{}.md) | Instance price maximum | 
- **page** | [**interface{}**](interface{}.md) | Page number | 
- **size** | [**interface{}**](interface{}.md) | Query size | 
+ **dataCenterId** | **string** | Data center ID | 
+ **cloudNetworkType** | **string** | Cloud network type | 
+ **vCpuType** | **string** | Compute instance vCPU type | 
+ **vCpu** | **int32** | Compute instance vCPU | 
+ **vCpuMin** | **int32** | Compute instance vCPU minimum | 
+ **vCpuMax** | **int32** | Compute instance vCPU maximum | 
+ **ramGb** | **int32** | Compute instance RAM (GB) | 
+ **ramGbMin** | **int32** | Compute instance RAM (GB) minimum | 
+ **ramGbMax** | **int32** | Compute instance RAM (GB) maximum | 
+ **volumeGb** | **int32** | Compute instance volume (GB) | 
+ **volumeGbMin** | **int32** | Compute instance volume minimum (GB) | 
+ **volumeGbMax** | **int32** | Compute instance volume maximun (GB) | 
+ **volumeType** | **string** | Compute instance volume type | 
+ **priceMin** | **float32** | Instance price minimum | 
+ **priceMax** | **float32** | Instance price maximum | 
+ **page** | **int32** | Page number | 
+ **size** | **int32** | Query size | 
 
 ### Return type
 
@@ -124,29 +124,29 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
-	providerId := TODO // interface{} | Provider ID (optional)
+	providerId := int32(5) // int32 | Provider ID (optional)
 	locationId := int32(6) // int32 | Location ID (optional)
-	dataCenterId := TODO // interface{} | Data center ID (optional)
-	cloudNetworkType := TODO // interface{} | Cloud network type (optional)
-	vCpuType := TODO // interface{} | Compute instance vCPU type (optional)
-	vCpu := TODO // interface{} | Compute instance vCPU (optional)
-	vCpuMin := TODO // interface{} | Compute instance vCPU minimum (optional)
-	vCpuMax := TODO // interface{} | Compute instance vCPU maximum (optional)
-	ramGb := TODO // interface{} | Compute instance RAM (GB) (optional)
-	ramGbMin := TODO // interface{} | Compute instance RAM (GB) minimum (optional)
-	ramGbMax := TODO // interface{} | Compute instance RAM (GB) maximum (optional)
-	volumeGb := TODO // interface{} | Compute instance volume (GB) (optional)
-	volumeGbMin := TODO // interface{} | Compute instance volume minimum (GB) (optional)
-	volumeGbMax := TODO // interface{} | Compute instance volume maximun (GB) (optional)
-	volumeType := TODO // interface{} | Compute instance volume type (optional)
-	priceMin := TODO // interface{} | Instance price minimum (optional)
-	priceMax := TODO // interface{} | Instance price maximum (optional)
-	page := TODO // interface{} | Page number (optional)
-	size := TODO // interface{} | Query size (optional)
+	dataCenterId := "aws-us-west-1" // string | Data center ID (optional)
+	cloudNetworkType := "multi-cloud" // string | Cloud network type (optional)
+	vCpuType := "Standard" // string | Compute instance vCPU type (optional)
+	vCpu := int32(4) // int32 | Compute instance vCPU (optional)
+	vCpuMin := int32(1) // int32 | Compute instance vCPU minimum (optional)
+	vCpuMax := int32(8) // int32 | Compute instance vCPU maximum (optional)
+	ramGb := int32(16) // int32 | Compute instance RAM (GB) (optional)
+	ramGbMin := int32(8) // int32 | Compute instance RAM (GB) minimum (optional)
+	ramGbMax := int32(32) // int32 | Compute instance RAM (GB) maximum (optional)
+	volumeGb := int32(500) // int32 | Compute instance volume (GB) (optional)
+	volumeGbMin := int32(250) // int32 | Compute instance volume minimum (GB) (optional)
+	volumeGbMax := int32(1000) // int32 | Compute instance volume maximun (GB) (optional)
+	volumeType := "ssd" // string | Compute instance volume type (optional)
+	priceMin := float32(8.14) // float32 | Instance price minimum (optional)
+	priceMax := float32(8.14) // float32 | Instance price maximum (optional)
+	page := int32(0) // int32 | Page number (optional)
+	size := int32(100) // int32 | Query size (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -171,25 +171,25 @@ Other parameters are passed through a pointer to a apiGetVmConfigsRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **providerId** | [**interface{}**](interface{}.md) | Provider ID | 
+ **providerId** | **int32** | Provider ID | 
  **locationId** | **int32** | Location ID | 
- **dataCenterId** | [**interface{}**](interface{}.md) | Data center ID | 
- **cloudNetworkType** | [**interface{}**](interface{}.md) | Cloud network type | 
- **vCpuType** | [**interface{}**](interface{}.md) | Compute instance vCPU type | 
- **vCpu** | [**interface{}**](interface{}.md) | Compute instance vCPU | 
- **vCpuMin** | [**interface{}**](interface{}.md) | Compute instance vCPU minimum | 
- **vCpuMax** | [**interface{}**](interface{}.md) | Compute instance vCPU maximum | 
- **ramGb** | [**interface{}**](interface{}.md) | Compute instance RAM (GB) | 
- **ramGbMin** | [**interface{}**](interface{}.md) | Compute instance RAM (GB) minimum | 
- **ramGbMax** | [**interface{}**](interface{}.md) | Compute instance RAM (GB) maximum | 
- **volumeGb** | [**interface{}**](interface{}.md) | Compute instance volume (GB) | 
- **volumeGbMin** | [**interface{}**](interface{}.md) | Compute instance volume minimum (GB) | 
- **volumeGbMax** | [**interface{}**](interface{}.md) | Compute instance volume maximun (GB) | 
- **volumeType** | [**interface{}**](interface{}.md) | Compute instance volume type | 
- **priceMin** | [**interface{}**](interface{}.md) | Instance price minimum | 
- **priceMax** | [**interface{}**](interface{}.md) | Instance price maximum | 
- **page** | [**interface{}**](interface{}.md) | Page number | 
- **size** | [**interface{}**](interface{}.md) | Query size | 
+ **dataCenterId** | **string** | Data center ID | 
+ **cloudNetworkType** | **string** | Cloud network type | 
+ **vCpuType** | **string** | Compute instance vCPU type | 
+ **vCpu** | **int32** | Compute instance vCPU | 
+ **vCpuMin** | **int32** | Compute instance vCPU minimum | 
+ **vCpuMax** | **int32** | Compute instance vCPU maximum | 
+ **ramGb** | **int32** | Compute instance RAM (GB) | 
+ **ramGbMin** | **int32** | Compute instance RAM (GB) minimum | 
+ **ramGbMax** | **int32** | Compute instance RAM (GB) maximum | 
+ **volumeGb** | **int32** | Compute instance volume (GB) | 
+ **volumeGbMin** | **int32** | Compute instance volume minimum (GB) | 
+ **volumeGbMax** | **int32** | Compute instance volume maximun (GB) | 
+ **volumeType** | **string** | Compute instance volume type | 
+ **priceMin** | **float32** | Instance price minimum | 
+ **priceMax** | **float32** | Instance price maximum | 
+ **page** | **int32** | Page number | 
+ **size** | **int32** | Query size | 
 
 ### Return type
 

@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Code** | **interface{}** |  | 
-**Message** | **interface{}** |  | 
+**Code** | **string** |  | 
+**Message** | **string** |  | 
 
 ## Methods
 
 ### NewUnauthorizedError
 
-`func NewUnauthorizedError(code interface{}, message interface{}, ) *UnauthorizedError`
+`func NewUnauthorizedError(code string, message string, ) *UnauthorizedError`
 
 NewUnauthorizedError instantiates a new UnauthorizedError object
 This constructor will assign default values to properties that have it defined,
@@ -28,64 +28,44 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetCode
 
-`func (o *UnauthorizedError) GetCode() interface{}`
+`func (o *UnauthorizedError) GetCode() string`
 
 GetCode returns the Code field if non-nil, zero value otherwise.
 
 ### GetCodeOk
 
-`func (o *UnauthorizedError) GetCodeOk() (*interface{}, bool)`
+`func (o *UnauthorizedError) GetCodeOk() (*string, bool)`
 
 GetCodeOk returns a tuple with the Code field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCode
 
-`func (o *UnauthorizedError) SetCode(v interface{})`
+`func (o *UnauthorizedError) SetCode(v string)`
 
 SetCode sets Code field to given value.
 
 
-### SetCodeNil
-
-`func (o *UnauthorizedError) SetCodeNil(b bool)`
-
- SetCodeNil sets the value for Code to be an explicit nil
-
-### UnsetCode
-`func (o *UnauthorizedError) UnsetCode()`
-
-UnsetCode ensures that no value is present for Code, not even an explicit nil
 ### GetMessage
 
-`func (o *UnauthorizedError) GetMessage() interface{}`
+`func (o *UnauthorizedError) GetMessage() string`
 
 GetMessage returns the Message field if non-nil, zero value otherwise.
 
 ### GetMessageOk
 
-`func (o *UnauthorizedError) GetMessageOk() (*interface{}, bool)`
+`func (o *UnauthorizedError) GetMessageOk() (*string, bool)`
 
 GetMessageOk returns a tuple with the Message field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMessage
 
-`func (o *UnauthorizedError) SetMessage(v interface{})`
+`func (o *UnauthorizedError) SetMessage(v string)`
 
 SetMessage sets Message field to given value.
 
 
-### SetMessageNil
-
-`func (o *UnauthorizedError) SetMessageNil(b bool)`
-
- SetMessageNil sets the value for Message to be an explicit nil
-
-### UnsetMessage
-`func (o *UnauthorizedError) UnsetMessage()`
-
-UnsetMessage ensures that no value is present for Message, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

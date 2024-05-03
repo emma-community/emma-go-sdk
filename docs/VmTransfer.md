@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Action** | **interface{}** | Action with a virtual machine | 
-**DataCenterId** | **interface{}** | Provider&#39;s data center ID | 
-**IsKeepOriginalInstance** | Pointer to **interface{}** | Keep original instance | [optional] [default to true]
+**Action** | **string** | Action with a virtual machine | 
+**DataCenterId** | **string** | Provider&#39;s data center ID | 
+**IsKeepOriginalInstance** | Pointer to **bool** | Keep original instance | [optional] [default to true]
 
 ## Methods
 
 ### NewVmTransfer
 
-`func NewVmTransfer(action interface{}, dataCenterId interface{}, ) *VmTransfer`
+`func NewVmTransfer(action string, dataCenterId string, ) *VmTransfer`
 
 NewVmTransfer instantiates a new VmTransfer object
 This constructor will assign default values to properties that have it defined,
@@ -29,80 +29,60 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetAction
 
-`func (o *VmTransfer) GetAction() interface{}`
+`func (o *VmTransfer) GetAction() string`
 
 GetAction returns the Action field if non-nil, zero value otherwise.
 
 ### GetActionOk
 
-`func (o *VmTransfer) GetActionOk() (*interface{}, bool)`
+`func (o *VmTransfer) GetActionOk() (*string, bool)`
 
 GetActionOk returns a tuple with the Action field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAction
 
-`func (o *VmTransfer) SetAction(v interface{})`
+`func (o *VmTransfer) SetAction(v string)`
 
 SetAction sets Action field to given value.
 
 
-### SetActionNil
-
-`func (o *VmTransfer) SetActionNil(b bool)`
-
- SetActionNil sets the value for Action to be an explicit nil
-
-### UnsetAction
-`func (o *VmTransfer) UnsetAction()`
-
-UnsetAction ensures that no value is present for Action, not even an explicit nil
 ### GetDataCenterId
 
-`func (o *VmTransfer) GetDataCenterId() interface{}`
+`func (o *VmTransfer) GetDataCenterId() string`
 
 GetDataCenterId returns the DataCenterId field if non-nil, zero value otherwise.
 
 ### GetDataCenterIdOk
 
-`func (o *VmTransfer) GetDataCenterIdOk() (*interface{}, bool)`
+`func (o *VmTransfer) GetDataCenterIdOk() (*string, bool)`
 
 GetDataCenterIdOk returns a tuple with the DataCenterId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDataCenterId
 
-`func (o *VmTransfer) SetDataCenterId(v interface{})`
+`func (o *VmTransfer) SetDataCenterId(v string)`
 
 SetDataCenterId sets DataCenterId field to given value.
 
 
-### SetDataCenterIdNil
-
-`func (o *VmTransfer) SetDataCenterIdNil(b bool)`
-
- SetDataCenterIdNil sets the value for DataCenterId to be an explicit nil
-
-### UnsetDataCenterId
-`func (o *VmTransfer) UnsetDataCenterId()`
-
-UnsetDataCenterId ensures that no value is present for DataCenterId, not even an explicit nil
 ### GetIsKeepOriginalInstance
 
-`func (o *VmTransfer) GetIsKeepOriginalInstance() interface{}`
+`func (o *VmTransfer) GetIsKeepOriginalInstance() bool`
 
 GetIsKeepOriginalInstance returns the IsKeepOriginalInstance field if non-nil, zero value otherwise.
 
 ### GetIsKeepOriginalInstanceOk
 
-`func (o *VmTransfer) GetIsKeepOriginalInstanceOk() (*interface{}, bool)`
+`func (o *VmTransfer) GetIsKeepOriginalInstanceOk() (*bool, bool)`
 
 GetIsKeepOriginalInstanceOk returns a tuple with the IsKeepOriginalInstance field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsKeepOriginalInstance
 
-`func (o *VmTransfer) SetIsKeepOriginalInstance(v interface{})`
+`func (o *VmTransfer) SetIsKeepOriginalInstance(v bool)`
 
 SetIsKeepOriginalInstance sets IsKeepOriginalInstance field to given value.
 
@@ -112,16 +92,6 @@ SetIsKeepOriginalInstance sets IsKeepOriginalInstance field to given value.
 
 HasIsKeepOriginalInstance returns a boolean if a field has been set.
 
-### SetIsKeepOriginalInstanceNil
-
-`func (o *VmTransfer) SetIsKeepOriginalInstanceNil(b bool)`
-
- SetIsKeepOriginalInstanceNil sets the value for IsKeepOriginalInstance to be an explicit nil
-
-### UnsetIsKeepOriginalInstance
-`func (o *VmTransfer) UnsetIsKeepOriginalInstance()`
-
-UnsetIsKeepOriginalInstance ensures that no value is present for IsKeepOriginalInstance, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

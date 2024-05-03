@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -22,9 +22,9 @@ var _ MappedNullable = &VmClone{}
 // VmClone struct for VmClone
 type VmClone struct {
 	// Action with a virtual machine
-	Action interface{} `json:"action"`
+	Action string `json:"action"`
 	// Virtual machine name
-	Name interface{} `json:"name"`
+	Name string `json:"name"`
 }
 
 type _VmClone VmClone
@@ -33,7 +33,7 @@ type _VmClone VmClone
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVmClone(action interface{}, name interface{}) *VmClone {
+func NewVmClone(action string, name string) *VmClone {
 	this := VmClone{}
 	this.Action = action
 	this.Name = name
@@ -49,10 +49,9 @@ func NewVmCloneWithDefaults() *VmClone {
 }
 
 // GetAction returns the Action field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmClone) GetAction() interface{} {
+func (o *VmClone) GetAction() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -61,24 +60,22 @@ func (o *VmClone) GetAction() interface{} {
 
 // GetActionOk returns a tuple with the Action field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmClone) GetActionOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Action) {
+func (o *VmClone) GetActionOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Action, true
 }
 
 // SetAction sets field value
-func (o *VmClone) SetAction(v interface{}) {
+func (o *VmClone) SetAction(v string) {
 	o.Action = v
 }
 
 // GetName returns the Name field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *VmClone) GetName() interface{} {
+func (o *VmClone) GetName() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -87,16 +84,15 @@ func (o *VmClone) GetName() interface{} {
 
 // GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmClone) GetNameOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Name) {
+func (o *VmClone) GetNameOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Name, true
 }
 
 // SetName sets field value
-func (o *VmClone) SetName(v interface{}) {
+func (o *VmClone) SetName(v string) {
 	o.Name = v
 }
 
@@ -110,12 +106,8 @@ func (o VmClone) MarshalJSON() ([]byte, error) {
 
 func (o VmClone) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.Name != nil {
-		toSerialize["name"] = o.Name
-	}
+	toSerialize["action"] = o.Action
+	toSerialize["name"] = o.Name
 	return toSerialize, nil
 }
 

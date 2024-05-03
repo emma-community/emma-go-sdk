@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -21,8 +21,8 @@ var _ MappedNullable = &ForbiddenError{}
 
 // ForbiddenError struct for ForbiddenError
 type ForbiddenError struct {
-	Code    interface{} `json:"code"`
-	Message interface{} `json:"message"`
+	Code    string `json:"code"`
+	Message string `json:"message"`
 }
 
 type _ForbiddenError ForbiddenError
@@ -31,7 +31,7 @@ type _ForbiddenError ForbiddenError
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewForbiddenError(code interface{}, message interface{}) *ForbiddenError {
+func NewForbiddenError(code string, message string) *ForbiddenError {
 	this := ForbiddenError{}
 	this.Code = code
 	this.Message = message
@@ -47,10 +47,9 @@ func NewForbiddenErrorWithDefaults() *ForbiddenError {
 }
 
 // GetCode returns the Code field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *ForbiddenError) GetCode() interface{} {
+func (o *ForbiddenError) GetCode() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -59,24 +58,22 @@ func (o *ForbiddenError) GetCode() interface{} {
 
 // GetCodeOk returns a tuple with the Code field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ForbiddenError) GetCodeOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Code) {
+func (o *ForbiddenError) GetCodeOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Code, true
 }
 
 // SetCode sets field value
-func (o *ForbiddenError) SetCode(v interface{}) {
+func (o *ForbiddenError) SetCode(v string) {
 	o.Code = v
 }
 
 // GetMessage returns the Message field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *ForbiddenError) GetMessage() interface{} {
+func (o *ForbiddenError) GetMessage() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -85,16 +82,15 @@ func (o *ForbiddenError) GetMessage() interface{} {
 
 // GetMessageOk returns a tuple with the Message field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ForbiddenError) GetMessageOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.Message) {
+func (o *ForbiddenError) GetMessageOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Message, true
 }
 
 // SetMessage sets field value
-func (o *ForbiddenError) SetMessage(v interface{}) {
+func (o *ForbiddenError) SetMessage(v string) {
 	o.Message = v
 }
 
@@ -108,12 +104,8 @@ func (o ForbiddenError) MarshalJSON() ([]byte, error) {
 
 func (o ForbiddenError) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Code != nil {
-		toSerialize["code"] = o.Code
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
+	toSerialize["code"] = o.Code
+	toSerialize["message"] = o.Message
 	return toSerialize, nil
 }
 

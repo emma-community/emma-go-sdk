@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,28 +19,28 @@ var _ MappedNullable = &Vm{}
 
 // Vm struct for Vm
 type Vm struct {
-	Id             interface{}       `json:"id,omitempty"`
-	CreatedAt      interface{}       `json:"createdAt,omitempty"`
-	CreatedByName  interface{}       `json:"createdByName,omitempty"`
-	CreatedById    interface{}       `json:"createdById,omitempty"`
-	ModifiedAt     interface{}       `json:"modifiedAt,omitempty"`
-	ModifiedByName interface{}       `json:"modifiedByName,omitempty"`
-	ModifiedById   interface{}       `json:"modifiedById,omitempty"`
-	Name           interface{}       `json:"name,omitempty"`
-	ProjectId      interface{}       `json:"projectId,omitempty"`
-	Status         interface{}       `json:"status,omitempty"`
-	Provider       *VmProvider       `json:"provider,omitempty"`
-	Location       *VmLocation       `json:"location,omitempty"`
-	DataCenter     *VmDataCenter     `json:"dataCenter,omitempty"`
-	Os             *VmOs             `json:"os,omitempty"`
-	Cpu            interface{}       `json:"cpu,omitempty"`
-	RamGb          interface{}       `json:"ramGb,omitempty"`
-	Disks          []VmDisksInner    `json:"disks,omitempty"`
-	Networks       []VmNetworksInner `json:"networks,omitempty"`
-	SecurityGroup  *VmSecurityGroup  `json:"securityGroup,omitempty"`
-	SshKeyId       interface{}       `json:"sshKeyId,omitempty"`
-	UserName       interface{}       `json:"userName,omitempty"`
-	Cost           *VmCost           `json:"cost,omitempty"`
+	Id             *int32                               `json:"id,omitempty"`
+	CreatedAt      *string                              `json:"createdAt,omitempty"`
+	CreatedByName  *string                              `json:"createdByName,omitempty"`
+	CreatedById    *int32                               `json:"createdById,omitempty"`
+	ModifiedAt     *string                              `json:"modifiedAt,omitempty"`
+	ModifiedByName *string                              `json:"modifiedByName,omitempty"`
+	ModifiedById   *int32                               `json:"modifiedById,omitempty"`
+	Name           *string                              `json:"name,omitempty"`
+	ProjectId      *int32                               `json:"projectId,omitempty"`
+	Status         *string                              `json:"status,omitempty"`
+	Provider       *SecurityGroupInstanceProvider       `json:"provider,omitempty"`
+	Location       *SecurityGroupInstanceLocation       `json:"location,omitempty"`
+	DataCenter     *VmDataCenter                        `json:"dataCenter,omitempty"`
+	Os             *SecurityGroupInstanceOs             `json:"os,omitempty"`
+	Cpu            *int32                               `json:"cpu,omitempty"`
+	RamGb          *int32                               `json:"ramGb,omitempty"`
+	Disks          []SecurityGroupInstanceDisksInner    `json:"disks,omitempty"`
+	Networks       []SecurityGroupInstanceNetworksInner `json:"networks,omitempty"`
+	SecurityGroup  *SecurityGroupInstanceSecurityGroup  `json:"securityGroup,omitempty"`
+	SshKeyId       *int32                               `json:"sshKeyId,omitempty"`
+	UserName       *string                              `json:"userName,omitempty"`
+	Cost           *SecurityGroupInstanceCost           `json:"cost,omitempty"`
 }
 
 // NewVm instantiates a new Vm object
@@ -60,23 +60,22 @@ func NewVmWithDefaults() *Vm {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *Vm) GetId() int32 {
+	if o == nil || IsNil(o.Id) {
+		var ret int32
 		return ret
 	}
-	return o.Id
+	return *o.Id
 }
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetIdOk() (*interface{}, bool) {
+func (o *Vm) GetIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
 // HasId returns a boolean if a field has been set.
@@ -88,28 +87,27 @@ func (o *Vm) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given interface{} and assigns it to the Id field.
-func (o *Vm) SetId(v interface{}) {
-	o.Id = v
+// SetId gets a reference to the given int32 and assigns it to the Id field.
+func (o *Vm) SetId(v int32) {
+	o.Id = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetCreatedAt() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+func (o *Vm) GetCreatedAt() string {
+	if o == nil || IsNil(o.CreatedAt) {
+		var ret string
 		return ret
 	}
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetCreatedAtOk() (*interface{}, bool) {
+func (o *Vm) GetCreatedAtOk() (*string, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
 // HasCreatedAt returns a boolean if a field has been set.
@@ -121,28 +119,27 @@ func (o *Vm) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given interface{} and assigns it to the CreatedAt field.
-func (o *Vm) SetCreatedAt(v interface{}) {
-	o.CreatedAt = v
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
+func (o *Vm) SetCreatedAt(v string) {
+	o.CreatedAt = &v
 }
 
-// GetCreatedByName returns the CreatedByName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetCreatedByName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCreatedByName returns the CreatedByName field value if set, zero value otherwise.
+func (o *Vm) GetCreatedByName() string {
+	if o == nil || IsNil(o.CreatedByName) {
+		var ret string
 		return ret
 	}
-	return o.CreatedByName
+	return *o.CreatedByName
 }
 
 // GetCreatedByNameOk returns a tuple with the CreatedByName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetCreatedByNameOk() (*interface{}, bool) {
+func (o *Vm) GetCreatedByNameOk() (*string, bool) {
 	if o == nil || IsNil(o.CreatedByName) {
 		return nil, false
 	}
-	return &o.CreatedByName, true
+	return o.CreatedByName, true
 }
 
 // HasCreatedByName returns a boolean if a field has been set.
@@ -154,28 +151,27 @@ func (o *Vm) HasCreatedByName() bool {
 	return false
 }
 
-// SetCreatedByName gets a reference to the given interface{} and assigns it to the CreatedByName field.
-func (o *Vm) SetCreatedByName(v interface{}) {
-	o.CreatedByName = v
+// SetCreatedByName gets a reference to the given string and assigns it to the CreatedByName field.
+func (o *Vm) SetCreatedByName(v string) {
+	o.CreatedByName = &v
 }
 
-// GetCreatedById returns the CreatedById field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetCreatedById() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCreatedById returns the CreatedById field value if set, zero value otherwise.
+func (o *Vm) GetCreatedById() int32 {
+	if o == nil || IsNil(o.CreatedById) {
+		var ret int32
 		return ret
 	}
-	return o.CreatedById
+	return *o.CreatedById
 }
 
 // GetCreatedByIdOk returns a tuple with the CreatedById field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetCreatedByIdOk() (*interface{}, bool) {
+func (o *Vm) GetCreatedByIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.CreatedById) {
 		return nil, false
 	}
-	return &o.CreatedById, true
+	return o.CreatedById, true
 }
 
 // HasCreatedById returns a boolean if a field has been set.
@@ -187,28 +183,27 @@ func (o *Vm) HasCreatedById() bool {
 	return false
 }
 
-// SetCreatedById gets a reference to the given interface{} and assigns it to the CreatedById field.
-func (o *Vm) SetCreatedById(v interface{}) {
-	o.CreatedById = v
+// SetCreatedById gets a reference to the given int32 and assigns it to the CreatedById field.
+func (o *Vm) SetCreatedById(v int32) {
+	o.CreatedById = &v
 }
 
-// GetModifiedAt returns the ModifiedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetModifiedAt() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetModifiedAt returns the ModifiedAt field value if set, zero value otherwise.
+func (o *Vm) GetModifiedAt() string {
+	if o == nil || IsNil(o.ModifiedAt) {
+		var ret string
 		return ret
 	}
-	return o.ModifiedAt
+	return *o.ModifiedAt
 }
 
 // GetModifiedAtOk returns a tuple with the ModifiedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetModifiedAtOk() (*interface{}, bool) {
+func (o *Vm) GetModifiedAtOk() (*string, bool) {
 	if o == nil || IsNil(o.ModifiedAt) {
 		return nil, false
 	}
-	return &o.ModifiedAt, true
+	return o.ModifiedAt, true
 }
 
 // HasModifiedAt returns a boolean if a field has been set.
@@ -220,28 +215,27 @@ func (o *Vm) HasModifiedAt() bool {
 	return false
 }
 
-// SetModifiedAt gets a reference to the given interface{} and assigns it to the ModifiedAt field.
-func (o *Vm) SetModifiedAt(v interface{}) {
-	o.ModifiedAt = v
+// SetModifiedAt gets a reference to the given string and assigns it to the ModifiedAt field.
+func (o *Vm) SetModifiedAt(v string) {
+	o.ModifiedAt = &v
 }
 
-// GetModifiedByName returns the ModifiedByName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetModifiedByName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetModifiedByName returns the ModifiedByName field value if set, zero value otherwise.
+func (o *Vm) GetModifiedByName() string {
+	if o == nil || IsNil(o.ModifiedByName) {
+		var ret string
 		return ret
 	}
-	return o.ModifiedByName
+	return *o.ModifiedByName
 }
 
 // GetModifiedByNameOk returns a tuple with the ModifiedByName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetModifiedByNameOk() (*interface{}, bool) {
+func (o *Vm) GetModifiedByNameOk() (*string, bool) {
 	if o == nil || IsNil(o.ModifiedByName) {
 		return nil, false
 	}
-	return &o.ModifiedByName, true
+	return o.ModifiedByName, true
 }
 
 // HasModifiedByName returns a boolean if a field has been set.
@@ -253,28 +247,27 @@ func (o *Vm) HasModifiedByName() bool {
 	return false
 }
 
-// SetModifiedByName gets a reference to the given interface{} and assigns it to the ModifiedByName field.
-func (o *Vm) SetModifiedByName(v interface{}) {
-	o.ModifiedByName = v
+// SetModifiedByName gets a reference to the given string and assigns it to the ModifiedByName field.
+func (o *Vm) SetModifiedByName(v string) {
+	o.ModifiedByName = &v
 }
 
-// GetModifiedById returns the ModifiedById field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetModifiedById() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetModifiedById returns the ModifiedById field value if set, zero value otherwise.
+func (o *Vm) GetModifiedById() int32 {
+	if o == nil || IsNil(o.ModifiedById) {
+		var ret int32
 		return ret
 	}
-	return o.ModifiedById
+	return *o.ModifiedById
 }
 
 // GetModifiedByIdOk returns a tuple with the ModifiedById field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetModifiedByIdOk() (*interface{}, bool) {
+func (o *Vm) GetModifiedByIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.ModifiedById) {
 		return nil, false
 	}
-	return &o.ModifiedById, true
+	return o.ModifiedById, true
 }
 
 // HasModifiedById returns a boolean if a field has been set.
@@ -286,28 +279,27 @@ func (o *Vm) HasModifiedById() bool {
 	return false
 }
 
-// SetModifiedById gets a reference to the given interface{} and assigns it to the ModifiedById field.
-func (o *Vm) SetModifiedById(v interface{}) {
-	o.ModifiedById = v
+// SetModifiedById gets a reference to the given int32 and assigns it to the ModifiedById field.
+func (o *Vm) SetModifiedById(v int32) {
+	o.ModifiedById = &v
 }
 
-// GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *Vm) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
 		return ret
 	}
-	return o.Name
+	return *o.Name
 }
 
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetNameOk() (*interface{}, bool) {
+func (o *Vm) GetNameOk() (*string, bool) {
 	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
 // HasName returns a boolean if a field has been set.
@@ -319,28 +311,27 @@ func (o *Vm) HasName() bool {
 	return false
 }
 
-// SetName gets a reference to the given interface{} and assigns it to the Name field.
-func (o *Vm) SetName(v interface{}) {
-	o.Name = v
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *Vm) SetName(v string) {
+	o.Name = &v
 }
 
-// GetProjectId returns the ProjectId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetProjectId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetProjectId returns the ProjectId field value if set, zero value otherwise.
+func (o *Vm) GetProjectId() int32 {
+	if o == nil || IsNil(o.ProjectId) {
+		var ret int32
 		return ret
 	}
-	return o.ProjectId
+	return *o.ProjectId
 }
 
 // GetProjectIdOk returns a tuple with the ProjectId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetProjectIdOk() (*interface{}, bool) {
+func (o *Vm) GetProjectIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.ProjectId) {
 		return nil, false
 	}
-	return &o.ProjectId, true
+	return o.ProjectId, true
 }
 
 // HasProjectId returns a boolean if a field has been set.
@@ -352,28 +343,27 @@ func (o *Vm) HasProjectId() bool {
 	return false
 }
 
-// SetProjectId gets a reference to the given interface{} and assigns it to the ProjectId field.
-func (o *Vm) SetProjectId(v interface{}) {
-	o.ProjectId = v
+// SetProjectId gets a reference to the given int32 and assigns it to the ProjectId field.
+func (o *Vm) SetProjectId(v int32) {
+	o.ProjectId = &v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetStatus() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *Vm) GetStatus() string {
+	if o == nil || IsNil(o.Status) {
+		var ret string
 		return ret
 	}
-	return o.Status
+	return *o.Status
 }
 
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetStatusOk() (*interface{}, bool) {
+func (o *Vm) GetStatusOk() (*string, bool) {
 	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
-	return &o.Status, true
+	return o.Status, true
 }
 
 // HasStatus returns a boolean if a field has been set.
@@ -385,15 +375,15 @@ func (o *Vm) HasStatus() bool {
 	return false
 }
 
-// SetStatus gets a reference to the given interface{} and assigns it to the Status field.
-func (o *Vm) SetStatus(v interface{}) {
-	o.Status = v
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *Vm) SetStatus(v string) {
+	o.Status = &v
 }
 
 // GetProvider returns the Provider field value if set, zero value otherwise.
-func (o *Vm) GetProvider() VmProvider {
+func (o *Vm) GetProvider() SecurityGroupInstanceProvider {
 	if o == nil || IsNil(o.Provider) {
-		var ret VmProvider
+		var ret SecurityGroupInstanceProvider
 		return ret
 	}
 	return *o.Provider
@@ -401,7 +391,7 @@ func (o *Vm) GetProvider() VmProvider {
 
 // GetProviderOk returns a tuple with the Provider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetProviderOk() (*VmProvider, bool) {
+func (o *Vm) GetProviderOk() (*SecurityGroupInstanceProvider, bool) {
 	if o == nil || IsNil(o.Provider) {
 		return nil, false
 	}
@@ -417,15 +407,15 @@ func (o *Vm) HasProvider() bool {
 	return false
 }
 
-// SetProvider gets a reference to the given VmProvider and assigns it to the Provider field.
-func (o *Vm) SetProvider(v VmProvider) {
+// SetProvider gets a reference to the given SecurityGroupInstanceProvider and assigns it to the Provider field.
+func (o *Vm) SetProvider(v SecurityGroupInstanceProvider) {
 	o.Provider = &v
 }
 
 // GetLocation returns the Location field value if set, zero value otherwise.
-func (o *Vm) GetLocation() VmLocation {
+func (o *Vm) GetLocation() SecurityGroupInstanceLocation {
 	if o == nil || IsNil(o.Location) {
-		var ret VmLocation
+		var ret SecurityGroupInstanceLocation
 		return ret
 	}
 	return *o.Location
@@ -433,7 +423,7 @@ func (o *Vm) GetLocation() VmLocation {
 
 // GetLocationOk returns a tuple with the Location field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetLocationOk() (*VmLocation, bool) {
+func (o *Vm) GetLocationOk() (*SecurityGroupInstanceLocation, bool) {
 	if o == nil || IsNil(o.Location) {
 		return nil, false
 	}
@@ -449,8 +439,8 @@ func (o *Vm) HasLocation() bool {
 	return false
 }
 
-// SetLocation gets a reference to the given VmLocation and assigns it to the Location field.
-func (o *Vm) SetLocation(v VmLocation) {
+// SetLocation gets a reference to the given SecurityGroupInstanceLocation and assigns it to the Location field.
+func (o *Vm) SetLocation(v SecurityGroupInstanceLocation) {
 	o.Location = &v
 }
 
@@ -487,9 +477,9 @@ func (o *Vm) SetDataCenter(v VmDataCenter) {
 }
 
 // GetOs returns the Os field value if set, zero value otherwise.
-func (o *Vm) GetOs() VmOs {
+func (o *Vm) GetOs() SecurityGroupInstanceOs {
 	if o == nil || IsNil(o.Os) {
-		var ret VmOs
+		var ret SecurityGroupInstanceOs
 		return ret
 	}
 	return *o.Os
@@ -497,7 +487,7 @@ func (o *Vm) GetOs() VmOs {
 
 // GetOsOk returns a tuple with the Os field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetOsOk() (*VmOs, bool) {
+func (o *Vm) GetOsOk() (*SecurityGroupInstanceOs, bool) {
 	if o == nil || IsNil(o.Os) {
 		return nil, false
 	}
@@ -513,28 +503,27 @@ func (o *Vm) HasOs() bool {
 	return false
 }
 
-// SetOs gets a reference to the given VmOs and assigns it to the Os field.
-func (o *Vm) SetOs(v VmOs) {
+// SetOs gets a reference to the given SecurityGroupInstanceOs and assigns it to the Os field.
+func (o *Vm) SetOs(v SecurityGroupInstanceOs) {
 	o.Os = &v
 }
 
-// GetCpu returns the Cpu field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetCpu() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCpu returns the Cpu field value if set, zero value otherwise.
+func (o *Vm) GetCpu() int32 {
+	if o == nil || IsNil(o.Cpu) {
+		var ret int32
 		return ret
 	}
-	return o.Cpu
+	return *o.Cpu
 }
 
 // GetCpuOk returns a tuple with the Cpu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetCpuOk() (*interface{}, bool) {
+func (o *Vm) GetCpuOk() (*int32, bool) {
 	if o == nil || IsNil(o.Cpu) {
 		return nil, false
 	}
-	return &o.Cpu, true
+	return o.Cpu, true
 }
 
 // HasCpu returns a boolean if a field has been set.
@@ -546,28 +535,27 @@ func (o *Vm) HasCpu() bool {
 	return false
 }
 
-// SetCpu gets a reference to the given interface{} and assigns it to the Cpu field.
-func (o *Vm) SetCpu(v interface{}) {
-	o.Cpu = v
+// SetCpu gets a reference to the given int32 and assigns it to the Cpu field.
+func (o *Vm) SetCpu(v int32) {
+	o.Cpu = &v
 }
 
-// GetRamGb returns the RamGb field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetRamGb() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetRamGb returns the RamGb field value if set, zero value otherwise.
+func (o *Vm) GetRamGb() int32 {
+	if o == nil || IsNil(o.RamGb) {
+		var ret int32
 		return ret
 	}
-	return o.RamGb
+	return *o.RamGb
 }
 
 // GetRamGbOk returns a tuple with the RamGb field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetRamGbOk() (*interface{}, bool) {
+func (o *Vm) GetRamGbOk() (*int32, bool) {
 	if o == nil || IsNil(o.RamGb) {
 		return nil, false
 	}
-	return &o.RamGb, true
+	return o.RamGb, true
 }
 
 // HasRamGb returns a boolean if a field has been set.
@@ -579,15 +567,15 @@ func (o *Vm) HasRamGb() bool {
 	return false
 }
 
-// SetRamGb gets a reference to the given interface{} and assigns it to the RamGb field.
-func (o *Vm) SetRamGb(v interface{}) {
-	o.RamGb = v
+// SetRamGb gets a reference to the given int32 and assigns it to the RamGb field.
+func (o *Vm) SetRamGb(v int32) {
+	o.RamGb = &v
 }
 
 // GetDisks returns the Disks field value if set, zero value otherwise.
-func (o *Vm) GetDisks() []VmDisksInner {
+func (o *Vm) GetDisks() []SecurityGroupInstanceDisksInner {
 	if o == nil || IsNil(o.Disks) {
-		var ret []VmDisksInner
+		var ret []SecurityGroupInstanceDisksInner
 		return ret
 	}
 	return o.Disks
@@ -595,7 +583,7 @@ func (o *Vm) GetDisks() []VmDisksInner {
 
 // GetDisksOk returns a tuple with the Disks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetDisksOk() ([]VmDisksInner, bool) {
+func (o *Vm) GetDisksOk() ([]SecurityGroupInstanceDisksInner, bool) {
 	if o == nil || IsNil(o.Disks) {
 		return nil, false
 	}
@@ -611,15 +599,15 @@ func (o *Vm) HasDisks() bool {
 	return false
 }
 
-// SetDisks gets a reference to the given []VmDisksInner and assigns it to the Disks field.
-func (o *Vm) SetDisks(v []VmDisksInner) {
+// SetDisks gets a reference to the given []SecurityGroupInstanceDisksInner and assigns it to the Disks field.
+func (o *Vm) SetDisks(v []SecurityGroupInstanceDisksInner) {
 	o.Disks = v
 }
 
 // GetNetworks returns the Networks field value if set, zero value otherwise.
-func (o *Vm) GetNetworks() []VmNetworksInner {
+func (o *Vm) GetNetworks() []SecurityGroupInstanceNetworksInner {
 	if o == nil || IsNil(o.Networks) {
-		var ret []VmNetworksInner
+		var ret []SecurityGroupInstanceNetworksInner
 		return ret
 	}
 	return o.Networks
@@ -627,7 +615,7 @@ func (o *Vm) GetNetworks() []VmNetworksInner {
 
 // GetNetworksOk returns a tuple with the Networks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetNetworksOk() ([]VmNetworksInner, bool) {
+func (o *Vm) GetNetworksOk() ([]SecurityGroupInstanceNetworksInner, bool) {
 	if o == nil || IsNil(o.Networks) {
 		return nil, false
 	}
@@ -643,15 +631,15 @@ func (o *Vm) HasNetworks() bool {
 	return false
 }
 
-// SetNetworks gets a reference to the given []VmNetworksInner and assigns it to the Networks field.
-func (o *Vm) SetNetworks(v []VmNetworksInner) {
+// SetNetworks gets a reference to the given []SecurityGroupInstanceNetworksInner and assigns it to the Networks field.
+func (o *Vm) SetNetworks(v []SecurityGroupInstanceNetworksInner) {
 	o.Networks = v
 }
 
 // GetSecurityGroup returns the SecurityGroup field value if set, zero value otherwise.
-func (o *Vm) GetSecurityGroup() VmSecurityGroup {
+func (o *Vm) GetSecurityGroup() SecurityGroupInstanceSecurityGroup {
 	if o == nil || IsNil(o.SecurityGroup) {
-		var ret VmSecurityGroup
+		var ret SecurityGroupInstanceSecurityGroup
 		return ret
 	}
 	return *o.SecurityGroup
@@ -659,7 +647,7 @@ func (o *Vm) GetSecurityGroup() VmSecurityGroup {
 
 // GetSecurityGroupOk returns a tuple with the SecurityGroup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetSecurityGroupOk() (*VmSecurityGroup, bool) {
+func (o *Vm) GetSecurityGroupOk() (*SecurityGroupInstanceSecurityGroup, bool) {
 	if o == nil || IsNil(o.SecurityGroup) {
 		return nil, false
 	}
@@ -675,28 +663,27 @@ func (o *Vm) HasSecurityGroup() bool {
 	return false
 }
 
-// SetSecurityGroup gets a reference to the given VmSecurityGroup and assigns it to the SecurityGroup field.
-func (o *Vm) SetSecurityGroup(v VmSecurityGroup) {
+// SetSecurityGroup gets a reference to the given SecurityGroupInstanceSecurityGroup and assigns it to the SecurityGroup field.
+func (o *Vm) SetSecurityGroup(v SecurityGroupInstanceSecurityGroup) {
 	o.SecurityGroup = &v
 }
 
-// GetSshKeyId returns the SshKeyId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetSshKeyId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetSshKeyId returns the SshKeyId field value if set, zero value otherwise.
+func (o *Vm) GetSshKeyId() int32 {
+	if o == nil || IsNil(o.SshKeyId) {
+		var ret int32
 		return ret
 	}
-	return o.SshKeyId
+	return *o.SshKeyId
 }
 
 // GetSshKeyIdOk returns a tuple with the SshKeyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetSshKeyIdOk() (*interface{}, bool) {
+func (o *Vm) GetSshKeyIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.SshKeyId) {
 		return nil, false
 	}
-	return &o.SshKeyId, true
+	return o.SshKeyId, true
 }
 
 // HasSshKeyId returns a boolean if a field has been set.
@@ -708,28 +695,27 @@ func (o *Vm) HasSshKeyId() bool {
 	return false
 }
 
-// SetSshKeyId gets a reference to the given interface{} and assigns it to the SshKeyId field.
-func (o *Vm) SetSshKeyId(v interface{}) {
-	o.SshKeyId = v
+// SetSshKeyId gets a reference to the given int32 and assigns it to the SshKeyId field.
+func (o *Vm) SetSshKeyId(v int32) {
+	o.SshKeyId = &v
 }
 
-// GetUserName returns the UserName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Vm) GetUserName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetUserName returns the UserName field value if set, zero value otherwise.
+func (o *Vm) GetUserName() string {
+	if o == nil || IsNil(o.UserName) {
+		var ret string
 		return ret
 	}
-	return o.UserName
+	return *o.UserName
 }
 
 // GetUserNameOk returns a tuple with the UserName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Vm) GetUserNameOk() (*interface{}, bool) {
+func (o *Vm) GetUserNameOk() (*string, bool) {
 	if o == nil || IsNil(o.UserName) {
 		return nil, false
 	}
-	return &o.UserName, true
+	return o.UserName, true
 }
 
 // HasUserName returns a boolean if a field has been set.
@@ -741,15 +727,15 @@ func (o *Vm) HasUserName() bool {
 	return false
 }
 
-// SetUserName gets a reference to the given interface{} and assigns it to the UserName field.
-func (o *Vm) SetUserName(v interface{}) {
-	o.UserName = v
+// SetUserName gets a reference to the given string and assigns it to the UserName field.
+func (o *Vm) SetUserName(v string) {
+	o.UserName = &v
 }
 
 // GetCost returns the Cost field value if set, zero value otherwise.
-func (o *Vm) GetCost() VmCost {
+func (o *Vm) GetCost() SecurityGroupInstanceCost {
 	if o == nil || IsNil(o.Cost) {
-		var ret VmCost
+		var ret SecurityGroupInstanceCost
 		return ret
 	}
 	return *o.Cost
@@ -757,7 +743,7 @@ func (o *Vm) GetCost() VmCost {
 
 // GetCostOk returns a tuple with the Cost field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetCostOk() (*VmCost, bool) {
+func (o *Vm) GetCostOk() (*SecurityGroupInstanceCost, bool) {
 	if o == nil || IsNil(o.Cost) {
 		return nil, false
 	}
@@ -773,8 +759,8 @@ func (o *Vm) HasCost() bool {
 	return false
 }
 
-// SetCost gets a reference to the given VmCost and assigns it to the Cost field.
-func (o *Vm) SetCost(v VmCost) {
+// SetCost gets a reference to the given SecurityGroupInstanceCost and assigns it to the Cost field.
+func (o *Vm) SetCost(v SecurityGroupInstanceCost) {
 	o.Cost = &v
 }
 
@@ -788,34 +774,34 @@ func (o Vm) MarshalJSON() ([]byte, error) {
 
 func (o Vm) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.CreatedAt != nil {
+	if !IsNil(o.CreatedAt) {
 		toSerialize["createdAt"] = o.CreatedAt
 	}
-	if o.CreatedByName != nil {
+	if !IsNil(o.CreatedByName) {
 		toSerialize["createdByName"] = o.CreatedByName
 	}
-	if o.CreatedById != nil {
+	if !IsNil(o.CreatedById) {
 		toSerialize["createdById"] = o.CreatedById
 	}
-	if o.ModifiedAt != nil {
+	if !IsNil(o.ModifiedAt) {
 		toSerialize["modifiedAt"] = o.ModifiedAt
 	}
-	if o.ModifiedByName != nil {
+	if !IsNil(o.ModifiedByName) {
 		toSerialize["modifiedByName"] = o.ModifiedByName
 	}
-	if o.ModifiedById != nil {
+	if !IsNil(o.ModifiedById) {
 		toSerialize["modifiedById"] = o.ModifiedById
 	}
-	if o.Name != nil {
+	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if o.ProjectId != nil {
+	if !IsNil(o.ProjectId) {
 		toSerialize["projectId"] = o.ProjectId
 	}
-	if o.Status != nil {
+	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}
 	if !IsNil(o.Provider) {
@@ -830,10 +816,10 @@ func (o Vm) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Os) {
 		toSerialize["os"] = o.Os
 	}
-	if o.Cpu != nil {
+	if !IsNil(o.Cpu) {
 		toSerialize["cpu"] = o.Cpu
 	}
-	if o.RamGb != nil {
+	if !IsNil(o.RamGb) {
 		toSerialize["ramGb"] = o.RamGb
 	}
 	if !IsNil(o.Disks) {
@@ -845,10 +831,10 @@ func (o Vm) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SecurityGroup) {
 		toSerialize["securityGroup"] = o.SecurityGroup
 	}
-	if o.SshKeyId != nil {
+	if !IsNil(o.SshKeyId) {
 		toSerialize["sshKeyId"] = o.SshKeyId
 	}
-	if o.UserName != nil {
+	if !IsNil(o.UserName) {
 		toSerialize["userName"] = o.UserName
 	}
 	if !IsNil(o.Cost) {

@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Code** | **interface{}** |  | 
-**Message** | **interface{}** |  | 
+**Code** | **string** |  | 
+**Message** | **string** |  | 
 
 ## Methods
 
 ### NewBadRequestError
 
-`func NewBadRequestError(code interface{}, message interface{}, ) *BadRequestError`
+`func NewBadRequestError(code string, message string, ) *BadRequestError`
 
 NewBadRequestError instantiates a new BadRequestError object
 This constructor will assign default values to properties that have it defined,
@@ -28,64 +28,44 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetCode
 
-`func (o *BadRequestError) GetCode() interface{}`
+`func (o *BadRequestError) GetCode() string`
 
 GetCode returns the Code field if non-nil, zero value otherwise.
 
 ### GetCodeOk
 
-`func (o *BadRequestError) GetCodeOk() (*interface{}, bool)`
+`func (o *BadRequestError) GetCodeOk() (*string, bool)`
 
 GetCodeOk returns a tuple with the Code field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCode
 
-`func (o *BadRequestError) SetCode(v interface{})`
+`func (o *BadRequestError) SetCode(v string)`
 
 SetCode sets Code field to given value.
 
 
-### SetCodeNil
-
-`func (o *BadRequestError) SetCodeNil(b bool)`
-
- SetCodeNil sets the value for Code to be an explicit nil
-
-### UnsetCode
-`func (o *BadRequestError) UnsetCode()`
-
-UnsetCode ensures that no value is present for Code, not even an explicit nil
 ### GetMessage
 
-`func (o *BadRequestError) GetMessage() interface{}`
+`func (o *BadRequestError) GetMessage() string`
 
 GetMessage returns the Message field if non-nil, zero value otherwise.
 
 ### GetMessageOk
 
-`func (o *BadRequestError) GetMessageOk() (*interface{}, bool)`
+`func (o *BadRequestError) GetMessageOk() (*string, bool)`
 
 GetMessageOk returns a tuple with the Message field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMessage
 
-`func (o *BadRequestError) SetMessage(v interface{})`
+`func (o *BadRequestError) SetMessage(v string)`
 
 SetMessage sets Message field to given value.
 
 
-### SetMessageNil
-
-`func (o *BadRequestError) SetMessageNil(b bool)`
-
- SetMessageNil sets the value for Message to be an explicit nil
-
-### UnsetMessage
-`func (o *BadRequestError) UnsetMessage()`
-
-UnsetMessage ensures that no value is present for Message, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

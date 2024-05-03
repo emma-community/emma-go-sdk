@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,15 +19,15 @@ var _ MappedNullable = &Token{}
 
 // Token struct for Token
 type Token struct {
-	OtherClaims      interface{} `json:"otherClaims,omitempty"`
-	AccessToken      interface{} `json:"accessToken,omitempty"`
-	ExpiresIn        interface{} `json:"expiresIn,omitempty"`
-	RefreshExpiresIn interface{} `json:"refreshExpiresIn,omitempty"`
-	RefreshToken     interface{} `json:"refreshToken,omitempty"`
-	TokenType        interface{} `json:"tokenType,omitempty"`
-	IdToken          interface{} `json:"idToken,omitempty"`
-	NotBeforePolicy  interface{} `json:"notBeforePolicy,omitempty"`
-	SessionState     interface{} `json:"sessionState,omitempty"`
+	OtherClaims      map[string]interface{} `json:"otherClaims,omitempty"`
+	AccessToken      *string                `json:"accessToken,omitempty"`
+	ExpiresIn        *int32                 `json:"expiresIn,omitempty"`
+	RefreshExpiresIn *int32                 `json:"refreshExpiresIn,omitempty"`
+	RefreshToken     *string                `json:"refreshToken,omitempty"`
+	TokenType        *string                `json:"tokenType,omitempty"`
+	IdToken          *int32                 `json:"idToken,omitempty"`
+	NotBeforePolicy  *int32                 `json:"notBeforePolicy,omitempty"`
+	SessionState     *string                `json:"sessionState,omitempty"`
 }
 
 // NewToken instantiates a new Token object
@@ -48,9 +48,9 @@ func NewTokenWithDefaults() *Token {
 }
 
 // GetOtherClaims returns the OtherClaims field value if set, zero value otherwise.
-func (o *Token) GetOtherClaims() interface{} {
+func (o *Token) GetOtherClaims() map[string]interface{} {
 	if o == nil || IsNil(o.OtherClaims) {
-		var ret interface{}
+		var ret map[string]interface{}
 		return ret
 	}
 	return o.OtherClaims
@@ -58,9 +58,9 @@ func (o *Token) GetOtherClaims() interface{} {
 
 // GetOtherClaimsOk returns a tuple with the OtherClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Token) GetOtherClaimsOk() (interface{}, bool) {
+func (o *Token) GetOtherClaimsOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.OtherClaims) {
-		return nil, false
+		return map[string]interface{}{}, false
 	}
 	return o.OtherClaims, true
 }
@@ -74,28 +74,27 @@ func (o *Token) HasOtherClaims() bool {
 	return false
 }
 
-// SetOtherClaims gets a reference to the given interface{} and assigns it to the OtherClaims field.
-func (o *Token) SetOtherClaims(v interface{}) {
+// SetOtherClaims gets a reference to the given map[string]interface{} and assigns it to the OtherClaims field.
+func (o *Token) SetOtherClaims(v map[string]interface{}) {
 	o.OtherClaims = v
 }
 
-// GetAccessToken returns the AccessToken field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Token) GetAccessToken() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetAccessToken returns the AccessToken field value if set, zero value otherwise.
+func (o *Token) GetAccessToken() string {
+	if o == nil || IsNil(o.AccessToken) {
+		var ret string
 		return ret
 	}
-	return o.AccessToken
+	return *o.AccessToken
 }
 
 // GetAccessTokenOk returns a tuple with the AccessToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Token) GetAccessTokenOk() (*interface{}, bool) {
+func (o *Token) GetAccessTokenOk() (*string, bool) {
 	if o == nil || IsNil(o.AccessToken) {
 		return nil, false
 	}
-	return &o.AccessToken, true
+	return o.AccessToken, true
 }
 
 // HasAccessToken returns a boolean if a field has been set.
@@ -107,28 +106,27 @@ func (o *Token) HasAccessToken() bool {
 	return false
 }
 
-// SetAccessToken gets a reference to the given interface{} and assigns it to the AccessToken field.
-func (o *Token) SetAccessToken(v interface{}) {
-	o.AccessToken = v
+// SetAccessToken gets a reference to the given string and assigns it to the AccessToken field.
+func (o *Token) SetAccessToken(v string) {
+	o.AccessToken = &v
 }
 
-// GetExpiresIn returns the ExpiresIn field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Token) GetExpiresIn() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetExpiresIn returns the ExpiresIn field value if set, zero value otherwise.
+func (o *Token) GetExpiresIn() int32 {
+	if o == nil || IsNil(o.ExpiresIn) {
+		var ret int32
 		return ret
 	}
-	return o.ExpiresIn
+	return *o.ExpiresIn
 }
 
 // GetExpiresInOk returns a tuple with the ExpiresIn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Token) GetExpiresInOk() (*interface{}, bool) {
+func (o *Token) GetExpiresInOk() (*int32, bool) {
 	if o == nil || IsNil(o.ExpiresIn) {
 		return nil, false
 	}
-	return &o.ExpiresIn, true
+	return o.ExpiresIn, true
 }
 
 // HasExpiresIn returns a boolean if a field has been set.
@@ -140,28 +138,27 @@ func (o *Token) HasExpiresIn() bool {
 	return false
 }
 
-// SetExpiresIn gets a reference to the given interface{} and assigns it to the ExpiresIn field.
-func (o *Token) SetExpiresIn(v interface{}) {
-	o.ExpiresIn = v
+// SetExpiresIn gets a reference to the given int32 and assigns it to the ExpiresIn field.
+func (o *Token) SetExpiresIn(v int32) {
+	o.ExpiresIn = &v
 }
 
-// GetRefreshExpiresIn returns the RefreshExpiresIn field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Token) GetRefreshExpiresIn() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetRefreshExpiresIn returns the RefreshExpiresIn field value if set, zero value otherwise.
+func (o *Token) GetRefreshExpiresIn() int32 {
+	if o == nil || IsNil(o.RefreshExpiresIn) {
+		var ret int32
 		return ret
 	}
-	return o.RefreshExpiresIn
+	return *o.RefreshExpiresIn
 }
 
 // GetRefreshExpiresInOk returns a tuple with the RefreshExpiresIn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Token) GetRefreshExpiresInOk() (*interface{}, bool) {
+func (o *Token) GetRefreshExpiresInOk() (*int32, bool) {
 	if o == nil || IsNil(o.RefreshExpiresIn) {
 		return nil, false
 	}
-	return &o.RefreshExpiresIn, true
+	return o.RefreshExpiresIn, true
 }
 
 // HasRefreshExpiresIn returns a boolean if a field has been set.
@@ -173,28 +170,27 @@ func (o *Token) HasRefreshExpiresIn() bool {
 	return false
 }
 
-// SetRefreshExpiresIn gets a reference to the given interface{} and assigns it to the RefreshExpiresIn field.
-func (o *Token) SetRefreshExpiresIn(v interface{}) {
-	o.RefreshExpiresIn = v
+// SetRefreshExpiresIn gets a reference to the given int32 and assigns it to the RefreshExpiresIn field.
+func (o *Token) SetRefreshExpiresIn(v int32) {
+	o.RefreshExpiresIn = &v
 }
 
-// GetRefreshToken returns the RefreshToken field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Token) GetRefreshToken() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetRefreshToken returns the RefreshToken field value if set, zero value otherwise.
+func (o *Token) GetRefreshToken() string {
+	if o == nil || IsNil(o.RefreshToken) {
+		var ret string
 		return ret
 	}
-	return o.RefreshToken
+	return *o.RefreshToken
 }
 
 // GetRefreshTokenOk returns a tuple with the RefreshToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Token) GetRefreshTokenOk() (*interface{}, bool) {
+func (o *Token) GetRefreshTokenOk() (*string, bool) {
 	if o == nil || IsNil(o.RefreshToken) {
 		return nil, false
 	}
-	return &o.RefreshToken, true
+	return o.RefreshToken, true
 }
 
 // HasRefreshToken returns a boolean if a field has been set.
@@ -206,28 +202,27 @@ func (o *Token) HasRefreshToken() bool {
 	return false
 }
 
-// SetRefreshToken gets a reference to the given interface{} and assigns it to the RefreshToken field.
-func (o *Token) SetRefreshToken(v interface{}) {
-	o.RefreshToken = v
+// SetRefreshToken gets a reference to the given string and assigns it to the RefreshToken field.
+func (o *Token) SetRefreshToken(v string) {
+	o.RefreshToken = &v
 }
 
-// GetTokenType returns the TokenType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Token) GetTokenType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetTokenType returns the TokenType field value if set, zero value otherwise.
+func (o *Token) GetTokenType() string {
+	if o == nil || IsNil(o.TokenType) {
+		var ret string
 		return ret
 	}
-	return o.TokenType
+	return *o.TokenType
 }
 
 // GetTokenTypeOk returns a tuple with the TokenType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Token) GetTokenTypeOk() (*interface{}, bool) {
+func (o *Token) GetTokenTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.TokenType) {
 		return nil, false
 	}
-	return &o.TokenType, true
+	return o.TokenType, true
 }
 
 // HasTokenType returns a boolean if a field has been set.
@@ -239,28 +234,27 @@ func (o *Token) HasTokenType() bool {
 	return false
 }
 
-// SetTokenType gets a reference to the given interface{} and assigns it to the TokenType field.
-func (o *Token) SetTokenType(v interface{}) {
-	o.TokenType = v
+// SetTokenType gets a reference to the given string and assigns it to the TokenType field.
+func (o *Token) SetTokenType(v string) {
+	o.TokenType = &v
 }
 
-// GetIdToken returns the IdToken field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Token) GetIdToken() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetIdToken returns the IdToken field value if set, zero value otherwise.
+func (o *Token) GetIdToken() int32 {
+	if o == nil || IsNil(o.IdToken) {
+		var ret int32
 		return ret
 	}
-	return o.IdToken
+	return *o.IdToken
 }
 
 // GetIdTokenOk returns a tuple with the IdToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Token) GetIdTokenOk() (*interface{}, bool) {
+func (o *Token) GetIdTokenOk() (*int32, bool) {
 	if o == nil || IsNil(o.IdToken) {
 		return nil, false
 	}
-	return &o.IdToken, true
+	return o.IdToken, true
 }
 
 // HasIdToken returns a boolean if a field has been set.
@@ -272,28 +266,27 @@ func (o *Token) HasIdToken() bool {
 	return false
 }
 
-// SetIdToken gets a reference to the given interface{} and assigns it to the IdToken field.
-func (o *Token) SetIdToken(v interface{}) {
-	o.IdToken = v
+// SetIdToken gets a reference to the given int32 and assigns it to the IdToken field.
+func (o *Token) SetIdToken(v int32) {
+	o.IdToken = &v
 }
 
-// GetNotBeforePolicy returns the NotBeforePolicy field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Token) GetNotBeforePolicy() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetNotBeforePolicy returns the NotBeforePolicy field value if set, zero value otherwise.
+func (o *Token) GetNotBeforePolicy() int32 {
+	if o == nil || IsNil(o.NotBeforePolicy) {
+		var ret int32
 		return ret
 	}
-	return o.NotBeforePolicy
+	return *o.NotBeforePolicy
 }
 
 // GetNotBeforePolicyOk returns a tuple with the NotBeforePolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Token) GetNotBeforePolicyOk() (*interface{}, bool) {
+func (o *Token) GetNotBeforePolicyOk() (*int32, bool) {
 	if o == nil || IsNil(o.NotBeforePolicy) {
 		return nil, false
 	}
-	return &o.NotBeforePolicy, true
+	return o.NotBeforePolicy, true
 }
 
 // HasNotBeforePolicy returns a boolean if a field has been set.
@@ -305,28 +298,27 @@ func (o *Token) HasNotBeforePolicy() bool {
 	return false
 }
 
-// SetNotBeforePolicy gets a reference to the given interface{} and assigns it to the NotBeforePolicy field.
-func (o *Token) SetNotBeforePolicy(v interface{}) {
-	o.NotBeforePolicy = v
+// SetNotBeforePolicy gets a reference to the given int32 and assigns it to the NotBeforePolicy field.
+func (o *Token) SetNotBeforePolicy(v int32) {
+	o.NotBeforePolicy = &v
 }
 
-// GetSessionState returns the SessionState field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Token) GetSessionState() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetSessionState returns the SessionState field value if set, zero value otherwise.
+func (o *Token) GetSessionState() string {
+	if o == nil || IsNil(o.SessionState) {
+		var ret string
 		return ret
 	}
-	return o.SessionState
+	return *o.SessionState
 }
 
 // GetSessionStateOk returns a tuple with the SessionState field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Token) GetSessionStateOk() (*interface{}, bool) {
+func (o *Token) GetSessionStateOk() (*string, bool) {
 	if o == nil || IsNil(o.SessionState) {
 		return nil, false
 	}
-	return &o.SessionState, true
+	return o.SessionState, true
 }
 
 // HasSessionState returns a boolean if a field has been set.
@@ -338,9 +330,9 @@ func (o *Token) HasSessionState() bool {
 	return false
 }
 
-// SetSessionState gets a reference to the given interface{} and assigns it to the SessionState field.
-func (o *Token) SetSessionState(v interface{}) {
-	o.SessionState = v
+// SetSessionState gets a reference to the given string and assigns it to the SessionState field.
+func (o *Token) SetSessionState(v string) {
+	o.SessionState = &v
 }
 
 func (o Token) MarshalJSON() ([]byte, error) {
@@ -356,28 +348,28 @@ func (o Token) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.OtherClaims) {
 		toSerialize["otherClaims"] = o.OtherClaims
 	}
-	if o.AccessToken != nil {
+	if !IsNil(o.AccessToken) {
 		toSerialize["accessToken"] = o.AccessToken
 	}
-	if o.ExpiresIn != nil {
+	if !IsNil(o.ExpiresIn) {
 		toSerialize["expiresIn"] = o.ExpiresIn
 	}
-	if o.RefreshExpiresIn != nil {
+	if !IsNil(o.RefreshExpiresIn) {
 		toSerialize["refreshExpiresIn"] = o.RefreshExpiresIn
 	}
-	if o.RefreshToken != nil {
+	if !IsNil(o.RefreshToken) {
 		toSerialize["refreshToken"] = o.RefreshToken
 	}
-	if o.TokenType != nil {
+	if !IsNil(o.TokenType) {
 		toSerialize["tokenType"] = o.TokenType
 	}
-	if o.IdToken != nil {
+	if !IsNil(o.IdToken) {
 		toSerialize["idToken"] = o.IdToken
 	}
-	if o.NotBeforePolicy != nil {
+	if !IsNil(o.NotBeforePolicy) {
 		toSerialize["notBeforePolicy"] = o.NotBeforePolicy
 	}
-	if o.SessionState != nil {
+	if !IsNil(o.SessionState) {
 		toSerialize["sessionState"] = o.SessionState
 	}
 	return toSerialize, nil

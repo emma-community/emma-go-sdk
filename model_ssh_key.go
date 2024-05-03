@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,14 +19,14 @@ var _ MappedNullable = &SshKey{}
 
 // SshKey struct for SshKey
 type SshKey struct {
-	Id            interface{} `json:"id,omitempty"`
-	Name          interface{} `json:"name,omitempty"`
-	Key           interface{} `json:"key,omitempty"`
-	Fingerprint   interface{} `json:"fingerprint,omitempty"`
-	KeyType       interface{} `json:"keyType,omitempty"`
-	CreatedAt     interface{} `json:"createdAt,omitempty"`
-	CreatedByName interface{} `json:"createdByName,omitempty"`
-	CreatedById   interface{} `json:"createdById,omitempty"`
+	Id            *int32  `json:"id,omitempty"`
+	Name          *string `json:"name,omitempty"`
+	Key           *string `json:"key,omitempty"`
+	Fingerprint   *string `json:"fingerprint,omitempty"`
+	KeyType       *string `json:"keyType,omitempty"`
+	CreatedAt     *string `json:"createdAt,omitempty"`
+	CreatedByName *string `json:"createdByName,omitempty"`
+	CreatedById   *int32  `json:"createdById,omitempty"`
 }
 
 // NewSshKey instantiates a new SshKey object
@@ -46,23 +46,22 @@ func NewSshKeyWithDefaults() *SshKey {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SshKey) GetId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *SshKey) GetId() int32 {
+	if o == nil || IsNil(o.Id) {
+		var ret int32
 		return ret
 	}
-	return o.Id
+	return *o.Id
 }
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SshKey) GetIdOk() (*interface{}, bool) {
+func (o *SshKey) GetIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
 // HasId returns a boolean if a field has been set.
@@ -74,28 +73,27 @@ func (o *SshKey) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given interface{} and assigns it to the Id field.
-func (o *SshKey) SetId(v interface{}) {
-	o.Id = v
+// SetId gets a reference to the given int32 and assigns it to the Id field.
+func (o *SshKey) SetId(v int32) {
+	o.Id = &v
 }
 
-// GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SshKey) GetName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *SshKey) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
 		return ret
 	}
-	return o.Name
+	return *o.Name
 }
 
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SshKey) GetNameOk() (*interface{}, bool) {
+func (o *SshKey) GetNameOk() (*string, bool) {
 	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
 // HasName returns a boolean if a field has been set.
@@ -107,28 +105,27 @@ func (o *SshKey) HasName() bool {
 	return false
 }
 
-// SetName gets a reference to the given interface{} and assigns it to the Name field.
-func (o *SshKey) SetName(v interface{}) {
-	o.Name = v
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *SshKey) SetName(v string) {
+	o.Name = &v
 }
 
-// GetKey returns the Key field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SshKey) GetKey() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetKey returns the Key field value if set, zero value otherwise.
+func (o *SshKey) GetKey() string {
+	if o == nil || IsNil(o.Key) {
+		var ret string
 		return ret
 	}
-	return o.Key
+	return *o.Key
 }
 
 // GetKeyOk returns a tuple with the Key field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SshKey) GetKeyOk() (*interface{}, bool) {
+func (o *SshKey) GetKeyOk() (*string, bool) {
 	if o == nil || IsNil(o.Key) {
 		return nil, false
 	}
-	return &o.Key, true
+	return o.Key, true
 }
 
 // HasKey returns a boolean if a field has been set.
@@ -140,28 +137,27 @@ func (o *SshKey) HasKey() bool {
 	return false
 }
 
-// SetKey gets a reference to the given interface{} and assigns it to the Key field.
-func (o *SshKey) SetKey(v interface{}) {
-	o.Key = v
+// SetKey gets a reference to the given string and assigns it to the Key field.
+func (o *SshKey) SetKey(v string) {
+	o.Key = &v
 }
 
-// GetFingerprint returns the Fingerprint field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SshKey) GetFingerprint() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetFingerprint returns the Fingerprint field value if set, zero value otherwise.
+func (o *SshKey) GetFingerprint() string {
+	if o == nil || IsNil(o.Fingerprint) {
+		var ret string
 		return ret
 	}
-	return o.Fingerprint
+	return *o.Fingerprint
 }
 
 // GetFingerprintOk returns a tuple with the Fingerprint field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SshKey) GetFingerprintOk() (*interface{}, bool) {
+func (o *SshKey) GetFingerprintOk() (*string, bool) {
 	if o == nil || IsNil(o.Fingerprint) {
 		return nil, false
 	}
-	return &o.Fingerprint, true
+	return o.Fingerprint, true
 }
 
 // HasFingerprint returns a boolean if a field has been set.
@@ -173,28 +169,27 @@ func (o *SshKey) HasFingerprint() bool {
 	return false
 }
 
-// SetFingerprint gets a reference to the given interface{} and assigns it to the Fingerprint field.
-func (o *SshKey) SetFingerprint(v interface{}) {
-	o.Fingerprint = v
+// SetFingerprint gets a reference to the given string and assigns it to the Fingerprint field.
+func (o *SshKey) SetFingerprint(v string) {
+	o.Fingerprint = &v
 }
 
-// GetKeyType returns the KeyType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SshKey) GetKeyType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetKeyType returns the KeyType field value if set, zero value otherwise.
+func (o *SshKey) GetKeyType() string {
+	if o == nil || IsNil(o.KeyType) {
+		var ret string
 		return ret
 	}
-	return o.KeyType
+	return *o.KeyType
 }
 
 // GetKeyTypeOk returns a tuple with the KeyType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SshKey) GetKeyTypeOk() (*interface{}, bool) {
+func (o *SshKey) GetKeyTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.KeyType) {
 		return nil, false
 	}
-	return &o.KeyType, true
+	return o.KeyType, true
 }
 
 // HasKeyType returns a boolean if a field has been set.
@@ -206,28 +201,27 @@ func (o *SshKey) HasKeyType() bool {
 	return false
 }
 
-// SetKeyType gets a reference to the given interface{} and assigns it to the KeyType field.
-func (o *SshKey) SetKeyType(v interface{}) {
-	o.KeyType = v
+// SetKeyType gets a reference to the given string and assigns it to the KeyType field.
+func (o *SshKey) SetKeyType(v string) {
+	o.KeyType = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SshKey) GetCreatedAt() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+func (o *SshKey) GetCreatedAt() string {
+	if o == nil || IsNil(o.CreatedAt) {
+		var ret string
 		return ret
 	}
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SshKey) GetCreatedAtOk() (*interface{}, bool) {
+func (o *SshKey) GetCreatedAtOk() (*string, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
 // HasCreatedAt returns a boolean if a field has been set.
@@ -239,28 +233,27 @@ func (o *SshKey) HasCreatedAt() bool {
 	return false
 }
 
-// SetCreatedAt gets a reference to the given interface{} and assigns it to the CreatedAt field.
-func (o *SshKey) SetCreatedAt(v interface{}) {
-	o.CreatedAt = v
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
+func (o *SshKey) SetCreatedAt(v string) {
+	o.CreatedAt = &v
 }
 
-// GetCreatedByName returns the CreatedByName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SshKey) GetCreatedByName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCreatedByName returns the CreatedByName field value if set, zero value otherwise.
+func (o *SshKey) GetCreatedByName() string {
+	if o == nil || IsNil(o.CreatedByName) {
+		var ret string
 		return ret
 	}
-	return o.CreatedByName
+	return *o.CreatedByName
 }
 
 // GetCreatedByNameOk returns a tuple with the CreatedByName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SshKey) GetCreatedByNameOk() (*interface{}, bool) {
+func (o *SshKey) GetCreatedByNameOk() (*string, bool) {
 	if o == nil || IsNil(o.CreatedByName) {
 		return nil, false
 	}
-	return &o.CreatedByName, true
+	return o.CreatedByName, true
 }
 
 // HasCreatedByName returns a boolean if a field has been set.
@@ -272,28 +265,27 @@ func (o *SshKey) HasCreatedByName() bool {
 	return false
 }
 
-// SetCreatedByName gets a reference to the given interface{} and assigns it to the CreatedByName field.
-func (o *SshKey) SetCreatedByName(v interface{}) {
-	o.CreatedByName = v
+// SetCreatedByName gets a reference to the given string and assigns it to the CreatedByName field.
+func (o *SshKey) SetCreatedByName(v string) {
+	o.CreatedByName = &v
 }
 
-// GetCreatedById returns the CreatedById field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SshKey) GetCreatedById() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCreatedById returns the CreatedById field value if set, zero value otherwise.
+func (o *SshKey) GetCreatedById() int32 {
+	if o == nil || IsNil(o.CreatedById) {
+		var ret int32
 		return ret
 	}
-	return o.CreatedById
+	return *o.CreatedById
 }
 
 // GetCreatedByIdOk returns a tuple with the CreatedById field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SshKey) GetCreatedByIdOk() (*interface{}, bool) {
+func (o *SshKey) GetCreatedByIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.CreatedById) {
 		return nil, false
 	}
-	return &o.CreatedById, true
+	return o.CreatedById, true
 }
 
 // HasCreatedById returns a boolean if a field has been set.
@@ -305,9 +297,9 @@ func (o *SshKey) HasCreatedById() bool {
 	return false
 }
 
-// SetCreatedById gets a reference to the given interface{} and assigns it to the CreatedById field.
-func (o *SshKey) SetCreatedById(v interface{}) {
-	o.CreatedById = v
+// SetCreatedById gets a reference to the given int32 and assigns it to the CreatedById field.
+func (o *SshKey) SetCreatedById(v int32) {
+	o.CreatedById = &v
 }
 
 func (o SshKey) MarshalJSON() ([]byte, error) {
@@ -320,28 +312,28 @@ func (o SshKey) MarshalJSON() ([]byte, error) {
 
 func (o SshKey) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.Name != nil {
+	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if o.Key != nil {
+	if !IsNil(o.Key) {
 		toSerialize["key"] = o.Key
 	}
-	if o.Fingerprint != nil {
+	if !IsNil(o.Fingerprint) {
 		toSerialize["fingerprint"] = o.Fingerprint
 	}
-	if o.KeyType != nil {
+	if !IsNil(o.KeyType) {
 		toSerialize["keyType"] = o.KeyType
 	}
-	if o.CreatedAt != nil {
+	if !IsNil(o.CreatedAt) {
 		toSerialize["createdAt"] = o.CreatedAt
 	}
-	if o.CreatedByName != nil {
+	if !IsNil(o.CreatedByName) {
 		toSerialize["createdByName"] = o.CreatedByName
 	}
-	if o.CreatedById != nil {
+	if !IsNil(o.CreatedById) {
 		toSerialize["createdById"] = o.CreatedById
 	}
 	return toSerialize, nil

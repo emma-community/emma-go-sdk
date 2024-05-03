@@ -4,22 +4,22 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **interface{}** |  | [optional] 
-**ProviderId** | Pointer to **interface{}** |  | [optional] 
-**ProviderName** | Pointer to **interface{}** |  | [optional] 
-**LocationId** | Pointer to **interface{}** |  | [optional] 
-**LocationName** | Pointer to **interface{}** |  | [optional] 
-**DataCenterId** | Pointer to **interface{}** |  | [optional] 
-**DataCenterName** | Pointer to **interface{}** |  | [optional] 
-**OsId** | Pointer to **interface{}** |  | [optional] 
-**OsType** | Pointer to **interface{}** |  | [optional] 
-**OsVersion** | Pointer to **interface{}** |  | [optional] 
-**CloudNetworkType** | Pointer to **interface{}** |  | [optional] 
-**VCpuType** | Pointer to **interface{}** |  | [optional] 
-**VCpu** | Pointer to **interface{}** |  | [optional] 
-**RamGb** | Pointer to **interface{}** |  | [optional] 
-**VolumeGb** | Pointer to **interface{}** |  | [optional] 
-**VolumeType** | Pointer to **interface{}** |  | [optional] 
+**Id** | Pointer to **int32** |  | [optional] 
+**ProviderId** | Pointer to **int32** |  | [optional] 
+**ProviderName** | Pointer to **string** |  | [optional] 
+**LocationId** | Pointer to **int32** |  | [optional] 
+**LocationName** | Pointer to **string** |  | [optional] 
+**DataCenterId** | Pointer to **string** |  | [optional] 
+**DataCenterName** | Pointer to **string** |  | [optional] 
+**OsId** | Pointer to **int32** |  | [optional] 
+**OsType** | Pointer to **string** |  | [optional] 
+**OsVersion** | Pointer to **string** |  | [optional] 
+**CloudNetworkTypes** | Pointer to **[]string** |  | [optional] 
+**VCpuType** | Pointer to **string** |  | [optional] 
+**VCpu** | Pointer to **int32** |  | [optional] 
+**RamGb** | Pointer to **int32** |  | [optional] 
+**VolumeGb** | Pointer to **int32** |  | [optional] 
+**VolumeType** | Pointer to **string** |  | [optional] 
 **Cost** | Pointer to [**VmConfigurationCost**](VmConfigurationCost.md) |  | [optional] 
 
 ## Methods
@@ -43,20 +43,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetId
 
-`func (o *VmConfiguration) GetId() interface{}`
+`func (o *VmConfiguration) GetId() int32`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *VmConfiguration) GetIdOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetIdOk() (*int32, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *VmConfiguration) SetId(v interface{})`
+`func (o *VmConfiguration) SetId(v int32)`
 
 SetId sets Id field to given value.
 
@@ -66,32 +66,22 @@ SetId sets Id field to given value.
 
 HasId returns a boolean if a field has been set.
 
-### SetIdNil
-
-`func (o *VmConfiguration) SetIdNil(b bool)`
-
- SetIdNil sets the value for Id to be an explicit nil
-
-### UnsetId
-`func (o *VmConfiguration) UnsetId()`
-
-UnsetId ensures that no value is present for Id, not even an explicit nil
 ### GetProviderId
 
-`func (o *VmConfiguration) GetProviderId() interface{}`
+`func (o *VmConfiguration) GetProviderId() int32`
 
 GetProviderId returns the ProviderId field if non-nil, zero value otherwise.
 
 ### GetProviderIdOk
 
-`func (o *VmConfiguration) GetProviderIdOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetProviderIdOk() (*int32, bool)`
 
 GetProviderIdOk returns a tuple with the ProviderId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProviderId
 
-`func (o *VmConfiguration) SetProviderId(v interface{})`
+`func (o *VmConfiguration) SetProviderId(v int32)`
 
 SetProviderId sets ProviderId field to given value.
 
@@ -101,32 +91,22 @@ SetProviderId sets ProviderId field to given value.
 
 HasProviderId returns a boolean if a field has been set.
 
-### SetProviderIdNil
-
-`func (o *VmConfiguration) SetProviderIdNil(b bool)`
-
- SetProviderIdNil sets the value for ProviderId to be an explicit nil
-
-### UnsetProviderId
-`func (o *VmConfiguration) UnsetProviderId()`
-
-UnsetProviderId ensures that no value is present for ProviderId, not even an explicit nil
 ### GetProviderName
 
-`func (o *VmConfiguration) GetProviderName() interface{}`
+`func (o *VmConfiguration) GetProviderName() string`
 
 GetProviderName returns the ProviderName field if non-nil, zero value otherwise.
 
 ### GetProviderNameOk
 
-`func (o *VmConfiguration) GetProviderNameOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetProviderNameOk() (*string, bool)`
 
 GetProviderNameOk returns a tuple with the ProviderName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProviderName
 
-`func (o *VmConfiguration) SetProviderName(v interface{})`
+`func (o *VmConfiguration) SetProviderName(v string)`
 
 SetProviderName sets ProviderName field to given value.
 
@@ -136,32 +116,22 @@ SetProviderName sets ProviderName field to given value.
 
 HasProviderName returns a boolean if a field has been set.
 
-### SetProviderNameNil
-
-`func (o *VmConfiguration) SetProviderNameNil(b bool)`
-
- SetProviderNameNil sets the value for ProviderName to be an explicit nil
-
-### UnsetProviderName
-`func (o *VmConfiguration) UnsetProviderName()`
-
-UnsetProviderName ensures that no value is present for ProviderName, not even an explicit nil
 ### GetLocationId
 
-`func (o *VmConfiguration) GetLocationId() interface{}`
+`func (o *VmConfiguration) GetLocationId() int32`
 
 GetLocationId returns the LocationId field if non-nil, zero value otherwise.
 
 ### GetLocationIdOk
 
-`func (o *VmConfiguration) GetLocationIdOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetLocationIdOk() (*int32, bool)`
 
 GetLocationIdOk returns a tuple with the LocationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLocationId
 
-`func (o *VmConfiguration) SetLocationId(v interface{})`
+`func (o *VmConfiguration) SetLocationId(v int32)`
 
 SetLocationId sets LocationId field to given value.
 
@@ -171,32 +141,22 @@ SetLocationId sets LocationId field to given value.
 
 HasLocationId returns a boolean if a field has been set.
 
-### SetLocationIdNil
-
-`func (o *VmConfiguration) SetLocationIdNil(b bool)`
-
- SetLocationIdNil sets the value for LocationId to be an explicit nil
-
-### UnsetLocationId
-`func (o *VmConfiguration) UnsetLocationId()`
-
-UnsetLocationId ensures that no value is present for LocationId, not even an explicit nil
 ### GetLocationName
 
-`func (o *VmConfiguration) GetLocationName() interface{}`
+`func (o *VmConfiguration) GetLocationName() string`
 
 GetLocationName returns the LocationName field if non-nil, zero value otherwise.
 
 ### GetLocationNameOk
 
-`func (o *VmConfiguration) GetLocationNameOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetLocationNameOk() (*string, bool)`
 
 GetLocationNameOk returns a tuple with the LocationName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLocationName
 
-`func (o *VmConfiguration) SetLocationName(v interface{})`
+`func (o *VmConfiguration) SetLocationName(v string)`
 
 SetLocationName sets LocationName field to given value.
 
@@ -206,32 +166,22 @@ SetLocationName sets LocationName field to given value.
 
 HasLocationName returns a boolean if a field has been set.
 
-### SetLocationNameNil
-
-`func (o *VmConfiguration) SetLocationNameNil(b bool)`
-
- SetLocationNameNil sets the value for LocationName to be an explicit nil
-
-### UnsetLocationName
-`func (o *VmConfiguration) UnsetLocationName()`
-
-UnsetLocationName ensures that no value is present for LocationName, not even an explicit nil
 ### GetDataCenterId
 
-`func (o *VmConfiguration) GetDataCenterId() interface{}`
+`func (o *VmConfiguration) GetDataCenterId() string`
 
 GetDataCenterId returns the DataCenterId field if non-nil, zero value otherwise.
 
 ### GetDataCenterIdOk
 
-`func (o *VmConfiguration) GetDataCenterIdOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetDataCenterIdOk() (*string, bool)`
 
 GetDataCenterIdOk returns a tuple with the DataCenterId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDataCenterId
 
-`func (o *VmConfiguration) SetDataCenterId(v interface{})`
+`func (o *VmConfiguration) SetDataCenterId(v string)`
 
 SetDataCenterId sets DataCenterId field to given value.
 
@@ -241,32 +191,22 @@ SetDataCenterId sets DataCenterId field to given value.
 
 HasDataCenterId returns a boolean if a field has been set.
 
-### SetDataCenterIdNil
-
-`func (o *VmConfiguration) SetDataCenterIdNil(b bool)`
-
- SetDataCenterIdNil sets the value for DataCenterId to be an explicit nil
-
-### UnsetDataCenterId
-`func (o *VmConfiguration) UnsetDataCenterId()`
-
-UnsetDataCenterId ensures that no value is present for DataCenterId, not even an explicit nil
 ### GetDataCenterName
 
-`func (o *VmConfiguration) GetDataCenterName() interface{}`
+`func (o *VmConfiguration) GetDataCenterName() string`
 
 GetDataCenterName returns the DataCenterName field if non-nil, zero value otherwise.
 
 ### GetDataCenterNameOk
 
-`func (o *VmConfiguration) GetDataCenterNameOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetDataCenterNameOk() (*string, bool)`
 
 GetDataCenterNameOk returns a tuple with the DataCenterName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDataCenterName
 
-`func (o *VmConfiguration) SetDataCenterName(v interface{})`
+`func (o *VmConfiguration) SetDataCenterName(v string)`
 
 SetDataCenterName sets DataCenterName field to given value.
 
@@ -276,32 +216,22 @@ SetDataCenterName sets DataCenterName field to given value.
 
 HasDataCenterName returns a boolean if a field has been set.
 
-### SetDataCenterNameNil
-
-`func (o *VmConfiguration) SetDataCenterNameNil(b bool)`
-
- SetDataCenterNameNil sets the value for DataCenterName to be an explicit nil
-
-### UnsetDataCenterName
-`func (o *VmConfiguration) UnsetDataCenterName()`
-
-UnsetDataCenterName ensures that no value is present for DataCenterName, not even an explicit nil
 ### GetOsId
 
-`func (o *VmConfiguration) GetOsId() interface{}`
+`func (o *VmConfiguration) GetOsId() int32`
 
 GetOsId returns the OsId field if non-nil, zero value otherwise.
 
 ### GetOsIdOk
 
-`func (o *VmConfiguration) GetOsIdOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetOsIdOk() (*int32, bool)`
 
 GetOsIdOk returns a tuple with the OsId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOsId
 
-`func (o *VmConfiguration) SetOsId(v interface{})`
+`func (o *VmConfiguration) SetOsId(v int32)`
 
 SetOsId sets OsId field to given value.
 
@@ -311,32 +241,22 @@ SetOsId sets OsId field to given value.
 
 HasOsId returns a boolean if a field has been set.
 
-### SetOsIdNil
-
-`func (o *VmConfiguration) SetOsIdNil(b bool)`
-
- SetOsIdNil sets the value for OsId to be an explicit nil
-
-### UnsetOsId
-`func (o *VmConfiguration) UnsetOsId()`
-
-UnsetOsId ensures that no value is present for OsId, not even an explicit nil
 ### GetOsType
 
-`func (o *VmConfiguration) GetOsType() interface{}`
+`func (o *VmConfiguration) GetOsType() string`
 
 GetOsType returns the OsType field if non-nil, zero value otherwise.
 
 ### GetOsTypeOk
 
-`func (o *VmConfiguration) GetOsTypeOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetOsTypeOk() (*string, bool)`
 
 GetOsTypeOk returns a tuple with the OsType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOsType
 
-`func (o *VmConfiguration) SetOsType(v interface{})`
+`func (o *VmConfiguration) SetOsType(v string)`
 
 SetOsType sets OsType field to given value.
 
@@ -346,32 +266,22 @@ SetOsType sets OsType field to given value.
 
 HasOsType returns a boolean if a field has been set.
 
-### SetOsTypeNil
-
-`func (o *VmConfiguration) SetOsTypeNil(b bool)`
-
- SetOsTypeNil sets the value for OsType to be an explicit nil
-
-### UnsetOsType
-`func (o *VmConfiguration) UnsetOsType()`
-
-UnsetOsType ensures that no value is present for OsType, not even an explicit nil
 ### GetOsVersion
 
-`func (o *VmConfiguration) GetOsVersion() interface{}`
+`func (o *VmConfiguration) GetOsVersion() string`
 
 GetOsVersion returns the OsVersion field if non-nil, zero value otherwise.
 
 ### GetOsVersionOk
 
-`func (o *VmConfiguration) GetOsVersionOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetOsVersionOk() (*string, bool)`
 
 GetOsVersionOk returns a tuple with the OsVersion field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOsVersion
 
-`func (o *VmConfiguration) SetOsVersion(v interface{})`
+`func (o *VmConfiguration) SetOsVersion(v string)`
 
 SetOsVersion sets OsVersion field to given value.
 
@@ -381,67 +291,47 @@ SetOsVersion sets OsVersion field to given value.
 
 HasOsVersion returns a boolean if a field has been set.
 
-### SetOsVersionNil
+### GetCloudNetworkTypes
 
-`func (o *VmConfiguration) SetOsVersionNil(b bool)`
+`func (o *VmConfiguration) GetCloudNetworkTypes() []string`
 
- SetOsVersionNil sets the value for OsVersion to be an explicit nil
+GetCloudNetworkTypes returns the CloudNetworkTypes field if non-nil, zero value otherwise.
 
-### UnsetOsVersion
-`func (o *VmConfiguration) UnsetOsVersion()`
+### GetCloudNetworkTypesOk
 
-UnsetOsVersion ensures that no value is present for OsVersion, not even an explicit nil
-### GetCloudNetworkType
+`func (o *VmConfiguration) GetCloudNetworkTypesOk() (*[]string, bool)`
 
-`func (o *VmConfiguration) GetCloudNetworkType() interface{}`
-
-GetCloudNetworkType returns the CloudNetworkType field if non-nil, zero value otherwise.
-
-### GetCloudNetworkTypeOk
-
-`func (o *VmConfiguration) GetCloudNetworkTypeOk() (*interface{}, bool)`
-
-GetCloudNetworkTypeOk returns a tuple with the CloudNetworkType field if it's non-nil, zero value otherwise
+GetCloudNetworkTypesOk returns a tuple with the CloudNetworkTypes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCloudNetworkType
+### SetCloudNetworkTypes
 
-`func (o *VmConfiguration) SetCloudNetworkType(v interface{})`
+`func (o *VmConfiguration) SetCloudNetworkTypes(v []string)`
 
-SetCloudNetworkType sets CloudNetworkType field to given value.
+SetCloudNetworkTypes sets CloudNetworkTypes field to given value.
 
-### HasCloudNetworkType
+### HasCloudNetworkTypes
 
-`func (o *VmConfiguration) HasCloudNetworkType() bool`
+`func (o *VmConfiguration) HasCloudNetworkTypes() bool`
 
-HasCloudNetworkType returns a boolean if a field has been set.
+HasCloudNetworkTypes returns a boolean if a field has been set.
 
-### SetCloudNetworkTypeNil
-
-`func (o *VmConfiguration) SetCloudNetworkTypeNil(b bool)`
-
- SetCloudNetworkTypeNil sets the value for CloudNetworkType to be an explicit nil
-
-### UnsetCloudNetworkType
-`func (o *VmConfiguration) UnsetCloudNetworkType()`
-
-UnsetCloudNetworkType ensures that no value is present for CloudNetworkType, not even an explicit nil
 ### GetVCpuType
 
-`func (o *VmConfiguration) GetVCpuType() interface{}`
+`func (o *VmConfiguration) GetVCpuType() string`
 
 GetVCpuType returns the VCpuType field if non-nil, zero value otherwise.
 
 ### GetVCpuTypeOk
 
-`func (o *VmConfiguration) GetVCpuTypeOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetVCpuTypeOk() (*string, bool)`
 
 GetVCpuTypeOk returns a tuple with the VCpuType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVCpuType
 
-`func (o *VmConfiguration) SetVCpuType(v interface{})`
+`func (o *VmConfiguration) SetVCpuType(v string)`
 
 SetVCpuType sets VCpuType field to given value.
 
@@ -451,32 +341,22 @@ SetVCpuType sets VCpuType field to given value.
 
 HasVCpuType returns a boolean if a field has been set.
 
-### SetVCpuTypeNil
-
-`func (o *VmConfiguration) SetVCpuTypeNil(b bool)`
-
- SetVCpuTypeNil sets the value for VCpuType to be an explicit nil
-
-### UnsetVCpuType
-`func (o *VmConfiguration) UnsetVCpuType()`
-
-UnsetVCpuType ensures that no value is present for VCpuType, not even an explicit nil
 ### GetVCpu
 
-`func (o *VmConfiguration) GetVCpu() interface{}`
+`func (o *VmConfiguration) GetVCpu() int32`
 
 GetVCpu returns the VCpu field if non-nil, zero value otherwise.
 
 ### GetVCpuOk
 
-`func (o *VmConfiguration) GetVCpuOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetVCpuOk() (*int32, bool)`
 
 GetVCpuOk returns a tuple with the VCpu field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVCpu
 
-`func (o *VmConfiguration) SetVCpu(v interface{})`
+`func (o *VmConfiguration) SetVCpu(v int32)`
 
 SetVCpu sets VCpu field to given value.
 
@@ -486,32 +366,22 @@ SetVCpu sets VCpu field to given value.
 
 HasVCpu returns a boolean if a field has been set.
 
-### SetVCpuNil
-
-`func (o *VmConfiguration) SetVCpuNil(b bool)`
-
- SetVCpuNil sets the value for VCpu to be an explicit nil
-
-### UnsetVCpu
-`func (o *VmConfiguration) UnsetVCpu()`
-
-UnsetVCpu ensures that no value is present for VCpu, not even an explicit nil
 ### GetRamGb
 
-`func (o *VmConfiguration) GetRamGb() interface{}`
+`func (o *VmConfiguration) GetRamGb() int32`
 
 GetRamGb returns the RamGb field if non-nil, zero value otherwise.
 
 ### GetRamGbOk
 
-`func (o *VmConfiguration) GetRamGbOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetRamGbOk() (*int32, bool)`
 
 GetRamGbOk returns a tuple with the RamGb field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRamGb
 
-`func (o *VmConfiguration) SetRamGb(v interface{})`
+`func (o *VmConfiguration) SetRamGb(v int32)`
 
 SetRamGb sets RamGb field to given value.
 
@@ -521,32 +391,22 @@ SetRamGb sets RamGb field to given value.
 
 HasRamGb returns a boolean if a field has been set.
 
-### SetRamGbNil
-
-`func (o *VmConfiguration) SetRamGbNil(b bool)`
-
- SetRamGbNil sets the value for RamGb to be an explicit nil
-
-### UnsetRamGb
-`func (o *VmConfiguration) UnsetRamGb()`
-
-UnsetRamGb ensures that no value is present for RamGb, not even an explicit nil
 ### GetVolumeGb
 
-`func (o *VmConfiguration) GetVolumeGb() interface{}`
+`func (o *VmConfiguration) GetVolumeGb() int32`
 
 GetVolumeGb returns the VolumeGb field if non-nil, zero value otherwise.
 
 ### GetVolumeGbOk
 
-`func (o *VmConfiguration) GetVolumeGbOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetVolumeGbOk() (*int32, bool)`
 
 GetVolumeGbOk returns a tuple with the VolumeGb field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVolumeGb
 
-`func (o *VmConfiguration) SetVolumeGb(v interface{})`
+`func (o *VmConfiguration) SetVolumeGb(v int32)`
 
 SetVolumeGb sets VolumeGb field to given value.
 
@@ -556,32 +416,22 @@ SetVolumeGb sets VolumeGb field to given value.
 
 HasVolumeGb returns a boolean if a field has been set.
 
-### SetVolumeGbNil
-
-`func (o *VmConfiguration) SetVolumeGbNil(b bool)`
-
- SetVolumeGbNil sets the value for VolumeGb to be an explicit nil
-
-### UnsetVolumeGb
-`func (o *VmConfiguration) UnsetVolumeGb()`
-
-UnsetVolumeGb ensures that no value is present for VolumeGb, not even an explicit nil
 ### GetVolumeType
 
-`func (o *VmConfiguration) GetVolumeType() interface{}`
+`func (o *VmConfiguration) GetVolumeType() string`
 
 GetVolumeType returns the VolumeType field if non-nil, zero value otherwise.
 
 ### GetVolumeTypeOk
 
-`func (o *VmConfiguration) GetVolumeTypeOk() (*interface{}, bool)`
+`func (o *VmConfiguration) GetVolumeTypeOk() (*string, bool)`
 
 GetVolumeTypeOk returns a tuple with the VolumeType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVolumeType
 
-`func (o *VmConfiguration) SetVolumeType(v interface{})`
+`func (o *VmConfiguration) SetVolumeType(v string)`
 
 SetVolumeType sets VolumeType field to given value.
 
@@ -591,16 +441,6 @@ SetVolumeType sets VolumeType field to given value.
 
 HasVolumeType returns a boolean if a field has been set.
 
-### SetVolumeTypeNil
-
-`func (o *VmConfiguration) SetVolumeTypeNil(b bool)`
-
- SetVolumeTypeNil sets the value for VolumeType to be an explicit nil
-
-### UnsetVolumeType
-`func (o *VmConfiguration) UnsetVolumeType()`
-
-UnsetVolumeType ensures that no value is present for VolumeType, not even an explicit nil
 ### GetCost
 
 `func (o *VmConfiguration) GetCost() VmConfigurationCost`

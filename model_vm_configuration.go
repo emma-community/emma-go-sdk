@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,23 +19,23 @@ var _ MappedNullable = &VmConfiguration{}
 
 // VmConfiguration struct for VmConfiguration
 type VmConfiguration struct {
-	Id               interface{}          `json:"id,omitempty"`
-	ProviderId       interface{}          `json:"providerId,omitempty"`
-	ProviderName     interface{}          `json:"providerName,omitempty"`
-	LocationId       interface{}          `json:"locationId,omitempty"`
-	LocationName     interface{}          `json:"locationName,omitempty"`
-	DataCenterId     interface{}          `json:"dataCenterId,omitempty"`
-	DataCenterName   interface{}          `json:"dataCenterName,omitempty"`
-	OsId             interface{}          `json:"osId,omitempty"`
-	OsType           interface{}          `json:"osType,omitempty"`
-	OsVersion        interface{}          `json:"osVersion,omitempty"`
-	CloudNetworkType interface{}          `json:"cloudNetworkType,omitempty"`
-	VCpuType         interface{}          `json:"vCpuType,omitempty"`
-	VCpu             interface{}          `json:"vCpu,omitempty"`
-	RamGb            interface{}          `json:"ramGb,omitempty"`
-	VolumeGb         interface{}          `json:"volumeGb,omitempty"`
-	VolumeType       interface{}          `json:"volumeType,omitempty"`
-	Cost             *VmConfigurationCost `json:"cost,omitempty"`
+	Id                *int32               `json:"id,omitempty"`
+	ProviderId        *int32               `json:"providerId,omitempty"`
+	ProviderName      *string              `json:"providerName,omitempty"`
+	LocationId        *int32               `json:"locationId,omitempty"`
+	LocationName      *string              `json:"locationName,omitempty"`
+	DataCenterId      *string              `json:"dataCenterId,omitempty"`
+	DataCenterName    *string              `json:"dataCenterName,omitempty"`
+	OsId              *int32               `json:"osId,omitempty"`
+	OsType            *string              `json:"osType,omitempty"`
+	OsVersion         *string              `json:"osVersion,omitempty"`
+	CloudNetworkTypes []string             `json:"cloudNetworkTypes,omitempty"`
+	VCpuType          *string              `json:"vCpuType,omitempty"`
+	VCpu              *int32               `json:"vCpu,omitempty"`
+	RamGb             *int32               `json:"ramGb,omitempty"`
+	VolumeGb          *int32               `json:"volumeGb,omitempty"`
+	VolumeType        *string              `json:"volumeType,omitempty"`
+	Cost              *VmConfigurationCost `json:"cost,omitempty"`
 }
 
 // NewVmConfiguration instantiates a new VmConfiguration object
@@ -55,23 +55,22 @@ func NewVmConfigurationWithDefaults() *VmConfiguration {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *VmConfiguration) GetId() int32 {
+	if o == nil || IsNil(o.Id) {
+		var ret int32
 		return ret
 	}
-	return o.Id
+	return *o.Id
 }
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetIdOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
 // HasId returns a boolean if a field has been set.
@@ -83,28 +82,27 @@ func (o *VmConfiguration) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given interface{} and assigns it to the Id field.
-func (o *VmConfiguration) SetId(v interface{}) {
-	o.Id = v
+// SetId gets a reference to the given int32 and assigns it to the Id field.
+func (o *VmConfiguration) SetId(v int32) {
+	o.Id = &v
 }
 
-// GetProviderId returns the ProviderId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetProviderId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetProviderId returns the ProviderId field value if set, zero value otherwise.
+func (o *VmConfiguration) GetProviderId() int32 {
+	if o == nil || IsNil(o.ProviderId) {
+		var ret int32
 		return ret
 	}
-	return o.ProviderId
+	return *o.ProviderId
 }
 
 // GetProviderIdOk returns a tuple with the ProviderId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetProviderIdOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetProviderIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.ProviderId) {
 		return nil, false
 	}
-	return &o.ProviderId, true
+	return o.ProviderId, true
 }
 
 // HasProviderId returns a boolean if a field has been set.
@@ -116,28 +114,27 @@ func (o *VmConfiguration) HasProviderId() bool {
 	return false
 }
 
-// SetProviderId gets a reference to the given interface{} and assigns it to the ProviderId field.
-func (o *VmConfiguration) SetProviderId(v interface{}) {
-	o.ProviderId = v
+// SetProviderId gets a reference to the given int32 and assigns it to the ProviderId field.
+func (o *VmConfiguration) SetProviderId(v int32) {
+	o.ProviderId = &v
 }
 
-// GetProviderName returns the ProviderName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetProviderName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetProviderName returns the ProviderName field value if set, zero value otherwise.
+func (o *VmConfiguration) GetProviderName() string {
+	if o == nil || IsNil(o.ProviderName) {
+		var ret string
 		return ret
 	}
-	return o.ProviderName
+	return *o.ProviderName
 }
 
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetProviderNameOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetProviderNameOk() (*string, bool) {
 	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
-	return &o.ProviderName, true
+	return o.ProviderName, true
 }
 
 // HasProviderName returns a boolean if a field has been set.
@@ -149,28 +146,27 @@ func (o *VmConfiguration) HasProviderName() bool {
 	return false
 }
 
-// SetProviderName gets a reference to the given interface{} and assigns it to the ProviderName field.
-func (o *VmConfiguration) SetProviderName(v interface{}) {
-	o.ProviderName = v
+// SetProviderName gets a reference to the given string and assigns it to the ProviderName field.
+func (o *VmConfiguration) SetProviderName(v string) {
+	o.ProviderName = &v
 }
 
-// GetLocationId returns the LocationId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetLocationId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetLocationId returns the LocationId field value if set, zero value otherwise.
+func (o *VmConfiguration) GetLocationId() int32 {
+	if o == nil || IsNil(o.LocationId) {
+		var ret int32
 		return ret
 	}
-	return o.LocationId
+	return *o.LocationId
 }
 
 // GetLocationIdOk returns a tuple with the LocationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetLocationIdOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetLocationIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.LocationId) {
 		return nil, false
 	}
-	return &o.LocationId, true
+	return o.LocationId, true
 }
 
 // HasLocationId returns a boolean if a field has been set.
@@ -182,28 +178,27 @@ func (o *VmConfiguration) HasLocationId() bool {
 	return false
 }
 
-// SetLocationId gets a reference to the given interface{} and assigns it to the LocationId field.
-func (o *VmConfiguration) SetLocationId(v interface{}) {
-	o.LocationId = v
+// SetLocationId gets a reference to the given int32 and assigns it to the LocationId field.
+func (o *VmConfiguration) SetLocationId(v int32) {
+	o.LocationId = &v
 }
 
-// GetLocationName returns the LocationName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetLocationName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetLocationName returns the LocationName field value if set, zero value otherwise.
+func (o *VmConfiguration) GetLocationName() string {
+	if o == nil || IsNil(o.LocationName) {
+		var ret string
 		return ret
 	}
-	return o.LocationName
+	return *o.LocationName
 }
 
 // GetLocationNameOk returns a tuple with the LocationName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetLocationNameOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetLocationNameOk() (*string, bool) {
 	if o == nil || IsNil(o.LocationName) {
 		return nil, false
 	}
-	return &o.LocationName, true
+	return o.LocationName, true
 }
 
 // HasLocationName returns a boolean if a field has been set.
@@ -215,28 +210,27 @@ func (o *VmConfiguration) HasLocationName() bool {
 	return false
 }
 
-// SetLocationName gets a reference to the given interface{} and assigns it to the LocationName field.
-func (o *VmConfiguration) SetLocationName(v interface{}) {
-	o.LocationName = v
+// SetLocationName gets a reference to the given string and assigns it to the LocationName field.
+func (o *VmConfiguration) SetLocationName(v string) {
+	o.LocationName = &v
 }
 
-// GetDataCenterId returns the DataCenterId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetDataCenterId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDataCenterId returns the DataCenterId field value if set, zero value otherwise.
+func (o *VmConfiguration) GetDataCenterId() string {
+	if o == nil || IsNil(o.DataCenterId) {
+		var ret string
 		return ret
 	}
-	return o.DataCenterId
+	return *o.DataCenterId
 }
 
 // GetDataCenterIdOk returns a tuple with the DataCenterId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetDataCenterIdOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetDataCenterIdOk() (*string, bool) {
 	if o == nil || IsNil(o.DataCenterId) {
 		return nil, false
 	}
-	return &o.DataCenterId, true
+	return o.DataCenterId, true
 }
 
 // HasDataCenterId returns a boolean if a field has been set.
@@ -248,28 +242,27 @@ func (o *VmConfiguration) HasDataCenterId() bool {
 	return false
 }
 
-// SetDataCenterId gets a reference to the given interface{} and assigns it to the DataCenterId field.
-func (o *VmConfiguration) SetDataCenterId(v interface{}) {
-	o.DataCenterId = v
+// SetDataCenterId gets a reference to the given string and assigns it to the DataCenterId field.
+func (o *VmConfiguration) SetDataCenterId(v string) {
+	o.DataCenterId = &v
 }
 
-// GetDataCenterName returns the DataCenterName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetDataCenterName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDataCenterName returns the DataCenterName field value if set, zero value otherwise.
+func (o *VmConfiguration) GetDataCenterName() string {
+	if o == nil || IsNil(o.DataCenterName) {
+		var ret string
 		return ret
 	}
-	return o.DataCenterName
+	return *o.DataCenterName
 }
 
 // GetDataCenterNameOk returns a tuple with the DataCenterName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetDataCenterNameOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetDataCenterNameOk() (*string, bool) {
 	if o == nil || IsNil(o.DataCenterName) {
 		return nil, false
 	}
-	return &o.DataCenterName, true
+	return o.DataCenterName, true
 }
 
 // HasDataCenterName returns a boolean if a field has been set.
@@ -281,28 +274,27 @@ func (o *VmConfiguration) HasDataCenterName() bool {
 	return false
 }
 
-// SetDataCenterName gets a reference to the given interface{} and assigns it to the DataCenterName field.
-func (o *VmConfiguration) SetDataCenterName(v interface{}) {
-	o.DataCenterName = v
+// SetDataCenterName gets a reference to the given string and assigns it to the DataCenterName field.
+func (o *VmConfiguration) SetDataCenterName(v string) {
+	o.DataCenterName = &v
 }
 
-// GetOsId returns the OsId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetOsId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetOsId returns the OsId field value if set, zero value otherwise.
+func (o *VmConfiguration) GetOsId() int32 {
+	if o == nil || IsNil(o.OsId) {
+		var ret int32
 		return ret
 	}
-	return o.OsId
+	return *o.OsId
 }
 
 // GetOsIdOk returns a tuple with the OsId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetOsIdOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetOsIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.OsId) {
 		return nil, false
 	}
-	return &o.OsId, true
+	return o.OsId, true
 }
 
 // HasOsId returns a boolean if a field has been set.
@@ -314,28 +306,27 @@ func (o *VmConfiguration) HasOsId() bool {
 	return false
 }
 
-// SetOsId gets a reference to the given interface{} and assigns it to the OsId field.
-func (o *VmConfiguration) SetOsId(v interface{}) {
-	o.OsId = v
+// SetOsId gets a reference to the given int32 and assigns it to the OsId field.
+func (o *VmConfiguration) SetOsId(v int32) {
+	o.OsId = &v
 }
 
-// GetOsType returns the OsType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetOsType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetOsType returns the OsType field value if set, zero value otherwise.
+func (o *VmConfiguration) GetOsType() string {
+	if o == nil || IsNil(o.OsType) {
+		var ret string
 		return ret
 	}
-	return o.OsType
+	return *o.OsType
 }
 
 // GetOsTypeOk returns a tuple with the OsType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetOsTypeOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetOsTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.OsType) {
 		return nil, false
 	}
-	return &o.OsType, true
+	return o.OsType, true
 }
 
 // HasOsType returns a boolean if a field has been set.
@@ -347,28 +338,27 @@ func (o *VmConfiguration) HasOsType() bool {
 	return false
 }
 
-// SetOsType gets a reference to the given interface{} and assigns it to the OsType field.
-func (o *VmConfiguration) SetOsType(v interface{}) {
-	o.OsType = v
+// SetOsType gets a reference to the given string and assigns it to the OsType field.
+func (o *VmConfiguration) SetOsType(v string) {
+	o.OsType = &v
 }
 
-// GetOsVersion returns the OsVersion field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetOsVersion() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetOsVersion returns the OsVersion field value if set, zero value otherwise.
+func (o *VmConfiguration) GetOsVersion() string {
+	if o == nil || IsNil(o.OsVersion) {
+		var ret string
 		return ret
 	}
-	return o.OsVersion
+	return *o.OsVersion
 }
 
 // GetOsVersionOk returns a tuple with the OsVersion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetOsVersionOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetOsVersionOk() (*string, bool) {
 	if o == nil || IsNil(o.OsVersion) {
 		return nil, false
 	}
-	return &o.OsVersion, true
+	return o.OsVersion, true
 }
 
 // HasOsVersion returns a boolean if a field has been set.
@@ -380,61 +370,59 @@ func (o *VmConfiguration) HasOsVersion() bool {
 	return false
 }
 
-// SetOsVersion gets a reference to the given interface{} and assigns it to the OsVersion field.
-func (o *VmConfiguration) SetOsVersion(v interface{}) {
-	o.OsVersion = v
+// SetOsVersion gets a reference to the given string and assigns it to the OsVersion field.
+func (o *VmConfiguration) SetOsVersion(v string) {
+	o.OsVersion = &v
 }
 
-// GetCloudNetworkType returns the CloudNetworkType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetCloudNetworkType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCloudNetworkTypes returns the CloudNetworkTypes field value if set, zero value otherwise.
+func (o *VmConfiguration) GetCloudNetworkTypes() []string {
+	if o == nil || IsNil(o.CloudNetworkTypes) {
+		var ret []string
 		return ret
 	}
-	return o.CloudNetworkType
+	return o.CloudNetworkTypes
 }
 
-// GetCloudNetworkTypeOk returns a tuple with the CloudNetworkType field value if set, nil otherwise
+// GetCloudNetworkTypesOk returns a tuple with the CloudNetworkTypes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetCloudNetworkTypeOk() (*interface{}, bool) {
-	if o == nil || IsNil(o.CloudNetworkType) {
+func (o *VmConfiguration) GetCloudNetworkTypesOk() ([]string, bool) {
+	if o == nil || IsNil(o.CloudNetworkTypes) {
 		return nil, false
 	}
-	return &o.CloudNetworkType, true
+	return o.CloudNetworkTypes, true
 }
 
-// HasCloudNetworkType returns a boolean if a field has been set.
-func (o *VmConfiguration) HasCloudNetworkType() bool {
-	if o != nil && !IsNil(o.CloudNetworkType) {
+// HasCloudNetworkTypes returns a boolean if a field has been set.
+func (o *VmConfiguration) HasCloudNetworkTypes() bool {
+	if o != nil && !IsNil(o.CloudNetworkTypes) {
 		return true
 	}
 
 	return false
 }
 
-// SetCloudNetworkType gets a reference to the given interface{} and assigns it to the CloudNetworkType field.
-func (o *VmConfiguration) SetCloudNetworkType(v interface{}) {
-	o.CloudNetworkType = v
+// SetCloudNetworkTypes gets a reference to the given []string and assigns it to the CloudNetworkTypes field.
+func (o *VmConfiguration) SetCloudNetworkTypes(v []string) {
+	o.CloudNetworkTypes = v
 }
 
-// GetVCpuType returns the VCpuType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetVCpuType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetVCpuType returns the VCpuType field value if set, zero value otherwise.
+func (o *VmConfiguration) GetVCpuType() string {
+	if o == nil || IsNil(o.VCpuType) {
+		var ret string
 		return ret
 	}
-	return o.VCpuType
+	return *o.VCpuType
 }
 
 // GetVCpuTypeOk returns a tuple with the VCpuType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetVCpuTypeOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetVCpuTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.VCpuType) {
 		return nil, false
 	}
-	return &o.VCpuType, true
+	return o.VCpuType, true
 }
 
 // HasVCpuType returns a boolean if a field has been set.
@@ -446,28 +434,27 @@ func (o *VmConfiguration) HasVCpuType() bool {
 	return false
 }
 
-// SetVCpuType gets a reference to the given interface{} and assigns it to the VCpuType field.
-func (o *VmConfiguration) SetVCpuType(v interface{}) {
-	o.VCpuType = v
+// SetVCpuType gets a reference to the given string and assigns it to the VCpuType field.
+func (o *VmConfiguration) SetVCpuType(v string) {
+	o.VCpuType = &v
 }
 
-// GetVCpu returns the VCpu field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetVCpu() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetVCpu returns the VCpu field value if set, zero value otherwise.
+func (o *VmConfiguration) GetVCpu() int32 {
+	if o == nil || IsNil(o.VCpu) {
+		var ret int32
 		return ret
 	}
-	return o.VCpu
+	return *o.VCpu
 }
 
 // GetVCpuOk returns a tuple with the VCpu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetVCpuOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetVCpuOk() (*int32, bool) {
 	if o == nil || IsNil(o.VCpu) {
 		return nil, false
 	}
-	return &o.VCpu, true
+	return o.VCpu, true
 }
 
 // HasVCpu returns a boolean if a field has been set.
@@ -479,28 +466,27 @@ func (o *VmConfiguration) HasVCpu() bool {
 	return false
 }
 
-// SetVCpu gets a reference to the given interface{} and assigns it to the VCpu field.
-func (o *VmConfiguration) SetVCpu(v interface{}) {
-	o.VCpu = v
+// SetVCpu gets a reference to the given int32 and assigns it to the VCpu field.
+func (o *VmConfiguration) SetVCpu(v int32) {
+	o.VCpu = &v
 }
 
-// GetRamGb returns the RamGb field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetRamGb() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetRamGb returns the RamGb field value if set, zero value otherwise.
+func (o *VmConfiguration) GetRamGb() int32 {
+	if o == nil || IsNil(o.RamGb) {
+		var ret int32
 		return ret
 	}
-	return o.RamGb
+	return *o.RamGb
 }
 
 // GetRamGbOk returns a tuple with the RamGb field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetRamGbOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetRamGbOk() (*int32, bool) {
 	if o == nil || IsNil(o.RamGb) {
 		return nil, false
 	}
-	return &o.RamGb, true
+	return o.RamGb, true
 }
 
 // HasRamGb returns a boolean if a field has been set.
@@ -512,28 +498,27 @@ func (o *VmConfiguration) HasRamGb() bool {
 	return false
 }
 
-// SetRamGb gets a reference to the given interface{} and assigns it to the RamGb field.
-func (o *VmConfiguration) SetRamGb(v interface{}) {
-	o.RamGb = v
+// SetRamGb gets a reference to the given int32 and assigns it to the RamGb field.
+func (o *VmConfiguration) SetRamGb(v int32) {
+	o.RamGb = &v
 }
 
-// GetVolumeGb returns the VolumeGb field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetVolumeGb() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetVolumeGb returns the VolumeGb field value if set, zero value otherwise.
+func (o *VmConfiguration) GetVolumeGb() int32 {
+	if o == nil || IsNil(o.VolumeGb) {
+		var ret int32
 		return ret
 	}
-	return o.VolumeGb
+	return *o.VolumeGb
 }
 
 // GetVolumeGbOk returns a tuple with the VolumeGb field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetVolumeGbOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetVolumeGbOk() (*int32, bool) {
 	if o == nil || IsNil(o.VolumeGb) {
 		return nil, false
 	}
-	return &o.VolumeGb, true
+	return o.VolumeGb, true
 }
 
 // HasVolumeGb returns a boolean if a field has been set.
@@ -545,28 +530,27 @@ func (o *VmConfiguration) HasVolumeGb() bool {
 	return false
 }
 
-// SetVolumeGb gets a reference to the given interface{} and assigns it to the VolumeGb field.
-func (o *VmConfiguration) SetVolumeGb(v interface{}) {
-	o.VolumeGb = v
+// SetVolumeGb gets a reference to the given int32 and assigns it to the VolumeGb field.
+func (o *VmConfiguration) SetVolumeGb(v int32) {
+	o.VolumeGb = &v
 }
 
-// GetVolumeType returns the VolumeType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmConfiguration) GetVolumeType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetVolumeType returns the VolumeType field value if set, zero value otherwise.
+func (o *VmConfiguration) GetVolumeType() string {
+	if o == nil || IsNil(o.VolumeType) {
+		var ret string
 		return ret
 	}
-	return o.VolumeType
+	return *o.VolumeType
 }
 
 // GetVolumeTypeOk returns a tuple with the VolumeType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmConfiguration) GetVolumeTypeOk() (*interface{}, bool) {
+func (o *VmConfiguration) GetVolumeTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.VolumeType) {
 		return nil, false
 	}
-	return &o.VolumeType, true
+	return o.VolumeType, true
 }
 
 // HasVolumeType returns a boolean if a field has been set.
@@ -578,9 +562,9 @@ func (o *VmConfiguration) HasVolumeType() bool {
 	return false
 }
 
-// SetVolumeType gets a reference to the given interface{} and assigns it to the VolumeType field.
-func (o *VmConfiguration) SetVolumeType(v interface{}) {
-	o.VolumeType = v
+// SetVolumeType gets a reference to the given string and assigns it to the VolumeType field.
+func (o *VmConfiguration) SetVolumeType(v string) {
+	o.VolumeType = &v
 }
 
 // GetCost returns the Cost field value if set, zero value otherwise.
@@ -625,52 +609,52 @@ func (o VmConfiguration) MarshalJSON() ([]byte, error) {
 
 func (o VmConfiguration) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.ProviderId != nil {
+	if !IsNil(o.ProviderId) {
 		toSerialize["providerId"] = o.ProviderId
 	}
-	if o.ProviderName != nil {
+	if !IsNil(o.ProviderName) {
 		toSerialize["providerName"] = o.ProviderName
 	}
-	if o.LocationId != nil {
+	if !IsNil(o.LocationId) {
 		toSerialize["locationId"] = o.LocationId
 	}
-	if o.LocationName != nil {
+	if !IsNil(o.LocationName) {
 		toSerialize["locationName"] = o.LocationName
 	}
-	if o.DataCenterId != nil {
+	if !IsNil(o.DataCenterId) {
 		toSerialize["dataCenterId"] = o.DataCenterId
 	}
-	if o.DataCenterName != nil {
+	if !IsNil(o.DataCenterName) {
 		toSerialize["dataCenterName"] = o.DataCenterName
 	}
-	if o.OsId != nil {
+	if !IsNil(o.OsId) {
 		toSerialize["osId"] = o.OsId
 	}
-	if o.OsType != nil {
+	if !IsNil(o.OsType) {
 		toSerialize["osType"] = o.OsType
 	}
-	if o.OsVersion != nil {
+	if !IsNil(o.OsVersion) {
 		toSerialize["osVersion"] = o.OsVersion
 	}
-	if o.CloudNetworkType != nil {
-		toSerialize["cloudNetworkType"] = o.CloudNetworkType
+	if !IsNil(o.CloudNetworkTypes) {
+		toSerialize["cloudNetworkTypes"] = o.CloudNetworkTypes
 	}
-	if o.VCpuType != nil {
+	if !IsNil(o.VCpuType) {
 		toSerialize["vCpuType"] = o.VCpuType
 	}
-	if o.VCpu != nil {
+	if !IsNil(o.VCpu) {
 		toSerialize["vCpu"] = o.VCpu
 	}
-	if o.RamGb != nil {
+	if !IsNil(o.RamGb) {
 		toSerialize["ramGb"] = o.RamGb
 	}
-	if o.VolumeGb != nil {
+	if !IsNil(o.VolumeGb) {
 		toSerialize["volumeGb"] = o.VolumeGb
 	}
-	if o.VolumeType != nil {
+	if !IsNil(o.VolumeType) {
 		toSerialize["volumeType"] = o.VolumeType
 	}
 	if !IsNil(o.Cost) {

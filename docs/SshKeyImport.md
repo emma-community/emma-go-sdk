@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **interface{}** |  | 
-**Key** | **interface{}** |  | 
+**Name** | **string** |  | 
+**Key** | **string** |  | 
 
 ## Methods
 
 ### NewSshKeyImport
 
-`func NewSshKeyImport(name interface{}, key interface{}, ) *SshKeyImport`
+`func NewSshKeyImport(name string, key string, ) *SshKeyImport`
 
 NewSshKeyImport instantiates a new SshKeyImport object
 This constructor will assign default values to properties that have it defined,
@@ -28,64 +28,44 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetName
 
-`func (o *SshKeyImport) GetName() interface{}`
+`func (o *SshKeyImport) GetName() string`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *SshKeyImport) GetNameOk() (*interface{}, bool)`
+`func (o *SshKeyImport) GetNameOk() (*string, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *SshKeyImport) SetName(v interface{})`
+`func (o *SshKeyImport) SetName(v string)`
 
 SetName sets Name field to given value.
 
 
-### SetNameNil
-
-`func (o *SshKeyImport) SetNameNil(b bool)`
-
- SetNameNil sets the value for Name to be an explicit nil
-
-### UnsetName
-`func (o *SshKeyImport) UnsetName()`
-
-UnsetName ensures that no value is present for Name, not even an explicit nil
 ### GetKey
 
-`func (o *SshKeyImport) GetKey() interface{}`
+`func (o *SshKeyImport) GetKey() string`
 
 GetKey returns the Key field if non-nil, zero value otherwise.
 
 ### GetKeyOk
 
-`func (o *SshKeyImport) GetKeyOk() (*interface{}, bool)`
+`func (o *SshKeyImport) GetKeyOk() (*string, bool)`
 
 GetKeyOk returns a tuple with the Key field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetKey
 
-`func (o *SshKeyImport) SetKey(v interface{})`
+`func (o *SshKeyImport) SetKey(v string)`
 
 SetKey sets Key field to given value.
 
 
-### SetKeyNil
-
-`func (o *SshKeyImport) SetKeyNil(b bool)`
-
- SetKeyNil sets the value for Key to be an explicit nil
-
-### UnsetKey
-`func (o *SshKeyImport) UnsetKey()`
-
-UnsetKey ensures that no value is present for Key, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

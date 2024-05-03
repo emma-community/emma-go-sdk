@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **interface{}** |  | [optional] 
-**Family** | Pointer to **interface{}** |  | [optional] 
-**Architecture** | Pointer to **interface{}** |  | [optional] 
-**Type** | Pointer to **interface{}** |  | [optional] 
-**Version** | Pointer to **interface{}** |  | [optional] 
+**Id** | Pointer to **int32** |  | [optional] 
+**Family** | Pointer to **string** |  | [optional] 
+**Architecture** | Pointer to **string** |  | [optional] 
+**Type** | Pointer to **string** |  | [optional] 
+**Version** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -31,20 +31,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetId
 
-`func (o *VmOs) GetId() interface{}`
+`func (o *VmOs) GetId() int32`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *VmOs) GetIdOk() (*interface{}, bool)`
+`func (o *VmOs) GetIdOk() (*int32, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *VmOs) SetId(v interface{})`
+`func (o *VmOs) SetId(v int32)`
 
 SetId sets Id field to given value.
 
@@ -54,32 +54,22 @@ SetId sets Id field to given value.
 
 HasId returns a boolean if a field has been set.
 
-### SetIdNil
-
-`func (o *VmOs) SetIdNil(b bool)`
-
- SetIdNil sets the value for Id to be an explicit nil
-
-### UnsetId
-`func (o *VmOs) UnsetId()`
-
-UnsetId ensures that no value is present for Id, not even an explicit nil
 ### GetFamily
 
-`func (o *VmOs) GetFamily() interface{}`
+`func (o *VmOs) GetFamily() string`
 
 GetFamily returns the Family field if non-nil, zero value otherwise.
 
 ### GetFamilyOk
 
-`func (o *VmOs) GetFamilyOk() (*interface{}, bool)`
+`func (o *VmOs) GetFamilyOk() (*string, bool)`
 
 GetFamilyOk returns a tuple with the Family field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFamily
 
-`func (o *VmOs) SetFamily(v interface{})`
+`func (o *VmOs) SetFamily(v string)`
 
 SetFamily sets Family field to given value.
 
@@ -89,32 +79,22 @@ SetFamily sets Family field to given value.
 
 HasFamily returns a boolean if a field has been set.
 
-### SetFamilyNil
-
-`func (o *VmOs) SetFamilyNil(b bool)`
-
- SetFamilyNil sets the value for Family to be an explicit nil
-
-### UnsetFamily
-`func (o *VmOs) UnsetFamily()`
-
-UnsetFamily ensures that no value is present for Family, not even an explicit nil
 ### GetArchitecture
 
-`func (o *VmOs) GetArchitecture() interface{}`
+`func (o *VmOs) GetArchitecture() string`
 
 GetArchitecture returns the Architecture field if non-nil, zero value otherwise.
 
 ### GetArchitectureOk
 
-`func (o *VmOs) GetArchitectureOk() (*interface{}, bool)`
+`func (o *VmOs) GetArchitectureOk() (*string, bool)`
 
 GetArchitectureOk returns a tuple with the Architecture field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetArchitecture
 
-`func (o *VmOs) SetArchitecture(v interface{})`
+`func (o *VmOs) SetArchitecture(v string)`
 
 SetArchitecture sets Architecture field to given value.
 
@@ -124,32 +104,22 @@ SetArchitecture sets Architecture field to given value.
 
 HasArchitecture returns a boolean if a field has been set.
 
-### SetArchitectureNil
-
-`func (o *VmOs) SetArchitectureNil(b bool)`
-
- SetArchitectureNil sets the value for Architecture to be an explicit nil
-
-### UnsetArchitecture
-`func (o *VmOs) UnsetArchitecture()`
-
-UnsetArchitecture ensures that no value is present for Architecture, not even an explicit nil
 ### GetType
 
-`func (o *VmOs) GetType() interface{}`
+`func (o *VmOs) GetType() string`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *VmOs) GetTypeOk() (*interface{}, bool)`
+`func (o *VmOs) GetTypeOk() (*string, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *VmOs) SetType(v interface{})`
+`func (o *VmOs) SetType(v string)`
 
 SetType sets Type field to given value.
 
@@ -159,32 +129,22 @@ SetType sets Type field to given value.
 
 HasType returns a boolean if a field has been set.
 
-### SetTypeNil
-
-`func (o *VmOs) SetTypeNil(b bool)`
-
- SetTypeNil sets the value for Type to be an explicit nil
-
-### UnsetType
-`func (o *VmOs) UnsetType()`
-
-UnsetType ensures that no value is present for Type, not even an explicit nil
 ### GetVersion
 
-`func (o *VmOs) GetVersion() interface{}`
+`func (o *VmOs) GetVersion() string`
 
 GetVersion returns the Version field if non-nil, zero value otherwise.
 
 ### GetVersionOk
 
-`func (o *VmOs) GetVersionOk() (*interface{}, bool)`
+`func (o *VmOs) GetVersionOk() (*string, bool)`
 
 GetVersionOk returns a tuple with the Version field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVersion
 
-`func (o *VmOs) SetVersion(v interface{})`
+`func (o *VmOs) SetVersion(v string)`
 
 SetVersion sets Version field to given value.
 
@@ -194,16 +154,6 @@ SetVersion sets Version field to given value.
 
 HasVersion returns a boolean if a field has been set.
 
-### SetVersionNil
-
-`func (o *VmOs) SetVersionNil(b bool)`
-
- SetVersionNil sets the value for Version to be an explicit nil
-
-### UnsetVersion
-`func (o *VmOs) UnsetVersion()`
-
-UnsetVersion ensures that no value is present for Version, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

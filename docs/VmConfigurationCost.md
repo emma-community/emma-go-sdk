@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Unit** | Pointer to **interface{}** |  | [optional] 
-**Currency** | Pointer to **interface{}** |  | [optional] 
-**PricePerUnit** | Pointer to **interface{}** |  | [optional] 
+**Unit** | Pointer to **string** |  | [optional] 
+**Currency** | Pointer to **string** |  | [optional] 
+**PricePerUnit** | Pointer to **float32** |  | [optional] 
 
 ## Methods
 
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetUnit
 
-`func (o *VmConfigurationCost) GetUnit() interface{}`
+`func (o *VmConfigurationCost) GetUnit() string`
 
 GetUnit returns the Unit field if non-nil, zero value otherwise.
 
 ### GetUnitOk
 
-`func (o *VmConfigurationCost) GetUnitOk() (*interface{}, bool)`
+`func (o *VmConfigurationCost) GetUnitOk() (*string, bool)`
 
 GetUnitOk returns a tuple with the Unit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUnit
 
-`func (o *VmConfigurationCost) SetUnit(v interface{})`
+`func (o *VmConfigurationCost) SetUnit(v string)`
 
 SetUnit sets Unit field to given value.
 
@@ -52,32 +52,22 @@ SetUnit sets Unit field to given value.
 
 HasUnit returns a boolean if a field has been set.
 
-### SetUnitNil
-
-`func (o *VmConfigurationCost) SetUnitNil(b bool)`
-
- SetUnitNil sets the value for Unit to be an explicit nil
-
-### UnsetUnit
-`func (o *VmConfigurationCost) UnsetUnit()`
-
-UnsetUnit ensures that no value is present for Unit, not even an explicit nil
 ### GetCurrency
 
-`func (o *VmConfigurationCost) GetCurrency() interface{}`
+`func (o *VmConfigurationCost) GetCurrency() string`
 
 GetCurrency returns the Currency field if non-nil, zero value otherwise.
 
 ### GetCurrencyOk
 
-`func (o *VmConfigurationCost) GetCurrencyOk() (*interface{}, bool)`
+`func (o *VmConfigurationCost) GetCurrencyOk() (*string, bool)`
 
 GetCurrencyOk returns a tuple with the Currency field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCurrency
 
-`func (o *VmConfigurationCost) SetCurrency(v interface{})`
+`func (o *VmConfigurationCost) SetCurrency(v string)`
 
 SetCurrency sets Currency field to given value.
 
@@ -87,32 +77,22 @@ SetCurrency sets Currency field to given value.
 
 HasCurrency returns a boolean if a field has been set.
 
-### SetCurrencyNil
-
-`func (o *VmConfigurationCost) SetCurrencyNil(b bool)`
-
- SetCurrencyNil sets the value for Currency to be an explicit nil
-
-### UnsetCurrency
-`func (o *VmConfigurationCost) UnsetCurrency()`
-
-UnsetCurrency ensures that no value is present for Currency, not even an explicit nil
 ### GetPricePerUnit
 
-`func (o *VmConfigurationCost) GetPricePerUnit() interface{}`
+`func (o *VmConfigurationCost) GetPricePerUnit() float32`
 
 GetPricePerUnit returns the PricePerUnit field if non-nil, zero value otherwise.
 
 ### GetPricePerUnitOk
 
-`func (o *VmConfigurationCost) GetPricePerUnitOk() (*interface{}, bool)`
+`func (o *VmConfigurationCost) GetPricePerUnitOk() (*float32, bool)`
 
 GetPricePerUnitOk returns a tuple with the PricePerUnit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPricePerUnit
 
-`func (o *VmConfigurationCost) SetPricePerUnit(v interface{})`
+`func (o *VmConfigurationCost) SetPricePerUnit(v float32)`
 
 SetPricePerUnit sets PricePerUnit field to given value.
 
@@ -122,16 +102,6 @@ SetPricePerUnit sets PricePerUnit field to given value.
 
 HasPricePerUnit returns a boolean if a field has been set.
 
-### SetPricePerUnitNil
-
-`func (o *VmConfigurationCost) SetPricePerUnitNil(b bool)`
-
- SetPricePerUnitNil sets the value for PricePerUnit to be an explicit nil
-
-### UnsetPricePerUnit
-`func (o *VmConfigurationCost) UnsetPricePerUnit()`
-
-UnsetPricePerUnit ensures that no value is present for PricePerUnit, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

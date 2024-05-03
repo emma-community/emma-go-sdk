@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,12 +19,12 @@ var _ MappedNullable = &VmDataCenter{}
 
 // VmDataCenter struct for VmDataCenter
 type VmDataCenter struct {
-	Id           interface{} `json:"id,omitempty"`
-	Name         interface{} `json:"name,omitempty"`
-	ProviderId   interface{} `json:"providerId,omitempty"`
-	ProviderName interface{} `json:"providerName,omitempty"`
-	LocationId   interface{} `json:"locationId,omitempty"`
-	LocationName interface{} `json:"locationName,omitempty"`
+	Id           *string `json:"id,omitempty"`
+	Name         *string `json:"name,omitempty"`
+	ProviderId   *int32  `json:"providerId,omitempty"`
+	ProviderName *string `json:"providerName,omitempty"`
+	LocationId   *int32  `json:"locationId,omitempty"`
+	LocationName *string `json:"locationName,omitempty"`
 }
 
 // NewVmDataCenter instantiates a new VmDataCenter object
@@ -44,23 +44,22 @@ func NewVmDataCenterWithDefaults() *VmDataCenter {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDataCenter) GetId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *VmDataCenter) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
 		return ret
 	}
-	return o.Id
+	return *o.Id
 }
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDataCenter) GetIdOk() (*interface{}, bool) {
+func (o *VmDataCenter) GetIdOk() (*string, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
 // HasId returns a boolean if a field has been set.
@@ -72,28 +71,27 @@ func (o *VmDataCenter) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given interface{} and assigns it to the Id field.
-func (o *VmDataCenter) SetId(v interface{}) {
-	o.Id = v
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *VmDataCenter) SetId(v string) {
+	o.Id = &v
 }
 
-// GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDataCenter) GetName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *VmDataCenter) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
 		return ret
 	}
-	return o.Name
+	return *o.Name
 }
 
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDataCenter) GetNameOk() (*interface{}, bool) {
+func (o *VmDataCenter) GetNameOk() (*string, bool) {
 	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
 // HasName returns a boolean if a field has been set.
@@ -105,28 +103,27 @@ func (o *VmDataCenter) HasName() bool {
 	return false
 }
 
-// SetName gets a reference to the given interface{} and assigns it to the Name field.
-func (o *VmDataCenter) SetName(v interface{}) {
-	o.Name = v
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *VmDataCenter) SetName(v string) {
+	o.Name = &v
 }
 
-// GetProviderId returns the ProviderId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDataCenter) GetProviderId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetProviderId returns the ProviderId field value if set, zero value otherwise.
+func (o *VmDataCenter) GetProviderId() int32 {
+	if o == nil || IsNil(o.ProviderId) {
+		var ret int32
 		return ret
 	}
-	return o.ProviderId
+	return *o.ProviderId
 }
 
 // GetProviderIdOk returns a tuple with the ProviderId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDataCenter) GetProviderIdOk() (*interface{}, bool) {
+func (o *VmDataCenter) GetProviderIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.ProviderId) {
 		return nil, false
 	}
-	return &o.ProviderId, true
+	return o.ProviderId, true
 }
 
 // HasProviderId returns a boolean if a field has been set.
@@ -138,28 +135,27 @@ func (o *VmDataCenter) HasProviderId() bool {
 	return false
 }
 
-// SetProviderId gets a reference to the given interface{} and assigns it to the ProviderId field.
-func (o *VmDataCenter) SetProviderId(v interface{}) {
-	o.ProviderId = v
+// SetProviderId gets a reference to the given int32 and assigns it to the ProviderId field.
+func (o *VmDataCenter) SetProviderId(v int32) {
+	o.ProviderId = &v
 }
 
-// GetProviderName returns the ProviderName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDataCenter) GetProviderName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetProviderName returns the ProviderName field value if set, zero value otherwise.
+func (o *VmDataCenter) GetProviderName() string {
+	if o == nil || IsNil(o.ProviderName) {
+		var ret string
 		return ret
 	}
-	return o.ProviderName
+	return *o.ProviderName
 }
 
 // GetProviderNameOk returns a tuple with the ProviderName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDataCenter) GetProviderNameOk() (*interface{}, bool) {
+func (o *VmDataCenter) GetProviderNameOk() (*string, bool) {
 	if o == nil || IsNil(o.ProviderName) {
 		return nil, false
 	}
-	return &o.ProviderName, true
+	return o.ProviderName, true
 }
 
 // HasProviderName returns a boolean if a field has been set.
@@ -171,28 +167,27 @@ func (o *VmDataCenter) HasProviderName() bool {
 	return false
 }
 
-// SetProviderName gets a reference to the given interface{} and assigns it to the ProviderName field.
-func (o *VmDataCenter) SetProviderName(v interface{}) {
-	o.ProviderName = v
+// SetProviderName gets a reference to the given string and assigns it to the ProviderName field.
+func (o *VmDataCenter) SetProviderName(v string) {
+	o.ProviderName = &v
 }
 
-// GetLocationId returns the LocationId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDataCenter) GetLocationId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetLocationId returns the LocationId field value if set, zero value otherwise.
+func (o *VmDataCenter) GetLocationId() int32 {
+	if o == nil || IsNil(o.LocationId) {
+		var ret int32
 		return ret
 	}
-	return o.LocationId
+	return *o.LocationId
 }
 
 // GetLocationIdOk returns a tuple with the LocationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDataCenter) GetLocationIdOk() (*interface{}, bool) {
+func (o *VmDataCenter) GetLocationIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.LocationId) {
 		return nil, false
 	}
-	return &o.LocationId, true
+	return o.LocationId, true
 }
 
 // HasLocationId returns a boolean if a field has been set.
@@ -204,28 +199,27 @@ func (o *VmDataCenter) HasLocationId() bool {
 	return false
 }
 
-// SetLocationId gets a reference to the given interface{} and assigns it to the LocationId field.
-func (o *VmDataCenter) SetLocationId(v interface{}) {
-	o.LocationId = v
+// SetLocationId gets a reference to the given int32 and assigns it to the LocationId field.
+func (o *VmDataCenter) SetLocationId(v int32) {
+	o.LocationId = &v
 }
 
-// GetLocationName returns the LocationName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmDataCenter) GetLocationName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetLocationName returns the LocationName field value if set, zero value otherwise.
+func (o *VmDataCenter) GetLocationName() string {
+	if o == nil || IsNil(o.LocationName) {
+		var ret string
 		return ret
 	}
-	return o.LocationName
+	return *o.LocationName
 }
 
 // GetLocationNameOk returns a tuple with the LocationName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmDataCenter) GetLocationNameOk() (*interface{}, bool) {
+func (o *VmDataCenter) GetLocationNameOk() (*string, bool) {
 	if o == nil || IsNil(o.LocationName) {
 		return nil, false
 	}
-	return &o.LocationName, true
+	return o.LocationName, true
 }
 
 // HasLocationName returns a boolean if a field has been set.
@@ -237,9 +231,9 @@ func (o *VmDataCenter) HasLocationName() bool {
 	return false
 }
 
-// SetLocationName gets a reference to the given interface{} and assigns it to the LocationName field.
-func (o *VmDataCenter) SetLocationName(v interface{}) {
-	o.LocationName = v
+// SetLocationName gets a reference to the given string and assigns it to the LocationName field.
+func (o *VmDataCenter) SetLocationName(v string) {
+	o.LocationName = &v
 }
 
 func (o VmDataCenter) MarshalJSON() ([]byte, error) {
@@ -252,22 +246,22 @@ func (o VmDataCenter) MarshalJSON() ([]byte, error) {
 
 func (o VmDataCenter) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.Name != nil {
+	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if o.ProviderId != nil {
+	if !IsNil(o.ProviderId) {
 		toSerialize["providerId"] = o.ProviderId
 	}
-	if o.ProviderName != nil {
+	if !IsNil(o.ProviderName) {
 		toSerialize["providerName"] = o.ProviderName
 	}
-	if o.LocationId != nil {
+	if !IsNil(o.LocationId) {
 		toSerialize["locationId"] = o.LocationId
 	}
-	if o.LocationName != nil {
+	if !IsNil(o.LocationName) {
 		toSerialize["locationName"] = o.LocationName
 	}
 	return toSerialize, nil

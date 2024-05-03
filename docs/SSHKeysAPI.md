@@ -27,7 +27,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
@@ -95,7 +95,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
@@ -161,12 +161,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
 	sshKeyId := int32(56) // int32 | SSH key ID
-	sshKeyUpdate := *openapiclient.NewSshKeyUpdate(interface{}(mykey)) // SshKeyUpdate |  (optional)
+	sshKeyUpdate := *openapiclient.NewSshKeyUpdate("mykey") // SshKeyUpdate |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -231,7 +231,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
@@ -290,11 +290,11 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
-	sshKeysCreateImportRequest := openapiclient.SshKeysCreateImport_request{SshKeyCreate: openapiclient.NewSshKeyCreate(interface{}(mykey), interface{}(RSA))} // SshKeysCreateImportRequest |  (optional)
+	sshKeysCreateImportRequest := openapiclient.SshKeysCreateImport_request{SshKeyCreate: openapiclient.NewSshKeyCreate("mykey", "RSA")} // SshKeysCreateImportRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

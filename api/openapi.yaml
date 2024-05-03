@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   description: |
-    This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.
+    **Base URL:** *<u>https://api.emma.ms/external</u>*
 
-    To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.
+    This **Infrastructure API** is for managing the cloud infrastructure within a project.
 
-    After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.
+    To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.
 
-    The Bearer access token is a text string, included in the request header:
+    After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.
 
-    -H "Authorization: Bearer {token}"
+    The Bearer access token is a text string, included in the request header, example:
 
-    Use this token for API requests.
+    *-H Authorization: Bearer {token}*
 
-    The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+    Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
   title: Public EMMA API
   version: 0.0.1
 servers:
@@ -30,6 +30,10 @@ tags:
   name: Operating systems
 - description: Viewing providers
   name: Providers
+- description: Security groups operations
+  name: Security groups
+- description: Spot instances operations
+  name: Spot instances
 - description: SSH keys operations
   name: SSH keys
 - description: Virtual machines operations
@@ -89,9 +93,33 @@ paths:
     get:
       operationId: GetDataCenters
       parameters:
-      - $ref: '#/components/parameters/dataCenterName'
-      - $ref: '#/components/parameters/locationIdQuery'
-      - $ref: '#/components/parameters/providerName'
+      - description: Data center name
+        explode: true
+        in: query
+        name: dataCenterName
+        required: false
+        schema:
+          example: eu-north-1
+          type: string
+        style: form
+      - description: Location ID
+        explode: true
+        in: query
+        name: locationId
+        required: false
+        schema:
+          example: 6
+          type: integer
+        style: form
+      - description: Provider name
+        explode: true
+        in: query
+        name: providerName
+        required: false
+        schema:
+          example: GCP
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -128,7 +156,15 @@ paths:
     get:
       operationId: GetDataCenter
       parameters:
-      - $ref: '#/components/parameters/dataCenterId'
+      - description: Data center ID
+        explode: false
+        in: path
+        name: dataCenterId
+        required: true
+        schema:
+          example: aws-us-west-1
+          type: string
+        style: simple
       responses:
         "200":
           content:
@@ -163,7 +199,15 @@ paths:
     get:
       operationId: GetLocations
       parameters:
-      - $ref: '#/components/parameters/locationName'
+      - description: Location name
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          example: Stockholm
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -194,7 +238,14 @@ paths:
     get:
       operationId: GetLocation
       parameters:
-      - $ref: '#/components/parameters/locationId'
+      - description: Location ID
+        explode: false
+        in: path
+        name: locationId
+        required: true
+        schema:
+          type: integer
+        style: simple
       responses:
         "200":
           content:
@@ -229,9 +280,33 @@ paths:
     get:
       operationId: GetOperatingSystems
       parameters:
-      - $ref: '#/components/parameters/osType'
-      - $ref: '#/components/parameters/osArchitecture'
-      - $ref: '#/components/parameters/osVersion'
+      - description: Operating system type
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          example: Ubuntu
+          type: string
+        style: form
+      - description: Operating system architecture
+        explode: true
+        in: query
+        name: architecture
+        required: false
+        schema:
+          example: x86-64
+          type: string
+        style: form
+      - description: Operating system version
+        explode: true
+        in: query
+        name: version
+        required: false
+        schema:
+          example: "18.04"
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -262,7 +337,14 @@ paths:
     get:
       operationId: GetOperatingSystem
       parameters:
-      - $ref: '#/components/parameters/operatingSystemId'
+      - description: Operating system ID
+        explode: false
+        in: path
+        name: operatingSystemId
+        required: true
+        schema:
+          type: integer
+        style: simple
       responses:
         "200":
           content:
@@ -297,7 +379,15 @@ paths:
     get:
       operationId: GetProviders
       parameters:
-      - $ref: '#/components/parameters/providerName'
+      - description: Provider name
+        explode: true
+        in: query
+        name: providerName
+        required: false
+        schema:
+          example: GCP
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -328,7 +418,14 @@ paths:
     get:
       operationId: GetProvider
       parameters:
-      - $ref: '#/components/parameters/providerId'
+      - description: Provider ID
+        explode: false
+        in: path
+        name: providerId
+        required: true
+        schema:
+          type: integer
+        style: simple
       responses:
         "200":
           content:
@@ -359,6 +456,541 @@ paths:
       summary: Get cloud provider by ID
       tags:
       - Providers
+  /v1/security-groups:
+    get:
+      operationId: GetSecurityGroups
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SecurityGroup'
+                type: array
+          description: Successful operation
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+      security:
+      - bearerAuth: []
+      summary: Get list of security groups
+      tags:
+      - Security groups
+    post:
+      operationId: SecurityGroupCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecurityGroupRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityGroup'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+      security:
+      - bearerAuth: []
+      summary: Create security group
+      tags:
+      - Security groups
+  /v1/security-groups/{securityGroupId}:
+    delete:
+      operationId: SecurityGroupDelete
+      parameters:
+      - description: Security group id
+        explode: false
+        in: path
+        name: securityGroupId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityGroup'
+          description: Successful operation
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+          description: Conflict
+      security:
+      - bearerAuth: []
+      summary: Delete security group
+      tags:
+      - Security groups
+    get:
+      operationId: GetSecurityGroup
+      parameters:
+      - description: Security group id
+        explode: false
+        in: path
+        name: securityGroupId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityGroup'
+          description: Successful operation
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+      security:
+      - bearerAuth: []
+      summary: Get security group by ID
+      tags:
+      - Security groups
+    put:
+      operationId: SecurityGroupUpdate
+      parameters:
+      - description: Security group id
+        explode: false
+        in: path
+        name: securityGroupId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecurityGroupRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityGroup'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+          description: Conflict
+      security:
+      - bearerAuth: []
+      summary: Update security group
+      tags:
+      - Security groups
+  /v1/security-groups/{securityGroupId}/instances:
+    get:
+      operationId: SecurityGroupInstances
+      parameters:
+      - description: Security group id
+        explode: false
+        in: path
+        name: securityGroupId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SecurityGroupInstance'
+                type: array
+          description: Successful operation
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+      security:
+      - bearerAuth: []
+      summary: Get instances in security group
+      tags:
+      - Security groups
+    post:
+      operationId: SecurityGroupInstanceAdd
+      parameters:
+      - description: Security group id
+        explode: false
+        in: path
+        name: securityGroupId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecurityGroupInstanceAdd'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityGroupInstance'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+          description: Unprocessable entity
+      security:
+      - bearerAuth: []
+      summary: Add instance to security group
+      tags:
+      - Security groups
+  /v1/spot-instances:
+    get:
+      operationId: GetSpots
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Vm'
+                type: array
+          description: Successful operation
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden - Access is denied
+      security:
+      - bearerAuth: []
+      summary: Get list of spot instances
+      tags:
+      - Spot instances
+    post:
+      operationId: SpotCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpotCreate'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vm'
+          description: Spot instance created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden - Access is denied
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+          description: Unprocessable entity
+      security:
+      - bearerAuth: []
+      summary: Create spot instance
+      tags:
+      - Spot instances
+  /v1/spot-instances/{spotInstanceId}:
+    delete:
+      operationId: SpotDelete
+      parameters:
+      - description: Spot instance id
+        explode: false
+        in: path
+        name: spotInstanceId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vm'
+          description: Successful operation
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden - Access is denied
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+      security:
+      - bearerAuth: []
+      summary: Delete spot instance
+      tags:
+      - Spot instances
+    get:
+      operationId: GetSpot
+      parameters:
+      - description: Spot instance id
+        explode: false
+        in: path
+        name: spotInstanceId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vm'
+          description: Successful operation
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden - Access is denied
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+      security:
+      - bearerAuth: []
+      summary: Get spot instance by id
+      tags:
+      - Spot instances
+  /v1/spot-instances/{spotInstanceId}/actions:
+    post:
+      operationId: SpotActions
+      parameters:
+      - description: Spot instance id
+        explode: false
+        in: path
+        name: spotInstanceId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpotActions_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vm'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden - Access is denied
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+      security:
+      - bearerAuth: []
+      summary: Perform actions with a spot instance
+      tags:
+      - Spot instances
   /v1/ssh-keys:
     get:
       operationId: SshKeys
@@ -429,7 +1061,14 @@ paths:
     delete:
       operationId: SshKeyDelete
       parameters:
-      - $ref: '#/components/parameters/sshKeyId'
+      - description: SSH key ID
+        explode: false
+        in: path
+        name: sshKeyId
+        required: true
+        schema:
+          type: integer
+        style: simple
       responses:
         "204":
           description: Successful operation
@@ -459,7 +1098,14 @@ paths:
     get:
       operationId: GetSshKey
       parameters:
-      - $ref: '#/components/parameters/sshKeyId'
+      - description: SSH key ID
+        explode: false
+        in: path
+        name: sshKeyId
+        required: true
+        schema:
+          type: integer
+        style: simple
       responses:
         "200":
           content:
@@ -493,7 +1139,14 @@ paths:
     put:
       operationId: SshKeyUpdate
       parameters:
-      - $ref: '#/components/parameters/sshKeyId'
+      - description: SSH key ID
+        explode: false
+        in: path
+        name: sshKeyId
+        required: true
+        schema:
+          type: integer
+        style: simple
       requestBody:
         content:
           application/json:
@@ -596,6 +1249,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: Forbidden - Access is denied
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+          description: Unprocessable entity
       security:
       - bearerAuth: []
       summary: Create virtual machine
@@ -605,7 +1264,14 @@ paths:
     delete:
       operationId: VmDelete
       parameters:
-      - $ref: '#/components/parameters/vmId'
+      - description: Virtual machine ID
+        explode: false
+        in: path
+        name: vmId
+        required: true
+        schema:
+          type: integer
+        style: simple
       responses:
         "200":
           content:
@@ -639,7 +1305,14 @@ paths:
     get:
       operationId: GetVm
       parameters:
-      - $ref: '#/components/parameters/vmId'
+      - description: Virtual machine ID
+        explode: false
+        in: path
+        name: vmId
+        required: true
+        schema:
+          type: integer
+        style: simple
       responses:
         "200":
           content:
@@ -674,7 +1347,14 @@ paths:
     post:
       operationId: VmActions
       parameters:
-      - $ref: '#/components/parameters/vmId'
+      - description: Virtual machine ID
+        explode: false
+        in: path
+        name: vmId
+        required: true
+        schema:
+          type: integer
+        style: simple
       requestBody:
         content:
           application/json:
@@ -685,8 +1365,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Vm'
+                $ref: '#/components/schemas/Vm'
           description: Successful operation
         "400":
           content:
@@ -721,25 +1400,186 @@ paths:
     get:
       operationId: GetVmConfigs
       parameters:
-      - $ref: '#/components/parameters/providerIdQuery'
-      - $ref: '#/components/parameters/locationIdQuery'
-      - $ref: '#/components/parameters/dataCenterIdQuery'
-      - $ref: '#/components/parameters/cloudNetworkType'
-      - $ref: '#/components/parameters/vCpuType'
-      - $ref: '#/components/parameters/vCpu'
-      - $ref: '#/components/parameters/vCpuMin'
-      - $ref: '#/components/parameters/vCpuMax'
-      - $ref: '#/components/parameters/ramGb'
-      - $ref: '#/components/parameters/ramGbMin'
-      - $ref: '#/components/parameters/ramGbMax'
-      - $ref: '#/components/parameters/volumeGb'
-      - $ref: '#/components/parameters/volumeGbMin'
-      - $ref: '#/components/parameters/volumeGbMax'
-      - $ref: '#/components/parameters/volumeType'
-      - $ref: '#/components/parameters/priceMin'
-      - $ref: '#/components/parameters/priceMax'
-      - $ref: '#/components/parameters/pageQuery'
-      - $ref: '#/components/parameters/sizeQuery'
+      - description: Provider ID
+        explode: true
+        in: query
+        name: providerId
+        required: false
+        schema:
+          example: 5
+          type: integer
+        style: form
+      - description: Location ID
+        explode: true
+        in: query
+        name: locationId
+        required: false
+        schema:
+          example: 6
+          type: integer
+        style: form
+      - description: Data center ID
+        explode: true
+        in: query
+        name: dataCenterId
+        required: false
+        schema:
+          example: aws-us-west-1
+          type: string
+        style: form
+      - description: Cloud network type
+        explode: true
+        in: query
+        name: cloudNetworkType
+        required: false
+        schema:
+          enum:
+          - isolated
+          - multi-cloud
+          - default
+          example: multi-cloud
+          type: string
+        style: form
+      - description: Compute instance vCPU type
+        explode: true
+        in: query
+        name: vCpuType
+        required: false
+        schema:
+          enum:
+          - shared
+          - standard
+          - hpc
+          example: Standard
+          type: string
+        style: form
+      - description: Compute instance vCPU
+        explode: true
+        in: query
+        name: vCpu
+        required: false
+        schema:
+          example: 4
+          type: integer
+        style: form
+      - description: Compute instance vCPU minimum
+        explode: true
+        in: query
+        name: vCpuMin
+        required: false
+        schema:
+          example: 1
+          type: integer
+        style: form
+      - description: Compute instance vCPU maximum
+        explode: true
+        in: query
+        name: vCpuMax
+        required: false
+        schema:
+          example: 8
+          type: integer
+        style: form
+      - description: Compute instance RAM (GB)
+        explode: true
+        in: query
+        name: ramGb
+        required: false
+        schema:
+          example: 16
+          type: integer
+        style: form
+      - description: Compute instance RAM (GB) minimum
+        explode: true
+        in: query
+        name: ramGbMin
+        required: false
+        schema:
+          example: 8
+          type: integer
+        style: form
+      - description: Compute instance RAM (GB) maximum
+        explode: true
+        in: query
+        name: ramGbMax
+        required: false
+        schema:
+          example: 32
+          type: integer
+        style: form
+      - description: Compute instance volume (GB)
+        explode: true
+        in: query
+        name: volumeGb
+        required: false
+        schema:
+          example: 500
+          type: integer
+        style: form
+      - description: Compute instance volume minimum (GB)
+        explode: true
+        in: query
+        name: volumeGbMin
+        required: false
+        schema:
+          example: 250
+          type: integer
+        style: form
+      - description: Compute instance volume maximun (GB)
+        explode: true
+        in: query
+        name: volumeGbMax
+        required: false
+        schema:
+          example: 1000
+          type: integer
+        style: form
+      - description: Compute instance volume type
+        explode: true
+        in: query
+        name: volumeType
+        required: false
+        schema:
+          enum:
+          - ssd
+          - ssd-plus
+          example: ssd
+          type: string
+        style: form
+      - description: Instance price minimum
+        explode: true
+        in: query
+        name: priceMin
+        required: false
+        schema:
+          type: number
+        style: form
+      - description: Instance price maximum
+        explode: true
+        in: query
+        name: priceMax
+        required: false
+        schema:
+          type: number
+        style: form
+      - description: Page number
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          example: 0
+          type: integer
+        style: form
+      - description: Query size
+        explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          example: 100
+          type: integer
+        style: form
       responses:
         "200":
           content:
@@ -774,25 +1614,186 @@ paths:
     get:
       operationId: GetSpotConfigs
       parameters:
-      - $ref: '#/components/parameters/providerIdQuery'
-      - $ref: '#/components/parameters/locationIdQuery'
-      - $ref: '#/components/parameters/dataCenterIdQuery'
-      - $ref: '#/components/parameters/cloudNetworkType'
-      - $ref: '#/components/parameters/vCpuType'
-      - $ref: '#/components/parameters/vCpu'
-      - $ref: '#/components/parameters/vCpuMin'
-      - $ref: '#/components/parameters/vCpuMax'
-      - $ref: '#/components/parameters/ramGb'
-      - $ref: '#/components/parameters/ramGbMin'
-      - $ref: '#/components/parameters/ramGbMax'
-      - $ref: '#/components/parameters/volumeGb'
-      - $ref: '#/components/parameters/volumeGbMin'
-      - $ref: '#/components/parameters/volumeGbMax'
-      - $ref: '#/components/parameters/volumeType'
-      - $ref: '#/components/parameters/priceMin'
-      - $ref: '#/components/parameters/priceMax'
-      - $ref: '#/components/parameters/pageQuery'
-      - $ref: '#/components/parameters/sizeQuery'
+      - description: Provider ID
+        explode: true
+        in: query
+        name: providerId
+        required: false
+        schema:
+          example: 5
+          type: integer
+        style: form
+      - description: Location ID
+        explode: true
+        in: query
+        name: locationId
+        required: false
+        schema:
+          example: 6
+          type: integer
+        style: form
+      - description: Data center ID
+        explode: true
+        in: query
+        name: dataCenterId
+        required: false
+        schema:
+          example: aws-us-west-1
+          type: string
+        style: form
+      - description: Cloud network type
+        explode: true
+        in: query
+        name: cloudNetworkType
+        required: false
+        schema:
+          enum:
+          - isolated
+          - multi-cloud
+          - default
+          example: multi-cloud
+          type: string
+        style: form
+      - description: Compute instance vCPU type
+        explode: true
+        in: query
+        name: vCpuType
+        required: false
+        schema:
+          enum:
+          - shared
+          - standard
+          - hpc
+          example: Standard
+          type: string
+        style: form
+      - description: Compute instance vCPU
+        explode: true
+        in: query
+        name: vCpu
+        required: false
+        schema:
+          example: 4
+          type: integer
+        style: form
+      - description: Compute instance vCPU minimum
+        explode: true
+        in: query
+        name: vCpuMin
+        required: false
+        schema:
+          example: 1
+          type: integer
+        style: form
+      - description: Compute instance vCPU maximum
+        explode: true
+        in: query
+        name: vCpuMax
+        required: false
+        schema:
+          example: 8
+          type: integer
+        style: form
+      - description: Compute instance RAM (GB)
+        explode: true
+        in: query
+        name: ramGb
+        required: false
+        schema:
+          example: 16
+          type: integer
+        style: form
+      - description: Compute instance RAM (GB) minimum
+        explode: true
+        in: query
+        name: ramGbMin
+        required: false
+        schema:
+          example: 8
+          type: integer
+        style: form
+      - description: Compute instance RAM (GB) maximum
+        explode: true
+        in: query
+        name: ramGbMax
+        required: false
+        schema:
+          example: 32
+          type: integer
+        style: form
+      - description: Compute instance volume (GB)
+        explode: true
+        in: query
+        name: volumeGb
+        required: false
+        schema:
+          example: 500
+          type: integer
+        style: form
+      - description: Compute instance volume minimum (GB)
+        explode: true
+        in: query
+        name: volumeGbMin
+        required: false
+        schema:
+          example: 250
+          type: integer
+        style: form
+      - description: Compute instance volume maximun (GB)
+        explode: true
+        in: query
+        name: volumeGbMax
+        required: false
+        schema:
+          example: 1000
+          type: integer
+        style: form
+      - description: Compute instance volume type
+        explode: true
+        in: query
+        name: volumeType
+        required: false
+        schema:
+          enum:
+          - ssd
+          - ssd-plus
+          example: ssd
+          type: string
+        style: form
+      - description: Instance price minimum
+        explode: true
+        in: query
+        name: priceMin
+        required: false
+        schema:
+          type: number
+        style: form
+      - description: Instance price maximum
+        explode: true
+        in: query
+        name: priceMax
+        required: false
+        schema:
+          type: number
+        style: form
+      - description: Page number
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          example: 0
+          type: integer
+        style: form
+      - description: Query size
+        explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          example: 100
+          type: integer
+        style: form
       responses:
         "200":
           content:
@@ -832,7 +1833,7 @@ components:
       name: applicationId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     cloudNetworkType:
       description: Cloud network type
@@ -846,6 +1847,7 @@ components:
         - multi-cloud
         - default
         example: multi-cloud
+        type: string
       style: form
     estoreAppId:
       description: ID of an application available for set up
@@ -854,7 +1856,7 @@ components:
       name: estoreAppId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     backupId:
       description: Backup ID
@@ -863,7 +1865,7 @@ components:
       name: backupId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     backupPolicyId:
       description: Backup policy ID
@@ -872,7 +1874,7 @@ components:
       name: backupPolicyId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     dataCenterId:
       description: Data center ID
@@ -902,6 +1904,7 @@ components:
       required: false
       schema:
         example: aws-us-west-1
+        type: string
       style: form
     instanceId:
       description: Instance ID in backup policy
@@ -910,7 +1913,7 @@ components:
       name: instanceId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     kClusterId:
       description: Kubernetes cluster ID
@@ -919,7 +1922,7 @@ components:
       name: kClusterId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     locationId:
       description: Location ID
@@ -929,7 +1932,6 @@ components:
       required: true
       schema:
         type: integer
-        example: null
       style: simple
     locationName:
       description: Location name
@@ -958,7 +1960,7 @@ components:
       name: nodeId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     operatingSystemId:
       description: Operating system ID
@@ -968,7 +1970,6 @@ components:
       required: true
       schema:
         type: integer
-        example: null
       style: simple
     osType:
       description: Operating system type
@@ -997,7 +1998,7 @@ components:
       name: version
       required: false
       schema:
-        example: 18.04
+        example: "18.04"
         type: string
       style: form
     pageQuery:
@@ -1008,6 +2009,7 @@ components:
       required: false
       schema:
         example: 0
+        type: integer
       style: form
     priceMin:
       description: Instance price minimum
@@ -1015,7 +2017,8 @@ components:
       in: query
       name: priceMin
       required: false
-      schema: {}
+      schema:
+        type: number
       style: form
     priceMax:
       description: Instance price maximum
@@ -1023,7 +2026,8 @@ components:
       in: query
       name: priceMax
       required: false
-      schema: {}
+      schema:
+        type: number
       style: form
     projectId:
       description: Project ID
@@ -1032,7 +2036,7 @@ components:
       name: projectId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     providerId:
       description: Provider ID
@@ -1042,7 +2046,6 @@ components:
       required: true
       schema:
         type: integer
-        example: null
       style: simple
     providerIdQuery:
       description: Provider ID
@@ -1052,6 +2055,7 @@ components:
       required: false
       schema:
         example: 5
+        type: integer
       style: form
     providerName:
       description: Provider name
@@ -1071,6 +2075,7 @@ components:
       required: false
       schema:
         example: 16
+        type: integer
       style: form
     ramGbMin:
       description: Compute instance RAM (GB) minimum
@@ -1080,6 +2085,7 @@ components:
       required: false
       schema:
         example: 8
+        type: integer
       style: form
     ramGbMax:
       description: Compute instance RAM (GB) maximum
@@ -1089,6 +2095,7 @@ components:
       required: false
       schema:
         example: 32
+        type: integer
       style: form
     reservedIpId:
       description: Reserved IP id
@@ -1097,7 +2104,7 @@ components:
       name: reservedIpId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     securityGroupId:
       description: Security group id
@@ -1106,7 +2113,7 @@ components:
       name: securityGroupId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     securityGroupRuleId:
       description: Security group rule id
@@ -1115,7 +2122,7 @@ components:
       name: securityGroupRuleId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     sizeQuery:
       description: Query size
@@ -1125,6 +2132,7 @@ components:
       required: false
       schema:
         example: 100
+        type: integer
       style: form
     spotInstanceId:
       description: Spot instance id
@@ -1133,7 +2141,7 @@ components:
       name: spotInstanceId
       required: true
       schema:
-        example: null
+        type: integer
       style: simple
     sshKeyId:
       description: SSH key ID
@@ -1143,7 +2151,6 @@ components:
       required: true
       schema:
         type: integer
-        example: null
       style: simple
     vCpu:
       description: Compute instance vCPU
@@ -1153,6 +2160,7 @@ components:
       required: false
       schema:
         example: 4
+        type: integer
       style: form
     vCpuMin:
       description: Compute instance vCPU minimum
@@ -1162,6 +2170,7 @@ components:
       required: false
       schema:
         example: 1
+        type: integer
       style: form
     vCpuMax:
       description: Compute instance vCPU maximum
@@ -1171,6 +2180,7 @@ components:
       required: false
       schema:
         example: 8
+        type: integer
       style: form
     vCpuType:
       description: Compute instance vCPU type
@@ -1184,6 +2194,7 @@ components:
         - standard
         - hpc
         example: Standard
+        type: string
       style: form
     vmId:
       description: Virtual machine ID
@@ -1193,7 +2204,6 @@ components:
       required: true
       schema:
         type: integer
-        example: null
       style: simple
     vmHardwareConfig:
       description: Virtual machine hardware configuration ID
@@ -1202,7 +2212,7 @@ components:
       name: vmHardwareConfig
       required: false
       schema:
-        example: null
+        type: integer
       style: form
     volumeGb:
       description: Compute instance volume (GB)
@@ -1212,6 +2222,7 @@ components:
       required: false
       schema:
         example: 500
+        type: integer
       style: form
     volumeGbMin:
       description: Compute instance volume minimum (GB)
@@ -1221,6 +2232,7 @@ components:
       required: false
       schema:
         example: 250
+        type: integer
       style: form
     volumeGbMax:
       description: Compute instance volume maximun (GB)
@@ -1230,6 +2242,7 @@ components:
       required: false
       schema:
         example: 1000
+        type: integer
       style: form
     volumeType:
       description: Compute instance volume type
@@ -1242,6 +2255,7 @@ components:
         - ssd
         - ssd-plus
         example: ssd
+        type: string
       style: form
   schemas:
     Credentials:
@@ -1251,11 +2265,14 @@ components:
       properties:
         clientId:
           example: ad6f8c5c-223f-4102-8664-8044b84864e2
+          type: string
         clientSecret:
           example: e0eb8a09-b7fe-4acc-a72b-79ce0dd26068
+          type: string
       required:
       - clientId
       - clientSecret
+      type: object
     DataCenter:
       example:
         locationName: Stockholm
@@ -1267,16 +2284,23 @@ components:
       properties:
         id:
           example: aws-us-west-1
+          type: string
         name:
           example: eu-north-1
+          type: string
         providerId:
           example: 5
+          type: integer
         providerName:
           example: AWS
+          type: string
         locationId:
           example: 15
+          type: integer
         locationName:
           example: Stockholm
+          type: string
+      type: object
     Location:
       example:
         name: London
@@ -1284,26 +2308,35 @@ components:
       properties:
         id:
           example: 18
+          type: integer
         name:
           example: London
+          type: string
+      type: object
     OperatingSystem:
       example:
         id: 18
         family: Linux
         type: Ubuntu
-        version: 18.04
+        version: "18.04"
         architecture: x86-64
       properties:
         id:
           example: 18
+          type: integer
         family:
           example: Linux
+          type: string
         type:
           example: Ubuntu
+          type: string
         architecture:
           example: x86-64
+          type: string
         version:
-          example: 18.04
+          example: "18.04"
+          type: string
+      type: object
     Provider:
       example:
         name: GCP
@@ -1311,8 +2344,11 @@ components:
       properties:
         id:
           example: 5
+          type: integer
         name:
           example: GCP
+          type: string
+      type: object
     RefreshToken:
       example:
         refreshToken: ad6f8c5js6dkj;s43dv3jljhf9fxej4236235tgdgrthreth8044b84864e2
@@ -1320,8 +2356,411 @@ components:
         refreshToken:
           description: Refresh token
           example: ad6f8c5js6dkj;s43dv3jljhf9fxej4236235tgdgrthreth8044b84864e2
+          type: string
       required:
       - refreshToken
+      type: object
+    SecurityGroup:
+      example:
+        createdByName: Jack Rur
+        createdAt: 2023-08-31T09:26:19.347+00:00
+        modifiedByName: Jack Rur
+        createdBy: 123
+        modifiedAt: 2023-08-31T09:26:19.347+00:00
+        synchronizationStatus: SYNCHRONIZED
+        name: default
+        recomposingStatus: RECOMPOSED
+        modifiedBy: 123
+        rules:
+        - protocol: TCP
+          ipRange: 0.0.0.0/0
+          type: Custom TCP
+          ports: "30321"
+          policy: ALLOW
+          direction: INBOUND
+        - protocol: TCP
+          ipRange: 0.0.0.0/0
+          type: Custom TCP
+          ports: "30321"
+          policy: ALLOW
+          direction: INBOUND
+        id: 5
+        lastModificationErrorDescription: Unable to update security group
+      properties:
+        id:
+          example: 5
+          type: integer
+        name:
+          example: default
+          type: string
+        createdBy:
+          example: 123
+          type: integer
+        createdByName:
+          example: Jack Rur
+          type: string
+        modifiedBy:
+          example: 123
+          type: integer
+        modifiedByName:
+          example: Jack Rur
+          type: string
+        createdAt:
+          example: 2023-08-31T09:26:19.347+00:00
+          type: string
+        modifiedAt:
+          example: 2023-08-31T09:26:19.347+00:00
+          type: string
+        synchronizationStatus:
+          enum:
+          - SYNCHRONIZED
+          - DESYNCHRONIZED
+          - SYNCHRONIZING
+          type: string
+        recomposingStatus:
+          enum:
+          - RECOMPOSED
+          - RECOMPOSING
+          type: string
+        lastModificationErrorDescription:
+          example: Unable to update security group
+          type: string
+        rules:
+          items:
+            $ref: '#/components/schemas/SecurityGroupRule'
+          type: array
+      type: object
+    SecurityGroupRequest:
+      example:
+        name: new_default
+        rules:
+        - protocol: TCP
+          ipRange: 0.0.0.0/0
+          ports: 1-30321
+          direction: INBOUND
+        - protocol: TCP
+          ipRange: 0.0.0.0/0
+          ports: 1-30321
+          direction: INBOUND
+      properties:
+        name:
+          description: Name of the security group
+          example: new_default
+          type: string
+        rules:
+          items:
+            $ref: '#/components/schemas/SecurityGroupRuleRequest'
+          type: array
+      required:
+      - name
+      - rules
+      type: object
+    SecurityGroupInstance:
+      example:
+        createdByName: Automation User
+        cost:
+          unit: MONTHS
+          price: 5.479952
+          currency: EUR
+        os:
+          id: 35
+          family: Linux
+          type: Ubuntu
+          version: "22.04"
+          architecture: x86-64
+        disks:
+        - sizeGb: 250
+          typeId: 2
+          id: 5819
+          type: SSD
+          isBootable: true
+        - sizeGb: 250
+          typeId: 2
+          id: 5819
+          type: SSD
+          isBootable: true
+        dataCenter:
+          name: eu-north-1
+          id: 19
+        modifiedAt: 2021-11-26T14:54:11
+        cpu: 1
+        securityGroup:
+          name: default
+          id: 208
+        networks:
+        - id: 9826
+          ip: 10.106.0.2
+          networkTypeId: 2
+          networkType: PRIVATE
+        - id: 9825
+          ip: 134.122.100.131
+          networkTypeId: 1
+          networkType: PUBLIC
+        userName: root
+        ramGb: 2
+        sshKeyId: 123
+        createdAt: 2021-11-26T14:54:11
+        modifiedByName: Automation User
+        modifiedById: 123
+        provider:
+          name: Digital Ocean
+          id: 22
+        name: vm-default-e08149hp
+        location:
+          name: London
+          id: 6
+        id: 8100
+        projectId: 933
+        createdById: 123
+        status: POWERED_ON
+      properties:
+        id:
+          example: 8100
+          type: integer
+        createdAt:
+          example: 2021-11-26T14:54:11
+          type: string
+        createdByName:
+          example: Automation User
+          type: string
+        createdById:
+          example: 123
+          type: integer
+        modifiedAt:
+          example: 2021-11-26T14:54:11
+          type: string
+        modifiedByName:
+          example: Automation User
+          type: string
+        modifiedById:
+          example: 123
+          type: integer
+        name:
+          example: vm-default-e08149hp
+          type: string
+        projectId:
+          example: 933
+          type: integer
+        status:
+          example: POWERED_ON
+          type: string
+        provider:
+          $ref: '#/components/schemas/SecurityGroupInstance_provider'
+        location:
+          $ref: '#/components/schemas/SecurityGroupInstance_location'
+        dataCenter:
+          $ref: '#/components/schemas/SecurityGroupInstance_dataCenter'
+        os:
+          $ref: '#/components/schemas/SecurityGroupInstance_os'
+        cpu:
+          example: 1
+          type: integer
+        ramGb:
+          example: 2
+          type: integer
+        disks:
+          items:
+            $ref: '#/components/schemas/SecurityGroupInstance_disks_inner'
+          type: array
+        networks:
+          example:
+          - id: 9826
+            ip: 10.106.0.2
+            networkTypeId: 2
+            networkType: PRIVATE
+          - id: 9825
+            ip: 134.122.100.131
+            networkTypeId: 1
+            networkType: PUBLIC
+          items:
+            $ref: '#/components/schemas/SecurityGroupInstance_networks_inner'
+          type: array
+        securityGroup:
+          $ref: '#/components/schemas/SecurityGroupInstance_securityGroup'
+        sshKeyId:
+          example: 123
+          type: integer
+        userName:
+          example: root
+          type: string
+        cost:
+          $ref: '#/components/schemas/SecurityGroupInstance_cost'
+      type: object
+    SecurityGroupInstanceAdd:
+      example:
+        instanceId: 8003
+      properties:
+        instanceId:
+          example: 8003
+          type: integer
+      type: object
+    SecurityGroupRule:
+      example:
+        protocol: TCP
+        ipRange: 0.0.0.0/0
+        type: Custom TCP
+        ports: "30321"
+        policy: ALLOW
+        direction: INBOUND
+      properties:
+        type:
+          example: Custom TCP
+          type: string
+        policy:
+          example: ALLOW
+          type: string
+        direction:
+          example: INBOUND
+          type: string
+        protocol:
+          example: TCP
+          type: string
+        ports:
+          example: "30321"
+          type: string
+        ipRange:
+          example: 0.0.0.0/0
+          type: string
+      type: object
+    SecurityGroupRuleRequest:
+      example:
+        protocol: TCP
+        ipRange: 0.0.0.0/0
+        ports: 1-30321
+        direction: INBOUND
+      properties:
+        direction:
+          description: Direction of network traffic
+          enum:
+          - INBOUND
+          - OUTBOUND
+          example: INBOUND
+          type: string
+        protocol:
+          description: Network protocol
+          enum:
+          - all
+          - TCP
+          - SCTP
+          - GRE
+          - ESP
+          - AH
+          - UDP
+          - ICMP
+          example: TCP
+          type: string
+        ports:
+          description: Port
+          example: 1-30321
+          type: string
+        ipRange:
+          description: Range of IPs for rule
+          example: 0.0.0.0/0
+          type: string
+      required:
+      - direction
+      - ipRange
+      - ports
+      - protocol
+      type: object
+    SpotCreate:
+      example:
+        securityGroupId: 208
+        volumeType: ssd
+        vCpu: 4
+        price: 0.002635
+        dataCenterId: aws-us-west-1
+        name: spot-default
+        volumeGb: 16
+        osId: 35
+        cloudNetworkType: multi-cloud
+        ramGb: 1
+        sshKeyId: 124
+        vCpuType: shared
+      properties:
+        name:
+          description: Spot instance name
+          example: spot-default
+          type: string
+        dataCenterId:
+          description: Provider's data center ID
+          example: aws-us-west-1
+          type: string
+        osId:
+          description: Operating system ID
+          example: 35
+          type: integer
+        cloudNetworkType:
+          description: Cloud network type
+          enum:
+          - isolated
+          - multi-cloud
+          - default
+          example: multi-cloud
+          type: string
+        vCpuType:
+          description: vCPU type
+          enum:
+          - shared
+          - standard
+          - hpc
+          example: shared
+          type: string
+        vCpu:
+          description: Number of virtual Central Processing Units (vCPUs)
+          example: 4
+          type: integer
+        ramGb:
+          description: Capacity of RAM in gigabytes
+          example: 1
+          type: integer
+        volumeType:
+          description: Volume type
+          enum:
+          - ssd
+          - ssd-plus
+          example: ssd
+          type: string
+        volumeGb:
+          description: Capacity of volume in gigabytes
+          example: 16
+          type: integer
+        sshKeyId:
+          description: SSH-key ID
+          example: 124
+          type: integer
+        securityGroupId:
+          description: Security group ID
+          example: 208
+          type: integer
+        price:
+          description: User offer price
+          example: 0.002635
+          type: number
+      required:
+      - cloudNetworkType
+      - dataCenterId
+      - name
+      - osId
+      - price
+      - ramGb
+      - sshKeyId
+      - vCpu
+      - vCpuType
+      - volumeGb
+      - volumeType
+      type: object
+    SpotReboot:
+      properties:
+        action:
+          description: Action with spot instance
+          enum:
+          - reboot
+          example: reboot
+          type: string
+      required:
+      - action
+      type: object
     SshKey:
       example:
         createdAt: 2021-11-26T14:54:11
@@ -1336,102 +2775,139 @@ components:
       properties:
         id:
           example: 60
+          type: integer
         name:
           example: mykey
+          type: string
         key:
           example: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMwmR5qB5VU9X4VYQJjXDT3qketmrrqEABSNAEEkfTtOtIZrKJmMST9bEus/5FFm9b5w5unyZaW39PUe/QDrxwB8Y3b+DTyA1LcRzd2UhCQsybh9DKbDb+HX0lKrgIeUkadwIq5gE2nx3VBQUifa2BGYC7b+FtFLjtHaOwWIvuQC7AYozCB+B69P3q8tK0D9UXlLyGGsBe8MYjl0mV9IumWS7WBz2VDqLhAvFIzpcERVstepLM9Y4mePpDhfQqt85MRIrqTWikhZExwbRmbSFCZHPi85Os2oxSHoXH1NMSBNEt3yJB4Cn5f2nBV45ysd0HcQmn7eLmRPzbkmhfYoOL
             Lego%20Group@localhost
+          type: string
         fingerprint:
           example: f2:60:34:c8:34:b2:a3:da:22:f9:12:f9:03:f0:33:c0
+          type: string
         keyType:
           example: RSA
+          type: string
         createdAt:
           example: 2021-11-26T14:54:11
+          type: string
         createdByName:
           example: Automation User
+          type: string
         createdById:
           example: 123
+          type: integer
+      type: object
     SshKeyGenerated:
       properties:
         id:
           example: 60
+          type: integer
         name:
           example: mykey
+          type: string
         key:
           example: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMwmR5qB5VU9X4VYQJjXDT3qketmrrqEABSNAEEkfTtOtIZrKJmMST9bEus/5FFm9b5w5unyZaW39PUe/QDrxwB8Y3b+DTyA1LcRzd2UhCQsybh9DKbDb+HX0lKrgIeUkadwIq5gE2nx3VBQUifa2BGYC7b+FtFLjtHaOwWIvuQC7AYozCB+B69P3q8tK0D9UXlLyGGsBe8MYjl0mV9IumWS7WBz2VDqLhAvFIzpcERVstepLM9Y4mePpDhfQqt85MRIrqTWikhZExwbRmbSFCZHPi85Os2oxSHoXH1NMSBNEt3yJB4Cn5f2nBV45ysd0HcQmn7eLmRPzbkmhfYoOL
             Lego%20Group@localhost
+          type: string
         fingerprint:
           example: f2:60:34:c8:34:b2:a3:da:22:f9:12:f9:03:f0:33:c0
+          type: string
         keyType:
           example: RSA
+          type: string
         privateKey:
           example: '-----BEGIN RSA PRIVATE KEY-----MIIEpAIBAAKCAQEA72Raj49bugh+eX+tUWmHUT+KKzYNcvBs8F+/GTHHRcUwcYhs-----END
             RSA PRIVATE KEY-----'
+          type: string
         createdAt:
           example: 2021-11-26T14:54:11
+          type: string
         createdByName:
           example: Automation User
+          type: string
         createdById:
           example: 123
+          type: integer
+      type: object
     SshKeyCreate:
       properties:
         name:
           example: mykey
+          type: string
         keyType:
           enum:
           - RSA
           - ED25519
           example: RSA
+          type: string
       required:
       - keyType
       - name
+      type: object
     SshKeyImport:
       properties:
         name:
           example: mykey
+          type: string
         key:
           example: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMwmR5qB5VU9X4VYQJjXDT3qketmrrqEABSNAEEkfTtOtIZrKJmMST9bEus/5FFm9b5w5unyZaW39PUe/QDrxwB8Y3b+DTyA1LcRzd2UhCQsybh9DKbDb+HX0lKrgIeUkadwIq5gE2nx3VBQUifa2BGYC7b+FtFLjtHaOwWIvuQC7AYozCB+B69P3q8tK0D9UXlLyGGsBe8MYjl0mV9IumWS7WBz2VDqLhAvFIzpcERVstepLM9Y4mePpDhfQqt85MRIrqTWikhZExwbRmbSFCZHPi85Os2oxSHoXH1NMSBNEt3yJB4Cn5f2nBV45ysd0HcQmn7eLmRPzbkmhfYoOL
             Lego%20Group@localhost
+          type: string
       required:
       - key
       - name
+      type: object
     SshKeyUpdate:
       example:
         name: mykey
       properties:
         name:
           example: mykey
+          type: string
       required:
       - name
+      type: object
     Token:
       example:
         expiresIn: 300
         notBeforePolicy: 1668610246
         sessionState: 33fce1d3-c51e-469f-b2cb-44c67b4f512e
-        otherClaims: ""
-        idToken: ""
+        otherClaims: "{}"
+        idToken: 0
         accessToken: eyJhbGcih3In0.eyJleHAiOjE3MDA2Mzc4NjksImlhdCI6MTcwMDYzNzU2OSwianRpIjoiYTMwOGRhMDItYmIwNy00MjVkLTk2NzUtNzFiMjczNzdkMjYxIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLmVtbWEubXMvYXV0aC9yZWFsbXMvZW1tYSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiIzMDg1YzdlOS1kYjExLT.VCXC-D43-8zp7FVYSNgbbz8KUASAWlFcCqj6wJwif_FReGSIofgDoya54bIBPEugVq0Is7TmbBaXCzkEEASxkMxrCg7r6-7XBWC3P5w8It8Kc-wdVRgjVGSnzz4B8hA
         tokenType: Bearer
         refreshExpiresIn: 1800
         refreshToken: eyJhIwOGIyYi00YzgwLTQ5NTQtODY4Ni02YmY2OWJiYjg0ZjcifQ.eyJleHAiOjE3MDA2MzkzNjksImlhdCI6MTcwMDYzNzU2OSwianRpIjoiYTIxMjRmZWQtODA5MS00ZDAyLTljtYXBpIiwic2Vzc2lvbl9zdGF0ZSI6IjMzZmNlMWQzLWM1MWUtNDY5Zi1iMmNiLTQ0YzY3YjRmNTEyZSIsInNjb3BlIjoidXNlckF0dHJpYnV0ZSBw
       properties:
-        otherClaims: {}
+        otherClaims:
+          type: object
         accessToken:
           example: eyJhbGcih3In0.eyJleHAiOjE3MDA2Mzc4NjksImlhdCI6MTcwMDYzNzU2OSwianRpIjoiYTMwOGRhMDItYmIwNy00MjVkLTk2NzUtNzFiMjczNzdkMjYxIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLmVtbWEubXMvYXV0aC9yZWFsbXMvZW1tYSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiIzMDg1YzdlOS1kYjExLT.VCXC-D43-8zp7FVYSNgbbz8KUASAWlFcCqj6wJwif_FReGSIofgDoya54bIBPEugVq0Is7TmbBaXCzkEEASxkMxrCg7r6-7XBWC3P5w8It8Kc-wdVRgjVGSnzz4B8hA
+          type: string
         expiresIn:
           example: 300
+          type: integer
         refreshExpiresIn:
           example: 1800
+          type: integer
         refreshToken:
           example: eyJhIwOGIyYi00YzgwLTQ5NTQtODY4Ni02YmY2OWJiYjg0ZjcifQ.eyJleHAiOjE3MDA2MzkzNjksImlhdCI6MTcwMDYzNzU2OSwianRpIjoiYTIxMjRmZWQtODA5MS00ZDAyLTljtYXBpIiwic2Vzc2lvbl9zdGF0ZSI6IjMzZmNlMWQzLWM1MWUtNDY5Zi1iMmNiLTQ0YzY3YjRmNTEyZSIsInNjb3BlIjoidXNlckF0dHJpYnV0ZSBw
+          type: string
         tokenType:
           example: Bearer
+          type: string
         idToken:
+          type: integer
           example: null
         notBeforePolicy:
           example: 1668610246
+          type: integer
         sessionState:
           example: 33fce1d3-c51e-469f-b2cb-44c67b4f512e
+          type: string
+      type: object
     Vm:
       example:
         createdByName: Automation User
@@ -1443,7 +2919,7 @@ components:
           id: 35
           family: Linux
           type: Ubuntu
-          version: 22.04
+          version: "22.04"
           architecture: x86-64
         disks:
         - sizeGb: 250
@@ -1497,22 +2973,31 @@ components:
       properties:
         id:
           example: 8100
+          type: integer
         createdAt:
           example: 2021-11-26T14:54:11
+          type: string
         createdByName:
           example: Automation User
+          type: string
         createdById:
           example: 123
+          type: integer
         modifiedAt:
           example: 2021-11-26T14:54:11
+          type: string
         modifiedByName:
           example: Automation User
+          type: string
         modifiedById:
           example: 123
+          type: integer
         name:
           example: vm-default-e08149hp
+          type: string
         projectId:
           example: 933
+          type: integer
         status:
           enum:
           - POWERED_ON
@@ -1520,21 +3005,25 @@ components:
           - BUSY
           - DRAFT
           example: POWERED_ON
+          type: string
         provider:
-          $ref: '#/components/schemas/Vm_provider'
+          $ref: '#/components/schemas/SecurityGroupInstance_provider'
         location:
-          $ref: '#/components/schemas/Vm_location'
+          $ref: '#/components/schemas/SecurityGroupInstance_location'
         dataCenter:
           $ref: '#/components/schemas/Vm_dataCenter'
         os:
-          $ref: '#/components/schemas/Vm_os'
+          $ref: '#/components/schemas/SecurityGroupInstance_os'
         cpu:
           example: 1
+          type: integer
         ramGb:
           example: 2
+          type: integer
         disks:
           items:
-            $ref: '#/components/schemas/Vm_disks_inner'
+            $ref: '#/components/schemas/SecurityGroupInstance_disks_inner'
+          type: array
         networks:
           example:
           - id: 9826
@@ -1546,15 +3035,19 @@ components:
             networkTypeId: 1
             networkType: PUBLIC
           items:
-            $ref: '#/components/schemas/Vm_networks_inner'
+            $ref: '#/components/schemas/SecurityGroupInstance_networks_inner'
+          type: array
         securityGroup:
-          $ref: '#/components/schemas/Vm_securityGroup'
+          $ref: '#/components/schemas/SecurityGroupInstance_securityGroup'
         sshKeyId:
           example: 123
+          type: integer
         userName:
           example: root
+          type: string
         cost:
-          $ref: '#/components/schemas/Vm_cost'
+          $ref: '#/components/schemas/SecurityGroupInstance_cost'
+      type: object
     VmCreate:
       example:
         securityGroupId: 208
@@ -1572,12 +3065,15 @@ components:
         name:
           description: Virtual machine name
           example: vm-test1
+          type: string
         dataCenterId:
           description: Provider's data center ID
           example: aws-us-west-1
+          type: string
         osId:
           description: Operating system ID
           example: 5
+          type: integer
         cloudNetworkType:
           description: Cloud network type
           enum:
@@ -1585,6 +3081,7 @@ components:
           - multi-cloud
           - default
           example: multi-cloud
+          type: string
         vCpuType:
           description: vCPU type
           enum:
@@ -1592,27 +3089,34 @@ components:
           - standard
           - hpc
           example: shared
+          type: string
         vCpu:
           description: Number of virtual Central Processing Units (vCPUs)
           example: 2
+          type: integer
         ramGb:
           description: Capacity of RAM in gigabytes
           example: 1
+          type: integer
         volumeType:
           description: Volume type
           enum:
           - ssd
           - ssd-plus
           example: ssd
+          type: string
         volumeGb:
           description: Capacity of volume in gigabytes
           example: 16
+          type: integer
         sshKeyId:
           description: SSH-key ID
           example: 124
+          type: integer
         securityGroupId:
           description: Security group ID
           example: 208
+          type: integer
       required:
       - cloudNetworkType
       - dataCenterId
@@ -1624,6 +3128,7 @@ components:
       - vCpuType
       - volumeGb
       - volumeType
+      type: object
     VmStart:
       properties:
         action:
@@ -1631,8 +3136,10 @@ components:
           enum:
           - start
           example: start
+          type: string
       required:
       - action
+      type: object
     VmShutdown:
       properties:
         action:
@@ -1640,8 +3147,10 @@ components:
           enum:
           - shutdown
           example: shutdown
+          type: string
       required:
       - action
+      type: object
     VmReboot:
       properties:
         action:
@@ -1649,8 +3158,10 @@ components:
           enum:
           - reboot
           example: reboot
+          type: string
       required:
       - action
+      type: object
     VmTransfer:
       properties:
         action:
@@ -1658,16 +3169,20 @@ components:
           enum:
           - transfer
           example: transfer
+          type: string
         dataCenterId:
           description: Provider's data center ID
           example: aws-us-west-1
+          type: string
         isKeepOriginalInstance:
           default: true
           description: Keep original instance
           example: true
+          type: boolean
       required:
       - action
       - dataCenterId
+      type: object
     VmClone:
       properties:
         action:
@@ -1675,12 +3190,15 @@ components:
           enum:
           - clone
           example: clone
+          type: string
         name:
           description: Virtual machine name
           example: vm-default-name
+          type: string
       required:
       - action
       - name
+      type: object
     VmEditHardware:
       properties:
         action:
@@ -1688,8 +3206,10 @@ components:
           enum:
           - edithardware
           example: edithardware
+          type: string
         vCpu:
           example: 4
+          type: integer
         vCpuType:
           description: vCPU type
           enum:
@@ -1697,15 +3217,19 @@ components:
           - standard
           - hpc
           example: shared
+          type: string
         ramGb:
           example: 16
+          type: integer
         volumeGb:
           example: 500
+          type: integer
       required:
       - action
       - ramGb
       - vCpu
       - volumeGb
+      type: object
     VmConfiguration:
       example:
         volumeType: SSD
@@ -1719,102 +3243,148 @@ components:
         osId: 35
         ramGb: 16
         vCpuType: Standard
-        osVersion: 18.04
+        cloudNetworkTypes:
+        - default
+        - multi-cloud
+        - isolated
+        osVersion: "18.04"
         providerId: 5
         locationId: 6
         dataCenterId: aws-us-west-1
         osType: Ubuntu
         volumeGb: 500
         id: 2456
-        cloudNetworkType: multi-cloud
         providerName: GCP
       properties:
         id:
           example: 2456
+          type: integer
         providerId:
           example: 5
+          type: integer
         providerName:
           example: GCP
+          type: string
         locationId:
           example: 6
+          type: integer
         locationName:
           example: London
+          type: string
         dataCenterId:
           example: aws-us-west-1
+          type: string
         dataCenterName:
           example: europe-west2
+          type: string
         osId:
           example: 35
+          type: integer
         osType:
           example: Ubuntu
+          type: string
         osVersion:
-          example: 18.04
-        cloudNetworkType:
-          example: multi-cloud
+          example: "18.04"
+          type: string
+        cloudNetworkTypes:
+          example:
+          - default
+          - multi-cloud
+          - isolated
+          items:
+            type: string
+          type: array
         vCpuType:
           example: Standard
+          type: string
         vCpu:
           example: 4
+          type: integer
         ramGb:
           example: 16
+          type: integer
         volumeGb:
           example: 500
+          type: integer
         volumeType:
           example: SSD
+          type: string
         cost:
           $ref: '#/components/schemas/VmConfiguration_cost'
+      type: object
     PaginatedResult:
       properties:
         totalPages:
           format: int32
+          type: integer
         totalElements:
           format: int64
+          type: integer
         size:
           format: int32
+          type: integer
         content:
-          items: {}
+          items:
+            type: object
+          type: array
         number:
           format: int32
+          type: integer
         sort:
           $ref: '#/components/schemas/SortObject'
-        last: {}
-        first: {}
+        last:
+          type: boolean
+        first:
+          type: boolean
         numberOfElements:
           format: int32
+          type: integer
         pageable:
           $ref: '#/components/schemas/PageableObject'
-        empty: {}
+        empty:
+          type: boolean
+      type: object
     PageableObject:
       example:
-        paged: ""
-        pageNumber: ""
-        offset: ""
-        pageSize: ""
-        unpaged: ""
+        paged: true
+        pageNumber: 9
+        offset: 2
+        pageSize: 7
+        unpaged: true
         sort:
-          unsorted: ""
-          sorted: ""
-          empty: ""
+          unsorted: true
+          sorted: true
+          empty: true
       properties:
         offset:
           format: int64
+          type: integer
         sort:
           $ref: '#/components/schemas/SortObject'
         pageSize:
           format: int32
+          type: integer
         pageNumber:
           format: int32
-        paged: {}
-        unpaged: {}
+          type: integer
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+      type: object
     SortObject:
       example:
-        unsorted: ""
-        sorted: ""
-        empty: ""
+        unsorted: true
+        sorted: true
+        empty: true
       properties:
-        empty: {}
-        unsorted: {}
-        sorted: {}
+        empty:
+          type: boolean
+        unsorted:
+          type: boolean
+        sorted:
+          type: boolean
+      type: object
     BadRequestError:
       example:
         code: BAD_REQUEST
@@ -1822,11 +3392,14 @@ components:
       properties:
         code:
           example: BAD_REQUEST
+          type: string
         message:
           example: Bad request
+          type: string
       required:
       - code
       - message
+      type: object
     NotFoundError:
       example:
         code: NOT_FOUND
@@ -1834,11 +3407,14 @@ components:
       properties:
         code:
           example: NOT_FOUND
+          type: string
         message:
           example: Not found
+          type: string
       required:
       - code
       - message
+      type: object
     UnauthorizedError:
       example:
         code: UNAUTHORIZED
@@ -1846,11 +3422,14 @@ components:
       properties:
         code:
           example: UNAUTHORIZED
+          type: string
         message:
           example: Token is not provided
+          type: string
       required:
       - code
       - message
+      type: object
     ForbiddenError:
       example:
         code: FORBIDDEN
@@ -1859,12 +3438,48 @@ components:
       properties:
         code:
           example: FORBIDDEN
+          type: string
         message:
           example: Access is denied. You do not have the necessary permissions to
             perform this action.
+          type: string
       required:
       - code
       - message
+      type: object
+    ConflictError:
+      example:
+        code: CONFLICT
+        message: Unable to update entity
+      properties:
+        code:
+          example: CONFLICT
+          type: string
+        message:
+          example: Unable to update entity
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    UnprocessableEntityError:
+      example:
+        code: UNPROCESSABLE_ENTITY
+        message: Unprocessable entity
+      properties:
+        code:
+          example: UNPROCESSABLE_ENTITY
+          type: string
+        message:
+          example: Unprocessable entity
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    SpotActions_request:
+      oneOf:
+      - $ref: '#/components/schemas/SpotReboot'
     SshKeysCreateImport_request:
       oneOf:
       - $ref: '#/components/schemas/SshKeyCreate'
@@ -1888,26 +3503,28 @@ components:
           content:
             items:
               $ref: '#/components/schemas/VmConfiguration'
+            type: array
+        type: object
       example:
-        number: ""
-        size: ""
-        last: ""
-        numberOfElements: ""
-        totalPages: ""
+        number: 5
+        size: 1
+        last: true
+        numberOfElements: 5
+        totalPages: 0
         pageable:
-          paged: ""
-          pageNumber: ""
-          offset: ""
-          pageSize: ""
-          unpaged: ""
+          paged: true
+          pageNumber: 9
+          offset: 2
+          pageSize: 7
+          unpaged: true
           sort:
-            unsorted: ""
-            sorted: ""
-            empty: ""
+            unsorted: true
+            sorted: true
+            empty: true
         sort:
-          unsorted: ""
-          sorted: ""
-          empty: ""
+          unsorted: true
+          sorted: true
+          empty: true
         content:
         - volumeType: SSD
           locationName: London
@@ -1920,14 +3537,17 @@ components:
           osId: 35
           ramGb: 16
           vCpuType: Standard
-          osVersion: 18.04
+          cloudNetworkTypes:
+          - default
+          - multi-cloud
+          - isolated
+          osVersion: "18.04"
           providerId: 5
           locationId: 6
           dataCenterId: aws-us-west-1
           osType: Ubuntu
           volumeGb: 500
           id: 2456
-          cloudNetworkType: multi-cloud
           providerName: GCP
         - volumeType: SSD
           locationName: London
@@ -1940,36 +3560,148 @@ components:
           osId: 35
           ramGb: 16
           vCpuType: Standard
-          osVersion: 18.04
+          cloudNetworkTypes:
+          - default
+          - multi-cloud
+          - isolated
+          osVersion: "18.04"
           providerId: 5
           locationId: 6
           dataCenterId: aws-us-west-1
           osType: Ubuntu
           volumeGb: 500
           id: 2456
-          cloudNetworkType: multi-cloud
           providerName: GCP
-        first: ""
-        totalElements: ""
-        empty: ""
-    Vm_provider:
+        first: true
+        totalElements: 6
+        empty: true
+    SecurityGroupInstance_provider:
       example:
         name: Digital Ocean
         id: 22
       properties:
         id:
           example: 22
+          type: integer
         name:
           example: Digital Ocean
-    Vm_location:
+          type: string
+      type: object
+    SecurityGroupInstance_location:
       example:
         name: London
         id: 6
       properties:
         id:
           example: 6
+          type: integer
         name:
           example: London
+          type: string
+      type: object
+    SecurityGroupInstance_dataCenter:
+      example:
+        name: eu-north-1
+        id: 19
+      properties:
+        id:
+          example: 19
+          type: integer
+        name:
+          example: eu-north-1
+          type: string
+      type: object
+    SecurityGroupInstance_os:
+      example:
+        id: 35
+        family: Linux
+        type: Ubuntu
+        version: "22.04"
+        architecture: x86-64
+      properties:
+        id:
+          example: 35
+          type: integer
+        family:
+          example: Linux
+          type: string
+        architecture:
+          example: x86-64
+          type: string
+        type:
+          example: Ubuntu
+          type: string
+        version:
+          example: "22.04"
+          type: string
+      type: object
+    SecurityGroupInstance_disks_inner:
+      example:
+        sizeGb: 250
+        typeId: 2
+        id: 5819
+        type: SSD
+        isBootable: true
+      properties:
+        id:
+          example: 5819
+          type: integer
+        sizeGb:
+          example: 250
+          type: integer
+        typeId:
+          example: 2
+          type: integer
+        type:
+          example: SSD
+          type: string
+        isBootable:
+          example: true
+          type: boolean
+      type: object
+    SecurityGroupInstance_networks_inner:
+      properties:
+        id:
+          example: 9826
+          type: integer
+        ip:
+          example: 10.106.0.2
+          type: string
+        networkTypeId:
+          example: 2
+          type: integer
+        networkType:
+          example: PRIVATE
+          type: string
+      type: object
+    SecurityGroupInstance_securityGroup:
+      example:
+        name: default
+        id: 208
+      properties:
+        id:
+          example: 208
+          type: integer
+        name:
+          example: default
+          type: string
+      type: object
+    SecurityGroupInstance_cost:
+      example:
+        unit: MONTHS
+        price: 5.479952
+        currency: EUR
+      properties:
+        unit:
+          example: MONTHS
+          type: string
+        currency:
+          example: EUR
+          type: string
+        price:
+          example: 5.479952
+          type: number
+      type: object
     Vm_dataCenter:
       example:
         locationName: Pune
@@ -1981,83 +3713,23 @@ components:
       properties:
         id:
           example: aws-ap-south-1
+          type: string
         name:
           example: eu-north-1
+          type: string
         providerId:
           example: 5
+          type: integer
         providerName:
           example: DO
+          type: string
         locationId:
           example: 35
+          type: integer
         locationName:
           example: Pune
-    Vm_os:
-      example:
-        id: 35
-        family: Linux
-        type: Ubuntu
-        version: 22.04
-        architecture: x86-64
-      properties:
-        id:
-          example: 35
-        family:
-          example: Linux
-        architecture:
-          example: x86-64
-        type:
-          example: Ubuntu
-        version:
-          example: 22.04
-    Vm_disks_inner:
-      example:
-        sizeGb: 250
-        typeId: 2
-        id: 5819
-        type: SSD
-        isBootable: true
-      properties:
-        id:
-          example: 5819
-        sizeGb:
-          example: 250
-        typeId:
-          example: 2
-        type:
-          example: SSD
-        isBootable:
-          example: true
-    Vm_networks_inner:
-      properties:
-        id:
-          example: 9826
-        ip:
-          example: 10.106.0.2
-        networkTypeId:
-          example: 2
-        networkType:
-          example: PRIVATE
-    Vm_securityGroup:
-      example:
-        name: default
-        id: 208
-      properties:
-        id:
-          example: 208
-        name:
-          example: default
-    Vm_cost:
-      example:
-        unit: MONTHS
-        price: 5.479952
-        currency: EUR
-      properties:
-        unit:
-          example: MONTHS
-        currency:
-          example: EUR
-        price:
-          example: 5.479952
+          type: string
+      type: object
     VmConfiguration_cost:
       example:
         unit: MONTHS
@@ -2066,10 +3738,14 @@ components:
       properties:
         unit:
           example: MONTHS
+          type: string
         currency:
           example: EUR
+          type: string
         pricePerUnit:
           example: 5.479952
+          type: number
+      type: object
   securitySchemes:
     bearerAuth:
       bearerFormat: JWT

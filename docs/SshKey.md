@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **interface{}** |  | [optional] 
-**Name** | Pointer to **interface{}** |  | [optional] 
-**Key** | Pointer to **interface{}** |  | [optional] 
-**Fingerprint** | Pointer to **interface{}** |  | [optional] 
-**KeyType** | Pointer to **interface{}** |  | [optional] 
-**CreatedAt** | Pointer to **interface{}** |  | [optional] 
-**CreatedByName** | Pointer to **interface{}** |  | [optional] 
-**CreatedById** | Pointer to **interface{}** |  | [optional] 
+**Id** | Pointer to **int32** |  | [optional] 
+**Name** | Pointer to **string** |  | [optional] 
+**Key** | Pointer to **string** |  | [optional] 
+**Fingerprint** | Pointer to **string** |  | [optional] 
+**KeyType** | Pointer to **string** |  | [optional] 
+**CreatedAt** | Pointer to **string** |  | [optional] 
+**CreatedByName** | Pointer to **string** |  | [optional] 
+**CreatedById** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
@@ -34,20 +34,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetId
 
-`func (o *SshKey) GetId() interface{}`
+`func (o *SshKey) GetId() int32`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *SshKey) GetIdOk() (*interface{}, bool)`
+`func (o *SshKey) GetIdOk() (*int32, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *SshKey) SetId(v interface{})`
+`func (o *SshKey) SetId(v int32)`
 
 SetId sets Id field to given value.
 
@@ -57,32 +57,22 @@ SetId sets Id field to given value.
 
 HasId returns a boolean if a field has been set.
 
-### SetIdNil
-
-`func (o *SshKey) SetIdNil(b bool)`
-
- SetIdNil sets the value for Id to be an explicit nil
-
-### UnsetId
-`func (o *SshKey) UnsetId()`
-
-UnsetId ensures that no value is present for Id, not even an explicit nil
 ### GetName
 
-`func (o *SshKey) GetName() interface{}`
+`func (o *SshKey) GetName() string`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *SshKey) GetNameOk() (*interface{}, bool)`
+`func (o *SshKey) GetNameOk() (*string, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *SshKey) SetName(v interface{})`
+`func (o *SshKey) SetName(v string)`
 
 SetName sets Name field to given value.
 
@@ -92,32 +82,22 @@ SetName sets Name field to given value.
 
 HasName returns a boolean if a field has been set.
 
-### SetNameNil
-
-`func (o *SshKey) SetNameNil(b bool)`
-
- SetNameNil sets the value for Name to be an explicit nil
-
-### UnsetName
-`func (o *SshKey) UnsetName()`
-
-UnsetName ensures that no value is present for Name, not even an explicit nil
 ### GetKey
 
-`func (o *SshKey) GetKey() interface{}`
+`func (o *SshKey) GetKey() string`
 
 GetKey returns the Key field if non-nil, zero value otherwise.
 
 ### GetKeyOk
 
-`func (o *SshKey) GetKeyOk() (*interface{}, bool)`
+`func (o *SshKey) GetKeyOk() (*string, bool)`
 
 GetKeyOk returns a tuple with the Key field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetKey
 
-`func (o *SshKey) SetKey(v interface{})`
+`func (o *SshKey) SetKey(v string)`
 
 SetKey sets Key field to given value.
 
@@ -127,32 +107,22 @@ SetKey sets Key field to given value.
 
 HasKey returns a boolean if a field has been set.
 
-### SetKeyNil
-
-`func (o *SshKey) SetKeyNil(b bool)`
-
- SetKeyNil sets the value for Key to be an explicit nil
-
-### UnsetKey
-`func (o *SshKey) UnsetKey()`
-
-UnsetKey ensures that no value is present for Key, not even an explicit nil
 ### GetFingerprint
 
-`func (o *SshKey) GetFingerprint() interface{}`
+`func (o *SshKey) GetFingerprint() string`
 
 GetFingerprint returns the Fingerprint field if non-nil, zero value otherwise.
 
 ### GetFingerprintOk
 
-`func (o *SshKey) GetFingerprintOk() (*interface{}, bool)`
+`func (o *SshKey) GetFingerprintOk() (*string, bool)`
 
 GetFingerprintOk returns a tuple with the Fingerprint field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFingerprint
 
-`func (o *SshKey) SetFingerprint(v interface{})`
+`func (o *SshKey) SetFingerprint(v string)`
 
 SetFingerprint sets Fingerprint field to given value.
 
@@ -162,32 +132,22 @@ SetFingerprint sets Fingerprint field to given value.
 
 HasFingerprint returns a boolean if a field has been set.
 
-### SetFingerprintNil
-
-`func (o *SshKey) SetFingerprintNil(b bool)`
-
- SetFingerprintNil sets the value for Fingerprint to be an explicit nil
-
-### UnsetFingerprint
-`func (o *SshKey) UnsetFingerprint()`
-
-UnsetFingerprint ensures that no value is present for Fingerprint, not even an explicit nil
 ### GetKeyType
 
-`func (o *SshKey) GetKeyType() interface{}`
+`func (o *SshKey) GetKeyType() string`
 
 GetKeyType returns the KeyType field if non-nil, zero value otherwise.
 
 ### GetKeyTypeOk
 
-`func (o *SshKey) GetKeyTypeOk() (*interface{}, bool)`
+`func (o *SshKey) GetKeyTypeOk() (*string, bool)`
 
 GetKeyTypeOk returns a tuple with the KeyType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetKeyType
 
-`func (o *SshKey) SetKeyType(v interface{})`
+`func (o *SshKey) SetKeyType(v string)`
 
 SetKeyType sets KeyType field to given value.
 
@@ -197,32 +157,22 @@ SetKeyType sets KeyType field to given value.
 
 HasKeyType returns a boolean if a field has been set.
 
-### SetKeyTypeNil
-
-`func (o *SshKey) SetKeyTypeNil(b bool)`
-
- SetKeyTypeNil sets the value for KeyType to be an explicit nil
-
-### UnsetKeyType
-`func (o *SshKey) UnsetKeyType()`
-
-UnsetKeyType ensures that no value is present for KeyType, not even an explicit nil
 ### GetCreatedAt
 
-`func (o *SshKey) GetCreatedAt() interface{}`
+`func (o *SshKey) GetCreatedAt() string`
 
 GetCreatedAt returns the CreatedAt field if non-nil, zero value otherwise.
 
 ### GetCreatedAtOk
 
-`func (o *SshKey) GetCreatedAtOk() (*interface{}, bool)`
+`func (o *SshKey) GetCreatedAtOk() (*string, bool)`
 
 GetCreatedAtOk returns a tuple with the CreatedAt field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedAt
 
-`func (o *SshKey) SetCreatedAt(v interface{})`
+`func (o *SshKey) SetCreatedAt(v string)`
 
 SetCreatedAt sets CreatedAt field to given value.
 
@@ -232,32 +182,22 @@ SetCreatedAt sets CreatedAt field to given value.
 
 HasCreatedAt returns a boolean if a field has been set.
 
-### SetCreatedAtNil
-
-`func (o *SshKey) SetCreatedAtNil(b bool)`
-
- SetCreatedAtNil sets the value for CreatedAt to be an explicit nil
-
-### UnsetCreatedAt
-`func (o *SshKey) UnsetCreatedAt()`
-
-UnsetCreatedAt ensures that no value is present for CreatedAt, not even an explicit nil
 ### GetCreatedByName
 
-`func (o *SshKey) GetCreatedByName() interface{}`
+`func (o *SshKey) GetCreatedByName() string`
 
 GetCreatedByName returns the CreatedByName field if non-nil, zero value otherwise.
 
 ### GetCreatedByNameOk
 
-`func (o *SshKey) GetCreatedByNameOk() (*interface{}, bool)`
+`func (o *SshKey) GetCreatedByNameOk() (*string, bool)`
 
 GetCreatedByNameOk returns a tuple with the CreatedByName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedByName
 
-`func (o *SshKey) SetCreatedByName(v interface{})`
+`func (o *SshKey) SetCreatedByName(v string)`
 
 SetCreatedByName sets CreatedByName field to given value.
 
@@ -267,32 +207,22 @@ SetCreatedByName sets CreatedByName field to given value.
 
 HasCreatedByName returns a boolean if a field has been set.
 
-### SetCreatedByNameNil
-
-`func (o *SshKey) SetCreatedByNameNil(b bool)`
-
- SetCreatedByNameNil sets the value for CreatedByName to be an explicit nil
-
-### UnsetCreatedByName
-`func (o *SshKey) UnsetCreatedByName()`
-
-UnsetCreatedByName ensures that no value is present for CreatedByName, not even an explicit nil
 ### GetCreatedById
 
-`func (o *SshKey) GetCreatedById() interface{}`
+`func (o *SshKey) GetCreatedById() int32`
 
 GetCreatedById returns the CreatedById field if non-nil, zero value otherwise.
 
 ### GetCreatedByIdOk
 
-`func (o *SshKey) GetCreatedByIdOk() (*interface{}, bool)`
+`func (o *SshKey) GetCreatedByIdOk() (*int32, bool)`
 
 GetCreatedByIdOk returns a tuple with the CreatedById field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedById
 
-`func (o *SshKey) SetCreatedById(v interface{})`
+`func (o *SshKey) SetCreatedById(v int32)`
 
 SetCreatedById sets CreatedById field to given value.
 
@@ -302,16 +232,6 @@ SetCreatedById sets CreatedById field to given value.
 
 HasCreatedById returns a boolean if a field has been set.
 
-### SetCreatedByIdNil
-
-`func (o *SshKey) SetCreatedByIdNil(b bool)`
-
- SetCreatedByIdNil sets the value for CreatedById to be an explicit nil
-
-### UnsetCreatedById
-`func (o *SshKey) UnsetCreatedById()`
-
-UnsetCreatedById ensures that no value is present for CreatedById, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

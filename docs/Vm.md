@@ -4,28 +4,28 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **interface{}** |  | [optional] 
-**CreatedAt** | Pointer to **interface{}** |  | [optional] 
-**CreatedByName** | Pointer to **interface{}** |  | [optional] 
-**CreatedById** | Pointer to **interface{}** |  | [optional] 
-**ModifiedAt** | Pointer to **interface{}** |  | [optional] 
-**ModifiedByName** | Pointer to **interface{}** |  | [optional] 
-**ModifiedById** | Pointer to **interface{}** |  | [optional] 
-**Name** | Pointer to **interface{}** |  | [optional] 
-**ProjectId** | Pointer to **interface{}** |  | [optional] 
-**Status** | Pointer to **interface{}** |  | [optional] 
-**Provider** | Pointer to [**VmProvider**](VmProvider.md) |  | [optional] 
-**Location** | Pointer to [**VmLocation**](VmLocation.md) |  | [optional] 
+**Id** | Pointer to **int32** |  | [optional] 
+**CreatedAt** | Pointer to **string** |  | [optional] 
+**CreatedByName** | Pointer to **string** |  | [optional] 
+**CreatedById** | Pointer to **int32** |  | [optional] 
+**ModifiedAt** | Pointer to **string** |  | [optional] 
+**ModifiedByName** | Pointer to **string** |  | [optional] 
+**ModifiedById** | Pointer to **int32** |  | [optional] 
+**Name** | Pointer to **string** |  | [optional] 
+**ProjectId** | Pointer to **int32** |  | [optional] 
+**Status** | Pointer to **string** |  | [optional] 
+**Provider** | Pointer to [**SecurityGroupInstanceProvider**](SecurityGroupInstanceProvider.md) |  | [optional] 
+**Location** | Pointer to [**SecurityGroupInstanceLocation**](SecurityGroupInstanceLocation.md) |  | [optional] 
 **DataCenter** | Pointer to [**VmDataCenter**](VmDataCenter.md) |  | [optional] 
-**Os** | Pointer to [**VmOs**](VmOs.md) |  | [optional] 
-**Cpu** | Pointer to **interface{}** |  | [optional] 
-**RamGb** | Pointer to **interface{}** |  | [optional] 
-**Disks** | Pointer to [**[]VmDisksInner**](VmDisksInner.md) |  | [optional] 
-**Networks** | Pointer to [**[]VmNetworksInner**](VmNetworksInner.md) |  | [optional] 
-**SecurityGroup** | Pointer to [**VmSecurityGroup**](VmSecurityGroup.md) |  | [optional] 
-**SshKeyId** | Pointer to **interface{}** |  | [optional] 
-**UserName** | Pointer to **interface{}** |  | [optional] 
-**Cost** | Pointer to [**VmCost**](VmCost.md) |  | [optional] 
+**Os** | Pointer to [**SecurityGroupInstanceOs**](SecurityGroupInstanceOs.md) |  | [optional] 
+**Cpu** | Pointer to **int32** |  | [optional] 
+**RamGb** | Pointer to **int32** |  | [optional] 
+**Disks** | Pointer to [**[]SecurityGroupInstanceDisksInner**](SecurityGroupInstanceDisksInner.md) |  | [optional] 
+**Networks** | Pointer to [**[]SecurityGroupInstanceNetworksInner**](SecurityGroupInstanceNetworksInner.md) |  | [optional] 
+**SecurityGroup** | Pointer to [**SecurityGroupInstanceSecurityGroup**](SecurityGroupInstanceSecurityGroup.md) |  | [optional] 
+**SshKeyId** | Pointer to **int32** |  | [optional] 
+**UserName** | Pointer to **string** |  | [optional] 
+**Cost** | Pointer to [**SecurityGroupInstanceCost**](SecurityGroupInstanceCost.md) |  | [optional] 
 
 ## Methods
 
@@ -48,20 +48,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetId
 
-`func (o *Vm) GetId() interface{}`
+`func (o *Vm) GetId() int32`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *Vm) GetIdOk() (*interface{}, bool)`
+`func (o *Vm) GetIdOk() (*int32, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *Vm) SetId(v interface{})`
+`func (o *Vm) SetId(v int32)`
 
 SetId sets Id field to given value.
 
@@ -71,32 +71,22 @@ SetId sets Id field to given value.
 
 HasId returns a boolean if a field has been set.
 
-### SetIdNil
-
-`func (o *Vm) SetIdNil(b bool)`
-
- SetIdNil sets the value for Id to be an explicit nil
-
-### UnsetId
-`func (o *Vm) UnsetId()`
-
-UnsetId ensures that no value is present for Id, not even an explicit nil
 ### GetCreatedAt
 
-`func (o *Vm) GetCreatedAt() interface{}`
+`func (o *Vm) GetCreatedAt() string`
 
 GetCreatedAt returns the CreatedAt field if non-nil, zero value otherwise.
 
 ### GetCreatedAtOk
 
-`func (o *Vm) GetCreatedAtOk() (*interface{}, bool)`
+`func (o *Vm) GetCreatedAtOk() (*string, bool)`
 
 GetCreatedAtOk returns a tuple with the CreatedAt field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedAt
 
-`func (o *Vm) SetCreatedAt(v interface{})`
+`func (o *Vm) SetCreatedAt(v string)`
 
 SetCreatedAt sets CreatedAt field to given value.
 
@@ -106,32 +96,22 @@ SetCreatedAt sets CreatedAt field to given value.
 
 HasCreatedAt returns a boolean if a field has been set.
 
-### SetCreatedAtNil
-
-`func (o *Vm) SetCreatedAtNil(b bool)`
-
- SetCreatedAtNil sets the value for CreatedAt to be an explicit nil
-
-### UnsetCreatedAt
-`func (o *Vm) UnsetCreatedAt()`
-
-UnsetCreatedAt ensures that no value is present for CreatedAt, not even an explicit nil
 ### GetCreatedByName
 
-`func (o *Vm) GetCreatedByName() interface{}`
+`func (o *Vm) GetCreatedByName() string`
 
 GetCreatedByName returns the CreatedByName field if non-nil, zero value otherwise.
 
 ### GetCreatedByNameOk
 
-`func (o *Vm) GetCreatedByNameOk() (*interface{}, bool)`
+`func (o *Vm) GetCreatedByNameOk() (*string, bool)`
 
 GetCreatedByNameOk returns a tuple with the CreatedByName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedByName
 
-`func (o *Vm) SetCreatedByName(v interface{})`
+`func (o *Vm) SetCreatedByName(v string)`
 
 SetCreatedByName sets CreatedByName field to given value.
 
@@ -141,32 +121,22 @@ SetCreatedByName sets CreatedByName field to given value.
 
 HasCreatedByName returns a boolean if a field has been set.
 
-### SetCreatedByNameNil
-
-`func (o *Vm) SetCreatedByNameNil(b bool)`
-
- SetCreatedByNameNil sets the value for CreatedByName to be an explicit nil
-
-### UnsetCreatedByName
-`func (o *Vm) UnsetCreatedByName()`
-
-UnsetCreatedByName ensures that no value is present for CreatedByName, not even an explicit nil
 ### GetCreatedById
 
-`func (o *Vm) GetCreatedById() interface{}`
+`func (o *Vm) GetCreatedById() int32`
 
 GetCreatedById returns the CreatedById field if non-nil, zero value otherwise.
 
 ### GetCreatedByIdOk
 
-`func (o *Vm) GetCreatedByIdOk() (*interface{}, bool)`
+`func (o *Vm) GetCreatedByIdOk() (*int32, bool)`
 
 GetCreatedByIdOk returns a tuple with the CreatedById field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedById
 
-`func (o *Vm) SetCreatedById(v interface{})`
+`func (o *Vm) SetCreatedById(v int32)`
 
 SetCreatedById sets CreatedById field to given value.
 
@@ -176,32 +146,22 @@ SetCreatedById sets CreatedById field to given value.
 
 HasCreatedById returns a boolean if a field has been set.
 
-### SetCreatedByIdNil
-
-`func (o *Vm) SetCreatedByIdNil(b bool)`
-
- SetCreatedByIdNil sets the value for CreatedById to be an explicit nil
-
-### UnsetCreatedById
-`func (o *Vm) UnsetCreatedById()`
-
-UnsetCreatedById ensures that no value is present for CreatedById, not even an explicit nil
 ### GetModifiedAt
 
-`func (o *Vm) GetModifiedAt() interface{}`
+`func (o *Vm) GetModifiedAt() string`
 
 GetModifiedAt returns the ModifiedAt field if non-nil, zero value otherwise.
 
 ### GetModifiedAtOk
 
-`func (o *Vm) GetModifiedAtOk() (*interface{}, bool)`
+`func (o *Vm) GetModifiedAtOk() (*string, bool)`
 
 GetModifiedAtOk returns a tuple with the ModifiedAt field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetModifiedAt
 
-`func (o *Vm) SetModifiedAt(v interface{})`
+`func (o *Vm) SetModifiedAt(v string)`
 
 SetModifiedAt sets ModifiedAt field to given value.
 
@@ -211,32 +171,22 @@ SetModifiedAt sets ModifiedAt field to given value.
 
 HasModifiedAt returns a boolean if a field has been set.
 
-### SetModifiedAtNil
-
-`func (o *Vm) SetModifiedAtNil(b bool)`
-
- SetModifiedAtNil sets the value for ModifiedAt to be an explicit nil
-
-### UnsetModifiedAt
-`func (o *Vm) UnsetModifiedAt()`
-
-UnsetModifiedAt ensures that no value is present for ModifiedAt, not even an explicit nil
 ### GetModifiedByName
 
-`func (o *Vm) GetModifiedByName() interface{}`
+`func (o *Vm) GetModifiedByName() string`
 
 GetModifiedByName returns the ModifiedByName field if non-nil, zero value otherwise.
 
 ### GetModifiedByNameOk
 
-`func (o *Vm) GetModifiedByNameOk() (*interface{}, bool)`
+`func (o *Vm) GetModifiedByNameOk() (*string, bool)`
 
 GetModifiedByNameOk returns a tuple with the ModifiedByName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetModifiedByName
 
-`func (o *Vm) SetModifiedByName(v interface{})`
+`func (o *Vm) SetModifiedByName(v string)`
 
 SetModifiedByName sets ModifiedByName field to given value.
 
@@ -246,32 +196,22 @@ SetModifiedByName sets ModifiedByName field to given value.
 
 HasModifiedByName returns a boolean if a field has been set.
 
-### SetModifiedByNameNil
-
-`func (o *Vm) SetModifiedByNameNil(b bool)`
-
- SetModifiedByNameNil sets the value for ModifiedByName to be an explicit nil
-
-### UnsetModifiedByName
-`func (o *Vm) UnsetModifiedByName()`
-
-UnsetModifiedByName ensures that no value is present for ModifiedByName, not even an explicit nil
 ### GetModifiedById
 
-`func (o *Vm) GetModifiedById() interface{}`
+`func (o *Vm) GetModifiedById() int32`
 
 GetModifiedById returns the ModifiedById field if non-nil, zero value otherwise.
 
 ### GetModifiedByIdOk
 
-`func (o *Vm) GetModifiedByIdOk() (*interface{}, bool)`
+`func (o *Vm) GetModifiedByIdOk() (*int32, bool)`
 
 GetModifiedByIdOk returns a tuple with the ModifiedById field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetModifiedById
 
-`func (o *Vm) SetModifiedById(v interface{})`
+`func (o *Vm) SetModifiedById(v int32)`
 
 SetModifiedById sets ModifiedById field to given value.
 
@@ -281,32 +221,22 @@ SetModifiedById sets ModifiedById field to given value.
 
 HasModifiedById returns a boolean if a field has been set.
 
-### SetModifiedByIdNil
-
-`func (o *Vm) SetModifiedByIdNil(b bool)`
-
- SetModifiedByIdNil sets the value for ModifiedById to be an explicit nil
-
-### UnsetModifiedById
-`func (o *Vm) UnsetModifiedById()`
-
-UnsetModifiedById ensures that no value is present for ModifiedById, not even an explicit nil
 ### GetName
 
-`func (o *Vm) GetName() interface{}`
+`func (o *Vm) GetName() string`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *Vm) GetNameOk() (*interface{}, bool)`
+`func (o *Vm) GetNameOk() (*string, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *Vm) SetName(v interface{})`
+`func (o *Vm) SetName(v string)`
 
 SetName sets Name field to given value.
 
@@ -316,32 +246,22 @@ SetName sets Name field to given value.
 
 HasName returns a boolean if a field has been set.
 
-### SetNameNil
-
-`func (o *Vm) SetNameNil(b bool)`
-
- SetNameNil sets the value for Name to be an explicit nil
-
-### UnsetName
-`func (o *Vm) UnsetName()`
-
-UnsetName ensures that no value is present for Name, not even an explicit nil
 ### GetProjectId
 
-`func (o *Vm) GetProjectId() interface{}`
+`func (o *Vm) GetProjectId() int32`
 
 GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
 ### GetProjectIdOk
 
-`func (o *Vm) GetProjectIdOk() (*interface{}, bool)`
+`func (o *Vm) GetProjectIdOk() (*int32, bool)`
 
 GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProjectId
 
-`func (o *Vm) SetProjectId(v interface{})`
+`func (o *Vm) SetProjectId(v int32)`
 
 SetProjectId sets ProjectId field to given value.
 
@@ -351,32 +271,22 @@ SetProjectId sets ProjectId field to given value.
 
 HasProjectId returns a boolean if a field has been set.
 
-### SetProjectIdNil
-
-`func (o *Vm) SetProjectIdNil(b bool)`
-
- SetProjectIdNil sets the value for ProjectId to be an explicit nil
-
-### UnsetProjectId
-`func (o *Vm) UnsetProjectId()`
-
-UnsetProjectId ensures that no value is present for ProjectId, not even an explicit nil
 ### GetStatus
 
-`func (o *Vm) GetStatus() interface{}`
+`func (o *Vm) GetStatus() string`
 
 GetStatus returns the Status field if non-nil, zero value otherwise.
 
 ### GetStatusOk
 
-`func (o *Vm) GetStatusOk() (*interface{}, bool)`
+`func (o *Vm) GetStatusOk() (*string, bool)`
 
 GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStatus
 
-`func (o *Vm) SetStatus(v interface{})`
+`func (o *Vm) SetStatus(v string)`
 
 SetStatus sets Status field to given value.
 
@@ -386,32 +296,22 @@ SetStatus sets Status field to given value.
 
 HasStatus returns a boolean if a field has been set.
 
-### SetStatusNil
-
-`func (o *Vm) SetStatusNil(b bool)`
-
- SetStatusNil sets the value for Status to be an explicit nil
-
-### UnsetStatus
-`func (o *Vm) UnsetStatus()`
-
-UnsetStatus ensures that no value is present for Status, not even an explicit nil
 ### GetProvider
 
-`func (o *Vm) GetProvider() VmProvider`
+`func (o *Vm) GetProvider() SecurityGroupInstanceProvider`
 
 GetProvider returns the Provider field if non-nil, zero value otherwise.
 
 ### GetProviderOk
 
-`func (o *Vm) GetProviderOk() (*VmProvider, bool)`
+`func (o *Vm) GetProviderOk() (*SecurityGroupInstanceProvider, bool)`
 
 GetProviderOk returns a tuple with the Provider field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProvider
 
-`func (o *Vm) SetProvider(v VmProvider)`
+`func (o *Vm) SetProvider(v SecurityGroupInstanceProvider)`
 
 SetProvider sets Provider field to given value.
 
@@ -423,20 +323,20 @@ HasProvider returns a boolean if a field has been set.
 
 ### GetLocation
 
-`func (o *Vm) GetLocation() VmLocation`
+`func (o *Vm) GetLocation() SecurityGroupInstanceLocation`
 
 GetLocation returns the Location field if non-nil, zero value otherwise.
 
 ### GetLocationOk
 
-`func (o *Vm) GetLocationOk() (*VmLocation, bool)`
+`func (o *Vm) GetLocationOk() (*SecurityGroupInstanceLocation, bool)`
 
 GetLocationOk returns a tuple with the Location field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLocation
 
-`func (o *Vm) SetLocation(v VmLocation)`
+`func (o *Vm) SetLocation(v SecurityGroupInstanceLocation)`
 
 SetLocation sets Location field to given value.
 
@@ -473,20 +373,20 @@ HasDataCenter returns a boolean if a field has been set.
 
 ### GetOs
 
-`func (o *Vm) GetOs() VmOs`
+`func (o *Vm) GetOs() SecurityGroupInstanceOs`
 
 GetOs returns the Os field if non-nil, zero value otherwise.
 
 ### GetOsOk
 
-`func (o *Vm) GetOsOk() (*VmOs, bool)`
+`func (o *Vm) GetOsOk() (*SecurityGroupInstanceOs, bool)`
 
 GetOsOk returns a tuple with the Os field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOs
 
-`func (o *Vm) SetOs(v VmOs)`
+`func (o *Vm) SetOs(v SecurityGroupInstanceOs)`
 
 SetOs sets Os field to given value.
 
@@ -498,20 +398,20 @@ HasOs returns a boolean if a field has been set.
 
 ### GetCpu
 
-`func (o *Vm) GetCpu() interface{}`
+`func (o *Vm) GetCpu() int32`
 
 GetCpu returns the Cpu field if non-nil, zero value otherwise.
 
 ### GetCpuOk
 
-`func (o *Vm) GetCpuOk() (*interface{}, bool)`
+`func (o *Vm) GetCpuOk() (*int32, bool)`
 
 GetCpuOk returns a tuple with the Cpu field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCpu
 
-`func (o *Vm) SetCpu(v interface{})`
+`func (o *Vm) SetCpu(v int32)`
 
 SetCpu sets Cpu field to given value.
 
@@ -521,32 +421,22 @@ SetCpu sets Cpu field to given value.
 
 HasCpu returns a boolean if a field has been set.
 
-### SetCpuNil
-
-`func (o *Vm) SetCpuNil(b bool)`
-
- SetCpuNil sets the value for Cpu to be an explicit nil
-
-### UnsetCpu
-`func (o *Vm) UnsetCpu()`
-
-UnsetCpu ensures that no value is present for Cpu, not even an explicit nil
 ### GetRamGb
 
-`func (o *Vm) GetRamGb() interface{}`
+`func (o *Vm) GetRamGb() int32`
 
 GetRamGb returns the RamGb field if non-nil, zero value otherwise.
 
 ### GetRamGbOk
 
-`func (o *Vm) GetRamGbOk() (*interface{}, bool)`
+`func (o *Vm) GetRamGbOk() (*int32, bool)`
 
 GetRamGbOk returns a tuple with the RamGb field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRamGb
 
-`func (o *Vm) SetRamGb(v interface{})`
+`func (o *Vm) SetRamGb(v int32)`
 
 SetRamGb sets RamGb field to given value.
 
@@ -556,32 +446,22 @@ SetRamGb sets RamGb field to given value.
 
 HasRamGb returns a boolean if a field has been set.
 
-### SetRamGbNil
-
-`func (o *Vm) SetRamGbNil(b bool)`
-
- SetRamGbNil sets the value for RamGb to be an explicit nil
-
-### UnsetRamGb
-`func (o *Vm) UnsetRamGb()`
-
-UnsetRamGb ensures that no value is present for RamGb, not even an explicit nil
 ### GetDisks
 
-`func (o *Vm) GetDisks() []VmDisksInner`
+`func (o *Vm) GetDisks() []SecurityGroupInstanceDisksInner`
 
 GetDisks returns the Disks field if non-nil, zero value otherwise.
 
 ### GetDisksOk
 
-`func (o *Vm) GetDisksOk() (*[]VmDisksInner, bool)`
+`func (o *Vm) GetDisksOk() (*[]SecurityGroupInstanceDisksInner, bool)`
 
 GetDisksOk returns a tuple with the Disks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDisks
 
-`func (o *Vm) SetDisks(v []VmDisksInner)`
+`func (o *Vm) SetDisks(v []SecurityGroupInstanceDisksInner)`
 
 SetDisks sets Disks field to given value.
 
@@ -593,20 +473,20 @@ HasDisks returns a boolean if a field has been set.
 
 ### GetNetworks
 
-`func (o *Vm) GetNetworks() []VmNetworksInner`
+`func (o *Vm) GetNetworks() []SecurityGroupInstanceNetworksInner`
 
 GetNetworks returns the Networks field if non-nil, zero value otherwise.
 
 ### GetNetworksOk
 
-`func (o *Vm) GetNetworksOk() (*[]VmNetworksInner, bool)`
+`func (o *Vm) GetNetworksOk() (*[]SecurityGroupInstanceNetworksInner, bool)`
 
 GetNetworksOk returns a tuple with the Networks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNetworks
 
-`func (o *Vm) SetNetworks(v []VmNetworksInner)`
+`func (o *Vm) SetNetworks(v []SecurityGroupInstanceNetworksInner)`
 
 SetNetworks sets Networks field to given value.
 
@@ -618,20 +498,20 @@ HasNetworks returns a boolean if a field has been set.
 
 ### GetSecurityGroup
 
-`func (o *Vm) GetSecurityGroup() VmSecurityGroup`
+`func (o *Vm) GetSecurityGroup() SecurityGroupInstanceSecurityGroup`
 
 GetSecurityGroup returns the SecurityGroup field if non-nil, zero value otherwise.
 
 ### GetSecurityGroupOk
 
-`func (o *Vm) GetSecurityGroupOk() (*VmSecurityGroup, bool)`
+`func (o *Vm) GetSecurityGroupOk() (*SecurityGroupInstanceSecurityGroup, bool)`
 
 GetSecurityGroupOk returns a tuple with the SecurityGroup field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSecurityGroup
 
-`func (o *Vm) SetSecurityGroup(v VmSecurityGroup)`
+`func (o *Vm) SetSecurityGroup(v SecurityGroupInstanceSecurityGroup)`
 
 SetSecurityGroup sets SecurityGroup field to given value.
 
@@ -643,20 +523,20 @@ HasSecurityGroup returns a boolean if a field has been set.
 
 ### GetSshKeyId
 
-`func (o *Vm) GetSshKeyId() interface{}`
+`func (o *Vm) GetSshKeyId() int32`
 
 GetSshKeyId returns the SshKeyId field if non-nil, zero value otherwise.
 
 ### GetSshKeyIdOk
 
-`func (o *Vm) GetSshKeyIdOk() (*interface{}, bool)`
+`func (o *Vm) GetSshKeyIdOk() (*int32, bool)`
 
 GetSshKeyIdOk returns a tuple with the SshKeyId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSshKeyId
 
-`func (o *Vm) SetSshKeyId(v interface{})`
+`func (o *Vm) SetSshKeyId(v int32)`
 
 SetSshKeyId sets SshKeyId field to given value.
 
@@ -666,32 +546,22 @@ SetSshKeyId sets SshKeyId field to given value.
 
 HasSshKeyId returns a boolean if a field has been set.
 
-### SetSshKeyIdNil
-
-`func (o *Vm) SetSshKeyIdNil(b bool)`
-
- SetSshKeyIdNil sets the value for SshKeyId to be an explicit nil
-
-### UnsetSshKeyId
-`func (o *Vm) UnsetSshKeyId()`
-
-UnsetSshKeyId ensures that no value is present for SshKeyId, not even an explicit nil
 ### GetUserName
 
-`func (o *Vm) GetUserName() interface{}`
+`func (o *Vm) GetUserName() string`
 
 GetUserName returns the UserName field if non-nil, zero value otherwise.
 
 ### GetUserNameOk
 
-`func (o *Vm) GetUserNameOk() (*interface{}, bool)`
+`func (o *Vm) GetUserNameOk() (*string, bool)`
 
 GetUserNameOk returns a tuple with the UserName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUserName
 
-`func (o *Vm) SetUserName(v interface{})`
+`func (o *Vm) SetUserName(v string)`
 
 SetUserName sets UserName field to given value.
 
@@ -701,32 +571,22 @@ SetUserName sets UserName field to given value.
 
 HasUserName returns a boolean if a field has been set.
 
-### SetUserNameNil
-
-`func (o *Vm) SetUserNameNil(b bool)`
-
- SetUserNameNil sets the value for UserName to be an explicit nil
-
-### UnsetUserName
-`func (o *Vm) UnsetUserName()`
-
-UnsetUserName ensures that no value is present for UserName, not even an explicit nil
 ### GetCost
 
-`func (o *Vm) GetCost() VmCost`
+`func (o *Vm) GetCost() SecurityGroupInstanceCost`
 
 GetCost returns the Cost field if non-nil, zero value otherwise.
 
 ### GetCostOk
 
-`func (o *Vm) GetCostOk() (*VmCost, bool)`
+`func (o *Vm) GetCostOk() (*SecurityGroupInstanceCost, bool)`
 
 GetCostOk returns a tuple with the Cost field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCost
 
-`func (o *Vm) SetCost(v VmCost)`
+`func (o *Vm) SetCost(v SecurityGroupInstanceCost)`
 
 SetCost sets Cost field to given value.
 

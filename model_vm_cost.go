@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,9 +19,9 @@ var _ MappedNullable = &VmCost{}
 
 // VmCost struct for VmCost
 type VmCost struct {
-	Unit     interface{} `json:"unit,omitempty"`
-	Currency interface{} `json:"currency,omitempty"`
-	Price    interface{} `json:"price,omitempty"`
+	Unit     *string  `json:"unit,omitempty"`
+	Currency *string  `json:"currency,omitempty"`
+	Price    *float32 `json:"price,omitempty"`
 }
 
 // NewVmCost instantiates a new VmCost object
@@ -41,23 +41,22 @@ func NewVmCostWithDefaults() *VmCost {
 	return &this
 }
 
-// GetUnit returns the Unit field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmCost) GetUnit() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetUnit returns the Unit field value if set, zero value otherwise.
+func (o *VmCost) GetUnit() string {
+	if o == nil || IsNil(o.Unit) {
+		var ret string
 		return ret
 	}
-	return o.Unit
+	return *o.Unit
 }
 
 // GetUnitOk returns a tuple with the Unit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCost) GetUnitOk() (*interface{}, bool) {
+func (o *VmCost) GetUnitOk() (*string, bool) {
 	if o == nil || IsNil(o.Unit) {
 		return nil, false
 	}
-	return &o.Unit, true
+	return o.Unit, true
 }
 
 // HasUnit returns a boolean if a field has been set.
@@ -69,28 +68,27 @@ func (o *VmCost) HasUnit() bool {
 	return false
 }
 
-// SetUnit gets a reference to the given interface{} and assigns it to the Unit field.
-func (o *VmCost) SetUnit(v interface{}) {
-	o.Unit = v
+// SetUnit gets a reference to the given string and assigns it to the Unit field.
+func (o *VmCost) SetUnit(v string) {
+	o.Unit = &v
 }
 
-// GetCurrency returns the Currency field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmCost) GetCurrency() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCurrency returns the Currency field value if set, zero value otherwise.
+func (o *VmCost) GetCurrency() string {
+	if o == nil || IsNil(o.Currency) {
+		var ret string
 		return ret
 	}
-	return o.Currency
+	return *o.Currency
 }
 
 // GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCost) GetCurrencyOk() (*interface{}, bool) {
+func (o *VmCost) GetCurrencyOk() (*string, bool) {
 	if o == nil || IsNil(o.Currency) {
 		return nil, false
 	}
-	return &o.Currency, true
+	return o.Currency, true
 }
 
 // HasCurrency returns a boolean if a field has been set.
@@ -102,28 +100,27 @@ func (o *VmCost) HasCurrency() bool {
 	return false
 }
 
-// SetCurrency gets a reference to the given interface{} and assigns it to the Currency field.
-func (o *VmCost) SetCurrency(v interface{}) {
-	o.Currency = v
+// SetCurrency gets a reference to the given string and assigns it to the Currency field.
+func (o *VmCost) SetCurrency(v string) {
+	o.Currency = &v
 }
 
-// GetPrice returns the Price field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *VmCost) GetPrice() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetPrice returns the Price field value if set, zero value otherwise.
+func (o *VmCost) GetPrice() float32 {
+	if o == nil || IsNil(o.Price) {
+		var ret float32
 		return ret
 	}
-	return o.Price
+	return *o.Price
 }
 
 // GetPriceOk returns a tuple with the Price field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *VmCost) GetPriceOk() (*interface{}, bool) {
+func (o *VmCost) GetPriceOk() (*float32, bool) {
 	if o == nil || IsNil(o.Price) {
 		return nil, false
 	}
-	return &o.Price, true
+	return o.Price, true
 }
 
 // HasPrice returns a boolean if a field has been set.
@@ -135,9 +132,9 @@ func (o *VmCost) HasPrice() bool {
 	return false
 }
 
-// SetPrice gets a reference to the given interface{} and assigns it to the Price field.
-func (o *VmCost) SetPrice(v interface{}) {
-	o.Price = v
+// SetPrice gets a reference to the given float32 and assigns it to the Price field.
+func (o *VmCost) SetPrice(v float32) {
+	o.Price = &v
 }
 
 func (o VmCost) MarshalJSON() ([]byte, error) {
@@ -150,13 +147,13 @@ func (o VmCost) MarshalJSON() ([]byte, error) {
 
 func (o VmCost) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Unit != nil {
+	if !IsNil(o.Unit) {
 		toSerialize["unit"] = o.Unit
 	}
-	if o.Currency != nil {
+	if !IsNil(o.Currency) {
 		toSerialize["currency"] = o.Currency
 	}
-	if o.Price != nil {
+	if !IsNil(o.Price) {
 		toSerialize["price"] = o.Price
 	}
 	return toSerialize, nil

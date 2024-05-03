@@ -1,18 +1,18 @@
 # Go API client for emma
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.
+**Base URL:** *<u>https://api.emma.ms/external</u>*
 
-To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.
+This **Infrastructure API** is for managing the cloud infrastructure within a project.
 
-After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.
+To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.
 
-The Bearer access token is a text string, included in the request header:
+After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.
 
--H \"Authorization: Bearer {token}\"
+The Bearer access token is a text string, included in the request header, example:
 
-Use this token for API requests.
+*-H Authorization: Bearer {token}*
 
-The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 
 ## Overview
@@ -35,7 +35,7 @@ go get golang.org/x/net/context
 Put the package under your project folder and add the following in import:
 
 ```go
-import emma "github.com/GIT_USER_ID/GIT_REPO_ID"
+import emma "github.com/emma-community/emma-go-sdk"
 ```
 
 To use a proxy, set the environment variable `HTTP_PROXY`:
@@ -108,6 +108,18 @@ Class | Method | HTTP request | Description
 *SSHKeysAPI* | [**SshKeyUpdate**](docs/SSHKeysAPI.md#sshkeyupdate) | **Put** /v1/ssh-keys/{sshKeyId} | Update SSH keys
 *SSHKeysAPI* | [**SshKeys**](docs/SSHKeysAPI.md#sshkeys) | **Get** /v1/ssh-keys | Get list of SSH keys
 *SSHKeysAPI* | [**SshKeysCreateImport**](docs/SSHKeysAPI.md#sshkeyscreateimport) | **Post** /v1/ssh-keys | Create or import SSH key
+*SecurityGroupsAPI* | [**GetSecurityGroup**](docs/SecurityGroupsAPI.md#getsecuritygroup) | **Get** /v1/security-groups/{securityGroupId} | Get security group by ID
+*SecurityGroupsAPI* | [**GetSecurityGroups**](docs/SecurityGroupsAPI.md#getsecuritygroups) | **Get** /v1/security-groups | Get list of security groups
+*SecurityGroupsAPI* | [**SecurityGroupCreate**](docs/SecurityGroupsAPI.md#securitygroupcreate) | **Post** /v1/security-groups | Create security group
+*SecurityGroupsAPI* | [**SecurityGroupDelete**](docs/SecurityGroupsAPI.md#securitygroupdelete) | **Delete** /v1/security-groups/{securityGroupId} | Delete security group
+*SecurityGroupsAPI* | [**SecurityGroupInstanceAdd**](docs/SecurityGroupsAPI.md#securitygroupinstanceadd) | **Post** /v1/security-groups/{securityGroupId}/instances | Add instance to security group
+*SecurityGroupsAPI* | [**SecurityGroupInstances**](docs/SecurityGroupsAPI.md#securitygroupinstances) | **Get** /v1/security-groups/{securityGroupId}/instances | Get instances in security group
+*SecurityGroupsAPI* | [**SecurityGroupUpdate**](docs/SecurityGroupsAPI.md#securitygroupupdate) | **Put** /v1/security-groups/{securityGroupId} | Update security group
+*SpotInstancesAPI* | [**GetSpot**](docs/SpotInstancesAPI.md#getspot) | **Get** /v1/spot-instances/{spotInstanceId} | Get spot instance by id
+*SpotInstancesAPI* | [**GetSpots**](docs/SpotInstancesAPI.md#getspots) | **Get** /v1/spot-instances | Get list of spot instances
+*SpotInstancesAPI* | [**SpotActions**](docs/SpotInstancesAPI.md#spotactions) | **Post** /v1/spot-instances/{spotInstanceId}/actions | Perform actions with a spot instance
+*SpotInstancesAPI* | [**SpotCreate**](docs/SpotInstancesAPI.md#spotcreate) | **Post** /v1/spot-instances | Create spot instance
+*SpotInstancesAPI* | [**SpotDelete**](docs/SpotInstancesAPI.md#spotdelete) | **Delete** /v1/spot-instances/{spotInstanceId} | Delete spot instance
 *VirtualMachinesAPI* | [**GetVm**](docs/VirtualMachinesAPI.md#getvm) | **Get** /v1/vms/{vmId} | Get virtual machine by id
 *VirtualMachinesAPI* | [**GetVms**](docs/VirtualMachinesAPI.md#getvms) | **Get** /v1/vms | Get list of virtual machines
 *VirtualMachinesAPI* | [**VmActions**](docs/VirtualMachinesAPI.md#vmactions) | **Post** /v1/vms/{vmId}/actions | Perform actions with a virtual machine
@@ -118,6 +130,7 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [BadRequestError](docs/BadRequestError.md)
+ - [ConflictError](docs/ConflictError.md)
  - [Credentials](docs/Credentials.md)
  - [DataCenter](docs/DataCenter.md)
  - [ForbiddenError](docs/ForbiddenError.md)
@@ -129,7 +142,24 @@ Class | Method | HTTP request | Description
  - [PaginatedResult](docs/PaginatedResult.md)
  - [Provider](docs/Provider.md)
  - [RefreshToken](docs/RefreshToken.md)
+ - [SecurityGroup](docs/SecurityGroup.md)
+ - [SecurityGroupInstance](docs/SecurityGroupInstance.md)
+ - [SecurityGroupInstanceAdd](docs/SecurityGroupInstanceAdd.md)
+ - [SecurityGroupInstanceCost](docs/SecurityGroupInstanceCost.md)
+ - [SecurityGroupInstanceDataCenter](docs/SecurityGroupInstanceDataCenter.md)
+ - [SecurityGroupInstanceDisksInner](docs/SecurityGroupInstanceDisksInner.md)
+ - [SecurityGroupInstanceLocation](docs/SecurityGroupInstanceLocation.md)
+ - [SecurityGroupInstanceNetworksInner](docs/SecurityGroupInstanceNetworksInner.md)
+ - [SecurityGroupInstanceOs](docs/SecurityGroupInstanceOs.md)
+ - [SecurityGroupInstanceProvider](docs/SecurityGroupInstanceProvider.md)
+ - [SecurityGroupInstanceSecurityGroup](docs/SecurityGroupInstanceSecurityGroup.md)
+ - [SecurityGroupRequest](docs/SecurityGroupRequest.md)
+ - [SecurityGroupRule](docs/SecurityGroupRule.md)
+ - [SecurityGroupRuleRequest](docs/SecurityGroupRuleRequest.md)
  - [SortObject](docs/SortObject.md)
+ - [SpotActionsRequest](docs/SpotActionsRequest.md)
+ - [SpotCreate](docs/SpotCreate.md)
+ - [SpotReboot](docs/SpotReboot.md)
  - [SshKey](docs/SshKey.md)
  - [SshKeyCreate](docs/SshKeyCreate.md)
  - [SshKeyGenerated](docs/SshKeyGenerated.md)
@@ -139,22 +169,16 @@ Class | Method | HTTP request | Description
  - [SshKeysCreateImportRequest](docs/SshKeysCreateImportRequest.md)
  - [Token](docs/Token.md)
  - [UnauthorizedError](docs/UnauthorizedError.md)
+ - [UnprocessableEntityError](docs/UnprocessableEntityError.md)
  - [Vm](docs/Vm.md)
  - [VmActionsRequest](docs/VmActionsRequest.md)
  - [VmClone](docs/VmClone.md)
  - [VmConfiguration](docs/VmConfiguration.md)
  - [VmConfigurationCost](docs/VmConfigurationCost.md)
- - [VmCost](docs/VmCost.md)
  - [VmCreate](docs/VmCreate.md)
  - [VmDataCenter](docs/VmDataCenter.md)
- - [VmDisksInner](docs/VmDisksInner.md)
  - [VmEditHardware](docs/VmEditHardware.md)
- - [VmLocation](docs/VmLocation.md)
- - [VmNetworksInner](docs/VmNetworksInner.md)
- - [VmOs](docs/VmOs.md)
- - [VmProvider](docs/VmProvider.md)
  - [VmReboot](docs/VmReboot.md)
- - [VmSecurityGroup](docs/VmSecurityGroup.md)
  - [VmShutdown](docs/VmShutdown.md)
  - [VmStart](docs/VmStart.md)
  - [VmTransfer](docs/VmTransfer.md)

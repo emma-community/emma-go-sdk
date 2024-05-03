@@ -24,11 +24,11 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
-	credentials := *openapiclient.NewCredentials(interface{}(ad6f8c5c-223f-4102-8664-8044b84864e2), interface{}(e0eb8a09-b7fe-4acc-a72b-79ce0dd26068)) // Credentials |  (optional)
+	credentials := *openapiclient.NewCredentials("ad6f8c5c-223f-4102-8664-8044b84864e2", "e0eb8a09-b7fe-4acc-a72b-79ce0dd26068") // Credentials |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -88,11 +88,11 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 )
 
 func main() {
-	refreshToken := *openapiclient.NewRefreshToken(interface{}(ad6f8c5js6dkj;s43dv3jljhf9fxej4236235tgdgrthreth8044b84864e2)) // RefreshToken |  (optional)
+	refreshToken := *openapiclient.NewRefreshToken("ad6f8c5js6dkj;s43dv3jljhf9fxej4236235tgdgrthreth8044b84864e2") // RefreshToken |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

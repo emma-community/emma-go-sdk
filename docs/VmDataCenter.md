@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **interface{}** |  | [optional] 
-**Name** | Pointer to **interface{}** |  | [optional] 
-**ProviderId** | Pointer to **interface{}** |  | [optional] 
-**ProviderName** | Pointer to **interface{}** |  | [optional] 
-**LocationId** | Pointer to **interface{}** |  | [optional] 
-**LocationName** | Pointer to **interface{}** |  | [optional] 
+**Id** | Pointer to **string** |  | [optional] 
+**Name** | Pointer to **string** |  | [optional] 
+**ProviderId** | Pointer to **int32** |  | [optional] 
+**ProviderName** | Pointer to **string** |  | [optional] 
+**LocationId** | Pointer to **int32** |  | [optional] 
+**LocationName** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -32,20 +32,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetId
 
-`func (o *VmDataCenter) GetId() interface{}`
+`func (o *VmDataCenter) GetId() string`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *VmDataCenter) GetIdOk() (*interface{}, bool)`
+`func (o *VmDataCenter) GetIdOk() (*string, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *VmDataCenter) SetId(v interface{})`
+`func (o *VmDataCenter) SetId(v string)`
 
 SetId sets Id field to given value.
 
@@ -55,32 +55,22 @@ SetId sets Id field to given value.
 
 HasId returns a boolean if a field has been set.
 
-### SetIdNil
-
-`func (o *VmDataCenter) SetIdNil(b bool)`
-
- SetIdNil sets the value for Id to be an explicit nil
-
-### UnsetId
-`func (o *VmDataCenter) UnsetId()`
-
-UnsetId ensures that no value is present for Id, not even an explicit nil
 ### GetName
 
-`func (o *VmDataCenter) GetName() interface{}`
+`func (o *VmDataCenter) GetName() string`
 
 GetName returns the Name field if non-nil, zero value otherwise.
 
 ### GetNameOk
 
-`func (o *VmDataCenter) GetNameOk() (*interface{}, bool)`
+`func (o *VmDataCenter) GetNameOk() (*string, bool)`
 
 GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetName
 
-`func (o *VmDataCenter) SetName(v interface{})`
+`func (o *VmDataCenter) SetName(v string)`
 
 SetName sets Name field to given value.
 
@@ -90,32 +80,22 @@ SetName sets Name field to given value.
 
 HasName returns a boolean if a field has been set.
 
-### SetNameNil
-
-`func (o *VmDataCenter) SetNameNil(b bool)`
-
- SetNameNil sets the value for Name to be an explicit nil
-
-### UnsetName
-`func (o *VmDataCenter) UnsetName()`
-
-UnsetName ensures that no value is present for Name, not even an explicit nil
 ### GetProviderId
 
-`func (o *VmDataCenter) GetProviderId() interface{}`
+`func (o *VmDataCenter) GetProviderId() int32`
 
 GetProviderId returns the ProviderId field if non-nil, zero value otherwise.
 
 ### GetProviderIdOk
 
-`func (o *VmDataCenter) GetProviderIdOk() (*interface{}, bool)`
+`func (o *VmDataCenter) GetProviderIdOk() (*int32, bool)`
 
 GetProviderIdOk returns a tuple with the ProviderId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProviderId
 
-`func (o *VmDataCenter) SetProviderId(v interface{})`
+`func (o *VmDataCenter) SetProviderId(v int32)`
 
 SetProviderId sets ProviderId field to given value.
 
@@ -125,32 +105,22 @@ SetProviderId sets ProviderId field to given value.
 
 HasProviderId returns a boolean if a field has been set.
 
-### SetProviderIdNil
-
-`func (o *VmDataCenter) SetProviderIdNil(b bool)`
-
- SetProviderIdNil sets the value for ProviderId to be an explicit nil
-
-### UnsetProviderId
-`func (o *VmDataCenter) UnsetProviderId()`
-
-UnsetProviderId ensures that no value is present for ProviderId, not even an explicit nil
 ### GetProviderName
 
-`func (o *VmDataCenter) GetProviderName() interface{}`
+`func (o *VmDataCenter) GetProviderName() string`
 
 GetProviderName returns the ProviderName field if non-nil, zero value otherwise.
 
 ### GetProviderNameOk
 
-`func (o *VmDataCenter) GetProviderNameOk() (*interface{}, bool)`
+`func (o *VmDataCenter) GetProviderNameOk() (*string, bool)`
 
 GetProviderNameOk returns a tuple with the ProviderName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProviderName
 
-`func (o *VmDataCenter) SetProviderName(v interface{})`
+`func (o *VmDataCenter) SetProviderName(v string)`
 
 SetProviderName sets ProviderName field to given value.
 
@@ -160,32 +130,22 @@ SetProviderName sets ProviderName field to given value.
 
 HasProviderName returns a boolean if a field has been set.
 
-### SetProviderNameNil
-
-`func (o *VmDataCenter) SetProviderNameNil(b bool)`
-
- SetProviderNameNil sets the value for ProviderName to be an explicit nil
-
-### UnsetProviderName
-`func (o *VmDataCenter) UnsetProviderName()`
-
-UnsetProviderName ensures that no value is present for ProviderName, not even an explicit nil
 ### GetLocationId
 
-`func (o *VmDataCenter) GetLocationId() interface{}`
+`func (o *VmDataCenter) GetLocationId() int32`
 
 GetLocationId returns the LocationId field if non-nil, zero value otherwise.
 
 ### GetLocationIdOk
 
-`func (o *VmDataCenter) GetLocationIdOk() (*interface{}, bool)`
+`func (o *VmDataCenter) GetLocationIdOk() (*int32, bool)`
 
 GetLocationIdOk returns a tuple with the LocationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLocationId
 
-`func (o *VmDataCenter) SetLocationId(v interface{})`
+`func (o *VmDataCenter) SetLocationId(v int32)`
 
 SetLocationId sets LocationId field to given value.
 
@@ -195,32 +155,22 @@ SetLocationId sets LocationId field to given value.
 
 HasLocationId returns a boolean if a field has been set.
 
-### SetLocationIdNil
-
-`func (o *VmDataCenter) SetLocationIdNil(b bool)`
-
- SetLocationIdNil sets the value for LocationId to be an explicit nil
-
-### UnsetLocationId
-`func (o *VmDataCenter) UnsetLocationId()`
-
-UnsetLocationId ensures that no value is present for LocationId, not even an explicit nil
 ### GetLocationName
 
-`func (o *VmDataCenter) GetLocationName() interface{}`
+`func (o *VmDataCenter) GetLocationName() string`
 
 GetLocationName returns the LocationName field if non-nil, zero value otherwise.
 
 ### GetLocationNameOk
 
-`func (o *VmDataCenter) GetLocationNameOk() (*interface{}, bool)`
+`func (o *VmDataCenter) GetLocationNameOk() (*string, bool)`
 
 GetLocationNameOk returns a tuple with the LocationName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLocationName
 
-`func (o *VmDataCenter) SetLocationName(v interface{})`
+`func (o *VmDataCenter) SetLocationName(v string)`
 
 SetLocationName sets LocationName field to given value.
 
@@ -230,16 +180,6 @@ SetLocationName sets LocationName field to given value.
 
 HasLocationName returns a boolean if a field has been set.
 
-### SetLocationNameNil
-
-`func (o *VmDataCenter) SetLocationNameNil(b bool)`
-
- SetLocationNameNil sets the value for LocationName to be an explicit nil
-
-### UnsetLocationName
-`func (o *VmDataCenter) UnsetLocationName()`
-
-UnsetLocationName ensures that no value is present for LocationName, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

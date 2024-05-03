@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-This <b>Infrastructure</b> API is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to <b>Settings</b> > <b>Service Apps</b>, and create a service application. Select the access level: <b>Read</b>, <b>Operate</b>, or <b>Manage</b>.  After creating the service application, copy the <b>Client ID</b> and <b>Client Secret</b>. Send an API request to the endpoint <b>/issue-token</b> as specified in the <b>Authentication</b> section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header:  -H \"Authorization: Bearer {token}\"  Use this token for API requests.  The access token will expire in 5 minutes, after which it must be refreshed using the refresh token.
+**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
 
 API version: 0.0.1
 */
@@ -19,12 +19,12 @@ var _ MappedNullable = &PageableObject{}
 
 // PageableObject struct for PageableObject
 type PageableObject struct {
-	Offset     interface{} `json:"offset,omitempty"`
+	Offset     *int64      `json:"offset,omitempty"`
 	Sort       *SortObject `json:"sort,omitempty"`
-	PageSize   interface{} `json:"pageSize,omitempty"`
-	PageNumber interface{} `json:"pageNumber,omitempty"`
-	Paged      interface{} `json:"paged,omitempty"`
-	Unpaged    interface{} `json:"unpaged,omitempty"`
+	PageSize   *int32      `json:"pageSize,omitempty"`
+	PageNumber *int32      `json:"pageNumber,omitempty"`
+	Paged      *bool       `json:"paged,omitempty"`
+	Unpaged    *bool       `json:"unpaged,omitempty"`
 }
 
 // NewPageableObject instantiates a new PageableObject object
@@ -44,23 +44,22 @@ func NewPageableObjectWithDefaults() *PageableObject {
 	return &this
 }
 
-// GetOffset returns the Offset field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PageableObject) GetOffset() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetOffset returns the Offset field value if set, zero value otherwise.
+func (o *PageableObject) GetOffset() int64 {
+	if o == nil || IsNil(o.Offset) {
+		var ret int64
 		return ret
 	}
-	return o.Offset
+	return *o.Offset
 }
 
 // GetOffsetOk returns a tuple with the Offset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PageableObject) GetOffsetOk() (*interface{}, bool) {
+func (o *PageableObject) GetOffsetOk() (*int64, bool) {
 	if o == nil || IsNil(o.Offset) {
 		return nil, false
 	}
-	return &o.Offset, true
+	return o.Offset, true
 }
 
 // HasOffset returns a boolean if a field has been set.
@@ -72,9 +71,9 @@ func (o *PageableObject) HasOffset() bool {
 	return false
 }
 
-// SetOffset gets a reference to the given interface{} and assigns it to the Offset field.
-func (o *PageableObject) SetOffset(v interface{}) {
-	o.Offset = v
+// SetOffset gets a reference to the given int64 and assigns it to the Offset field.
+func (o *PageableObject) SetOffset(v int64) {
+	o.Offset = &v
 }
 
 // GetSort returns the Sort field value if set, zero value otherwise.
@@ -109,23 +108,22 @@ func (o *PageableObject) SetSort(v SortObject) {
 	o.Sort = &v
 }
 
-// GetPageSize returns the PageSize field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PageableObject) GetPageSize() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetPageSize returns the PageSize field value if set, zero value otherwise.
+func (o *PageableObject) GetPageSize() int32 {
+	if o == nil || IsNil(o.PageSize) {
+		var ret int32
 		return ret
 	}
-	return o.PageSize
+	return *o.PageSize
 }
 
 // GetPageSizeOk returns a tuple with the PageSize field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PageableObject) GetPageSizeOk() (*interface{}, bool) {
+func (o *PageableObject) GetPageSizeOk() (*int32, bool) {
 	if o == nil || IsNil(o.PageSize) {
 		return nil, false
 	}
-	return &o.PageSize, true
+	return o.PageSize, true
 }
 
 // HasPageSize returns a boolean if a field has been set.
@@ -137,28 +135,27 @@ func (o *PageableObject) HasPageSize() bool {
 	return false
 }
 
-// SetPageSize gets a reference to the given interface{} and assigns it to the PageSize field.
-func (o *PageableObject) SetPageSize(v interface{}) {
-	o.PageSize = v
+// SetPageSize gets a reference to the given int32 and assigns it to the PageSize field.
+func (o *PageableObject) SetPageSize(v int32) {
+	o.PageSize = &v
 }
 
-// GetPageNumber returns the PageNumber field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PageableObject) GetPageNumber() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetPageNumber returns the PageNumber field value if set, zero value otherwise.
+func (o *PageableObject) GetPageNumber() int32 {
+	if o == nil || IsNil(o.PageNumber) {
+		var ret int32
 		return ret
 	}
-	return o.PageNumber
+	return *o.PageNumber
 }
 
 // GetPageNumberOk returns a tuple with the PageNumber field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PageableObject) GetPageNumberOk() (*interface{}, bool) {
+func (o *PageableObject) GetPageNumberOk() (*int32, bool) {
 	if o == nil || IsNil(o.PageNumber) {
 		return nil, false
 	}
-	return &o.PageNumber, true
+	return o.PageNumber, true
 }
 
 // HasPageNumber returns a boolean if a field has been set.
@@ -170,28 +167,27 @@ func (o *PageableObject) HasPageNumber() bool {
 	return false
 }
 
-// SetPageNumber gets a reference to the given interface{} and assigns it to the PageNumber field.
-func (o *PageableObject) SetPageNumber(v interface{}) {
-	o.PageNumber = v
+// SetPageNumber gets a reference to the given int32 and assigns it to the PageNumber field.
+func (o *PageableObject) SetPageNumber(v int32) {
+	o.PageNumber = &v
 }
 
-// GetPaged returns the Paged field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PageableObject) GetPaged() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetPaged returns the Paged field value if set, zero value otherwise.
+func (o *PageableObject) GetPaged() bool {
+	if o == nil || IsNil(o.Paged) {
+		var ret bool
 		return ret
 	}
-	return o.Paged
+	return *o.Paged
 }
 
 // GetPagedOk returns a tuple with the Paged field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PageableObject) GetPagedOk() (*interface{}, bool) {
+func (o *PageableObject) GetPagedOk() (*bool, bool) {
 	if o == nil || IsNil(o.Paged) {
 		return nil, false
 	}
-	return &o.Paged, true
+	return o.Paged, true
 }
 
 // HasPaged returns a boolean if a field has been set.
@@ -203,28 +199,27 @@ func (o *PageableObject) HasPaged() bool {
 	return false
 }
 
-// SetPaged gets a reference to the given interface{} and assigns it to the Paged field.
-func (o *PageableObject) SetPaged(v interface{}) {
-	o.Paged = v
+// SetPaged gets a reference to the given bool and assigns it to the Paged field.
+func (o *PageableObject) SetPaged(v bool) {
+	o.Paged = &v
 }
 
-// GetUnpaged returns the Unpaged field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PageableObject) GetUnpaged() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetUnpaged returns the Unpaged field value if set, zero value otherwise.
+func (o *PageableObject) GetUnpaged() bool {
+	if o == nil || IsNil(o.Unpaged) {
+		var ret bool
 		return ret
 	}
-	return o.Unpaged
+	return *o.Unpaged
 }
 
 // GetUnpagedOk returns a tuple with the Unpaged field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PageableObject) GetUnpagedOk() (*interface{}, bool) {
+func (o *PageableObject) GetUnpagedOk() (*bool, bool) {
 	if o == nil || IsNil(o.Unpaged) {
 		return nil, false
 	}
-	return &o.Unpaged, true
+	return o.Unpaged, true
 }
 
 // HasUnpaged returns a boolean if a field has been set.
@@ -236,9 +231,9 @@ func (o *PageableObject) HasUnpaged() bool {
 	return false
 }
 
-// SetUnpaged gets a reference to the given interface{} and assigns it to the Unpaged field.
-func (o *PageableObject) SetUnpaged(v interface{}) {
-	o.Unpaged = v
+// SetUnpaged gets a reference to the given bool and assigns it to the Unpaged field.
+func (o *PageableObject) SetUnpaged(v bool) {
+	o.Unpaged = &v
 }
 
 func (o PageableObject) MarshalJSON() ([]byte, error) {
@@ -251,22 +246,22 @@ func (o PageableObject) MarshalJSON() ([]byte, error) {
 
 func (o PageableObject) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Offset != nil {
+	if !IsNil(o.Offset) {
 		toSerialize["offset"] = o.Offset
 	}
 	if !IsNil(o.Sort) {
 		toSerialize["sort"] = o.Sort
 	}
-	if o.PageSize != nil {
+	if !IsNil(o.PageSize) {
 		toSerialize["pageSize"] = o.PageSize
 	}
-	if o.PageNumber != nil {
+	if !IsNil(o.PageNumber) {
 		toSerialize["pageNumber"] = o.PageNumber
 	}
-	if o.Paged != nil {
+	if !IsNil(o.Paged) {
 		toSerialize["paged"] = o.Paged
 	}
-	if o.Unpaged != nil {
+	if !IsNil(o.Unpaged) {
 		toSerialize["unpaged"] = o.Unpaged
 	}
 	return toSerialize, nil

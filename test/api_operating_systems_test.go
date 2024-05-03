@@ -11,7 +11,7 @@ package emma
 
 import (
 	"context"
-	openapiclient "github.com/MandarinSolutions/emma-go-sdk"
+	openapiclient "github.com/emma-community/emma-go-sdk"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

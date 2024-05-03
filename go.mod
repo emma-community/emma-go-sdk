@@ -1,4 +1,4 @@
-module github.com/MandarinSolutions/emma-go-sdk
+module github.com/emma-community/emma-go-sdk
 
 go 1.22.0
 
