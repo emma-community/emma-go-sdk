@@ -2373,12 +2373,14 @@ components:
         modifiedBy: 123
         rules:
         - protocol: TCP
+          isMutable: true
           ipRange: 0.0.0.0/0
           type: Custom TCP
           ports: "30321"
           policy: ALLOW
           direction: INBOUND
         - protocol: TCP
+          isMutable: true
           ipRange: 0.0.0.0/0
           type: Custom TCP
           ports: "30321"
@@ -2468,6 +2470,7 @@ components:
           type: Ubuntu
           version: "22.04"
           architecture: x86-64
+        vCpu: 1
         disks:
         - sizeGb: 250
           typeId: 2
@@ -2483,7 +2486,6 @@ components:
           name: eu-north-1
           id: 19
         modifiedAt: 2021-11-26T14:54:11
-        cpu: 1
         securityGroup:
           name: default
           id: 208
@@ -2499,6 +2501,7 @@ components:
         userName: root
         ramGb: 2
         sshKeyId: 123
+        vCpuType: shared
         createdAt: 2021-11-26T14:54:11
         modifiedByName: Automation User
         modifiedById: 123
@@ -2510,6 +2513,7 @@ components:
           name: London
           id: 6
         id: 8100
+        cloudNetworkType: multi-cloud
         projectId: 933
         createdById: 123
         status: POWERED_ON
@@ -2552,9 +2556,25 @@ components:
           $ref: '#/components/schemas/SecurityGroupInstance_dataCenter'
         os:
           $ref: '#/components/schemas/SecurityGroupInstance_os'
-        cpu:
+        vCpu:
           example: 1
           type: integer
+        vCpuType:
+          description: vCPU type
+          enum:
+          - shared
+          - standard
+          - hpc
+          example: shared
+          type: string
+        cloudNetworkType:
+          description: Cloud network type
+          enum:
+          - isolated
+          - multi-cloud
+          - default
+          example: multi-cloud
+          type: string
         ramGb:
           example: 2
           type: integer
@@ -2597,6 +2617,7 @@ components:
     SecurityGroupRule:
       example:
         protocol: TCP
+        isMutable: true
         ipRange: 0.0.0.0/0
         type: Custom TCP
         ports: "30321"
@@ -2621,6 +2642,9 @@ components:
         ipRange:
           example: 0.0.0.0/0
           type: string
+        isMutable:
+          example: true
+          type: boolean
       type: object
     SecurityGroupRuleRequest:
       example:
@@ -2921,6 +2945,7 @@ components:
           type: Ubuntu
           version: "22.04"
           architecture: x86-64
+        vCpu: 1
         disks:
         - sizeGb: 250
           typeId: 2
@@ -2940,7 +2965,6 @@ components:
           id: aws-ap-south-1
           providerName: DO
         modifiedAt: 2021-11-26T14:54:11
-        cpu: 1
         securityGroup:
           name: default
           id: 208
@@ -2956,6 +2980,7 @@ components:
         userName: root
         ramGb: 2
         sshKeyId: 123
+        vCpuType: shared
         createdAt: 2021-11-26T14:54:11
         modifiedByName: Automation User
         modifiedById: 123
@@ -2967,6 +2992,7 @@ components:
           name: London
           id: 6
         id: 8100
+        cloudNetworkType: multi-cloud
         projectId: 933
         createdById: 123
         status: POWERED_ON
@@ -3014,9 +3040,25 @@ components:
           $ref: '#/components/schemas/Vm_dataCenter'
         os:
           $ref: '#/components/schemas/SecurityGroupInstance_os'
-        cpu:
+        vCpu:
           example: 1
           type: integer
+        vCpuType:
+          description: vCPU type
+          enum:
+          - shared
+          - standard
+          - hpc
+          example: shared
+          type: string
+        cloudNetworkType:
+          description: Cloud network type
+          enum:
+          - isolated
+          - multi-cloud
+          - default
+          example: multi-cloud
+          type: string
         ramGb:
           example: 2
           type: integer

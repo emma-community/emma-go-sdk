@@ -25,6 +25,7 @@ type SecurityGroupRule struct {
 	Protocol  *string `json:"protocol,omitempty"`
 	Ports     *string `json:"ports,omitempty"`
 	IpRange   *string `json:"ipRange,omitempty"`
+	IsMutable *bool   `json:"isMutable,omitempty"`
 }
 
 // NewSecurityGroupRule instantiates a new SecurityGroupRule object
@@ -236,6 +237,38 @@ func (o *SecurityGroupRule) SetIpRange(v string) {
 	o.IpRange = &v
 }
 
+// GetIsMutable returns the IsMutable field value if set, zero value otherwise.
+func (o *SecurityGroupRule) GetIsMutable() bool {
+	if o == nil || IsNil(o.IsMutable) {
+		var ret bool
+		return ret
+	}
+	return *o.IsMutable
+}
+
+// GetIsMutableOk returns a tuple with the IsMutable field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SecurityGroupRule) GetIsMutableOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsMutable) {
+		return nil, false
+	}
+	return o.IsMutable, true
+}
+
+// HasIsMutable returns a boolean if a field has been set.
+func (o *SecurityGroupRule) HasIsMutable() bool {
+	if o != nil && !IsNil(o.IsMutable) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsMutable gets a reference to the given bool and assigns it to the IsMutable field.
+func (o *SecurityGroupRule) SetIsMutable(v bool) {
+	o.IsMutable = &v
+}
+
 func (o SecurityGroupRule) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -263,6 +296,9 @@ func (o SecurityGroupRule) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IpRange) {
 		toSerialize["ipRange"] = o.IpRange
+	}
+	if !IsNil(o.IsMutable) {
+		toSerialize["isMutable"] = o.IsMutable
 	}
 	return toSerialize, nil
 }

@@ -19,28 +19,32 @@ var _ MappedNullable = &SecurityGroupInstance{}
 
 // SecurityGroupInstance struct for SecurityGroupInstance
 type SecurityGroupInstance struct {
-	Id             *int32                               `json:"id,omitempty"`
-	CreatedAt      *string                              `json:"createdAt,omitempty"`
-	CreatedByName  *string                              `json:"createdByName,omitempty"`
-	CreatedById    *int32                               `json:"createdById,omitempty"`
-	ModifiedAt     *string                              `json:"modifiedAt,omitempty"`
-	ModifiedByName *string                              `json:"modifiedByName,omitempty"`
-	ModifiedById   *int32                               `json:"modifiedById,omitempty"`
-	Name           *string                              `json:"name,omitempty"`
-	ProjectId      *int32                               `json:"projectId,omitempty"`
-	Status         *string                              `json:"status,omitempty"`
-	Provider       *SecurityGroupInstanceProvider       `json:"provider,omitempty"`
-	Location       *SecurityGroupInstanceLocation       `json:"location,omitempty"`
-	DataCenter     *SecurityGroupInstanceDataCenter     `json:"dataCenter,omitempty"`
-	Os             *SecurityGroupInstanceOs             `json:"os,omitempty"`
-	Cpu            *int32                               `json:"cpu,omitempty"`
-	RamGb          *int32                               `json:"ramGb,omitempty"`
-	Disks          []SecurityGroupInstanceDisksInner    `json:"disks,omitempty"`
-	Networks       []SecurityGroupInstanceNetworksInner `json:"networks,omitempty"`
-	SecurityGroup  *SecurityGroupInstanceSecurityGroup  `json:"securityGroup,omitempty"`
-	SshKeyId       *int32                               `json:"sshKeyId,omitempty"`
-	UserName       *string                              `json:"userName,omitempty"`
-	Cost           *SecurityGroupInstanceCost           `json:"cost,omitempty"`
+	Id             *int32                           `json:"id,omitempty"`
+	CreatedAt      *string                          `json:"createdAt,omitempty"`
+	CreatedByName  *string                          `json:"createdByName,omitempty"`
+	CreatedById    *int32                           `json:"createdById,omitempty"`
+	ModifiedAt     *string                          `json:"modifiedAt,omitempty"`
+	ModifiedByName *string                          `json:"modifiedByName,omitempty"`
+	ModifiedById   *int32                           `json:"modifiedById,omitempty"`
+	Name           *string                          `json:"name,omitempty"`
+	ProjectId      *int32                           `json:"projectId,omitempty"`
+	Status         *string                          `json:"status,omitempty"`
+	Provider       *SecurityGroupInstanceProvider   `json:"provider,omitempty"`
+	Location       *SecurityGroupInstanceLocation   `json:"location,omitempty"`
+	DataCenter     *SecurityGroupInstanceDataCenter `json:"dataCenter,omitempty"`
+	Os             *SecurityGroupInstanceOs         `json:"os,omitempty"`
+	VCpu           *int32                           `json:"vCpu,omitempty"`
+	// vCPU type
+	VCpuType *string `json:"vCpuType,omitempty"`
+	// Cloud network type
+	CloudNetworkType *string                              `json:"cloudNetworkType,omitempty"`
+	RamGb            *int32                               `json:"ramGb,omitempty"`
+	Disks            []SecurityGroupInstanceDisksInner    `json:"disks,omitempty"`
+	Networks         []SecurityGroupInstanceNetworksInner `json:"networks,omitempty"`
+	SecurityGroup    *SecurityGroupInstanceSecurityGroup  `json:"securityGroup,omitempty"`
+	SshKeyId         *int32                               `json:"sshKeyId,omitempty"`
+	UserName         *string                              `json:"userName,omitempty"`
+	Cost             *SecurityGroupInstanceCost           `json:"cost,omitempty"`
 }
 
 // NewSecurityGroupInstance instantiates a new SecurityGroupInstance object
@@ -508,36 +512,100 @@ func (o *SecurityGroupInstance) SetOs(v SecurityGroupInstanceOs) {
 	o.Os = &v
 }
 
-// GetCpu returns the Cpu field value if set, zero value otherwise.
-func (o *SecurityGroupInstance) GetCpu() int32 {
-	if o == nil || IsNil(o.Cpu) {
+// GetVCpu returns the VCpu field value if set, zero value otherwise.
+func (o *SecurityGroupInstance) GetVCpu() int32 {
+	if o == nil || IsNil(o.VCpu) {
 		var ret int32
 		return ret
 	}
-	return *o.Cpu
+	return *o.VCpu
 }
 
-// GetCpuOk returns a tuple with the Cpu field value if set, nil otherwise
+// GetVCpuOk returns a tuple with the VCpu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SecurityGroupInstance) GetCpuOk() (*int32, bool) {
-	if o == nil || IsNil(o.Cpu) {
+func (o *SecurityGroupInstance) GetVCpuOk() (*int32, bool) {
+	if o == nil || IsNil(o.VCpu) {
 		return nil, false
 	}
-	return o.Cpu, true
+	return o.VCpu, true
 }
 
-// HasCpu returns a boolean if a field has been set.
-func (o *SecurityGroupInstance) HasCpu() bool {
-	if o != nil && !IsNil(o.Cpu) {
+// HasVCpu returns a boolean if a field has been set.
+func (o *SecurityGroupInstance) HasVCpu() bool {
+	if o != nil && !IsNil(o.VCpu) {
 		return true
 	}
 
 	return false
 }
 
-// SetCpu gets a reference to the given int32 and assigns it to the Cpu field.
-func (o *SecurityGroupInstance) SetCpu(v int32) {
-	o.Cpu = &v
+// SetVCpu gets a reference to the given int32 and assigns it to the VCpu field.
+func (o *SecurityGroupInstance) SetVCpu(v int32) {
+	o.VCpu = &v
+}
+
+// GetVCpuType returns the VCpuType field value if set, zero value otherwise.
+func (o *SecurityGroupInstance) GetVCpuType() string {
+	if o == nil || IsNil(o.VCpuType) {
+		var ret string
+		return ret
+	}
+	return *o.VCpuType
+}
+
+// GetVCpuTypeOk returns a tuple with the VCpuType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SecurityGroupInstance) GetVCpuTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.VCpuType) {
+		return nil, false
+	}
+	return o.VCpuType, true
+}
+
+// HasVCpuType returns a boolean if a field has been set.
+func (o *SecurityGroupInstance) HasVCpuType() bool {
+	if o != nil && !IsNil(o.VCpuType) {
+		return true
+	}
+
+	return false
+}
+
+// SetVCpuType gets a reference to the given string and assigns it to the VCpuType field.
+func (o *SecurityGroupInstance) SetVCpuType(v string) {
+	o.VCpuType = &v
+}
+
+// GetCloudNetworkType returns the CloudNetworkType field value if set, zero value otherwise.
+func (o *SecurityGroupInstance) GetCloudNetworkType() string {
+	if o == nil || IsNil(o.CloudNetworkType) {
+		var ret string
+		return ret
+	}
+	return *o.CloudNetworkType
+}
+
+// GetCloudNetworkTypeOk returns a tuple with the CloudNetworkType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SecurityGroupInstance) GetCloudNetworkTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.CloudNetworkType) {
+		return nil, false
+	}
+	return o.CloudNetworkType, true
+}
+
+// HasCloudNetworkType returns a boolean if a field has been set.
+func (o *SecurityGroupInstance) HasCloudNetworkType() bool {
+	if o != nil && !IsNil(o.CloudNetworkType) {
+		return true
+	}
+
+	return false
+}
+
+// SetCloudNetworkType gets a reference to the given string and assigns it to the CloudNetworkType field.
+func (o *SecurityGroupInstance) SetCloudNetworkType(v string) {
+	o.CloudNetworkType = &v
 }
 
 // GetRamGb returns the RamGb field value if set, zero value otherwise.
@@ -816,8 +884,14 @@ func (o SecurityGroupInstance) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Os) {
 		toSerialize["os"] = o.Os
 	}
-	if !IsNil(o.Cpu) {
-		toSerialize["cpu"] = o.Cpu
+	if !IsNil(o.VCpu) {
+		toSerialize["vCpu"] = o.VCpu
+	}
+	if !IsNil(o.VCpuType) {
+		toSerialize["vCpuType"] = o.VCpuType
+	}
+	if !IsNil(o.CloudNetworkType) {
+		toSerialize["cloudNetworkType"] = o.CloudNetworkType
 	}
 	if !IsNil(o.RamGb) {
 		toSerialize["ramGb"] = o.RamGb

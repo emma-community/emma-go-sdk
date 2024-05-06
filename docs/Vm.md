@@ -18,7 +18,9 @@ Name | Type | Description | Notes
 **Location** | Pointer to [**SecurityGroupInstanceLocation**](SecurityGroupInstanceLocation.md) |  | [optional] 
 **DataCenter** | Pointer to [**VmDataCenter**](VmDataCenter.md) |  | [optional] 
 **Os** | Pointer to [**SecurityGroupInstanceOs**](SecurityGroupInstanceOs.md) |  | [optional] 
-**Cpu** | Pointer to **int32** |  | [optional] 
+**VCpu** | Pointer to **int32** |  | [optional] 
+**VCpuType** | Pointer to **string** | vCPU type | [optional] 
+**CloudNetworkType** | Pointer to **string** | Cloud network type | [optional] 
 **RamGb** | Pointer to **int32** |  | [optional] 
 **Disks** | Pointer to [**[]SecurityGroupInstanceDisksInner**](SecurityGroupInstanceDisksInner.md) |  | [optional] 
 **Networks** | Pointer to [**[]SecurityGroupInstanceNetworksInner**](SecurityGroupInstanceNetworksInner.md) |  | [optional] 
@@ -396,30 +398,80 @@ SetOs sets Os field to given value.
 
 HasOs returns a boolean if a field has been set.
 
-### GetCpu
+### GetVCpu
 
-`func (o *Vm) GetCpu() int32`
+`func (o *Vm) GetVCpu() int32`
 
-GetCpu returns the Cpu field if non-nil, zero value otherwise.
+GetVCpu returns the VCpu field if non-nil, zero value otherwise.
 
-### GetCpuOk
+### GetVCpuOk
 
-`func (o *Vm) GetCpuOk() (*int32, bool)`
+`func (o *Vm) GetVCpuOk() (*int32, bool)`
 
-GetCpuOk returns a tuple with the Cpu field if it's non-nil, zero value otherwise
+GetVCpuOk returns a tuple with the VCpu field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCpu
+### SetVCpu
 
-`func (o *Vm) SetCpu(v int32)`
+`func (o *Vm) SetVCpu(v int32)`
 
-SetCpu sets Cpu field to given value.
+SetVCpu sets VCpu field to given value.
 
-### HasCpu
+### HasVCpu
 
-`func (o *Vm) HasCpu() bool`
+`func (o *Vm) HasVCpu() bool`
 
-HasCpu returns a boolean if a field has been set.
+HasVCpu returns a boolean if a field has been set.
+
+### GetVCpuType
+
+`func (o *Vm) GetVCpuType() string`
+
+GetVCpuType returns the VCpuType field if non-nil, zero value otherwise.
+
+### GetVCpuTypeOk
+
+`func (o *Vm) GetVCpuTypeOk() (*string, bool)`
+
+GetVCpuTypeOk returns a tuple with the VCpuType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVCpuType
+
+`func (o *Vm) SetVCpuType(v string)`
+
+SetVCpuType sets VCpuType field to given value.
+
+### HasVCpuType
+
+`func (o *Vm) HasVCpuType() bool`
+
+HasVCpuType returns a boolean if a field has been set.
+
+### GetCloudNetworkType
+
+`func (o *Vm) GetCloudNetworkType() string`
+
+GetCloudNetworkType returns the CloudNetworkType field if non-nil, zero value otherwise.
+
+### GetCloudNetworkTypeOk
+
+`func (o *Vm) GetCloudNetworkTypeOk() (*string, bool)`
+
+GetCloudNetworkTypeOk returns a tuple with the CloudNetworkType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCloudNetworkType
+
+`func (o *Vm) SetCloudNetworkType(v string)`
+
+SetCloudNetworkType sets CloudNetworkType field to given value.
+
+### HasCloudNetworkType
+
+`func (o *Vm) HasCloudNetworkType() bool`
+
+HasCloudNetworkType returns a boolean if a field has been set.
 
 ### GetRamGb
 

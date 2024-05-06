@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Protocol** | Pointer to **string** |  | [optional] 
 **Ports** | Pointer to **string** |  | [optional] 
 **IpRange** | Pointer to **string** |  | [optional] 
+**IsMutable** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -179,6 +180,31 @@ SetIpRange sets IpRange field to given value.
 `func (o *SecurityGroupRule) HasIpRange() bool`
 
 HasIpRange returns a boolean if a field has been set.
+
+### GetIsMutable
+
+`func (o *SecurityGroupRule) GetIsMutable() bool`
+
+GetIsMutable returns the IsMutable field if non-nil, zero value otherwise.
+
+### GetIsMutableOk
+
+`func (o *SecurityGroupRule) GetIsMutableOk() (*bool, bool)`
+
+GetIsMutableOk returns a tuple with the IsMutable field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsMutable
+
+`func (o *SecurityGroupRule) SetIsMutable(v bool)`
+
+SetIsMutable sets IsMutable field to given value.
+
+### HasIsMutable
+
+`func (o *SecurityGroupRule) HasIsMutable() bool`
+
+HasIsMutable returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -132,14 +132,4 @@ model_vm_shutdown.go
 model_vm_start.go
 model_vm_transfer.go
 response.go
-test/api_authentication_test.go
-test/api_compute_instances_configurations_test.go
-test/api_data_centers_test.go
-test/api_locations_test.go
-test/api_operating_systems_test.go
-test/api_providers_test.go
-test/api_security_groups_test.go
-test/api_spot_instances_test.go
-test/api_ssh_keys_test.go
-test/api_virtual_machines_test.go
 utils.go
