@@ -14,20 +14,20 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** |  | [optional] 
 **ProjectId** | Pointer to **int32** |  | [optional] 
 **Status** | Pointer to **string** |  | [optional] 
-**Provider** | Pointer to [**SecurityGroupInstanceProvider**](SecurityGroupInstanceProvider.md) |  | [optional] 
-**Location** | Pointer to [**SecurityGroupInstanceLocation**](SecurityGroupInstanceLocation.md) |  | [optional] 
+**Provider** | Pointer to [**VmProvider**](VmProvider.md) |  | [optional] 
+**Location** | Pointer to [**VmLocation**](VmLocation.md) |  | [optional] 
 **DataCenter** | Pointer to [**VmDataCenter**](VmDataCenter.md) |  | [optional] 
-**Os** | Pointer to [**SecurityGroupInstanceOs**](SecurityGroupInstanceOs.md) |  | [optional] 
+**Os** | Pointer to [**VmOs**](VmOs.md) |  | [optional] 
 **VCpu** | Pointer to **int32** |  | [optional] 
 **VCpuType** | Pointer to **string** | vCPU type | [optional] 
 **CloudNetworkType** | Pointer to **string** | Cloud network type | [optional] 
 **RamGb** | Pointer to **int32** |  | [optional] 
-**Disks** | Pointer to [**[]SecurityGroupInstanceDisksInner**](SecurityGroupInstanceDisksInner.md) |  | [optional] 
-**Networks** | Pointer to [**[]SecurityGroupInstanceNetworksInner**](SecurityGroupInstanceNetworksInner.md) |  | [optional] 
-**SecurityGroup** | Pointer to [**SecurityGroupInstanceSecurityGroup**](SecurityGroupInstanceSecurityGroup.md) |  | [optional] 
+**Disks** | Pointer to [**[]VmDisksInner**](VmDisksInner.md) |  | [optional] 
+**Networks** | Pointer to [**[]VmNetworksInner**](VmNetworksInner.md) |  | [optional] 
+**SecurityGroup** | Pointer to [**VmSecurityGroup**](VmSecurityGroup.md) |  | [optional] 
 **SshKeyId** | Pointer to **int32** |  | [optional] 
 **UserName** | Pointer to **string** |  | [optional] 
-**Cost** | Pointer to [**SecurityGroupInstanceCost**](SecurityGroupInstanceCost.md) |  | [optional] 
+**Cost** | Pointer to [**VmCost**](VmCost.md) |  | [optional] 
 
 ## Methods
 
@@ -300,20 +300,20 @@ HasStatus returns a boolean if a field has been set.
 
 ### GetProvider
 
-`func (o *Vm) GetProvider() SecurityGroupInstanceProvider`
+`func (o *Vm) GetProvider() VmProvider`
 
 GetProvider returns the Provider field if non-nil, zero value otherwise.
 
 ### GetProviderOk
 
-`func (o *Vm) GetProviderOk() (*SecurityGroupInstanceProvider, bool)`
+`func (o *Vm) GetProviderOk() (*VmProvider, bool)`
 
 GetProviderOk returns a tuple with the Provider field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProvider
 
-`func (o *Vm) SetProvider(v SecurityGroupInstanceProvider)`
+`func (o *Vm) SetProvider(v VmProvider)`
 
 SetProvider sets Provider field to given value.
 
@@ -325,20 +325,20 @@ HasProvider returns a boolean if a field has been set.
 
 ### GetLocation
 
-`func (o *Vm) GetLocation() SecurityGroupInstanceLocation`
+`func (o *Vm) GetLocation() VmLocation`
 
 GetLocation returns the Location field if non-nil, zero value otherwise.
 
 ### GetLocationOk
 
-`func (o *Vm) GetLocationOk() (*SecurityGroupInstanceLocation, bool)`
+`func (o *Vm) GetLocationOk() (*VmLocation, bool)`
 
 GetLocationOk returns a tuple with the Location field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLocation
 
-`func (o *Vm) SetLocation(v SecurityGroupInstanceLocation)`
+`func (o *Vm) SetLocation(v VmLocation)`
 
 SetLocation sets Location field to given value.
 
@@ -375,20 +375,20 @@ HasDataCenter returns a boolean if a field has been set.
 
 ### GetOs
 
-`func (o *Vm) GetOs() SecurityGroupInstanceOs`
+`func (o *Vm) GetOs() VmOs`
 
 GetOs returns the Os field if non-nil, zero value otherwise.
 
 ### GetOsOk
 
-`func (o *Vm) GetOsOk() (*SecurityGroupInstanceOs, bool)`
+`func (o *Vm) GetOsOk() (*VmOs, bool)`
 
 GetOsOk returns a tuple with the Os field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOs
 
-`func (o *Vm) SetOs(v SecurityGroupInstanceOs)`
+`func (o *Vm) SetOs(v VmOs)`
 
 SetOs sets Os field to given value.
 
@@ -500,20 +500,20 @@ HasRamGb returns a boolean if a field has been set.
 
 ### GetDisks
 
-`func (o *Vm) GetDisks() []SecurityGroupInstanceDisksInner`
+`func (o *Vm) GetDisks() []VmDisksInner`
 
 GetDisks returns the Disks field if non-nil, zero value otherwise.
 
 ### GetDisksOk
 
-`func (o *Vm) GetDisksOk() (*[]SecurityGroupInstanceDisksInner, bool)`
+`func (o *Vm) GetDisksOk() (*[]VmDisksInner, bool)`
 
 GetDisksOk returns a tuple with the Disks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDisks
 
-`func (o *Vm) SetDisks(v []SecurityGroupInstanceDisksInner)`
+`func (o *Vm) SetDisks(v []VmDisksInner)`
 
 SetDisks sets Disks field to given value.
 
@@ -525,20 +525,20 @@ HasDisks returns a boolean if a field has been set.
 
 ### GetNetworks
 
-`func (o *Vm) GetNetworks() []SecurityGroupInstanceNetworksInner`
+`func (o *Vm) GetNetworks() []VmNetworksInner`
 
 GetNetworks returns the Networks field if non-nil, zero value otherwise.
 
 ### GetNetworksOk
 
-`func (o *Vm) GetNetworksOk() (*[]SecurityGroupInstanceNetworksInner, bool)`
+`func (o *Vm) GetNetworksOk() (*[]VmNetworksInner, bool)`
 
 GetNetworksOk returns a tuple with the Networks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNetworks
 
-`func (o *Vm) SetNetworks(v []SecurityGroupInstanceNetworksInner)`
+`func (o *Vm) SetNetworks(v []VmNetworksInner)`
 
 SetNetworks sets Networks field to given value.
 
@@ -550,20 +550,20 @@ HasNetworks returns a boolean if a field has been set.
 
 ### GetSecurityGroup
 
-`func (o *Vm) GetSecurityGroup() SecurityGroupInstanceSecurityGroup`
+`func (o *Vm) GetSecurityGroup() VmSecurityGroup`
 
 GetSecurityGroup returns the SecurityGroup field if non-nil, zero value otherwise.
 
 ### GetSecurityGroupOk
 
-`func (o *Vm) GetSecurityGroupOk() (*SecurityGroupInstanceSecurityGroup, bool)`
+`func (o *Vm) GetSecurityGroupOk() (*VmSecurityGroup, bool)`
 
 GetSecurityGroupOk returns a tuple with the SecurityGroup field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSecurityGroup
 
-`func (o *Vm) SetSecurityGroup(v SecurityGroupInstanceSecurityGroup)`
+`func (o *Vm) SetSecurityGroup(v VmSecurityGroup)`
 
 SetSecurityGroup sets SecurityGroup field to given value.
 
@@ -625,20 +625,20 @@ HasUserName returns a boolean if a field has been set.
 
 ### GetCost
 
-`func (o *Vm) GetCost() SecurityGroupInstanceCost`
+`func (o *Vm) GetCost() VmCost`
 
 GetCost returns the Cost field if non-nil, zero value otherwise.
 
 ### GetCostOk
 
-`func (o *Vm) GetCostOk() (*SecurityGroupInstanceCost, bool)`
+`func (o *Vm) GetCostOk() (*VmCost, bool)`
 
 GetCostOk returns a tuple with the Cost field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCost
 
-`func (o *Vm) SetCost(v SecurityGroupInstanceCost)`
+`func (o *Vm) SetCost(v VmCost)`
 
 SetCost sets Cost field to given value.
 

@@ -275,7 +275,7 @@ Name | Type | Description  | Notes
 
 ## SecurityGroupInstanceAdd
 
-> SecurityGroupInstance SecurityGroupInstanceAdd(ctx, securityGroupId).SecurityGroupInstanceAdd(securityGroupInstanceAdd).Execute()
+> Vm SecurityGroupInstanceAdd(ctx, securityGroupId).SecurityGroupInstanceAdd(securityGroupInstanceAdd).Execute()
 
 Add instance to security group
 
@@ -302,7 +302,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `SecurityGroupsAPI.SecurityGroupInstanceAdd``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `SecurityGroupInstanceAdd`: SecurityGroupInstance
+	// response from `SecurityGroupInstanceAdd`: Vm
 	fmt.Fprintf(os.Stdout, "Response from `SecurityGroupsAPI.SecurityGroupInstanceAdd`: %v\n", resp)
 }
 ```
@@ -327,7 +327,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SecurityGroupInstance**](SecurityGroupInstance.md)
+[**Vm**](Vm.md)
 
 ### Authorization
 
@@ -345,7 +345,7 @@ Name | Type | Description  | Notes
 
 ## SecurityGroupInstances
 
-> []SecurityGroupInstance SecurityGroupInstances(ctx, securityGroupId).Execute()
+> []Vm SecurityGroupInstances(ctx, securityGroupId).Execute()
 
 Get instances in security group
 
@@ -371,7 +371,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `SecurityGroupsAPI.SecurityGroupInstances``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `SecurityGroupInstances`: []SecurityGroupInstance
+	// response from `SecurityGroupInstances`: []Vm
 	fmt.Fprintf(os.Stdout, "Response from `SecurityGroupsAPI.SecurityGroupInstances`: %v\n", resp)
 }
 ```
@@ -395,7 +395,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]SecurityGroupInstance**](SecurityGroupInstance.md)
+[**[]Vm**](Vm.md)
 
 ### Authorization
 

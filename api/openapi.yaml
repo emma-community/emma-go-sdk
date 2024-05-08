@@ -699,7 +699,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/SecurityGroupInstance'
+                  $ref: '#/components/schemas/Vm'
                 type: array
           description: Successful operation
         "401":
@@ -746,7 +746,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SecurityGroupInstance'
+                $ref: '#/components/schemas/Vm'
           description: Successful operation
         "400":
           content:
@@ -2457,155 +2457,6 @@ components:
       - name
       - rules
       type: object
-    SecurityGroupInstance:
-      example:
-        createdByName: Automation User
-        cost:
-          unit: MONTHS
-          price: 5.479952
-          currency: EUR
-        os:
-          id: 35
-          family: Linux
-          type: Ubuntu
-          version: "22.04"
-          architecture: x86-64
-        vCpu: 1
-        disks:
-        - sizeGb: 250
-          typeId: 2
-          id: 5819
-          type: SSD
-          isBootable: true
-        - sizeGb: 250
-          typeId: 2
-          id: 5819
-          type: SSD
-          isBootable: true
-        dataCenter:
-          name: eu-north-1
-          id: 19
-        modifiedAt: 2021-11-26T14:54:11
-        securityGroup:
-          name: default
-          id: 208
-        networks:
-        - id: 9826
-          ip: 10.106.0.2
-          networkTypeId: 2
-          networkType: PRIVATE
-        - id: 9825
-          ip: 134.122.100.131
-          networkTypeId: 1
-          networkType: PUBLIC
-        userName: root
-        ramGb: 2
-        sshKeyId: 123
-        vCpuType: shared
-        createdAt: 2021-11-26T14:54:11
-        modifiedByName: Automation User
-        modifiedById: 123
-        provider:
-          name: Digital Ocean
-          id: 22
-        name: vm-default-e08149hp
-        location:
-          name: London
-          id: 6
-        id: 8100
-        cloudNetworkType: multi-cloud
-        projectId: 933
-        createdById: 123
-        status: POWERED_ON
-      properties:
-        id:
-          example: 8100
-          type: integer
-        createdAt:
-          example: 2021-11-26T14:54:11
-          type: string
-        createdByName:
-          example: Automation User
-          type: string
-        createdById:
-          example: 123
-          type: integer
-        modifiedAt:
-          example: 2021-11-26T14:54:11
-          type: string
-        modifiedByName:
-          example: Automation User
-          type: string
-        modifiedById:
-          example: 123
-          type: integer
-        name:
-          example: vm-default-e08149hp
-          type: string
-        projectId:
-          example: 933
-          type: integer
-        status:
-          example: POWERED_ON
-          type: string
-        provider:
-          $ref: '#/components/schemas/SecurityGroupInstance_provider'
-        location:
-          $ref: '#/components/schemas/SecurityGroupInstance_location'
-        dataCenter:
-          $ref: '#/components/schemas/SecurityGroupInstance_dataCenter'
-        os:
-          $ref: '#/components/schemas/SecurityGroupInstance_os'
-        vCpu:
-          example: 1
-          type: integer
-        vCpuType:
-          description: vCPU type
-          enum:
-          - shared
-          - standard
-          - hpc
-          example: shared
-          type: string
-        cloudNetworkType:
-          description: Cloud network type
-          enum:
-          - isolated
-          - multi-cloud
-          - default
-          example: multi-cloud
-          type: string
-        ramGb:
-          example: 2
-          type: integer
-        disks:
-          items:
-            $ref: '#/components/schemas/SecurityGroupInstance_disks_inner'
-          type: array
-        networks:
-          example:
-          - id: 9826
-            ip: 10.106.0.2
-            networkTypeId: 2
-            networkType: PRIVATE
-          - id: 9825
-            ip: 134.122.100.131
-            networkTypeId: 1
-            networkType: PUBLIC
-          items:
-            $ref: '#/components/schemas/SecurityGroupInstance_networks_inner'
-          type: array
-        securityGroup:
-          $ref: '#/components/schemas/SecurityGroupInstance_securityGroup'
-        sshKeyId:
-          example: 123
-          type: integer
-        userName:
-          example: root
-          type: string
-        cost:
-          $ref: '#/components/schemas/SecurityGroupInstance_cost'
-      type: object
     SecurityGroupInstanceAdd:
       example:
         instanceId: 8003
@@ -3033,13 +2884,13 @@ components:
           example: POWERED_ON
           type: string
         provider:
-          $ref: '#/components/schemas/SecurityGroupInstance_provider'
+          $ref: '#/components/schemas/Vm_provider'
         location:
-          $ref: '#/components/schemas/SecurityGroupInstance_location'
+          $ref: '#/components/schemas/Vm_location'
         dataCenter:
           $ref: '#/components/schemas/Vm_dataCenter'
         os:
-          $ref: '#/components/schemas/SecurityGroupInstance_os'
+          $ref: '#/components/schemas/Vm_os'
         vCpu:
           example: 1
           type: integer
@@ -3064,7 +2915,7 @@ components:
           type: integer
         disks:
           items:
-            $ref: '#/components/schemas/SecurityGroupInstance_disks_inner'
+            $ref: '#/components/schemas/Vm_disks_inner'
           type: array
         networks:
           example:
@@ -3077,10 +2928,10 @@ components:
             networkTypeId: 1
             networkType: PUBLIC
           items:
-            $ref: '#/components/schemas/SecurityGroupInstance_networks_inner'
+            $ref: '#/components/schemas/Vm_networks_inner'
           type: array
         securityGroup:
-          $ref: '#/components/schemas/SecurityGroupInstance_securityGroup'
+          $ref: '#/components/schemas/Vm_securityGroup'
         sshKeyId:
           example: 123
           type: integer
@@ -3088,7 +2939,7 @@ components:
           example: root
           type: string
         cost:
-          $ref: '#/components/schemas/SecurityGroupInstance_cost'
+          $ref: '#/components/schemas/Vm_cost'
       type: object
     VmCreate:
       example:
@@ -3617,7 +3468,7 @@ components:
         first: true
         totalElements: 6
         empty: true
-    SecurityGroupInstance_provider:
+    Vm_provider:
       example:
         name: Digital Ocean
         id: 22
@@ -3629,7 +3480,7 @@ components:
           example: Digital Ocean
           type: string
       type: object
-    SecurityGroupInstance_location:
+    Vm_location:
       example:
         name: London
         id: 6
@@ -3640,109 +3491,6 @@ components:
         name:
           example: London
           type: string
-      type: object
-    SecurityGroupInstance_dataCenter:
-      example:
-        name: eu-north-1
-        id: 19
-      properties:
-        id:
-          example: 19
-          type: integer
-        name:
-          example: eu-north-1
-          type: string
-      type: object
-    SecurityGroupInstance_os:
-      example:
-        id: 35
-        family: Linux
-        type: Ubuntu
-        version: "22.04"
-        architecture: x86-64
-      properties:
-        id:
-          example: 35
-          type: integer
-        family:
-          example: Linux
-          type: string
-        architecture:
-          example: x86-64
-          type: string
-        type:
-          example: Ubuntu
-          type: string
-        version:
-          example: "22.04"
-          type: string
-      type: object
-    SecurityGroupInstance_disks_inner:
-      example:
-        sizeGb: 250
-        typeId: 2
-        id: 5819
-        type: SSD
-        isBootable: true
-      properties:
-        id:
-          example: 5819
-          type: integer
-        sizeGb:
-          example: 250
-          type: integer
-        typeId:
-          example: 2
-          type: integer
-        type:
-          example: SSD
-          type: string
-        isBootable:
-          example: true
-          type: boolean
-      type: object
-    SecurityGroupInstance_networks_inner:
-      properties:
-        id:
-          example: 9826
-          type: integer
-        ip:
-          example: 10.106.0.2
-          type: string
-        networkTypeId:
-          example: 2
-          type: integer
-        networkType:
-          example: PRIVATE
-          type: string
-      type: object
-    SecurityGroupInstance_securityGroup:
-      example:
-        name: default
-        id: 208
-      properties:
-        id:
-          example: 208
-          type: integer
-        name:
-          example: default
-          type: string
-      type: object
-    SecurityGroupInstance_cost:
-      example:
-        unit: MONTHS
-        price: 5.479952
-        currency: EUR
-      properties:
-        unit:
-          example: MONTHS
-          type: string
-        currency:
-          example: EUR
-          type: string
-        price:
-          example: 5.479952
-          type: number
       type: object
     Vm_dataCenter:
       example:
@@ -3771,6 +3519,97 @@ components:
         locationName:
           example: Pune
           type: string
+      type: object
+    Vm_os:
+      example:
+        id: 35
+        family: Linux
+        type: Ubuntu
+        version: "22.04"
+        architecture: x86-64
+      properties:
+        id:
+          example: 35
+          type: integer
+        family:
+          example: Linux
+          type: string
+        architecture:
+          example: x86-64
+          type: string
+        type:
+          example: Ubuntu
+          type: string
+        version:
+          example: "22.04"
+          type: string
+      type: object
+    Vm_disks_inner:
+      example:
+        sizeGb: 250
+        typeId: 2
+        id: 5819
+        type: SSD
+        isBootable: true
+      properties:
+        id:
+          example: 5819
+          type: integer
+        sizeGb:
+          example: 250
+          type: integer
+        typeId:
+          example: 2
+          type: integer
+        type:
+          example: SSD
+          type: string
+        isBootable:
+          example: true
+          type: boolean
+      type: object
+    Vm_networks_inner:
+      properties:
+        id:
+          example: 9826
+          type: integer
+        ip:
+          example: 10.106.0.2
+          type: string
+        networkTypeId:
+          example: 2
+          type: integer
+        networkType:
+          example: PRIVATE
+          type: string
+      type: object
+    Vm_securityGroup:
+      example:
+        name: default
+        id: 208
+      properties:
+        id:
+          example: 208
+          type: integer
+        name:
+          example: default
+          type: string
+      type: object
+    Vm_cost:
+      example:
+        unit: MONTHS
+        price: 5.479952
+        currency: EUR
+      properties:
+        unit:
+          example: MONTHS
+          type: string
+        currency:
+          example: EUR
+          type: string
+        price:
+          example: 5.479952
+          type: number
       type: object
     VmConfiguration_cost:
       example:

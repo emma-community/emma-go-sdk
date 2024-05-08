@@ -592,7 +592,7 @@ func (r ApiSecurityGroupInstanceAddRequest) SecurityGroupInstanceAdd(securityGro
 	return r
 }
 
-func (r ApiSecurityGroupInstanceAddRequest) Execute() (*SecurityGroupInstance, *http.Response, error) {
+func (r ApiSecurityGroupInstanceAddRequest) Execute() (*Vm, *http.Response, error) {
 	return r.ApiService.SecurityGroupInstanceAddExecute(r)
 }
 
@@ -613,13 +613,13 @@ func (a *SecurityGroupsAPIService) SecurityGroupInstanceAdd(ctx context.Context,
 
 // Execute executes the request
 //
-//	@return SecurityGroupInstance
-func (a *SecurityGroupsAPIService) SecurityGroupInstanceAddExecute(r ApiSecurityGroupInstanceAddRequest) (*SecurityGroupInstance, *http.Response, error) {
+//	@return Vm
+func (a *SecurityGroupsAPIService) SecurityGroupInstanceAddExecute(r ApiSecurityGroupInstanceAddRequest) (*Vm, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *SecurityGroupInstance
+		localVarReturnValue *Vm
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecurityGroupsAPIService.SecurityGroupInstanceAdd")
@@ -750,7 +750,7 @@ type ApiSecurityGroupInstancesRequest struct {
 	securityGroupId int32
 }
 
-func (r ApiSecurityGroupInstancesRequest) Execute() ([]SecurityGroupInstance, *http.Response, error) {
+func (r ApiSecurityGroupInstancesRequest) Execute() ([]Vm, *http.Response, error) {
 	return r.ApiService.SecurityGroupInstancesExecute(r)
 }
 
@@ -771,13 +771,13 @@ func (a *SecurityGroupsAPIService) SecurityGroupInstances(ctx context.Context, s
 
 // Execute executes the request
 //
-//	@return []SecurityGroupInstance
-func (a *SecurityGroupsAPIService) SecurityGroupInstancesExecute(r ApiSecurityGroupInstancesRequest) ([]SecurityGroupInstance, *http.Response, error) {
+//	@return []Vm
+func (a *SecurityGroupsAPIService) SecurityGroupInstancesExecute(r ApiSecurityGroupInstancesRequest) ([]Vm, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue []SecurityGroupInstance
+		localVarReturnValue []Vm
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SecurityGroupsAPIService.SecurityGroupInstances")

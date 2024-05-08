@@ -19,32 +19,32 @@ var _ MappedNullable = &Vm{}
 
 // Vm struct for Vm
 type Vm struct {
-	Id             *int32                         `json:"id,omitempty"`
-	CreatedAt      *string                        `json:"createdAt,omitempty"`
-	CreatedByName  *string                        `json:"createdByName,omitempty"`
-	CreatedById    *int32                         `json:"createdById,omitempty"`
-	ModifiedAt     *string                        `json:"modifiedAt,omitempty"`
-	ModifiedByName *string                        `json:"modifiedByName,omitempty"`
-	ModifiedById   *int32                         `json:"modifiedById,omitempty"`
-	Name           *string                        `json:"name,omitempty"`
-	ProjectId      *int32                         `json:"projectId,omitempty"`
-	Status         *string                        `json:"status,omitempty"`
-	Provider       *SecurityGroupInstanceProvider `json:"provider,omitempty"`
-	Location       *SecurityGroupInstanceLocation `json:"location,omitempty"`
-	DataCenter     *VmDataCenter                  `json:"dataCenter,omitempty"`
-	Os             *SecurityGroupInstanceOs       `json:"os,omitempty"`
-	VCpu           *int32                         `json:"vCpu,omitempty"`
+	Id             *int32        `json:"id,omitempty"`
+	CreatedAt      *string       `json:"createdAt,omitempty"`
+	CreatedByName  *string       `json:"createdByName,omitempty"`
+	CreatedById    *int32        `json:"createdById,omitempty"`
+	ModifiedAt     *string       `json:"modifiedAt,omitempty"`
+	ModifiedByName *string       `json:"modifiedByName,omitempty"`
+	ModifiedById   *int32        `json:"modifiedById,omitempty"`
+	Name           *string       `json:"name,omitempty"`
+	ProjectId      *int32        `json:"projectId,omitempty"`
+	Status         *string       `json:"status,omitempty"`
+	Provider       *VmProvider   `json:"provider,omitempty"`
+	Location       *VmLocation   `json:"location,omitempty"`
+	DataCenter     *VmDataCenter `json:"dataCenter,omitempty"`
+	Os             *VmOs         `json:"os,omitempty"`
+	VCpu           *int32        `json:"vCpu,omitempty"`
 	// vCPU type
 	VCpuType *string `json:"vCpuType,omitempty"`
 	// Cloud network type
-	CloudNetworkType *string                              `json:"cloudNetworkType,omitempty"`
-	RamGb            *int32                               `json:"ramGb,omitempty"`
-	Disks            []SecurityGroupInstanceDisksInner    `json:"disks,omitempty"`
-	Networks         []SecurityGroupInstanceNetworksInner `json:"networks,omitempty"`
-	SecurityGroup    *SecurityGroupInstanceSecurityGroup  `json:"securityGroup,omitempty"`
-	SshKeyId         *int32                               `json:"sshKeyId,omitempty"`
-	UserName         *string                              `json:"userName,omitempty"`
-	Cost             *SecurityGroupInstanceCost           `json:"cost,omitempty"`
+	CloudNetworkType *string           `json:"cloudNetworkType,omitempty"`
+	RamGb            *int32            `json:"ramGb,omitempty"`
+	Disks            []VmDisksInner    `json:"disks,omitempty"`
+	Networks         []VmNetworksInner `json:"networks,omitempty"`
+	SecurityGroup    *VmSecurityGroup  `json:"securityGroup,omitempty"`
+	SshKeyId         *int32            `json:"sshKeyId,omitempty"`
+	UserName         *string           `json:"userName,omitempty"`
+	Cost             *VmCost           `json:"cost,omitempty"`
 }
 
 // NewVm instantiates a new Vm object
@@ -385,9 +385,9 @@ func (o *Vm) SetStatus(v string) {
 }
 
 // GetProvider returns the Provider field value if set, zero value otherwise.
-func (o *Vm) GetProvider() SecurityGroupInstanceProvider {
+func (o *Vm) GetProvider() VmProvider {
 	if o == nil || IsNil(o.Provider) {
-		var ret SecurityGroupInstanceProvider
+		var ret VmProvider
 		return ret
 	}
 	return *o.Provider
@@ -395,7 +395,7 @@ func (o *Vm) GetProvider() SecurityGroupInstanceProvider {
 
 // GetProviderOk returns a tuple with the Provider field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetProviderOk() (*SecurityGroupInstanceProvider, bool) {
+func (o *Vm) GetProviderOk() (*VmProvider, bool) {
 	if o == nil || IsNil(o.Provider) {
 		return nil, false
 	}
@@ -411,15 +411,15 @@ func (o *Vm) HasProvider() bool {
 	return false
 }
 
-// SetProvider gets a reference to the given SecurityGroupInstanceProvider and assigns it to the Provider field.
-func (o *Vm) SetProvider(v SecurityGroupInstanceProvider) {
+// SetProvider gets a reference to the given VmProvider and assigns it to the Provider field.
+func (o *Vm) SetProvider(v VmProvider) {
 	o.Provider = &v
 }
 
 // GetLocation returns the Location field value if set, zero value otherwise.
-func (o *Vm) GetLocation() SecurityGroupInstanceLocation {
+func (o *Vm) GetLocation() VmLocation {
 	if o == nil || IsNil(o.Location) {
-		var ret SecurityGroupInstanceLocation
+		var ret VmLocation
 		return ret
 	}
 	return *o.Location
@@ -427,7 +427,7 @@ func (o *Vm) GetLocation() SecurityGroupInstanceLocation {
 
 // GetLocationOk returns a tuple with the Location field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetLocationOk() (*SecurityGroupInstanceLocation, bool) {
+func (o *Vm) GetLocationOk() (*VmLocation, bool) {
 	if o == nil || IsNil(o.Location) {
 		return nil, false
 	}
@@ -443,8 +443,8 @@ func (o *Vm) HasLocation() bool {
 	return false
 }
 
-// SetLocation gets a reference to the given SecurityGroupInstanceLocation and assigns it to the Location field.
-func (o *Vm) SetLocation(v SecurityGroupInstanceLocation) {
+// SetLocation gets a reference to the given VmLocation and assigns it to the Location field.
+func (o *Vm) SetLocation(v VmLocation) {
 	o.Location = &v
 }
 
@@ -481,9 +481,9 @@ func (o *Vm) SetDataCenter(v VmDataCenter) {
 }
 
 // GetOs returns the Os field value if set, zero value otherwise.
-func (o *Vm) GetOs() SecurityGroupInstanceOs {
+func (o *Vm) GetOs() VmOs {
 	if o == nil || IsNil(o.Os) {
-		var ret SecurityGroupInstanceOs
+		var ret VmOs
 		return ret
 	}
 	return *o.Os
@@ -491,7 +491,7 @@ func (o *Vm) GetOs() SecurityGroupInstanceOs {
 
 // GetOsOk returns a tuple with the Os field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetOsOk() (*SecurityGroupInstanceOs, bool) {
+func (o *Vm) GetOsOk() (*VmOs, bool) {
 	if o == nil || IsNil(o.Os) {
 		return nil, false
 	}
@@ -507,8 +507,8 @@ func (o *Vm) HasOs() bool {
 	return false
 }
 
-// SetOs gets a reference to the given SecurityGroupInstanceOs and assigns it to the Os field.
-func (o *Vm) SetOs(v SecurityGroupInstanceOs) {
+// SetOs gets a reference to the given VmOs and assigns it to the Os field.
+func (o *Vm) SetOs(v VmOs) {
 	o.Os = &v
 }
 
@@ -641,9 +641,9 @@ func (o *Vm) SetRamGb(v int32) {
 }
 
 // GetDisks returns the Disks field value if set, zero value otherwise.
-func (o *Vm) GetDisks() []SecurityGroupInstanceDisksInner {
+func (o *Vm) GetDisks() []VmDisksInner {
 	if o == nil || IsNil(o.Disks) {
-		var ret []SecurityGroupInstanceDisksInner
+		var ret []VmDisksInner
 		return ret
 	}
 	return o.Disks
@@ -651,7 +651,7 @@ func (o *Vm) GetDisks() []SecurityGroupInstanceDisksInner {
 
 // GetDisksOk returns a tuple with the Disks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetDisksOk() ([]SecurityGroupInstanceDisksInner, bool) {
+func (o *Vm) GetDisksOk() ([]VmDisksInner, bool) {
 	if o == nil || IsNil(o.Disks) {
 		return nil, false
 	}
@@ -667,15 +667,15 @@ func (o *Vm) HasDisks() bool {
 	return false
 }
 
-// SetDisks gets a reference to the given []SecurityGroupInstanceDisksInner and assigns it to the Disks field.
-func (o *Vm) SetDisks(v []SecurityGroupInstanceDisksInner) {
+// SetDisks gets a reference to the given []VmDisksInner and assigns it to the Disks field.
+func (o *Vm) SetDisks(v []VmDisksInner) {
 	o.Disks = v
 }
 
 // GetNetworks returns the Networks field value if set, zero value otherwise.
-func (o *Vm) GetNetworks() []SecurityGroupInstanceNetworksInner {
+func (o *Vm) GetNetworks() []VmNetworksInner {
 	if o == nil || IsNil(o.Networks) {
-		var ret []SecurityGroupInstanceNetworksInner
+		var ret []VmNetworksInner
 		return ret
 	}
 	return o.Networks
@@ -683,7 +683,7 @@ func (o *Vm) GetNetworks() []SecurityGroupInstanceNetworksInner {
 
 // GetNetworksOk returns a tuple with the Networks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetNetworksOk() ([]SecurityGroupInstanceNetworksInner, bool) {
+func (o *Vm) GetNetworksOk() ([]VmNetworksInner, bool) {
 	if o == nil || IsNil(o.Networks) {
 		return nil, false
 	}
@@ -699,15 +699,15 @@ func (o *Vm) HasNetworks() bool {
 	return false
 }
 
-// SetNetworks gets a reference to the given []SecurityGroupInstanceNetworksInner and assigns it to the Networks field.
-func (o *Vm) SetNetworks(v []SecurityGroupInstanceNetworksInner) {
+// SetNetworks gets a reference to the given []VmNetworksInner and assigns it to the Networks field.
+func (o *Vm) SetNetworks(v []VmNetworksInner) {
 	o.Networks = v
 }
 
 // GetSecurityGroup returns the SecurityGroup field value if set, zero value otherwise.
-func (o *Vm) GetSecurityGroup() SecurityGroupInstanceSecurityGroup {
+func (o *Vm) GetSecurityGroup() VmSecurityGroup {
 	if o == nil || IsNil(o.SecurityGroup) {
-		var ret SecurityGroupInstanceSecurityGroup
+		var ret VmSecurityGroup
 		return ret
 	}
 	return *o.SecurityGroup
@@ -715,7 +715,7 @@ func (o *Vm) GetSecurityGroup() SecurityGroupInstanceSecurityGroup {
 
 // GetSecurityGroupOk returns a tuple with the SecurityGroup field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetSecurityGroupOk() (*SecurityGroupInstanceSecurityGroup, bool) {
+func (o *Vm) GetSecurityGroupOk() (*VmSecurityGroup, bool) {
 	if o == nil || IsNil(o.SecurityGroup) {
 		return nil, false
 	}
@@ -731,8 +731,8 @@ func (o *Vm) HasSecurityGroup() bool {
 	return false
 }
 
-// SetSecurityGroup gets a reference to the given SecurityGroupInstanceSecurityGroup and assigns it to the SecurityGroup field.
-func (o *Vm) SetSecurityGroup(v SecurityGroupInstanceSecurityGroup) {
+// SetSecurityGroup gets a reference to the given VmSecurityGroup and assigns it to the SecurityGroup field.
+func (o *Vm) SetSecurityGroup(v VmSecurityGroup) {
 	o.SecurityGroup = &v
 }
 
@@ -801,9 +801,9 @@ func (o *Vm) SetUserName(v string) {
 }
 
 // GetCost returns the Cost field value if set, zero value otherwise.
-func (o *Vm) GetCost() SecurityGroupInstanceCost {
+func (o *Vm) GetCost() VmCost {
 	if o == nil || IsNil(o.Cost) {
-		var ret SecurityGroupInstanceCost
+		var ret VmCost
 		return ret
 	}
 	return *o.Cost
@@ -811,7 +811,7 @@ func (o *Vm) GetCost() SecurityGroupInstanceCost {
 
 // GetCostOk returns a tuple with the Cost field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetCostOk() (*SecurityGroupInstanceCost, bool) {
+func (o *Vm) GetCostOk() (*VmCost, bool) {
 	if o == nil || IsNil(o.Cost) {
 		return nil, false
 	}
@@ -827,8 +827,8 @@ func (o *Vm) HasCost() bool {
 	return false
 }
 
-// SetCost gets a reference to the given SecurityGroupInstanceCost and assigns it to the Cost field.
-func (o *Vm) SetCost(v SecurityGroupInstanceCost) {
+// SetCost gets a reference to the given VmCost and assigns it to the Cost field.
+func (o *Vm) SetCost(v VmCost) {
 	o.Cost = &v
 }
 
