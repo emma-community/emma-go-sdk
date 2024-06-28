@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**Ip** | Pointer to **string** |  | [optional] 
-**NetworkTypeId** | Pointer to **int32** |  | [optional] 
-**NetworkType** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **int32** | Network ID | [optional] 
+**Ip** | Pointer to **string** | Network IP | [optional] 
+**NetworkTypeId** | Pointer to **int32** | ID of the network type | [optional] 
+**NetworkType** | Pointer to **string** | Network type | [optional] 
 
 ## Methods
 

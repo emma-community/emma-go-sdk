@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **int32** | ID of the cloud provider | [optional] 
+**Name** | Pointer to **string** | Name of the cloud provider | [optional] 
 
 ## Methods
 

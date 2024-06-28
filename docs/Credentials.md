@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ClientId** | **string** |  | 
-**ClientSecret** | **string** |  | 
+**ClientId** | **string** | Client ID from the Service application in the project | 
+**ClientSecret** | **string** | Client secret from the Service application in the project | 
 
 ## Methods
 

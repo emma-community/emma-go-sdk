@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
+### About Infrastructure API   **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.     #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```      #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.     #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -H \"Authorization: Bearer YOUR-ACCESS-TOKEN\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
 
 API version: 0.0.1
 */
@@ -35,8 +35,14 @@ func (r ApiGetSecurityGroupRequest) Execute() (*SecurityGroup, *http.Response, e
 /*
 GetSecurityGroup Get security group by ID
 
+Returns a security groups by its ID.
+
+A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+Security groups operate based on predefined rules that allow or deny traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param securityGroupId Security group id
+	@param securityGroupId ID of the security group
 	@return ApiGetSecurityGroupRequest
 */
 func (a *SecurityGroupsAPIService) GetSecurityGroup(ctx context.Context, securityGroupId int32) ApiGetSecurityGroupRequest {
@@ -167,6 +173,10 @@ func (r ApiGetSecurityGroupsRequest) Execute() ([]SecurityGroup, *http.Response,
 
 /*
 GetSecurityGroups Get list of security groups
+
+Returns a list of security groups.
+A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+Security groups operate based on predefined rules that allow or deny traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetSecurityGroupsRequest
@@ -303,6 +313,20 @@ func (r ApiSecurityGroupCreateRequest) Execute() (*SecurityGroup, *http.Response
 
 /*
 SecurityGroupCreate Create security group
+
+This method creates a security group.
+
+A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
+When creating a security group, provide its name and a set of inbound and outbound rules. You can only define rules that allow traffic, not deny it. All traffic is denied except for explicitly allowed traffic.
+
+Security groups control TCP, SCTP, GRE, ESP, AH, UDP, and ICMP protocols, or all the selected protocols at once.
+
+After creating a security group, a set of default rules is added to the security group. These rules are immutable, and you can't edit or delete them.
+
+All traffic in the selected protocol is allowed if the IP range in a rule is set to `0.0.0.0/0`.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSecurityGroupCreateRequest
@@ -448,8 +472,16 @@ func (r ApiSecurityGroupDeleteRequest) Execute() (*SecurityGroup, *http.Response
 /*
 SecurityGroupDelete Delete security group
 
+This method deletes a security group.
+
+A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
+You can't delete a security group if any compute instance is using this security group. To delete a security group, first remove a compute instance from the security group using this method: `POST /v1/security-groups/{securityGroupId}/instances`
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param securityGroupId Security group id
+	@param securityGroupId ID of the security group
 	@return ApiSecurityGroupDeleteRequest
 */
 func (a *SecurityGroupsAPIService) SecurityGroupDelete(ctx context.Context, securityGroupId int32) ApiSecurityGroupDeleteRequest {
@@ -599,8 +631,16 @@ func (r ApiSecurityGroupInstanceAddRequest) Execute() (*Vm, *http.Response, erro
 /*
 SecurityGroupInstanceAdd Add instance to security group
 
+This method adds a compute instance to the selected security group.
+
+A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
+Any compute instance always uses some security group since its creation. Adding a compute instance to a security group effectively means moving it from one security group to another. When adding a compute instance to a new security group, it is automatically removed from the previous security group.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param securityGroupId Security group id
+	@param securityGroupId ID of the security group
 	@return ApiSecurityGroupInstanceAddRequest
 */
 func (a *SecurityGroupsAPIService) SecurityGroupInstanceAdd(ctx context.Context, securityGroupId int32) ApiSecurityGroupInstanceAddRequest {
@@ -757,8 +797,14 @@ func (r ApiSecurityGroupInstancesRequest) Execute() ([]Vm, *http.Response, error
 /*
 SecurityGroupInstances Get instances in security group
 
+Returns a list of compute instances using the selected security group.
+
+A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param securityGroupId Security group id
+	@param securityGroupId ID of the security group
 	@return ApiSecurityGroupInstancesRequest
 */
 func (a *SecurityGroupsAPIService) SecurityGroupInstances(ctx context.Context, securityGroupId int32) ApiSecurityGroupInstancesRequest {
@@ -897,8 +943,22 @@ func (r ApiSecurityGroupUpdateRequest) Execute() (*SecurityGroup, *http.Response
 /*
 SecurityGroupUpdate Update security group
 
+This method updates a security group.
+
+A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
+When editing a security group, you can add and delete the inbound and outbound rules. You can only define rules that allow traffic, not deny it. All traffic is denied except for explicitly allowed traffic.
+
+Security groups control TCP, SCTP, GRE, ESP, AH, UDP, and ICMP protocols, or all the selected protocols at once.
+
+After creating a security group, a set of default rules is added to the security group. These rules are immutable, and you can't edit or delete them. When editing a security group, _you should provide the default rules along with any other rules._
+
+All traffic in the selected protocol is allowed if the IP range in a rule is set to `0.0.0.0/0`.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param securityGroupId Security group id
+	@param securityGroupId ID of the security group
 	@return ApiSecurityGroupUpdateRequest
 */
 func (a *SecurityGroupsAPIService) SecurityGroupUpdate(ctx context.Context, securityGroupId int32) ApiSecurityGroupUpdateRequest {

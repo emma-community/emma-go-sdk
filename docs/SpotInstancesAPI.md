@@ -18,6 +18,8 @@ Method | HTTP request | Description
 
 Get spot instance by id
 
+
+
 ### Example
 
 ```go
@@ -31,7 +33,7 @@ import (
 )
 
 func main() {
-	spotInstanceId := int32(56) // int32 | Spot instance id
+	spotInstanceId := int32(56) // int32 | ID of the spot instance
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -51,7 +53,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**spotInstanceId** | **int32** | Spot instance id | 
+**spotInstanceId** | **int32** | ID of the spot instance | 
 
 ### Other Parameters
 
@@ -85,6 +87,8 @@ Name | Type | Description  | Notes
 > []Vm GetSpots(ctx).Execute()
 
 Get list of spot instances
+
+
 
 ### Example
 
@@ -145,6 +149,8 @@ Other parameters are passed through a pointer to a apiGetSpotsRequest struct via
 
 Perform actions with a spot instance
 
+
+
 ### Example
 
 ```go
@@ -158,7 +164,7 @@ import (
 )
 
 func main() {
-	spotInstanceId := int32(56) // int32 | Spot instance id
+	spotInstanceId := int32(56) // int32 | ID of the spot instance
 	spotActionsRequest := openapiclient.SpotActions_request{SpotReboot: openapiclient.NewSpotReboot("reboot")} // SpotActionsRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -179,7 +185,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**spotInstanceId** | **int32** | Spot instance id | 
+**spotInstanceId** | **int32** | ID of the spot instance | 
 
 ### Other Parameters
 
@@ -215,6 +221,8 @@ Name | Type | Description  | Notes
 
 Create spot instance
 
+
+
 ### Example
 
 ```go
@@ -228,7 +236,7 @@ import (
 )
 
 func main() {
-	spotCreate := *openapiclient.NewSpotCreate("spot-default", "aws-us-west-1", int32(35), "multi-cloud", "shared", int32(4), int32(1), "ssd", int32(16), int32(124), float32(0.002635)) // SpotCreate |  (optional)
+	spotCreate := *openapiclient.NewSpotCreate("spot-default", "aws-us-west-1", int32(35), "multi-cloud", "shared", int32(4), float32(1), "ssd", int32(16), int32(124), float32(0.002635)) // SpotCreate |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -279,6 +287,8 @@ Name | Type | Description  | Notes
 
 Delete spot instance
 
+
+
 ### Example
 
 ```go
@@ -292,7 +302,7 @@ import (
 )
 
 func main() {
-	spotInstanceId := int32(56) // int32 | Spot instance id
+	spotInstanceId := int32(56) // int32 | ID of the spot instance
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -312,7 +322,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**spotInstanceId** | **int32** | Spot instance id | 
+**spotInstanceId** | **int32** | ID of the spot instance | 
 
 ### Other Parameters
 

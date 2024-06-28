@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **int32** | ID of the security group | [optional] 
+**Name** | Pointer to **string** | Name of the security group | [optional] 
 
 ## Methods
 

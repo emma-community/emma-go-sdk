@@ -4,22 +4,22 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**ProviderId** | Pointer to **int32** |  | [optional] 
-**ProviderName** | Pointer to **string** |  | [optional] 
-**LocationId** | Pointer to **int32** |  | [optional] 
-**LocationName** | Pointer to **string** |  | [optional] 
-**DataCenterId** | Pointer to **string** |  | [optional] 
-**DataCenterName** | Pointer to **string** |  | [optional] 
-**OsId** | Pointer to **int32** |  | [optional] 
-**OsType** | Pointer to **string** |  | [optional] 
-**OsVersion** | Pointer to **string** |  | [optional] 
-**CloudNetworkTypes** | Pointer to **[]string** |  | [optional] 
-**VCpuType** | Pointer to **string** |  | [optional] 
-**VCpu** | Pointer to **int32** |  | [optional] 
-**RamGb** | Pointer to **int32** |  | [optional] 
-**VolumeGb** | Pointer to **int32** |  | [optional] 
-**VolumeType** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **int32** | Configuration ID | [optional] 
+**ProviderId** | Pointer to **int32** | ID of the cloud provider | [optional] 
+**ProviderName** | Pointer to **string** | Name of the cloud provider | [optional] 
+**LocationId** | Pointer to **int32** | Location ID | [optional] 
+**LocationName** | Pointer to **string** | Location name (city or state) | [optional] 
+**DataCenterId** | Pointer to **string** | ID of the data center | [optional] 
+**DataCenterName** | Pointer to **string** | Name of the data center | [optional] 
+**OsId** | Pointer to **int32** | ID of the operating system | [optional] 
+**OsType** | Pointer to **string** | Type of the operating system | [optional] 
+**OsVersion** | Pointer to **string** | Version of the operating system | [optional] 
+**CloudNetworkTypes** | Pointer to **[]string** | List of the cloud network types | [optional] 
+**VCpuType** | Pointer to **string** | Type of virtual Central Processing Units (vCPUs) | [optional] 
+**VCpu** | Pointer to **int32** | Number of virtual Central Processing Units (vCPUs) | [optional] 
+**RamGb** | Pointer to **float32** | Capacity of the RAM in gigabytes | [optional] 
+**VolumeGb** | Pointer to **int32** | Capacity of the volume in gigabytes | [optional] 
+**VolumeType** | Pointer to **string** | Volume type | [optional] 
 **Cost** | Pointer to [**VmConfigurationCost**](VmConfigurationCost.md) |  | [optional] 
 
 ## Methods
@@ -368,20 +368,20 @@ HasVCpu returns a boolean if a field has been set.
 
 ### GetRamGb
 
-`func (o *VmConfiguration) GetRamGb() int32`
+`func (o *VmConfiguration) GetRamGb() float32`
 
 GetRamGb returns the RamGb field if non-nil, zero value otherwise.
 
 ### GetRamGbOk
 
-`func (o *VmConfiguration) GetRamGbOk() (*int32, bool)`
+`func (o *VmConfiguration) GetRamGbOk() (*float32, bool)`
 
 GetRamGbOk returns a tuple with the RamGb field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRamGb
 
-`func (o *VmConfiguration) SetRamGb(v int32)`
+`func (o *VmConfiguration) SetRamGb(v float32)`
 
 SetRamGb sets RamGb field to given value.
 

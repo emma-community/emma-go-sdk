@@ -5,19 +5,19 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | **string** | Action with a virtual machine | 
-**DataCenterId** | **string** | Provider&#39;s data center ID | 
-**IsKeepOriginalInstance** | Pointer to **bool** | Keep original instance | [optional] [default to true]
-**Name** | **string** | Virtual machine name | 
-**VCpu** | **int32** |  | 
-**VCpuType** | Pointer to **string** | vCPU type | [optional] 
-**RamGb** | **int32** |  | 
-**VolumeGb** | **int32** |  | 
+**DataCenterId** | **string** | ID of the provider&#39;s data center | 
+**IsKeepOriginalInstance** | Pointer to **bool** | Indicate if it is necessary to keep the original instance | [optional] [default to true]
+**Name** | **string** | Name of the virtual machine | 
+**VCpu** | **int32** | Number of virtual Central Processing Units (vCPUs) | 
+**VCpuType** | Pointer to **string** | Type of virtual Central Processing Units (vCPUs) | [optional] 
+**RamGb** | **float32** | Capacity of the RAM in gigabytes | 
+**VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
 
 ## Methods
 
 ### NewVmActionsRequest
 
-`func NewVmActionsRequest(action string, dataCenterId string, name string, vCpu int32, ramGb int32, volumeGb int32, ) *VmActionsRequest`
+`func NewVmActionsRequest(action string, dataCenterId string, name string, vCpu int32, ramGb float32, volumeGb int32, ) *VmActionsRequest`
 
 NewVmActionsRequest instantiates a new VmActionsRequest object
 This constructor will assign default values to properties that have it defined,
@@ -164,20 +164,20 @@ HasVCpuType returns a boolean if a field has been set.
 
 ### GetRamGb
 
-`func (o *VmActionsRequest) GetRamGb() int32`
+`func (o *VmActionsRequest) GetRamGb() float32`
 
 GetRamGb returns the RamGb field if non-nil, zero value otherwise.
 
 ### GetRamGbOk
 
-`func (o *VmActionsRequest) GetRamGbOk() (*int32, bool)`
+`func (o *VmActionsRequest) GetRamGbOk() (*float32, bool)`
 
 GetRamGbOk returns a tuple with the RamGb field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRamGb
 
-`func (o *VmActionsRequest) SetRamGb(v int32)`
+`func (o *VmActionsRequest) SetRamGb(v float32)`
 
 SetRamGb sets RamGb field to given value.
 

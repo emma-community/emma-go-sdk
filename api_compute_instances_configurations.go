@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
+### About Infrastructure API   **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.     #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```      #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.     #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -H \"Authorization: Bearer YOUR-ACCESS-TOKEN\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
 
 API version: 0.0.1
 */
@@ -32,9 +32,9 @@ type ApiGetSpotConfigsRequest struct {
 	vCpu             *int32
 	vCpuMin          *int32
 	vCpuMax          *int32
-	ramGb            *int32
-	ramGbMin         *int32
-	ramGbMax         *int32
+	ramGb            *float32
+	ramGbMin         *float32
+	ramGbMax         *float32
 	volumeGb         *int32
 	volumeGbMin      *int32
 	volumeGbMax      *int32
@@ -45,103 +45,103 @@ type ApiGetSpotConfigsRequest struct {
 	size             *int32
 }
 
-// Provider ID
+// ID of the cloud provider
 func (r ApiGetSpotConfigsRequest) ProviderId(providerId int32) ApiGetSpotConfigsRequest {
 	r.providerId = &providerId
 	return r
 }
 
-// Location ID
+// ID of the geographic location
 func (r ApiGetSpotConfigsRequest) LocationId(locationId int32) ApiGetSpotConfigsRequest {
 	r.locationId = &locationId
 	return r
 }
 
-// Data center ID
+// ID of the cloud provider&#39;s data center
 func (r ApiGetSpotConfigsRequest) DataCenterId(dataCenterId string) ApiGetSpotConfigsRequest {
 	r.dataCenterId = &dataCenterId
 	return r
 }
 
-// Cloud network type
+// Type of cloud network
 func (r ApiGetSpotConfigsRequest) CloudNetworkType(cloudNetworkType string) ApiGetSpotConfigsRequest {
 	r.cloudNetworkType = &cloudNetworkType
 	return r
 }
 
-// Compute instance vCPU type
+// Type of vCPUs for the compute instance
 func (r ApiGetSpotConfigsRequest) VCpuType(vCpuType string) ApiGetSpotConfigsRequest {
 	r.vCpuType = &vCpuType
 	return r
 }
 
-// Compute instance vCPU
+// virtual Central Processing Units (vCPUs) for the compute instance
 func (r ApiGetSpotConfigsRequest) VCpu(vCpu int32) ApiGetSpotConfigsRequest {
 	r.vCpu = &vCpu
 	return r
 }
 
-// Compute instance vCPU minimum
+// Minimum number of vCPUs for the compute instance
 func (r ApiGetSpotConfigsRequest) VCpuMin(vCpuMin int32) ApiGetSpotConfigsRequest {
 	r.vCpuMin = &vCpuMin
 	return r
 }
 
-// Compute instance vCPU maximum
+// Maximum number of vCPUs for the compute instance
 func (r ApiGetSpotConfigsRequest) VCpuMax(vCpuMax int32) ApiGetSpotConfigsRequest {
 	r.vCpuMax = &vCpuMax
 	return r
 }
 
-// Compute instance RAM (GB)
-func (r ApiGetSpotConfigsRequest) RamGb(ramGb int32) ApiGetSpotConfigsRequest {
+// RAM of the compute instance in gigabytes
+func (r ApiGetSpotConfigsRequest) RamGb(ramGb float32) ApiGetSpotConfigsRequest {
 	r.ramGb = &ramGb
 	return r
 }
 
-// Compute instance RAM (GB) minimum
-func (r ApiGetSpotConfigsRequest) RamGbMin(ramGbMin int32) ApiGetSpotConfigsRequest {
+// Minimum RAM of the compute instance in gigabytes
+func (r ApiGetSpotConfigsRequest) RamGbMin(ramGbMin float32) ApiGetSpotConfigsRequest {
 	r.ramGbMin = &ramGbMin
 	return r
 }
 
-// Compute instance RAM (GB) maximum
-func (r ApiGetSpotConfigsRequest) RamGbMax(ramGbMax int32) ApiGetSpotConfigsRequest {
+// Maximum RAM of the compute instance in gigabytes
+func (r ApiGetSpotConfigsRequest) RamGbMax(ramGbMax float32) ApiGetSpotConfigsRequest {
 	r.ramGbMax = &ramGbMax
 	return r
 }
 
-// Compute instance volume (GB)
+// Volume size of the compute instance in gigabytes
 func (r ApiGetSpotConfigsRequest) VolumeGb(volumeGb int32) ApiGetSpotConfigsRequest {
 	r.volumeGb = &volumeGb
 	return r
 }
 
-// Compute instance volume minimum (GB)
+// Minimum volume size of the compute instance in gigabytes
 func (r ApiGetSpotConfigsRequest) VolumeGbMin(volumeGbMin int32) ApiGetSpotConfigsRequest {
 	r.volumeGbMin = &volumeGbMin
 	return r
 }
 
-// Compute instance volume maximun (GB)
+// Maximum volume size of the compute instance in gigabytes
 func (r ApiGetSpotConfigsRequest) VolumeGbMax(volumeGbMax int32) ApiGetSpotConfigsRequest {
 	r.volumeGbMax = &volumeGbMax
 	return r
 }
 
-// Compute instance volume type
+// Volume type of the compute instance
 func (r ApiGetSpotConfigsRequest) VolumeType(volumeType string) ApiGetSpotConfigsRequest {
 	r.volumeType = &volumeType
 	return r
 }
 
-// Instance price minimum
+// Minimum price of the compute instance
 func (r ApiGetSpotConfigsRequest) PriceMin(priceMin float32) ApiGetSpotConfigsRequest {
 	r.priceMin = &priceMin
 	return r
 }
 
-// Instance price maximum
+// Maximum price of the compute instance
 func (r ApiGetSpotConfigsRequest) PriceMax(priceMax float32) ApiGetSpotConfigsRequest {
 	r.priceMax = &priceMax
 	return r
@@ -165,6 +165,12 @@ func (r ApiGetSpotConfigsRequest) Execute() (*GetVmConfigs200Response, *http.Res
 
 /*
 GetSpotConfigs Search available configurations for spot instance creation
+
+When creating spot instances you need to provide the desired hardware configurations. These configurations include CPU, CPU type, RAM, volume size, and volume type. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
+
+Use this endpoint as a reference for available configurations for spot instances. You can search the available configurations by different parameters (provider, location, data center, cloud network type, CPU, CPU type, RAM, volume size, volume type, and price).
+
+When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a spot instance.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetSpotConfigsRequest
@@ -352,9 +358,9 @@ type ApiGetVmConfigsRequest struct {
 	vCpu             *int32
 	vCpuMin          *int32
 	vCpuMax          *int32
-	ramGb            *int32
-	ramGbMin         *int32
-	ramGbMax         *int32
+	ramGb            *float32
+	ramGbMin         *float32
+	ramGbMax         *float32
 	volumeGb         *int32
 	volumeGbMin      *int32
 	volumeGbMax      *int32
@@ -365,103 +371,103 @@ type ApiGetVmConfigsRequest struct {
 	size             *int32
 }
 
-// Provider ID
+// ID of the cloud provider
 func (r ApiGetVmConfigsRequest) ProviderId(providerId int32) ApiGetVmConfigsRequest {
 	r.providerId = &providerId
 	return r
 }
 
-// Location ID
+// ID of the geographic location
 func (r ApiGetVmConfigsRequest) LocationId(locationId int32) ApiGetVmConfigsRequest {
 	r.locationId = &locationId
 	return r
 }
 
-// Data center ID
+// ID of the cloud provider&#39;s data center
 func (r ApiGetVmConfigsRequest) DataCenterId(dataCenterId string) ApiGetVmConfigsRequest {
 	r.dataCenterId = &dataCenterId
 	return r
 }
 
-// Cloud network type
+// Type of cloud network
 func (r ApiGetVmConfigsRequest) CloudNetworkType(cloudNetworkType string) ApiGetVmConfigsRequest {
 	r.cloudNetworkType = &cloudNetworkType
 	return r
 }
 
-// Compute instance vCPU type
+// Type of vCPUs for the compute instance
 func (r ApiGetVmConfigsRequest) VCpuType(vCpuType string) ApiGetVmConfigsRequest {
 	r.vCpuType = &vCpuType
 	return r
 }
 
-// Compute instance vCPU
+// virtual Central Processing Units (vCPUs) for the compute instance
 func (r ApiGetVmConfigsRequest) VCpu(vCpu int32) ApiGetVmConfigsRequest {
 	r.vCpu = &vCpu
 	return r
 }
 
-// Compute instance vCPU minimum
+// Minimum number of vCPUs for the compute instance
 func (r ApiGetVmConfigsRequest) VCpuMin(vCpuMin int32) ApiGetVmConfigsRequest {
 	r.vCpuMin = &vCpuMin
 	return r
 }
 
-// Compute instance vCPU maximum
+// Maximum number of vCPUs for the compute instance
 func (r ApiGetVmConfigsRequest) VCpuMax(vCpuMax int32) ApiGetVmConfigsRequest {
 	r.vCpuMax = &vCpuMax
 	return r
 }
 
-// Compute instance RAM (GB)
-func (r ApiGetVmConfigsRequest) RamGb(ramGb int32) ApiGetVmConfigsRequest {
+// RAM of the compute instance in gigabytes
+func (r ApiGetVmConfigsRequest) RamGb(ramGb float32) ApiGetVmConfigsRequest {
 	r.ramGb = &ramGb
 	return r
 }
 
-// Compute instance RAM (GB) minimum
-func (r ApiGetVmConfigsRequest) RamGbMin(ramGbMin int32) ApiGetVmConfigsRequest {
+// Minimum RAM of the compute instance in gigabytes
+func (r ApiGetVmConfigsRequest) RamGbMin(ramGbMin float32) ApiGetVmConfigsRequest {
 	r.ramGbMin = &ramGbMin
 	return r
 }
 
-// Compute instance RAM (GB) maximum
-func (r ApiGetVmConfigsRequest) RamGbMax(ramGbMax int32) ApiGetVmConfigsRequest {
+// Maximum RAM of the compute instance in gigabytes
+func (r ApiGetVmConfigsRequest) RamGbMax(ramGbMax float32) ApiGetVmConfigsRequest {
 	r.ramGbMax = &ramGbMax
 	return r
 }
 
-// Compute instance volume (GB)
+// Volume size of the compute instance in gigabytes
 func (r ApiGetVmConfigsRequest) VolumeGb(volumeGb int32) ApiGetVmConfigsRequest {
 	r.volumeGb = &volumeGb
 	return r
 }
 
-// Compute instance volume minimum (GB)
+// Minimum volume size of the compute instance in gigabytes
 func (r ApiGetVmConfigsRequest) VolumeGbMin(volumeGbMin int32) ApiGetVmConfigsRequest {
 	r.volumeGbMin = &volumeGbMin
 	return r
 }
 
-// Compute instance volume maximun (GB)
+// Maximum volume size of the compute instance in gigabytes
 func (r ApiGetVmConfigsRequest) VolumeGbMax(volumeGbMax int32) ApiGetVmConfigsRequest {
 	r.volumeGbMax = &volumeGbMax
 	return r
 }
 
-// Compute instance volume type
+// Volume type of the compute instance
 func (r ApiGetVmConfigsRequest) VolumeType(volumeType string) ApiGetVmConfigsRequest {
 	r.volumeType = &volumeType
 	return r
 }
 
-// Instance price minimum
+// Minimum price of the compute instance
 func (r ApiGetVmConfigsRequest) PriceMin(priceMin float32) ApiGetVmConfigsRequest {
 	r.priceMin = &priceMin
 	return r
 }
 
-// Instance price maximum
+// Maximum price of the compute instance
 func (r ApiGetVmConfigsRequest) PriceMax(priceMax float32) ApiGetVmConfigsRequest {
 	r.priceMax = &priceMax
 	return r
@@ -485,6 +491,12 @@ func (r ApiGetVmConfigsRequest) Execute() (*GetVmConfigs200Response, *http.Respo
 
 /*
 GetVmConfigs Search available configurations for virtual machine creation
+
+When creating virtual machines you need to provide the desired hardware configurations. These configurations include CPU, CPU type, RAM, volume size, and volume type. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
+
+Use this endpoint as a reference for available configurations for virtual machines. You can search the available configurations by different parameters (provider, location, data center, cloud network type, CPU, CPU type, RAM, volume size, volume type, and price).
+
+When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a virtual machine.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetVmConfigsRequest

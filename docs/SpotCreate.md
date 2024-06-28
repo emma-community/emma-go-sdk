@@ -4,24 +4,24 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | Spot instance name | 
-**DataCenterId** | **string** | Provider&#39;s data center ID | 
-**OsId** | **int32** | Operating system ID | 
-**CloudNetworkType** | **string** | Cloud network type | 
-**VCpuType** | **string** | vCPU type | 
+**Name** | **string** | Name of the spot instance | 
+**DataCenterId** | **string** | ID of the provider&#39;s data center | 
+**OsId** | **int32** | ID of the operating system | 
+**CloudNetworkType** | **string** | Type of the cloud network | 
+**VCpuType** | **string** | Type of the Central Processing Units (vCPUs) | 
 **VCpu** | **int32** | Number of virtual Central Processing Units (vCPUs) | 
-**RamGb** | **int32** | Capacity of RAM in gigabytes | 
+**RamGb** | **float32** | Capacity of the RAM in gigabytes | 
 **VolumeType** | **string** | Volume type | 
-**VolumeGb** | **int32** | Capacity of volume in gigabytes | 
+**VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
 **SshKeyId** | **int32** | SSH-key ID | 
-**SecurityGroupId** | Pointer to **int32** | Security group ID | [optional] 
-**Price** | **float32** | User offer price | 
+**SecurityGroupId** | Pointer to **int32** | ID of the security group | [optional] 
+**Price** | **float32** | Offer price of the spot instance | 
 
 ## Methods
 
 ### NewSpotCreate
 
-`func NewSpotCreate(name string, dataCenterId string, osId int32, cloudNetworkType string, vCpuType string, vCpu int32, ramGb int32, volumeType string, volumeGb int32, sshKeyId int32, price float32, ) *SpotCreate`
+`func NewSpotCreate(name string, dataCenterId string, osId int32, cloudNetworkType string, vCpuType string, vCpu int32, ramGb float32, volumeType string, volumeGb int32, sshKeyId int32, price float32, ) *SpotCreate`
 
 NewSpotCreate instantiates a new SpotCreate object
 This constructor will assign default values to properties that have it defined,
@@ -158,20 +158,20 @@ SetVCpu sets VCpu field to given value.
 
 ### GetRamGb
 
-`func (o *SpotCreate) GetRamGb() int32`
+`func (o *SpotCreate) GetRamGb() float32`
 
 GetRamGb returns the RamGb field if non-nil, zero value otherwise.
 
 ### GetRamGbOk
 
-`func (o *SpotCreate) GetRamGbOk() (*int32, bool)`
+`func (o *SpotCreate) GetRamGbOk() (*float32, bool)`
 
 GetRamGbOk returns a tuple with the RamGb field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRamGb
 
-`func (o *SpotCreate) SetRamGb(v int32)`
+`func (o *SpotCreate) SetRamGb(v float32)`
 
 SetRamGb sets RamGb field to given value.
 

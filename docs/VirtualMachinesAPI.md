@@ -18,6 +18,8 @@ Method | HTTP request | Description
 
 Get virtual machine by id
 
+
+
 ### Example
 
 ```go
@@ -31,7 +33,7 @@ import (
 )
 
 func main() {
-	vmId := int32(56) // int32 | Virtual machine ID
+	vmId := int32(56) // int32 | ID of the virtual machine
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -51,7 +53,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**vmId** | **int32** | Virtual machine ID | 
+**vmId** | **int32** | ID of the virtual machine | 
 
 ### Other Parameters
 
@@ -85,6 +87,8 @@ Name | Type | Description  | Notes
 > []Vm GetVms(ctx).Execute()
 
 Get list of virtual machines
+
+
 
 ### Example
 
@@ -145,6 +149,8 @@ Other parameters are passed through a pointer to a apiGetVmsRequest struct via t
 
 Perform actions with a virtual machine
 
+
+
 ### Example
 
 ```go
@@ -158,7 +164,7 @@ import (
 )
 
 func main() {
-	vmId := int32(56) // int32 | Virtual machine ID
+	vmId := int32(56) // int32 | ID of the virtual machine
 	vmActionsRequest := openapiclient.VmActions_request{VmClone: openapiclient.NewVmClone("clone", "vm-default-name")} // VmActionsRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -179,7 +185,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**vmId** | **int32** | Virtual machine ID | 
+**vmId** | **int32** | ID of the virtual machine | 
 
 ### Other Parameters
 
@@ -215,6 +221,8 @@ Name | Type | Description  | Notes
 
 Create virtual machine
 
+
+
 ### Example
 
 ```go
@@ -228,7 +236,7 @@ import (
 )
 
 func main() {
-	vmCreate := *openapiclient.NewVmCreate("vm-test1", "aws-us-west-1", int32(5), "multi-cloud", "shared", int32(2), int32(1), "ssd", int32(16), int32(124)) // VmCreate |  (optional)
+	vmCreate := *openapiclient.NewVmCreate("vm-test1", "aws-us-west-1", int32(5), "multi-cloud", "shared", int32(2), float32(1), "ssd", int32(16), int32(124)) // VmCreate |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -279,6 +287,8 @@ Name | Type | Description  | Notes
 
 Delete virtual machine
 
+
+
 ### Example
 
 ```go
@@ -292,7 +302,7 @@ import (
 )
 
 func main() {
-	vmId := int32(56) // int32 | Virtual machine ID
+	vmId := int32(56) // int32 | ID of the virtual machine
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -312,7 +322,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**vmId** | **int32** | Virtual machine ID | 
+**vmId** | **int32** | ID of the virtual machine | 
 
 ### Other Parameters
 

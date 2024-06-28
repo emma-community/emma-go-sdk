@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **int32** | ID of the geographical location | [optional] 
+**Name** | Pointer to **string** | Name of the geographical location (city or state) | [optional] 
 
 ## Methods
 

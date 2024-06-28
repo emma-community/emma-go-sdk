@@ -1,7 +1,7 @@
 /*
 Public EMMA API
 
-**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
+### About Infrastructure API   **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.     #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```      #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.     #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -H \"Authorization: Bearer YOUR-ACCESS-TOKEN\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
 
 API version: 0.0.1
 */
@@ -35,8 +35,12 @@ func (r ApiGetSpotRequest) Execute() (*Vm, *http.Response, error) {
 /*
 GetSpot Get spot instance by id
 
+Returns a spot instance by its ID.
+
+A Spot Instance is a specialized compute instance that allows you to access and utilize unused instance capacity at a steeply discounted rate.  Spot price is charged on an hourly basis.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param spotInstanceId Spot instance id
+	@param spotInstanceId ID of the spot instance
 	@return ApiGetSpotRequest
 */
 func (a *SpotInstancesAPIService) GetSpot(ctx context.Context, spotInstanceId int32) ApiGetSpotRequest {
@@ -168,6 +172,10 @@ func (r ApiGetSpotsRequest) Execute() ([]Vm, *http.Response, error) {
 /*
 GetSpots Get list of spot instances
 
+Returns a list of spot instances.
+
+A Spot Instance is a specialized compute instance that allows you to access and utilize unused instance capacity at a steeply discounted rate.  Spot price is charged on an hourly basis.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetSpotsRequest
 */
@@ -294,8 +302,10 @@ func (r ApiSpotActionsRequest) Execute() (*Vm, *http.Response, error) {
 /*
 SpotActions Perform actions with a spot instance
 
+This endpoint reboots a spot instance.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param spotInstanceId Spot instance id
+	@param spotInstanceId ID of the spot instance
 	@return ApiSpotActionsRequest
 */
 func (a *SpotInstancesAPIService) SpotActions(ctx context.Context, spotInstanceId int32) ApiSpotActionsRequest {
@@ -446,6 +456,28 @@ func (r ApiSpotCreateRequest) Execute() (*Vm, *http.Response, error) {
 /*
 SpotCreate Create spot instance
 
+This method creates a spot instance according to the specified parameters.
+
+A Spot Instance is a specialized compute instance that allows you to access and utilize unused instance capacity at a steeply discounted rate. Spot price is charged on an hourly basis.
+
+To create a spot instance, follow these steps:
+
+1. Select a data center using the `/v1/data-centers` endpoint. The data center determines the provider and location of the spot instance.
+
+2. Select an available hardware configuration for the spot instance using the `/v1/spots-configs` endpoint.
+
+3. Select an SSH key for the Linux spot instance using the `/v1/ssh-keys` endpoint.
+
+4. Select an operating system using the `/v1/operating-systems` endpoint.
+
+5. Choose one of the cloud network types: _multi-cloud, isolated,_ or _default_. Choose the _multi-cloud_ network type if you need to connect compute instances from different providers.
+
+You may choose not to specify a security group. In this case, the spot instance will be added to the default security group.
+
+A `price` field of a spot instance is not required.
+
+The spot instance market operates on a bidding system. Your specified price acts as your bid in this market. If your bid is higher than the current spot price, your instance request will likely be fulfilled. However, if the market price exceeds your bid, your instance may not be launched or could be terminated if already running.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSpotCreateRequest
 */
@@ -590,8 +622,10 @@ func (r ApiSpotDeleteRequest) Execute() (*Vm, *http.Response, error) {
 /*
 SpotDelete Delete spot instance
 
+This method deletes a spot instance.
+
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param spotInstanceId Spot instance id
+	@param spotInstanceId ID of the spot instance
 	@return ApiSpotDeleteRequest
 */
 func (a *SpotInstancesAPIService) SpotDelete(ctx context.Context, spotInstanceId int32) ApiSpotDeleteRequest {

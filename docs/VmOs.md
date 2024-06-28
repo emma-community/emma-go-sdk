@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**Family** | Pointer to **string** |  | [optional] 
-**Architecture** | Pointer to **string** |  | [optional] 
-**Type** | Pointer to **string** |  | [optional] 
-**Version** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **int32** | ID of the operating system | [optional] 
+**Family** | Pointer to **string** | Family of the operating system | [optional] 
+**Architecture** | Pointer to **string** | Architecture of the operating system | [optional] 
+**Type** | Pointer to **string** | Type of the operating system | [optional] 
+**Version** | Pointer to **string** | Version of the operating system | [optional] 
 
 ## Methods
 

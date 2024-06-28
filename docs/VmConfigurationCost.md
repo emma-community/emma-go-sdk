@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Unit** | Pointer to **string** |  | [optional] 
-**Currency** | Pointer to **string** |  | [optional] 
-**PricePerUnit** | Pointer to **float32** |  | [optional] 
+**Unit** | Pointer to **string** | Cost period | [optional] 
+**Currency** | Pointer to **string** | Currency of the cost | [optional] 
+**PricePerUnit** | Pointer to **float32** | Cost for the period | [optional] 
 
 ## Methods
 

@@ -5,16 +5,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | **string** | Action with a virtual machine | 
-**VCpu** | **int32** |  | 
-**VCpuType** | Pointer to **string** | vCPU type | [optional] 
-**RamGb** | **int32** |  | 
-**VolumeGb** | **int32** |  | 
+**VCpu** | **int32** | Number of virtual Central Processing Units (vCPUs) | 
+**VCpuType** | Pointer to **string** | Type of virtual Central Processing Units (vCPUs) | [optional] 
+**RamGb** | **float32** | Capacity of the RAM in gigabytes | 
+**VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
 
 ## Methods
 
 ### NewVmEditHardware
 
-`func NewVmEditHardware(action string, vCpu int32, ramGb int32, volumeGb int32, ) *VmEditHardware`
+`func NewVmEditHardware(action string, vCpu int32, ramGb float32, volumeGb int32, ) *VmEditHardware`
 
 NewVmEditHardware instantiates a new VmEditHardware object
 This constructor will assign default values to properties that have it defined,
@@ -96,20 +96,20 @@ HasVCpuType returns a boolean if a field has been set.
 
 ### GetRamGb
 
-`func (o *VmEditHardware) GetRamGb() int32`
+`func (o *VmEditHardware) GetRamGb() float32`
 
 GetRamGb returns the RamGb field if non-nil, zero value otherwise.
 
 ### GetRamGbOk
 
-`func (o *VmEditHardware) GetRamGbOk() (*int32, bool)`
+`func (o *VmEditHardware) GetRamGbOk() (*float32, bool)`
 
 GetRamGbOk returns a tuple with the RamGb field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRamGb
 
-`func (o *VmEditHardware) SetRamGb(v int32)`
+`func (o *VmEditHardware) SetRamGb(v float32)`
 
 SetRamGb sets RamGb field to given value.
 

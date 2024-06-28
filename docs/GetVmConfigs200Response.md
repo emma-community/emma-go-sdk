@@ -4,17 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TotalPages** | Pointer to **int32** |  | [optional] 
-**TotalElements** | Pointer to **int64** |  | [optional] 
-**Size** | Pointer to **int32** |  | [optional] 
+**TotalPages** | Pointer to **int32** | Total number of pages available | [optional] 
+**TotalElements** | Pointer to **int64** | Total number of elements across all pages | [optional] 
+**Size** | Pointer to **int32** | Number of elements per page | [optional] 
 **Content** | Pointer to [**[]VmConfiguration**](VmConfiguration.md) |  | [optional] 
-**Number** | Pointer to **int32** |  | [optional] 
+**Number** | Pointer to **int32** | Current page number (0-based index) | [optional] 
 **Sort** | Pointer to [**SortObject**](SortObject.md) |  | [optional] 
-**Last** | Pointer to **bool** |  | [optional] 
-**First** | Pointer to **bool** |  | [optional] 
-**NumberOfElements** | Pointer to **int32** |  | [optional] 
+**Last** | Pointer to **bool** | Indicates if this is the last page | [optional] 
+**First** | Pointer to **bool** | Indicates if this is the first page | [optional] 
+**NumberOfElements** | Pointer to **int32** | Number of elements on the current page | [optional] 
 **Pageable** | Pointer to [**PageableObject**](PageableObject.md) |  | [optional] 
-**Empty** | Pointer to **bool** |  | [optional] 
+**Empty** | Pointer to **bool** | Indicates if the page is empty | [optional] 
 
 ## Methods
 

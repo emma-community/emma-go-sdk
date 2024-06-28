@@ -1,48 +1,120 @@
 openapi: 3.0.0
 info:
-  description: |
-    **Base URL:** *<u>https://api.emma.ms/external</u>*
-
-    This **Infrastructure API** is for managing the cloud infrastructure within a project.
-
-    To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.
-
-    After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.
-
-    The Bearer access token is a text string, included in the request header, example:
-
-    *-H Authorization: Bearer {token}*
-
-    Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
+  description: "### About Infrastructure API\n\n **Base URL:** **<u>https://api.emma.ms/external</u>**\n\
+    \n This **Infrastructure API** is for managing the emma cloud infrastructure within\
+    \ a project. The API enables you to view, create, edit, and delete _Virtual machines,\
+    \ Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups,\
+    \ and Backup policies_. For creating the resources you can use the endpoints with\
+    \ the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual\
+    \ machines configurations, Spot instances configurations, Kubernetes clusters\
+    \ configurations._\n\n ### Authentication\n\n #### 1. Create service application\n\
+    \n To access the API, enter your project, navigate to **Settings** > **Service\
+    \ Apps**, and create a service application. Select the access level **Read**,\
+    \ **Operate**, or **Manage**.\n\n - **Read** - only GET methods are allowed in\
+    \ the API.\n\n - **Operate** - some operations are allowed with the resources\
+    \ (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).\n\n - **Manage**\
+    \ - full creating, updating, and deleting of the resources is allowed.\n\n \n\
+    \ #### 2. Get access token\n\n - Copy the **Client ID** and **Client Secret**\
+    \ in the service application.\n - Send an API request to the endpoint **/issue-token**\
+    \ as specified in the **Authentication** section of the API documentation. You\
+    \ will receive access and refresh tokens in the response.\n\n _For Linux / Mac:_\n\
+    \ ```\n curl -X POST https://api.emma.ms/external/v1/issue-token \\\n -H \"Content-Type:\
+    \ application/json\" \\\n -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\"\
+    : \"YOUR-CLIENT-SECRET\"}'\n ```\n _For Windows:_\n ```\n curl -X POST https://api.emma.ms/external/v1/issue-token\
+    \ ^\n -H \"Content-Type: application/json\" ^\n -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\
+    \", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"\n ```\n   \n #### 3. Use\
+    \ access token in requests\n The Bearer access token is a text string, included\
+    \ in the request header, for example:\n\n _For Linux / Mac:_\n ```\n curl -X GET\
+    \ https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"\
+    \n ```\n\n Use this token for the API requests. \n \n #### 4. Refresh token\n\
+    \ The access token will expire in 10 minutes. A new access token may be created\
+    \ using the refresh token (without Client ID and Client Secret).\n\n To get a\
+    \ new access token send a request to the **/refresh-token** endpoint:\n\n\n _For\
+    \ Linux / Mac:_\n ```\n curl -X POST https://api.emma.ms/external/v1/refresh-token\
+    \ \\\n -H \"Content-Type: application/json\" \\\n -H \"Authorization: Bearer YOUR-ACCESS-TOKEN\"\
+    \ \\\n -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'\n ```    \n\n ### Possible\
+    \ response status codes\n\n We use standard HTTP response codes to show the success\
+    \ or failure of requests.\n\n `2xx` - successful responses.\n\n `4xx` - client\
+    \ error responses (the response contains an explanation of the error).\n\n `5xx`\
+    \ - server error responses.\n\n The API uses the following status codes:\n\n |\
+    \ Status Code | Description                  | Notes                         \
+    \                                         |\n |-------------|------------------------------|------------------------------------------------------------------------|\n\
+    \ | 200         | OK                           | The request was successful. \
+    \                                            |\n | 201         | Created     \
+    \                 | The object was successfully created. This code is only used\
+    \ with objects that are created immediately.\n | 400         | Bad Request   \
+    \               | The request could not be understood by the server. Incoming\
+    \ parameters might not be valid. |\n | 401         | Unauthorized            |\
+    \ The client is unauthenticated. The client must authenticate itself to get the\
+    \ requested response. |\n | 403         | Forbidden                   | The client\
+    \ does not have access rights to the content.\n | 404         | Not Found    \
+    \                | The requested resource is not found.                      \
+    \              |\n | 409         | Conflict | This response is sent when a request\
+    \ conflicts with the current state of the object (e.g. deleting the security group\
+    \ with the compute instances in it).|\n | 422         | Unprocessable Content\
+    \   | The request was well-formed but was unable to be followed due to incorrect\
+    \ field values (e.g. creation of a virtual machine in the non-existent data center).\
+    \  |\n | 500         | Internal server Error                 | The server could\
+    \ not return the representation due to an internal server error. |\n"
   title: Public EMMA API
   version: 0.0.1
 servers:
 - description: Public EMMA API
   url: https://api.emma.ms/external
 tags:
-- description: Authentication operations
+- description: |
+    Includes two endpoints for obtaining access tokens for authentication in the current API. The first endpoint enables you to get an access token and a refresh token. To send a request, you first need to create a Service application in your project (in the Settings section). After creating the application, you will get a Client ID and a Client Secret. Use them in your API request body to get the access and refresh tokens.
+
+    The second endpoint is used for getting a new access token using the refresh token. Since the access token can expire in a few minutes, you can generate a new access token without providing the Client ID and Client Secret.
   name: Authentication
-- description: Viewing data centers
-  name: Data centers
-- description: Viewing locations
-  name: Locations
-- description: Viewing operating Systems
-  name: Operating systems
-- description: Viewing providers
-  name: Providers
-- description: Security groups operations
-  name: Security groups
-- description: Spot instances operations
-  name: Spot instances
-- description: SSH keys operations
-  name: SSH keys
-- description: Virtual machines operations
-  name: Virtual machines
-- description: Viewing configurations of virtual machines and spot instances
+- description: |
+    When creating virtual machines, spot instances, or Kubernetes clusters, you need to provide the desired hardware configurations. These configurations include CPU, CPU type, RAM, volume size, and volume type. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
+
+    Use these three endpoints as references for available configurations for virtual machines, spot instances, and Kubernetes clusters. You can search the available configurations by different parameters (provider, location, data center, cloud network type, CPU, CPU type, RAM, volume size, volume type, and price).
+
+    When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a virtual machine, spot instance, or Kubernetes cluster.
   name: Compute instances configurations
+- description: |
+    Data centers from cloud providers. The data center ID is necessary for creating compute instances. Use data center endpoints to find the provider's data centers.
+  name: Data centers
+- description: |
+    Geographic locations of the provider's data centers. These endpoints provide the ID and name of each geographic location. Use the retrieved location ID for searching data centers.
+  name: Locations
+- description: |
+    Operating systems of compute instances supported by the cloud providers. Endpoints provide detailed information about each operating system, including its family, type, version, and architecture. The operating system ID is necessary when creating virtual machines and spot instances.
+  name: Operating systems
+- description: |
+    Cloud service provider is a third-party company that provides scalable computing resources that users can access over emma platform. When you create any computing resources in emma you create them in the provider's datacenters.
+  name: Providers
+- description: |
+    A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular network or system. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+    Security groups operate based on predefined rules that allow or deny traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol. You can create and modify security groups, and add or delete compute instances from the security group.
+  name: Security groups
+- description: |
+    A Spot Instance is a specialized compute instance that allows you to access and utilize unused instance capacity at a steeply discounted rate.  Spot price is charged on an hourly basis.
+  name: Spot instances
+- description: |
+    Provides endpoints for managing SSH keys within the project. These endpoints allow users to create, retrieve, update, and delete SSH keys, facilitating secure access to cloud resources.
+    You can only manage the SSH keys created by the current Service application that you use to authenticate to the API. You can't retrieve a list of SSH keys created by other users. You can't use other user's SSH keys when creating compute instances.
+  name: SSH keys
+- description: |
+    Provides a comprehensive set of endpoints for managing virtual machines (VMs) within the project. These endpoints enable users to create, retrieve, update, and delete virtual machines.
+  name: Virtual machines
 paths:
   /v1/issue-token:
     post:
+      description: |
+        Returns an access token and a refresh token for this API. The bearer access token enables you to get access and send requests to the endpoints in this API.
+
+        To get the tokens, you need to send a Client ID and a Client Secret, which you can obtain from the Service application in your project. First, create a Service app in your project (Project -> Settings -> Service apps).
+
+        To manage access rights to the API, select an appropriate access level for your app when creating the service app - **Read**, **Operate,** or **Manage**.
+
+        The Bearer access token is a text string, included in the request header, for example:
+
+        ```
+        curl -X GET https://api.emma.ms/external/v1/locations -H "Authorization: Bearer YOUR-ACCESS-TOKEN-HERE"
+        ```
       operationId: issueToken
       requestBody:
         content:
@@ -67,6 +139,8 @@ paths:
       - Authentication
   /v1/refresh-token:
     post:
+      description: |
+        Returns an access token for this API using a refresh token. The refresh token enables you to get a new access token (when it is expired) without needing the Client ID and Client Secret. To get the access token, you need to send the refresh token in the payload. You can obtain the refresh token from the `/v1/issue-token` endpoint.
       operationId: refreshToken
       requestBody:
         content:
@@ -91,9 +165,11 @@ paths:
       - Authentication
   /v1/data-centers:
     get:
+      description: |
+        Returns a list of data centers from cloud providers. All compute instances are created in data centers. The data center ID is necessary for creating any compute instance. Use this endpoint to find the provider's data centers.
       operationId: GetDataCenters
       parameters:
-      - description: Data center name
+      - description: Name of the cloud provider's data center
         explode: true
         in: query
         name: dataCenterName
@@ -102,7 +178,7 @@ paths:
           example: eu-north-1
           type: string
         style: form
-      - description: Location ID
+      - description: ID of the geographic location
         explode: true
         in: query
         name: locationId
@@ -111,7 +187,7 @@ paths:
           example: 6
           type: integer
         style: form
-      - description: Provider name
+      - description: Name of the cloud provider
         explode: true
         in: query
         name: providerName
@@ -154,9 +230,11 @@ paths:
       - Data centers
   /v1/data-centers/{dataCenterId}:
     get:
+      description: |
+        Returns a data center from a cloud provider by data center ID. Information on the data center includes its name, provider and location.
       operationId: GetDataCenter
       parameters:
-      - description: Data center ID
+      - description: ID of the cloud provider's data center
         explode: false
         in: path
         name: dataCenterId
@@ -197,9 +275,11 @@ paths:
       - Data centers
   /v1/locations:
     get:
+      description: |
+        Returns a list of geographic locations of the provider's data centers. Locations are cities or states (in the case of the USA). When creating any compute instance, you need to specify a data center. This method helps you find locations with data centers.
       operationId: GetLocations
       parameters:
-      - description: Location name
+      - description: Name of the geographic location
         explode: true
         in: query
         name: name
@@ -236,9 +316,11 @@ paths:
       - Locations
   /v1/locations/{locationId}:
     get:
+      description: |
+        Returns a geographic location by its ID. Locations are cities or states (in the case of the USA) where providers have data centers.
       operationId: GetLocation
       parameters:
-      - description: Location ID
+      - description: ID of the geographic location
         explode: false
         in: path
         name: locationId
@@ -278,9 +360,11 @@ paths:
       - Locations
   /v1/operating-systems:
     get:
+      description: |
+        Returns a list of available operating systems of compute instances supported by the cloud providers. The method provides detailed information about each operating system, including its family, type, version, and architecture. Use this list of the operating systems to find an OS when you create any compute instance.
       operationId: GetOperatingSystems
       parameters:
-      - description: Operating system type
+      - description: Type of the operating system
         explode: true
         in: query
         name: type
@@ -289,7 +373,7 @@ paths:
           example: Ubuntu
           type: string
         style: form
-      - description: Operating system architecture
+      - description: Architecture of the operating system
         explode: true
         in: query
         name: architecture
@@ -298,7 +382,7 @@ paths:
           example: x86-64
           type: string
         style: form
-      - description: Operating system version
+      - description: Version of the operating system
         explode: true
         in: query
         name: version
@@ -335,9 +419,11 @@ paths:
       - Operating systems
   /v1/operating-systems/{operatingSystemId}:
     get:
+      description: |
+        Returns an operating system (supported by the cloud providers) by its ID. The method provides detailed information about each operating system, including its family, type, version, and architecture.
       operationId: GetOperatingSystem
       parameters:
-      - description: Operating system ID
+      - description: ID of the operating system
         explode: false
         in: path
         name: operatingSystemId
@@ -377,9 +463,12 @@ paths:
       - Operating systems
   /v1/providers:
     get:
+      description: |
+        Returns a list of cloud providers. Cloud service provider is a third-party company that provides scalable computing resources that users can access over emma platform. When you create any computing resources in emma you create them in the provider's datacenters.
+        Provider is necessary when you select a data center for creating compute instances.
       operationId: GetProviders
       parameters:
-      - description: Provider name
+      - description: Name of the cloud provider
         explode: true
         in: query
         name: providerName
@@ -416,9 +505,12 @@ paths:
       - Providers
   /v1/providers/{providerId}:
     get:
+      description: |
+        Returns a cloud provider by provider ID. Cloud service provider is a third-party company that provides scalable computing resources that users can access over emma platform.
+        Provider is necessary when you select a data center for creating compute instances.
       operationId: GetProvider
       parameters:
-      - description: Provider ID
+      - description: ID of the cloud provider
         explode: false
         in: path
         name: providerId
@@ -458,6 +550,10 @@ paths:
       - Providers
   /v1/security-groups:
     get:
+      description: |
+        Returns a list of security groups.
+        A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+        Security groups operate based on predefined rules that allow or deny traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
       operationId: GetSecurityGroups
       responses:
         "200":
@@ -492,6 +588,20 @@ paths:
       tags:
       - Security groups
     post:
+      description: |
+        This method creates a security group.
+
+        A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+        Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
+        When creating a security group, provide its name and a set of inbound and outbound rules. You can only define rules that allow traffic, not deny it. All traffic is denied except for explicitly allowed traffic.
+
+        Security groups control TCP, SCTP, GRE, ESP, AH, UDP, and ICMP protocols, or all the selected protocols at once.
+
+        After creating a security group, a set of default rules is added to the security group. These rules are immutable, and you can't edit or delete them.
+
+        All traffic in the selected protocol is allowed if the IP range in a rule is set to `0.0.0.0/0`.
       operationId: SecurityGroupCreate
       requestBody:
         content:
@@ -536,9 +646,17 @@ paths:
       - Security groups
   /v1/security-groups/{securityGroupId}:
     delete:
+      description: |
+        This method deletes a security group.
+
+        A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+        Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
+        You can't delete a security group if any compute instance is using this security group. To delete a security group, first remove a compute instance from the security group using this method: `POST /v1/security-groups/{securityGroupId}/instances`
       operationId: SecurityGroupDelete
       parameters:
-      - description: Security group id
+      - description: ID of the security group
         explode: false
         in: path
         name: securityGroupId
@@ -583,9 +701,15 @@ paths:
       tags:
       - Security groups
     get:
+      description: |
+        Returns a security groups by its ID.
+
+        A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+        Security groups operate based on predefined rules that allow or deny traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
       operationId: GetSecurityGroup
       parameters:
-      - description: Security group id
+      - description: ID of the security group
         explode: false
         in: path
         name: securityGroupId
@@ -624,9 +748,23 @@ paths:
       tags:
       - Security groups
     put:
+      description: |
+        This method updates a security group.
+
+        A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+        Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
+        When editing a security group, you can add and delete the inbound and outbound rules. You can only define rules that allow traffic, not deny it. All traffic is denied except for explicitly allowed traffic.
+
+        Security groups control TCP, SCTP, GRE, ESP, AH, UDP, and ICMP protocols, or all the selected protocols at once.
+
+        After creating a security group, a set of default rules is added to the security group. These rules are immutable, and you can't edit or delete them. When editing a security group, _you should provide the default rules along with any other rules._
+
+        All traffic in the selected protocol is allowed if the IP range in a rule is set to `0.0.0.0/0`.
       operationId: SecurityGroupUpdate
       parameters:
-      - description: Security group id
+      - description: ID of the security group
         explode: false
         in: path
         name: securityGroupId
@@ -683,9 +821,15 @@ paths:
       - Security groups
   /v1/security-groups/{securityGroupId}/instances:
     get:
+      description: |
+        Returns a list of compute instances using the selected security group.
+
+        A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+        Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
       operationId: SecurityGroupInstances
       parameters:
-      - description: Security group id
+      - description: ID of the security group
         explode: false
         in: path
         name: securityGroupId
@@ -726,9 +870,17 @@ paths:
       tags:
       - Security groups
     post:
+      description: |
+        This method adds a compute instance to the selected security group.
+
+        A security group refers to a set of rules that determine what network traffic is allowed to enter or leave a particular compute instance. It acts as a virtual firewall, controlling inbound and outbound traffic based on predefined rules.
+
+        Security groups operate based on predefined rules that allow traffic based on specified criteria, such as source IP address, destination IP address, port number, and protocol.
+
+        Any compute instance always uses some security group since its creation. Adding a compute instance to a security group effectively means moving it from one security group to another. When adding a compute instance to a new security group, it is automatically removed from the previous security group.
       operationId: SecurityGroupInstanceAdd
       parameters:
-      - description: Security group id
+      - description: ID of the security group
         explode: false
         in: path
         name: securityGroupId
@@ -785,6 +937,10 @@ paths:
       - Security groups
   /v1/spot-instances:
     get:
+      description: |
+        Returns a list of spot instances.
+
+        A Spot Instance is a specialized compute instance that allows you to access and utilize unused instance capacity at a steeply discounted rate.  Spot price is charged on an hourly basis.
       operationId: GetSpots
       responses:
         "200":
@@ -813,6 +969,26 @@ paths:
       tags:
       - Spot instances
     post:
+      description: "This method creates a spot instance according to the specified\
+        \ parameters.\n\nA Spot Instance is a specialized compute instance that allows\
+        \ you to access and utilize unused instance capacity at a steeply discounted\
+        \ rate. Spot price is charged on an hourly basis. \n\nTo create a spot instance,\
+        \ follow these steps:\n\n1. Select a data center using the `/v1/data-centers`\
+        \ endpoint. The data center determines the provider and location of the spot\
+        \ instance.\n\n2. Select an available hardware configuration for the spot\
+        \ instance using the `/v1/spots-configs` endpoint.\n\n3. Select an SSH key\
+        \ for the Linux spot instance using the `/v1/ssh-keys` endpoint.\n\n4. Select\
+        \ an operating system using the `/v1/operating-systems` endpoint.\n\n5. Choose\
+        \ one of the cloud network types: _multi-cloud, isolated,_ or _default_. Choose\
+        \ the _multi-cloud_ network type if you need to connect compute instances\
+        \ from different providers.\n\nYou may choose not to specify a security group.\
+        \ In this case, the spot instance will be added to the default security group.\n\
+        \nA `price` field of a spot instance is not required. \n\nThe spot instance\
+        \ market operates on a bidding system. Your specified price acts as your bid\
+        \ in this market. If your bid is higher than the current spot price, your\
+        \ instance request will likely be fulfilled. However, if the market price\
+        \ exceeds your bid, your instance may not be launched or could be terminated\
+        \ if already running.\n"
       operationId: SpotCreate
       requestBody:
         content:
@@ -857,9 +1033,11 @@ paths:
       - Spot instances
   /v1/spot-instances/{spotInstanceId}:
     delete:
+      description: |
+        This method deletes a spot instance.
       operationId: SpotDelete
       parameters:
-      - description: Spot instance id
+      - description: ID of the spot instance
         explode: false
         in: path
         name: spotInstanceId
@@ -898,9 +1076,13 @@ paths:
       tags:
       - Spot instances
     get:
+      description: |
+        Returns a spot instance by its ID.
+
+        A Spot Instance is a specialized compute instance that allows you to access and utilize unused instance capacity at a steeply discounted rate.  Spot price is charged on an hourly basis.
       operationId: GetSpot
       parameters:
-      - description: Spot instance id
+      - description: ID of the spot instance
         explode: false
         in: path
         name: spotInstanceId
@@ -940,9 +1122,11 @@ paths:
       - Spot instances
   /v1/spot-instances/{spotInstanceId}/actions:
     post:
+      description: |
+        This endpoint reboots a spot instance.
       operationId: SpotActions
       parameters:
-      - description: Spot instance id
+      - description: ID of the spot instance
         explode: false
         in: path
         name: spotInstanceId
@@ -993,6 +1177,11 @@ paths:
       - Spot instances
   /v1/ssh-keys:
     get:
+      description: "Returns a list of the SSH keys for access to Linux compute instances.\
+        \ You can use these keys to create compute instances. \n\nThe list only contains\
+        \ the SSH keys created by the current Service application that you use to\
+        \ send a request. \n\nYou can't retrieve a list of SSH keys created by other\
+        \ users and applications.\n"
       operationId: SshKeys
       responses:
         "200":
@@ -1021,6 +1210,12 @@ paths:
       tags:
       - SSH keys
     post:
+      description: |
+        This method creates an SSH key that can be used for Linux compute instance creation. An SSH key can be created in two ways: generated by emma or imported by the user.
+
+        If you want to **generate** a key, specify two fields: name and keyType (RSA or ED25519). The key will be generated, and you will receive a private key in the response. The private key will be shown only once, so copy and save it to connect to the Linux compute instances.
+
+        If you want to **import** an existing SSH key, specify two fields: name and key. In the key field, insert your public SSH key as a string. It will be imported.
       operationId: SshKeysCreateImport
       requestBody:
         content:
@@ -1059,6 +1254,8 @@ paths:
       - SSH keys
   /v1/ssh-keys/{sshKeyId}:
     delete:
+      description: |
+        This method deletes a SSH key. You can only delete an SSH key created by the current Service application that you use to send a request. You can't delete SSH keys created by other users and applications.
       operationId: SshKeyDelete
       parameters:
       - description: SSH key ID
@@ -1096,6 +1293,8 @@ paths:
       tags:
       - SSH keys
     get:
+      description: |
+        Returns an SSH key by ID for access to Linux compute instances. You can only retrieve the SSH keys created by the current Service application that you use to send a request. You can't retrieve SSH keys created by other users and applications.
       operationId: GetSshKey
       parameters:
       - description: SSH key ID
@@ -1137,6 +1336,8 @@ paths:
       tags:
       - SSH keys
     put:
+      description: |
+        This method updates a name of an existing SSH-key. You can only update an SSH key created by the current Service application that you use to send a request. You can't update SSH keys created by other users and applications.
       operationId: SshKeyUpdate
       parameters:
       - description: SSH key ID
@@ -1190,6 +1391,8 @@ paths:
       - SSH keys
   /v1/vms:
     get:
+      description: |
+        Returns a list of virtual machines within the project.
       operationId: GetVms
       responses:
         "200":
@@ -1218,6 +1421,22 @@ paths:
       tags:
       - Virtual machines
     post:
+      description: |
+        This method creates a virtual machine according to the specified parameters.
+
+        To create a virtual machine, follow these steps:
+
+        1. Select a data center using the `/v1/data-centers` endpoint. The data center determines the provider and location of the virtual machine.
+
+        2. Select an available hardware configuration for the virtual machine using the `/v1/vms-configs` endpoint.
+
+        3. Select an SSH key for the Linux virtual machine using the `/v1/ssh-keys` endpoint.
+
+        4. Select an operating system using the `/v1/operating-systems` endpoint.
+
+        5. Choose one of the cloud network types: _multi-cloud, isolated,_ or _default_. Choose the _multi-cloud_ network type if you need to connect compute instances from different providers.
+
+        You may choose not to specify a security group. In this case, the virtual machine will be added to the default security group.
       operationId: VmCreate
       requestBody:
         content:
@@ -1262,9 +1481,11 @@ paths:
       - Virtual machines
   /v1/vms/{vmId}:
     delete:
+      description: |
+        This method deletes a virtual machine.
       operationId: VmDelete
       parameters:
-      - description: Virtual machine ID
+      - description: ID of the virtual machine
         explode: false
         in: path
         name: vmId
@@ -1303,9 +1524,11 @@ paths:
       tags:
       - Virtual machines
     get:
+      description: |
+        This endpoint returns a virtual machine by ID.
       operationId: GetVm
       parameters:
-      - description: Virtual machine ID
+      - description: ID of the virtual machine
         explode: false
         in: path
         name: vmId
@@ -1345,9 +1568,17 @@ paths:
       - Virtual machines
   /v1/vms/{vmId}/actions:
     post:
+      description: |
+        This method performs several actions with a virtual machine:
+          - Start a virtual machine
+          - Shutdown a virtual machine
+          - Reboot a virtual machine
+          - Transfer a virtual machine
+          - Clone a virtual machine
+          - Edit hardware of a virtual machine
       operationId: VmActions
       parameters:
-      - description: Virtual machine ID
+      - description: ID of the virtual machine
         explode: false
         in: path
         name: vmId
@@ -1398,9 +1629,15 @@ paths:
       - Virtual machines
   /v1/vms-configs:
     get:
+      description: |
+        When creating virtual machines you need to provide the desired hardware configurations. These configurations include CPU, CPU type, RAM, volume size, and volume type. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
+
+        Use this endpoint as a reference for available configurations for virtual machines. You can search the available configurations by different parameters (provider, location, data center, cloud network type, CPU, CPU type, RAM, volume size, volume type, and price).
+
+        When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a virtual machine.
       operationId: GetVmConfigs
       parameters:
-      - description: Provider ID
+      - description: ID of the cloud provider
         explode: true
         in: query
         name: providerId
@@ -1409,7 +1646,7 @@ paths:
           example: 5
           type: integer
         style: form
-      - description: Location ID
+      - description: ID of the geographic location
         explode: true
         in: query
         name: locationId
@@ -1418,7 +1655,7 @@ paths:
           example: 6
           type: integer
         style: form
-      - description: Data center ID
+      - description: ID of the cloud provider's data center
         explode: true
         in: query
         name: dataCenterId
@@ -1427,7 +1664,7 @@ paths:
           example: aws-us-west-1
           type: string
         style: form
-      - description: Cloud network type
+      - description: Type of cloud network
         explode: true
         in: query
         name: cloudNetworkType
@@ -1440,7 +1677,7 @@ paths:
           example: multi-cloud
           type: string
         style: form
-      - description: Compute instance vCPU type
+      - description: Type of vCPUs for the compute instance
         explode: true
         in: query
         name: vCpuType
@@ -1453,7 +1690,7 @@ paths:
           example: Standard
           type: string
         style: form
-      - description: Compute instance vCPU
+      - description: virtual Central Processing Units (vCPUs) for the compute instance
         explode: true
         in: query
         name: vCpu
@@ -1462,7 +1699,7 @@ paths:
           example: 4
           type: integer
         style: form
-      - description: Compute instance vCPU minimum
+      - description: Minimum number of vCPUs for the compute instance
         explode: true
         in: query
         name: vCpuMin
@@ -1471,7 +1708,7 @@ paths:
           example: 1
           type: integer
         style: form
-      - description: Compute instance vCPU maximum
+      - description: Maximum number of vCPUs for the compute instance
         explode: true
         in: query
         name: vCpuMax
@@ -1480,34 +1717,37 @@ paths:
           example: 8
           type: integer
         style: form
-      - description: Compute instance RAM (GB)
+      - description: RAM of the compute instance in gigabytes
         explode: true
         in: query
         name: ramGb
         required: false
         schema:
           example: 16
-          type: integer
+          format: float
+          type: number
         style: form
-      - description: Compute instance RAM (GB) minimum
+      - description: Minimum RAM of the compute instance in gigabytes
         explode: true
         in: query
         name: ramGbMin
         required: false
         schema:
           example: 8
-          type: integer
+          format: float
+          type: number
         style: form
-      - description: Compute instance RAM (GB) maximum
+      - description: Maximum RAM of the compute instance in gigabytes
         explode: true
         in: query
         name: ramGbMax
         required: false
         schema:
           example: 32
-          type: integer
+          format: float
+          type: number
         style: form
-      - description: Compute instance volume (GB)
+      - description: Volume size of the compute instance in gigabytes
         explode: true
         in: query
         name: volumeGb
@@ -1516,7 +1756,7 @@ paths:
           example: 500
           type: integer
         style: form
-      - description: Compute instance volume minimum (GB)
+      - description: Minimum volume size of the compute instance in gigabytes
         explode: true
         in: query
         name: volumeGbMin
@@ -1525,7 +1765,7 @@ paths:
           example: 250
           type: integer
         style: form
-      - description: Compute instance volume maximun (GB)
+      - description: Maximum volume size of the compute instance in gigabytes
         explode: true
         in: query
         name: volumeGbMax
@@ -1534,7 +1774,7 @@ paths:
           example: 1000
           type: integer
         style: form
-      - description: Compute instance volume type
+      - description: Volume type of the compute instance
         explode: true
         in: query
         name: volumeType
@@ -1546,7 +1786,7 @@ paths:
           example: ssd
           type: string
         style: form
-      - description: Instance price minimum
+      - description: Minimum price of the compute instance
         explode: true
         in: query
         name: priceMin
@@ -1554,7 +1794,7 @@ paths:
         schema:
           type: number
         style: form
-      - description: Instance price maximum
+      - description: Maximum price of the compute instance
         explode: true
         in: query
         name: priceMax
@@ -1612,9 +1852,15 @@ paths:
       - Compute instances configurations
   /v1/spots-configs:
     get:
+      description: |
+        When creating spot instances you need to provide the desired hardware configurations. These configurations include CPU, CPU type, RAM, volume size, and volume type. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
+
+        Use this endpoint as a reference for available configurations for spot instances. You can search the available configurations by different parameters (provider, location, data center, cloud network type, CPU, CPU type, RAM, volume size, volume type, and price).
+
+        When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a spot instance.
       operationId: GetSpotConfigs
       parameters:
-      - description: Provider ID
+      - description: ID of the cloud provider
         explode: true
         in: query
         name: providerId
@@ -1623,7 +1869,7 @@ paths:
           example: 5
           type: integer
         style: form
-      - description: Location ID
+      - description: ID of the geographic location
         explode: true
         in: query
         name: locationId
@@ -1632,7 +1878,7 @@ paths:
           example: 6
           type: integer
         style: form
-      - description: Data center ID
+      - description: ID of the cloud provider's data center
         explode: true
         in: query
         name: dataCenterId
@@ -1641,7 +1887,7 @@ paths:
           example: aws-us-west-1
           type: string
         style: form
-      - description: Cloud network type
+      - description: Type of cloud network
         explode: true
         in: query
         name: cloudNetworkType
@@ -1654,7 +1900,7 @@ paths:
           example: multi-cloud
           type: string
         style: form
-      - description: Compute instance vCPU type
+      - description: Type of vCPUs for the compute instance
         explode: true
         in: query
         name: vCpuType
@@ -1667,7 +1913,7 @@ paths:
           example: Standard
           type: string
         style: form
-      - description: Compute instance vCPU
+      - description: virtual Central Processing Units (vCPUs) for the compute instance
         explode: true
         in: query
         name: vCpu
@@ -1676,7 +1922,7 @@ paths:
           example: 4
           type: integer
         style: form
-      - description: Compute instance vCPU minimum
+      - description: Minimum number of vCPUs for the compute instance
         explode: true
         in: query
         name: vCpuMin
@@ -1685,7 +1931,7 @@ paths:
           example: 1
           type: integer
         style: form
-      - description: Compute instance vCPU maximum
+      - description: Maximum number of vCPUs for the compute instance
         explode: true
         in: query
         name: vCpuMax
@@ -1694,34 +1940,37 @@ paths:
           example: 8
           type: integer
         style: form
-      - description: Compute instance RAM (GB)
+      - description: RAM of the compute instance in gigabytes
         explode: true
         in: query
         name: ramGb
         required: false
         schema:
           example: 16
-          type: integer
+          format: float
+          type: number
         style: form
-      - description: Compute instance RAM (GB) minimum
+      - description: Minimum RAM of the compute instance in gigabytes
         explode: true
         in: query
         name: ramGbMin
         required: false
         schema:
           example: 8
-          type: integer
+          format: float
+          type: number
         style: form
-      - description: Compute instance RAM (GB) maximum
+      - description: Maximum RAM of the compute instance in gigabytes
         explode: true
         in: query
         name: ramGbMax
         required: false
         schema:
           example: 32
-          type: integer
+          format: float
+          type: number
         style: form
-      - description: Compute instance volume (GB)
+      - description: Volume size of the compute instance in gigabytes
         explode: true
         in: query
         name: volumeGb
@@ -1730,7 +1979,7 @@ paths:
           example: 500
           type: integer
         style: form
-      - description: Compute instance volume minimum (GB)
+      - description: Minimum volume size of the compute instance in gigabytes
         explode: true
         in: query
         name: volumeGbMin
@@ -1739,7 +1988,7 @@ paths:
           example: 250
           type: integer
         style: form
-      - description: Compute instance volume maximun (GB)
+      - description: Maximum volume size of the compute instance in gigabytes
         explode: true
         in: query
         name: volumeGbMax
@@ -1748,7 +1997,7 @@ paths:
           example: 1000
           type: integer
         style: form
-      - description: Compute instance volume type
+      - description: Volume type of the compute instance
         explode: true
         in: query
         name: volumeType
@@ -1760,7 +2009,7 @@ paths:
           example: ssd
           type: string
         style: form
-      - description: Instance price minimum
+      - description: Minimum price of the compute instance
         explode: true
         in: query
         name: priceMin
@@ -1768,7 +2017,7 @@ paths:
         schema:
           type: number
         style: form
-      - description: Instance price maximum
+      - description: Maximum price of the compute instance
         explode: true
         in: query
         name: priceMax
@@ -1826,17 +2075,8 @@ paths:
       - Compute instances configurations
 components:
   parameters:
-    applicationId:
-      description: Application ID
-      explode: false
-      in: path
-      name: applicationId
-      required: true
-      schema:
-        type: integer
-      style: simple
     cloudNetworkType:
-      description: Cloud network type
+      description: Type of cloud network
       explode: true
       in: query
       name: cloudNetworkType
@@ -1849,35 +2089,8 @@ components:
         example: multi-cloud
         type: string
       style: form
-    estoreAppId:
-      description: ID of an application available for set up
-      explode: false
-      in: path
-      name: estoreAppId
-      required: true
-      schema:
-        type: integer
-      style: simple
-    backupId:
-      description: Backup ID
-      explode: false
-      in: path
-      name: backupId
-      required: true
-      schema:
-        type: integer
-      style: simple
-    backupPolicyId:
-      description: Backup policy ID
-      explode: false
-      in: path
-      name: backupPolicyId
-      required: true
-      schema:
-        type: integer
-      style: simple
     dataCenterId:
-      description: Data center ID
+      description: ID of the cloud provider's data center
       explode: false
       in: path
       name: dataCenterId
@@ -1887,7 +2100,7 @@ components:
         type: string
       style: simple
     dataCenterName:
-      description: Data center name
+      description: Name of the cloud provider's data center
       explode: true
       in: query
       name: dataCenterName
@@ -1897,7 +2110,7 @@ components:
         type: string
       style: form
     dataCenterIdQuery:
-      description: Data center ID
+      description: ID of the cloud provider's data center
       explode: true
       in: query
       name: dataCenterId
@@ -1906,26 +2119,8 @@ components:
         example: aws-us-west-1
         type: string
       style: form
-    instanceId:
-      description: Instance ID in backup policy
-      explode: false
-      in: path
-      name: instanceId
-      required: true
-      schema:
-        type: integer
-      style: simple
-    kClusterId:
-      description: Kubernetes cluster ID
-      explode: false
-      in: path
-      name: kClusterId
-      required: true
-      schema:
-        type: integer
-      style: simple
     locationId:
-      description: Location ID
+      description: ID of the geographic location
       explode: false
       in: path
       name: locationId
@@ -1934,7 +2129,7 @@ components:
         type: integer
       style: simple
     locationName:
-      description: Location name
+      description: Name of the geographic location
       explode: true
       in: query
       name: name
@@ -1944,7 +2139,7 @@ components:
         type: string
       style: form
     locationIdQuery:
-      description: Location ID
+      description: ID of the geographic location
       explode: true
       in: query
       name: locationId
@@ -1953,17 +2148,8 @@ components:
         example: 6
         type: integer
       style: form
-    nodeId:
-      description: ID of an instance (node)
-      explode: false
-      in: path
-      name: nodeId
-      required: true
-      schema:
-        type: integer
-      style: simple
     operatingSystemId:
-      description: Operating system ID
+      description: ID of the operating system
       explode: false
       in: path
       name: operatingSystemId
@@ -1972,7 +2158,7 @@ components:
         type: integer
       style: simple
     osType:
-      description: Operating system type
+      description: Type of the operating system
       explode: true
       in: query
       name: type
@@ -1982,7 +2168,7 @@ components:
         type: string
       style: form
     osArchitecture:
-      description: Operating system architecture
+      description: Architecture of the operating system
       explode: true
       in: query
       name: architecture
@@ -1992,7 +2178,7 @@ components:
         type: string
       style: form
     osVersion:
-      description: Operating system version
+      description: Version of the operating system
       explode: true
       in: query
       name: version
@@ -2012,7 +2198,7 @@ components:
         type: integer
       style: form
     priceMin:
-      description: Instance price minimum
+      description: Minimum price of the compute instance
       explode: true
       in: query
       name: priceMin
@@ -2021,7 +2207,7 @@ components:
         type: number
       style: form
     priceMax:
-      description: Instance price maximum
+      description: Maximum price of the compute instance
       explode: true
       in: query
       name: priceMax
@@ -2029,17 +2215,8 @@ components:
       schema:
         type: number
       style: form
-    projectId:
-      description: Project ID
-      explode: false
-      in: path
-      name: projectId
-      required: true
-      schema:
-        type: integer
-      style: simple
     providerId:
-      description: Provider ID
+      description: ID of the cloud provider
       explode: false
       in: path
       name: providerId
@@ -2048,7 +2225,7 @@ components:
         type: integer
       style: simple
     providerIdQuery:
-      description: Provider ID
+      description: ID of the cloud provider
       explode: true
       in: query
       name: providerId
@@ -2058,7 +2235,7 @@ components:
         type: integer
       style: form
     providerName:
-      description: Provider name
+      description: Name of the cloud provider
       explode: true
       in: query
       name: providerName
@@ -2068,46 +2245,40 @@ components:
         type: string
       style: form
     ramGb:
-      description: Compute instance RAM (GB)
+      description: RAM of the compute instance in gigabytes
       explode: true
       in: query
       name: ramGb
       required: false
       schema:
         example: 16
-        type: integer
+        format: float
+        type: number
       style: form
     ramGbMin:
-      description: Compute instance RAM (GB) minimum
+      description: Minimum RAM of the compute instance in gigabytes
       explode: true
       in: query
       name: ramGbMin
       required: false
       schema:
         example: 8
-        type: integer
+        format: float
+        type: number
       style: form
     ramGbMax:
-      description: Compute instance RAM (GB) maximum
+      description: Maximum RAM of the compute instance in gigabytes
       explode: true
       in: query
       name: ramGbMax
       required: false
       schema:
         example: 32
-        type: integer
+        format: float
+        type: number
       style: form
-    reservedIpId:
-      description: Reserved IP id
-      explode: false
-      in: path
-      name: reservedIpId
-      required: true
-      schema:
-        type: integer
-      style: simple
     securityGroupId:
-      description: Security group id
+      description: ID of the security group
       explode: false
       in: path
       name: securityGroupId
@@ -2116,7 +2287,7 @@ components:
         type: integer
       style: simple
     securityGroupRuleId:
-      description: Security group rule id
+      description: ID of the rule in the security group
       explode: false
       in: path
       name: securityGroupRuleId
@@ -2135,7 +2306,7 @@ components:
         type: integer
       style: form
     spotInstanceId:
-      description: Spot instance id
+      description: ID of the spot instance
       explode: false
       in: path
       name: spotInstanceId
@@ -2153,7 +2324,7 @@ components:
         type: integer
       style: simple
     vCpu:
-      description: Compute instance vCPU
+      description: virtual Central Processing Units (vCPUs) for the compute instance
       explode: true
       in: query
       name: vCpu
@@ -2163,7 +2334,7 @@ components:
         type: integer
       style: form
     vCpuMin:
-      description: Compute instance vCPU minimum
+      description: Minimum number of vCPUs for the compute instance
       explode: true
       in: query
       name: vCpuMin
@@ -2173,7 +2344,7 @@ components:
         type: integer
       style: form
     vCpuMax:
-      description: Compute instance vCPU maximum
+      description: Maximum number of vCPUs for the compute instance
       explode: true
       in: query
       name: vCpuMax
@@ -2183,7 +2354,7 @@ components:
         type: integer
       style: form
     vCpuType:
-      description: Compute instance vCPU type
+      description: Type of vCPUs for the compute instance
       explode: true
       in: query
       name: vCpuType
@@ -2197,7 +2368,7 @@ components:
         type: string
       style: form
     vmId:
-      description: Virtual machine ID
+      description: ID of the virtual machine
       explode: false
       in: path
       name: vmId
@@ -2205,17 +2376,8 @@ components:
       schema:
         type: integer
       style: simple
-    vmHardwareConfig:
-      description: Virtual machine hardware configuration ID
-      explode: true
-      in: query
-      name: vmHardwareConfig
-      required: false
-      schema:
-        type: integer
-      style: form
     volumeGb:
-      description: Compute instance volume (GB)
+      description: Volume size of the compute instance in gigabytes
       explode: true
       in: query
       name: volumeGb
@@ -2225,7 +2387,7 @@ components:
         type: integer
       style: form
     volumeGbMin:
-      description: Compute instance volume minimum (GB)
+      description: Minimum volume size of the compute instance in gigabytes
       explode: true
       in: query
       name: volumeGbMin
@@ -2235,7 +2397,7 @@ components:
         type: integer
       style: form
     volumeGbMax:
-      description: Compute instance volume maximun (GB)
+      description: Maximum volume size of the compute instance in gigabytes
       explode: true
       in: query
       name: volumeGbMax
@@ -2245,7 +2407,7 @@ components:
         type: integer
       style: form
     volumeType:
-      description: Compute instance volume type
+      description: Volume type of the compute instance
       explode: true
       in: query
       name: volumeType
@@ -2264,9 +2426,11 @@ components:
         clientSecret: e0eb8a09-b7fe-4acc-a72b-79ce0dd26068
       properties:
         clientId:
+          description: Client ID from the Service application in the project
           example: ad6f8c5c-223f-4102-8664-8044b84864e2
           type: string
         clientSecret:
+          description: Client secret from the Service application in the project
           example: e0eb8a09-b7fe-4acc-a72b-79ce0dd26068
           type: string
       required:
@@ -2283,21 +2447,27 @@ components:
         providerName: AWS
       properties:
         id:
+          description: ID of the cloud provider's data center
           example: aws-us-west-1
           type: string
         name:
+          description: Name of the cloud provider's data center
           example: eu-north-1
           type: string
         providerId:
+          description: ID of the cloud provider that owns the datacenter
           example: 5
           type: integer
         providerName:
+          description: Name of the cloud provider that owns the datacenter
           example: AWS
           type: string
         locationId:
+          description: ID of the data center location
           example: 15
           type: integer
         locationName:
+          description: Name of the data center location (city or state)
           example: Stockholm
           type: string
       type: object
@@ -2307,9 +2477,11 @@ components:
         id: 18
       properties:
         id:
+          description: ID of the geographical location
           example: 18
           type: integer
         name:
+          description: Name of the geographical location (city or state)
           example: London
           type: string
       type: object
@@ -2322,18 +2494,23 @@ components:
         architecture: x86-64
       properties:
         id:
+          description: Operating system ID
           example: 18
           type: integer
         family:
+          description: Operating system family
           example: Linux
           type: string
         type:
+          description: Operating system type
           example: Ubuntu
           type: string
         architecture:
+          description: Operating system architecture
           example: x86-64
           type: string
         version:
+          description: Operating system version
           example: "18.04"
           type: string
       type: object
@@ -2343,9 +2520,11 @@ components:
         id: 5
       properties:
         id:
+          description: ID of the cloud provider
           example: 5
           type: integer
         name:
+          description: Name of the cloud provider
           example: GCP
           type: string
       type: object
@@ -2354,7 +2533,8 @@ components:
         refreshToken: ad6f8c5js6dkj;s43dv3jljhf9fxej4236235tgdgrthreth8044b84864e2
       properties:
         refreshToken:
-          description: Refresh token
+          description: Refresh token. You can obtain a refresh token from the `/v1/issue-token`
+            endpoint
           example: ad6f8c5js6dkj;s43dv3jljhf9fxej4236235tgdgrthreth8044b84864e2
           type: string
       required:
@@ -2365,12 +2545,11 @@ components:
         createdByName: Jack Rur
         createdAt: 2023-08-31T09:26:19.347+00:00
         modifiedByName: Jack Rur
-        createdBy: 123
+        modifiedById: 123
         modifiedAt: 2023-08-31T09:26:19.347+00:00
         synchronizationStatus: SYNCHRONIZED
         name: default
         recomposingStatus: RECOMPOSED
-        modifiedBy: 123
         rules:
         - protocol: TCP
           isMutable: true
@@ -2388,46 +2567,66 @@ components:
           direction: INBOUND
         id: 5
         lastModificationErrorDescription: Unable to update security group
+        createdById: 123
       properties:
         id:
+          description: Security group id
           example: 5
           type: integer
         name:
+          description: Security group name
           example: default
           type: string
-        createdBy:
+        createdById:
+          description: ID of the user who created the security group
           example: 123
           type: integer
         createdByName:
+          description: Name of the user who created the security group
           example: Jack Rur
           type: string
-        modifiedBy:
+        modifiedById:
+          description: ID of the user who last edited the security group
           example: 123
           type: integer
         modifiedByName:
+          description: Name of the user who last edited the security group
           example: Jack Rur
           type: string
         createdAt:
+          description: Date and time of the security group's creation
           example: 2023-08-31T09:26:19.347+00:00
           type: string
         modifiedAt:
+          description: Date and time of the security group's last update
           example: 2023-08-31T09:26:19.347+00:00
           type: string
         synchronizationStatus:
+          description: "Synchronization status of the security group. When you make\
+            \ changes in the rules the changes are propagated to the respective provider’\
+            s security groups. While this is happening the security groups have the\
+            \ status Synchronizing. After it is done the status changes to Synchronized.\
+            \ When another VM is added to the security group it will not be synchronized\
+            \ at first with the other VMs, therefore the status will be Desynchronized."
           enum:
           - SYNCHRONIZED
           - DESYNCHRONIZED
           - SYNCHRONIZING
           type: string
         recomposingStatus:
+          description: Recomposing status of the security group. When a new Virtual
+            machine is added to the Security group it starts a synchronization process.
+            During this process the Security group will have a Recomposing status.
           enum:
           - RECOMPOSED
           - RECOMPOSING
           type: string
         lastModificationErrorDescription:
+          description: Text of the error when the Security group was last edited
           example: Unable to update security group
           type: string
         rules:
+          description: List of the inbound and outbound rules in the Security group
           items:
             $ref: '#/components/schemas/SecurityGroupRule'
           type: array
@@ -2450,6 +2649,7 @@ components:
           example: new_default
           type: string
         rules:
+          description: List of the inbound and outbound rules in the Security group
           items:
             $ref: '#/components/schemas/SecurityGroupRuleRequest'
           type: array
@@ -2462,6 +2662,7 @@ components:
         instanceId: 8003
       properties:
         instanceId:
+          description: ID of the compute instance to be added to the Security group
           example: 8003
           type: integer
       type: object
@@ -2476,24 +2677,33 @@ components:
         direction: INBOUND
       properties:
         type:
+          description: Type of the security group rule
           example: Custom TCP
           type: string
         policy:
+          description: Rule policy (all rules are allowing)
           example: ALLOW
           type: string
         direction:
+          description: |
+            Direction of the network traffic: inbound or outbound.
           example: INBOUND
           type: string
         protocol:
+          description: Network protocol of the rule
           example: TCP
           type: string
         ports:
+          description: Allowed port or port range
           example: "30321"
           type: string
         ipRange:
+          description: Allowed IP or IP range
           example: 0.0.0.0/0
           type: string
         isMutable:
+          description: "Indicates if the rule can be edited. Some security group rules\
+            \ are added by default, cannot be changed, and are marked as immutable."
           example: true
           type: boolean
       type: object
@@ -2505,7 +2715,7 @@ components:
         direction: INBOUND
       properties:
         direction:
-          description: Direction of network traffic
+          description: Direction of the network traffic
           enum:
           - INBOUND
           - OUTBOUND
@@ -2525,11 +2735,11 @@ components:
           example: TCP
           type: string
         ports:
-          description: Port
+          description: Allowed port or port range
           example: 1-30321
           type: string
         ipRange:
-          description: Range of IPs for rule
+          description: Allowed IP or IP range
           example: 0.0.0.0/0
           type: string
       required:
@@ -2554,19 +2764,19 @@ components:
         vCpuType: shared
       properties:
         name:
-          description: Spot instance name
+          description: Name of the spot instance
           example: spot-default
           type: string
         dataCenterId:
-          description: Provider's data center ID
+          description: ID of the provider's data center
           example: aws-us-west-1
           type: string
         osId:
-          description: Operating system ID
+          description: ID of the operating system
           example: 35
           type: integer
         cloudNetworkType:
-          description: Cloud network type
+          description: Type of the cloud network
           enum:
           - isolated
           - multi-cloud
@@ -2574,7 +2784,7 @@ components:
           example: multi-cloud
           type: string
         vCpuType:
-          description: vCPU type
+          description: Type of the Central Processing Units (vCPUs)
           enum:
           - shared
           - standard
@@ -2586,9 +2796,10 @@ components:
           example: 4
           type: integer
         ramGb:
-          description: Capacity of RAM in gigabytes
+          description: Capacity of the RAM in gigabytes
           example: 1
-          type: integer
+          format: float
+          type: number
         volumeType:
           description: Volume type
           enum:
@@ -2597,7 +2808,7 @@ components:
           example: ssd
           type: string
         volumeGb:
-          description: Capacity of volume in gigabytes
+          description: Capacity of the volume in gigabytes
           example: 16
           type: integer
         sshKeyId:
@@ -2605,12 +2816,13 @@ components:
           example: 124
           type: integer
         securityGroupId:
-          description: Security group ID
+          description: ID of the security group
           example: 208
           type: integer
         price:
-          description: User offer price
+          description: Offer price of the spot instance
           example: 0.002635
+          format: float
           type: number
       required:
       - cloudNetworkType
@@ -2628,7 +2840,7 @@ components:
     SpotReboot:
       properties:
         action:
-          description: Action with spot instance
+          description: Action with the spot instance - reboot
           enum:
           - reboot
           example: reboot
@@ -2649,69 +2861,88 @@ components:
         createdById: 123
       properties:
         id:
+          description: SSH key ID
           example: 60
           type: integer
         name:
+          description: SSH key name
           example: mykey
           type: string
         key:
+          description: SSH public key
           example: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMwmR5qB5VU9X4VYQJjXDT3qketmrrqEABSNAEEkfTtOtIZrKJmMST9bEus/5FFm9b5w5unyZaW39PUe/QDrxwB8Y3b+DTyA1LcRzd2UhCQsybh9DKbDb+HX0lKrgIeUkadwIq5gE2nx3VBQUifa2BGYC7b+FtFLjtHaOwWIvuQC7AYozCB+B69P3q8tK0D9UXlLyGGsBe8MYjl0mV9IumWS7WBz2VDqLhAvFIzpcERVstepLM9Y4mePpDhfQqt85MRIrqTWikhZExwbRmbSFCZHPi85Os2oxSHoXH1NMSBNEt3yJB4Cn5f2nBV45ysd0HcQmn7eLmRPzbkmhfYoOL
             Lego%20Group@localhost
           type: string
         fingerprint:
+          description: SSH key fingerprint
           example: f2:60:34:c8:34:b2:a3:da:22:f9:12:f9:03:f0:33:c0
           type: string
         keyType:
+          description: SSH key type (RSA or ED25519)
           example: RSA
           type: string
         createdAt:
+          description: Date and time when the SSH key was created
           example: 2021-11-26T14:54:11
           type: string
         createdByName:
+          description: Name of the user who created the SSH key
           example: Automation User
           type: string
         createdById:
+          description: ID of the user who created the SSH key
           example: 123
           type: integer
       type: object
     SshKeyGenerated:
       properties:
         id:
+          description: SSH key ID
           example: 60
           type: integer
         name:
+          description: SSH key name
           example: mykey
           type: string
         key:
+          description: SSH public key
           example: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMwmR5qB5VU9X4VYQJjXDT3qketmrrqEABSNAEEkfTtOtIZrKJmMST9bEus/5FFm9b5w5unyZaW39PUe/QDrxwB8Y3b+DTyA1LcRzd2UhCQsybh9DKbDb+HX0lKrgIeUkadwIq5gE2nx3VBQUifa2BGYC7b+FtFLjtHaOwWIvuQC7AYozCB+B69P3q8tK0D9UXlLyGGsBe8MYjl0mV9IumWS7WBz2VDqLhAvFIzpcERVstepLM9Y4mePpDhfQqt85MRIrqTWikhZExwbRmbSFCZHPi85Os2oxSHoXH1NMSBNEt3yJB4Cn5f2nBV45ysd0HcQmn7eLmRPzbkmhfYoOL
             Lego%20Group@localhost
           type: string
         fingerprint:
+          description: SSH key fingerprint
           example: f2:60:34:c8:34:b2:a3:da:22:f9:12:f9:03:f0:33:c0
           type: string
         keyType:
+          description: SSH key type (RSA or ED25519)
           example: RSA
           type: string
         privateKey:
+          description: SSH private key
           example: '-----BEGIN RSA PRIVATE KEY-----MIIEpAIBAAKCAQEA72Raj49bugh+eX+tUWmHUT+KKzYNcvBs8F+/GTHHRcUwcYhs-----END
             RSA PRIVATE KEY-----'
           type: string
         createdAt:
+          description: Date and time when the SSH key was created
           example: 2021-11-26T14:54:11
           type: string
         createdByName:
+          description: Name of the user who created the SSH key
           example: Automation User
           type: string
         createdById:
+          description: ID of the user who created the SSH key
           example: 123
           type: integer
       type: object
     SshKeyCreate:
       properties:
         name:
+          description: SSH key name
           example: mykey
           type: string
         keyType:
+          description: SSH key type (RSA or ED25519)
           enum:
           - RSA
           - ED25519
@@ -2724,9 +2955,11 @@ components:
     SshKeyImport:
       properties:
         name:
+          description: SSH key name
           example: mykey
           type: string
         key:
+          description: SSH public key
           example: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMwmR5qB5VU9X4VYQJjXDT3qketmrrqEABSNAEEkfTtOtIZrKJmMST9bEus/5FFm9b5w5unyZaW39PUe/QDrxwB8Y3b+DTyA1LcRzd2UhCQsybh9DKbDb+HX0lKrgIeUkadwIq5gE2nx3VBQUifa2BGYC7b+FtFLjtHaOwWIvuQC7AYozCB+B69P3q8tK0D9UXlLyGGsBe8MYjl0mV9IumWS7WBz2VDqLhAvFIzpcERVstepLM9Y4mePpDhfQqt85MRIrqTWikhZExwbRmbSFCZHPi85Os2oxSHoXH1NMSBNEt3yJB4Cn5f2nBV45ysd0HcQmn7eLmRPzbkmhfYoOL
             Lego%20Group@localhost
           type: string
@@ -2739,6 +2972,7 @@ components:
         name: mykey
       properties:
         name:
+          description: SSH key name
           example: mykey
           type: string
       required:
@@ -2757,29 +2991,38 @@ components:
         refreshToken: eyJhIwOGIyYi00YzgwLTQ5NTQtODY4Ni02YmY2OWJiYjg0ZjcifQ.eyJleHAiOjE3MDA2MzkzNjksImlhdCI6MTcwMDYzNzU2OSwianRpIjoiYTIxMjRmZWQtODA5MS00ZDAyLTljtYXBpIiwic2Vzc2lvbl9zdGF0ZSI6IjMzZmNlMWQzLWM1MWUtNDY5Zi1iMmNiLTQ0YzY3YjRmNTEyZSIsInNjb3BlIjoidXNlckF0dHJpYnV0ZSBw
       properties:
         otherClaims:
+          description: ""
           type: object
         accessToken:
+          description: Access token
           example: eyJhbGcih3In0.eyJleHAiOjE3MDA2Mzc4NjksImlhdCI6MTcwMDYzNzU2OSwianRpIjoiYTMwOGRhMDItYmIwNy00MjVkLTk2NzUtNzFiMjczNzdkMjYxIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLmVtbWEubXMvYXV0aC9yZWFsbXMvZW1tYSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiIzMDg1YzdlOS1kYjExLT.VCXC-D43-8zp7FVYSNgbbz8KUASAWlFcCqj6wJwif_FReGSIofgDoya54bIBPEugVq0Is7TmbBaXCzkEEASxkMxrCg7r6-7XBWC3P5w8It8Kc-wdVRgjVGSnzz4B8hA
           type: string
         expiresIn:
+          description: Seconds until access token expiration
           example: 300
           type: integer
         refreshExpiresIn:
+          description: Seconds until refresh token expiration
           example: 1800
           type: integer
         refreshToken:
+          description: Refresh token
           example: eyJhIwOGIyYi00YzgwLTQ5NTQtODY4Ni02YmY2OWJiYjg0ZjcifQ.eyJleHAiOjE3MDA2MzkzNjksImlhdCI6MTcwMDYzNzU2OSwianRpIjoiYTIxMjRmZWQtODA5MS00ZDAyLTljtYXBpIiwic2Vzc2lvbl9zdGF0ZSI6IjMzZmNlMWQzLWM1MWUtNDY5Zi1iMmNiLTQ0YzY3YjRmNTEyZSIsInNjb3BlIjoidXNlckF0dHJpYnV0ZSBw
           type: string
         tokenType:
+          description: Token type
           example: Bearer
           type: string
         idToken:
+          description: ""
           type: integer
           example: null
         notBeforePolicy:
+          description: Timestamp before which the token is not valid
           example: 1668610246
           type: integer
         sessionState:
+          description: ""
           example: 33fce1d3-c51e-469f-b2cb-44c67b4f512e
           type: string
       type: object
@@ -2849,33 +3092,43 @@ components:
         status: POWERED_ON
       properties:
         id:
+          description: ID of the virtual machine
           example: 8100
           type: integer
         createdAt:
+          description: Date and time when the virtual machine was created
           example: 2021-11-26T14:54:11
           type: string
         createdByName:
+          description: Name of the user who created the virtual machine
           example: Automation User
           type: string
         createdById:
+          description: ID of the user who created the virtual machine
           example: 123
           type: integer
         modifiedAt:
+          description: Date and time when the virtual machine was last edited
           example: 2021-11-26T14:54:11
           type: string
         modifiedByName:
+          description: Name of the user who last edited the virtual machine
           example: Automation User
           type: string
         modifiedById:
+          description: ID of the user who last edited the virtual machine
           example: 123
           type: integer
         name:
+          description: Name of the virtual machine
           example: vm-default-e08149hp
           type: string
         projectId:
+          description: Project ID
           example: 933
           type: integer
         status:
+          description: Status of the virtual machine
           enum:
           - POWERED_ON
           - POWERED_OFF
@@ -2892,10 +3145,11 @@ components:
         os:
           $ref: '#/components/schemas/Vm_os'
         vCpu:
+          description: Number of virtual Central Processing Units (vCPUs)
           example: 1
           type: integer
         vCpuType:
-          description: vCPU type
+          description: Type of virtual Central Processing Units (vCPUs)
           enum:
           - shared
           - standard
@@ -2911,13 +3165,17 @@ components:
           example: multi-cloud
           type: string
         ramGb:
+          description: Capacity of the RAM in gigabytes
           example: 2
-          type: integer
+          format: float
+          type: number
         disks:
+          description: List of volumes
           items:
             $ref: '#/components/schemas/Vm_disks_inner'
           type: array
         networks:
+          description: ""
           example:
           - id: 9826
             ip: 10.106.0.2
@@ -2933,9 +3191,11 @@ components:
         securityGroup:
           $ref: '#/components/schemas/Vm_securityGroup'
         sshKeyId:
+          description: SSH key ID
           example: 123
           type: integer
         userName:
+          description: User name
           example: root
           type: string
         cost:
@@ -2960,15 +3220,15 @@ components:
           example: vm-test1
           type: string
         dataCenterId:
-          description: Provider's data center ID
+          description: ID of the provider's data center
           example: aws-us-west-1
           type: string
         osId:
-          description: Operating system ID
+          description: ID of the operating system
           example: 5
           type: integer
         cloudNetworkType:
-          description: Cloud network type
+          description: Type of the cloud network
           enum:
           - isolated
           - multi-cloud
@@ -2976,7 +3236,7 @@ components:
           example: multi-cloud
           type: string
         vCpuType:
-          description: vCPU type
+          description: Type of virtual Central Processing Units (vCPUs)
           enum:
           - shared
           - standard
@@ -2988,9 +3248,10 @@ components:
           example: 2
           type: integer
         ramGb:
-          description: Capacity of RAM in gigabytes
+          description: Capacity of the RAM in gigabytes
           example: 1
-          type: integer
+          format: float
+          type: number
         volumeType:
           description: Volume type
           enum:
@@ -2999,7 +3260,7 @@ components:
           example: ssd
           type: string
         volumeGb:
-          description: Capacity of volume in gigabytes
+          description: Capacity of the volume in gigabytes
           example: 16
           type: integer
         sshKeyId:
@@ -3007,7 +3268,7 @@ components:
           example: 124
           type: integer
         securityGroupId:
-          description: Security group ID
+          description: ID of the security group
           example: 208
           type: integer
       required:
@@ -3064,12 +3325,12 @@ components:
           example: transfer
           type: string
         dataCenterId:
-          description: Provider's data center ID
+          description: ID of the provider's data center
           example: aws-us-west-1
           type: string
         isKeepOriginalInstance:
           default: true
-          description: Keep original instance
+          description: Indicate if it is necessary to keep the original instance
           example: true
           type: boolean
       required:
@@ -3085,7 +3346,7 @@ components:
           example: clone
           type: string
         name:
-          description: Virtual machine name
+          description: Name of the virtual machine
           example: vm-default-name
           type: string
       required:
@@ -3101,10 +3362,11 @@ components:
           example: edithardware
           type: string
         vCpu:
+          description: Number of virtual Central Processing Units (vCPUs)
           example: 4
           type: integer
         vCpuType:
-          description: vCPU type
+          description: Type of virtual Central Processing Units (vCPUs)
           enum:
           - shared
           - standard
@@ -3112,9 +3374,12 @@ components:
           example: shared
           type: string
         ramGb:
+          description: Capacity of the RAM in gigabytes
           example: 16
-          type: integer
+          format: float
+          type: number
         volumeGb:
+          description: Capacity of the volume in gigabytes
           example: 500
           type: integer
       required:
@@ -3150,36 +3415,47 @@ components:
         providerName: GCP
       properties:
         id:
+          description: Configuration ID
           example: 2456
           type: integer
         providerId:
+          description: ID of the cloud provider
           example: 5
           type: integer
         providerName:
+          description: Name of the cloud provider
           example: GCP
           type: string
         locationId:
+          description: Location ID
           example: 6
           type: integer
         locationName:
+          description: Location name (city or state)
           example: London
           type: string
         dataCenterId:
+          description: ID of the data center
           example: aws-us-west-1
           type: string
         dataCenterName:
+          description: Name of the data center
           example: europe-west2
           type: string
         osId:
+          description: ID of the operating system
           example: 35
           type: integer
         osType:
+          description: Type of the operating system
           example: Ubuntu
           type: string
         osVersion:
+          description: Version of the operating system
           example: "18.04"
           type: string
         cloudNetworkTypes:
+          description: List of the cloud network types
           example:
           - default
           - multi-cloud
@@ -3188,18 +3464,24 @@ components:
             type: string
           type: array
         vCpuType:
+          description: Type of virtual Central Processing Units (vCPUs)
           example: Standard
           type: string
         vCpu:
+          description: Number of virtual Central Processing Units (vCPUs)
           example: 4
           type: integer
         ramGb:
+          description: Capacity of the RAM in gigabytes
           example: 16
-          type: integer
+          format: float
+          type: number
         volumeGb:
+          description: Capacity of the volume in gigabytes
           example: 500
           type: integer
         volumeType:
+          description: Volume type
           example: SSD
           type: string
         cost:
@@ -3208,36 +3490,46 @@ components:
     PaginatedResult:
       properties:
         totalPages:
+          description: Total number of pages available
           format: int32
           type: integer
         totalElements:
+          description: Total number of elements across all pages
           format: int64
           type: integer
         size:
+          description: Number of elements per page
           format: int32
           type: integer
         content:
+          description: List of elements on the current page
           items:
             type: object
           type: array
         number:
+          description: Current page number (0-based index)
           format: int32
           type: integer
         sort:
           $ref: '#/components/schemas/SortObject'
         last:
+          description: Indicates if this is the last page
           type: boolean
         first:
+          description: Indicates if this is the first page
           type: boolean
         numberOfElements:
+          description: Number of elements on the current page
           format: int32
           type: integer
         pageable:
           $ref: '#/components/schemas/PageableObject'
         empty:
+          description: Indicates if the page is empty
           type: boolean
       type: object
     PageableObject:
+      description: Pageable object containing pagination information
       example:
         paged: true
         pageNumber: 9
@@ -3250,32 +3542,41 @@ components:
           empty: true
       properties:
         offset:
+          description: Offset of the first element on the page
           format: int64
           type: integer
         sort:
           $ref: '#/components/schemas/SortObject'
         pageSize:
+          description: Number of elements per page
           format: int32
           type: integer
         pageNumber:
+          description: Current page number (0-based index)
           format: int32
           type: integer
         paged:
+          description: Indicates if pagination is applied
           type: boolean
         unpaged:
+          description: Indicates if pagination is not applied
           type: boolean
       type: object
     SortObject:
+      description: Sorting criteria for the elements
       example:
         unsorted: true
         sorted: true
         empty: true
       properties:
         empty:
+          description: Indicates if the sorting criteria is empty
           type: boolean
         unsorted:
+          description: Indicates if the elements are unsorted
           type: boolean
         sorted:
+          description: Indicates if the elements are sorted
           type: boolean
       type: object
     BadRequestError:
@@ -3284,9 +3585,11 @@ components:
         message: Bad request
       properties:
         code:
+          description: Error code
           example: BAD_REQUEST
           type: string
         message:
+          description: Error message
           example: Bad request
           type: string
       required:
@@ -3299,9 +3602,11 @@ components:
         message: Not found
       properties:
         code:
+          description: Error code
           example: NOT_FOUND
           type: string
         message:
+          description: Error message
           example: Not found
           type: string
       required:
@@ -3314,9 +3619,11 @@ components:
         message: Token is not provided
       properties:
         code:
+          description: Error code
           example: UNAUTHORIZED
           type: string
         message:
+          description: Error message
           example: Token is not provided
           type: string
       required:
@@ -3330,9 +3637,11 @@ components:
           this action.
       properties:
         code:
+          description: Error code
           example: FORBIDDEN
           type: string
         message:
+          description: Error message
           example: Access is denied. You do not have the necessary permissions to
             perform this action.
           type: string
@@ -3346,9 +3655,11 @@ components:
         message: Unable to update entity
       properties:
         code:
+          description: Error code
           example: CONFLICT
           type: string
         message:
+          description: Error message
           example: Unable to update entity
           type: string
       required:
@@ -3361,9 +3672,11 @@ components:
         message: Unprocessable entity
       properties:
         code:
+          description: Error code
           example: UNPROCESSABLE_ENTITY
           type: string
         message:
+          description: Error message
           example: Unprocessable entity
           type: string
       required:
@@ -3474,9 +3787,11 @@ components:
         id: 22
       properties:
         id:
+          description: ID of the cloud provider
           example: 22
           type: integer
         name:
+          description: Name of the cloud provider
           example: Digital Ocean
           type: string
       type: object
@@ -3486,9 +3801,11 @@ components:
         id: 6
       properties:
         id:
+          description: ID of the data center location
           example: 6
           type: integer
         name:
+          description: Name of the data center location (city or state)
           example: London
           type: string
       type: object
@@ -3502,21 +3819,27 @@ components:
         providerName: DO
       properties:
         id:
+          description: Data center ID
           example: aws-ap-south-1
           type: string
         name:
+          description: Data center name
           example: eu-north-1
           type: string
         providerId:
+          description: ID of the cloud provider
           example: 5
           type: integer
         providerName:
+          description: Name of the cloud provider
           example: DO
           type: string
         locationId:
+          description: ID of the data center location
           example: 35
           type: integer
         locationName:
+          description: Name of the data center location
           example: Pune
           type: string
       type: object
@@ -3529,18 +3852,23 @@ components:
         architecture: x86-64
       properties:
         id:
+          description: ID of the operating system
           example: 35
           type: integer
         family:
+          description: Family of the operating system
           example: Linux
           type: string
         architecture:
+          description: Architecture of the operating system
           example: x86-64
           type: string
         type:
+          description: Type of the operating system
           example: Ubuntu
           type: string
         version:
+          description: Version of the operating system
           example: "22.04"
           type: string
       type: object
@@ -3553,33 +3881,42 @@ components:
         isBootable: true
       properties:
         id:
+          description: Volume ID
           example: 5819
           type: integer
         sizeGb:
+          description: Volume size in gigabytes
           example: 250
           type: integer
         typeId:
+          description: ID of the volume type
           example: 2
           type: integer
         type:
+          description: Volume type
           example: SSD
           type: string
         isBootable:
+          description: Indicates whether the volume is bootable or not
           example: true
           type: boolean
       type: object
     Vm_networks_inner:
       properties:
         id:
+          description: Network ID
           example: 9826
           type: integer
         ip:
+          description: Network IP
           example: 10.106.0.2
           type: string
         networkTypeId:
+          description: ID of the network type
           example: 2
           type: integer
         networkType:
+          description: Network type
           example: PRIVATE
           type: string
       type: object
@@ -3589,9 +3926,11 @@ components:
         id: 208
       properties:
         id:
+          description: ID of the security group
           example: 208
           type: integer
         name:
+          description: Name of the security group
           example: default
           type: string
       type: object
@@ -3602,28 +3941,35 @@ components:
         currency: EUR
       properties:
         unit:
+          description: Cost period
           example: MONTHS
           type: string
         currency:
+          description: Currency of cost
           example: EUR
           type: string
         price:
+          description: Cost of the virtual machine for the period
           example: 5.479952
           type: number
       type: object
     VmConfiguration_cost:
+      description: Cost of the configuration
       example:
         unit: MONTHS
         currency: EUR
         pricePerUnit: 5.479952
       properties:
         unit:
+          description: Cost period
           example: MONTHS
           type: string
         currency:
+          description: Currency of the cost
           example: EUR
           type: string
         pricePerUnit:
+          description: Cost for the period
           example: 5.479952
           type: number
       type: object
