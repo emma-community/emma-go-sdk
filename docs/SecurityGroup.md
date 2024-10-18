@@ -4,18 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
-**CreatedBy** | Pointer to **int32** |  | [optional] 
-**CreatedByName** | Pointer to **string** |  | [optional] 
-**ModifiedBy** | Pointer to **int32** |  | [optional] 
-**ModifiedByName** | Pointer to **string** |  | [optional] 
-**CreatedAt** | Pointer to **string** |  | [optional] 
-**ModifiedAt** | Pointer to **string** |  | [optional] 
-**SynchronizationStatus** | Pointer to **string** |  | [optional] 
-**RecomposingStatus** | Pointer to **string** |  | [optional] 
-**LastModificationErrorDescription** | Pointer to **string** |  | [optional] 
-**Rules** | Pointer to [**[]SecurityGroupRule**](SecurityGroupRule.md) |  | [optional] 
+**Id** | Pointer to **int32** | Security group id | [optional] 
+**Name** | Pointer to **string** | Security group name | [optional] 
+**CreatedById** | Pointer to **int32** | ID of the user who created the security group | [optional] 
+**CreatedByName** | Pointer to **string** | Name of the user who created the security group | [optional] 
+**ModifiedById** | Pointer to **int32** | ID of the user who last edited the security group | [optional] 
+**ModifiedByName** | Pointer to **string** | Name of the user who last edited the security group | [optional] 
+**CreatedAt** | Pointer to **string** | Date and time of the security group&#39;s creation | [optional] 
+**ModifiedAt** | Pointer to **string** | Date and time of the security group&#39;s last update | [optional] 
+**SynchronizationStatus** | Pointer to **string** | Synchronization status of the security group. When you make changes in the rules the changes are propagated to the respective provider’s security groups. While this is happening the security groups have the status Synchronizing. After it is done the status changes to Synchronized. When another VM is added to the security group it will not be synchronized at first with the other VMs, therefore the status will be Desynchronized. | [optional] 
+**RecomposingStatus** | Pointer to **string** | Recomposing status of the security group. When a new Virtual machine is added to the Security group it starts a synchronization process. During this process the Security group will have a Recomposing status. | [optional] 
+**LastModificationErrorDescription** | Pointer to **string** | Text of the error when the Security group was last edited | [optional] 
+**Rules** | Pointer to [**[]SecurityGroupRule**](SecurityGroupRule.md) | List of the inbound and outbound rules in the Security group | [optional] 
 
 ## Methods
 
@@ -86,30 +86,30 @@ SetName sets Name field to given value.
 
 HasName returns a boolean if a field has been set.
 
-### GetCreatedBy
+### GetCreatedById
 
-`func (o *SecurityGroup) GetCreatedBy() int32`
+`func (o *SecurityGroup) GetCreatedById() int32`
 
-GetCreatedBy returns the CreatedBy field if non-nil, zero value otherwise.
+GetCreatedById returns the CreatedById field if non-nil, zero value otherwise.
 
-### GetCreatedByOk
+### GetCreatedByIdOk
 
-`func (o *SecurityGroup) GetCreatedByOk() (*int32, bool)`
+`func (o *SecurityGroup) GetCreatedByIdOk() (*int32, bool)`
 
-GetCreatedByOk returns a tuple with the CreatedBy field if it's non-nil, zero value otherwise
+GetCreatedByIdOk returns a tuple with the CreatedById field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCreatedBy
+### SetCreatedById
 
-`func (o *SecurityGroup) SetCreatedBy(v int32)`
+`func (o *SecurityGroup) SetCreatedById(v int32)`
 
-SetCreatedBy sets CreatedBy field to given value.
+SetCreatedById sets CreatedById field to given value.
 
-### HasCreatedBy
+### HasCreatedById
 
-`func (o *SecurityGroup) HasCreatedBy() bool`
+`func (o *SecurityGroup) HasCreatedById() bool`
 
-HasCreatedBy returns a boolean if a field has been set.
+HasCreatedById returns a boolean if a field has been set.
 
 ### GetCreatedByName
 
@@ -136,30 +136,30 @@ SetCreatedByName sets CreatedByName field to given value.
 
 HasCreatedByName returns a boolean if a field has been set.
 
-### GetModifiedBy
+### GetModifiedById
 
-`func (o *SecurityGroup) GetModifiedBy() int32`
+`func (o *SecurityGroup) GetModifiedById() int32`
 
-GetModifiedBy returns the ModifiedBy field if non-nil, zero value otherwise.
+GetModifiedById returns the ModifiedById field if non-nil, zero value otherwise.
 
-### GetModifiedByOk
+### GetModifiedByIdOk
 
-`func (o *SecurityGroup) GetModifiedByOk() (*int32, bool)`
+`func (o *SecurityGroup) GetModifiedByIdOk() (*int32, bool)`
 
-GetModifiedByOk returns a tuple with the ModifiedBy field if it's non-nil, zero value otherwise
+GetModifiedByIdOk returns a tuple with the ModifiedById field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetModifiedBy
+### SetModifiedById
 
-`func (o *SecurityGroup) SetModifiedBy(v int32)`
+`func (o *SecurityGroup) SetModifiedById(v int32)`
 
-SetModifiedBy sets ModifiedBy field to given value.
+SetModifiedById sets ModifiedById field to given value.
 
-### HasModifiedBy
+### HasModifiedById
 
-`func (o *SecurityGroup) HasModifiedBy() bool`
+`func (o *SecurityGroup) HasModifiedById() bool`
 
-HasModifiedBy returns a boolean if a field has been set.
+HasModifiedById returns a boolean if a field has been set.
 
 ### GetModifiedByName
 

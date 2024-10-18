@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OtherClaims** | Pointer to **map[string]interface{}** |  | [optional] 
-**AccessToken** | Pointer to **string** |  | [optional] 
-**ExpiresIn** | Pointer to **int32** |  | [optional] 
-**RefreshExpiresIn** | Pointer to **int32** |  | [optional] 
-**RefreshToken** | Pointer to **string** |  | [optional] 
-**TokenType** | Pointer to **string** |  | [optional] 
+**AccessToken** | Pointer to **string** | Access token | [optional] 
+**ExpiresIn** | Pointer to **int32** | Seconds until access token expiration | [optional] 
+**RefreshExpiresIn** | Pointer to **int32** | Seconds until refresh token expiration | [optional] 
+**RefreshToken** | Pointer to **string** | Refresh token | [optional] 
+**TokenType** | Pointer to **string** | Token type | [optional] 
 **IdToken** | Pointer to **int32** |  | [optional] 
-**NotBeforePolicy** | Pointer to **int32** |  | [optional] 
+**NotBeforePolicy** | Pointer to **int32** | Timestamp before which the token is not valid | [optional] 
 **SessionState** | Pointer to **string** |  | [optional] 
 
 ## Methods

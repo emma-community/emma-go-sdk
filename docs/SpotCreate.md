@@ -4,18 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | Spot instance name | 
-**DataCenterId** | **string** | Provider&#39;s data center ID | 
-**OsId** | **int32** | Operating system ID | 
-**CloudNetworkType** | **string** | Cloud network type | 
-**VCpuType** | **string** | vCPU type | 
+**Name** | **string** | Name of the spot instance | 
+**DataCenterId** | **string** | ID of the provider&#39;s data center | 
+**OsId** | **int32** | ID of the operating system | 
+**CloudNetworkType** | **string** | Type of the cloud network | 
+**VCpuType** | **string** | Type of the Central Processing Units (vCPUs) | 
 **VCpu** | **int32** | Number of virtual Central Processing Units (vCPUs) | 
-**RamGb** | **int32** | Capacity of RAM in gigabytes | 
+**RamGb** | **int32** | Capacity of the RAM in gigabytes | 
 **VolumeType** | **string** | Volume type | 
-**VolumeGb** | **int32** | Capacity of volume in gigabytes | 
+**VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
 **SshKeyId** | **int32** | SSH-key ID | 
-**SecurityGroupId** | Pointer to **int32** | Security group ID | [optional] 
-**Price** | **float32** | User offer price | 
+**SecurityGroupId** | Pointer to **int32** | ID of the security group | [optional] 
+**Price** | **float32** | Offer price of the spot instance | 
 
 ## Methods
 

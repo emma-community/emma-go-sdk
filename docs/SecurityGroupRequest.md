@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Name of the security group | 
-**Rules** | [**[]SecurityGroupRuleRequest**](SecurityGroupRuleRequest.md) |  | 
+**Rules** | [**[]SecurityGroupRuleRequest**](SecurityGroupRuleRequest.md) | List of the inbound and outbound rules in the Security group | 
 
 ## Methods
 

@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Offset** | Pointer to **int64** |  | [optional] 
+**Offset** | Pointer to **int64** | Offset of the first element on the page | [optional] 
 **Sort** | Pointer to [**SortObject**](SortObject.md) |  | [optional] 
-**PageSize** | Pointer to **int32** |  | [optional] 
-**PageNumber** | Pointer to **int32** |  | [optional] 
-**Paged** | Pointer to **bool** |  | [optional] 
-**Unpaged** | Pointer to **bool** |  | [optional] 
+**PageSize** | Pointer to **int32** | Number of elements per page | [optional] 
+**PageNumber** | Pointer to **int32** | Current page number (0-based index) | [optional] 
+**Paged** | Pointer to **bool** | Indicates if pagination is applied | [optional] 
+**Unpaged** | Pointer to **bool** | Indicates if pagination is not applied | [optional] 
 
 ## Methods
 

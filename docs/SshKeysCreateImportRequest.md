@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** |  | 
-**KeyType** | **string** |  | 
-**Key** | **string** |  | 
+**Name** | **string** | SSH key name | 
+**KeyType** | **string** | SSH key type (RSA or ED25519) | 
+**Key** | **string** | SSH public key | 
 
 ## Methods
 

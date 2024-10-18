@@ -18,6 +18,8 @@ Method | HTTP request | Description
 
 Get SSH key by id
 
+
+
 ### Example
 
 ```go
@@ -86,6 +88,8 @@ Name | Type | Description  | Notes
 
 Delete SSH keys
 
+
+
 ### Example
 
 ```go
@@ -151,6 +155,8 @@ Name | Type | Description  | Notes
 > SshKey SshKeyUpdate(ctx, sshKeyId).SshKeyUpdate(sshKeyUpdate).Execute()
 
 Update SSH keys
+
+
 
 ### Example
 
@@ -222,6 +228,8 @@ Name | Type | Description  | Notes
 
 Get list of SSH keys
 
+
+
 ### Example
 
 ```go
@@ -280,6 +288,8 @@ Other parameters are passed through a pointer to a apiSshKeysRequest struct via 
 > SshKeysCreateImport201Response SshKeysCreateImport(ctx).SshKeysCreateImportRequest(sshKeysCreateImportRequest).Execute()
 
 Create or import SSH key
+
+
 
 ### Example
 

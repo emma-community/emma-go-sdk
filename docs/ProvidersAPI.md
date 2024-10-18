@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 Get cloud provider by ID
 
+
+
 ### Example
 
 ```go
@@ -28,7 +30,7 @@ import (
 )
 
 func main() {
-	providerId := int32(56) // int32 | Provider ID
+	providerId := int32(56) // int32 | ID of the cloud provider
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -48,7 +50,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**providerId** | **int32** | Provider ID | 
+**providerId** | **int32** | ID of the cloud provider | 
 
 ### Other Parameters
 
@@ -83,6 +85,8 @@ Name | Type | Description  | Notes
 
 Get list of cloud providers
 
+
+
 ### Example
 
 ```go
@@ -96,7 +100,7 @@ import (
 )
 
 func main() {
-	providerName := "GCP" // string | Provider name (optional)
+	providerName := "GCP" // string | Name of the cloud provider (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -121,7 +125,7 @@ Other parameters are passed through a pointer to a apiGetProvidersRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **providerName** | **string** | Provider name | 
+ **providerName** | **string** | Name of the cloud provider | 
 
 ### Return type
 

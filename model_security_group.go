@@ -1,9 +1,9 @@
 /*
 Public EMMA API
 
-**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
+### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. | 
 
-API version: 0.0.1
+API version: 1.0.1
 */
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
@@ -19,18 +19,30 @@ var _ MappedNullable = &SecurityGroup{}
 
 // SecurityGroup struct for SecurityGroup
 type SecurityGroup struct {
-	Id                               *int32              `json:"id,omitempty"`
-	Name                             *string             `json:"name,omitempty"`
-	CreatedBy                        *int32              `json:"createdBy,omitempty"`
-	CreatedByName                    *string             `json:"createdByName,omitempty"`
-	ModifiedBy                       *int32              `json:"modifiedBy,omitempty"`
-	ModifiedByName                   *string             `json:"modifiedByName,omitempty"`
-	CreatedAt                        *string             `json:"createdAt,omitempty"`
-	ModifiedAt                       *string             `json:"modifiedAt,omitempty"`
-	SynchronizationStatus            *string             `json:"synchronizationStatus,omitempty"`
-	RecomposingStatus                *string             `json:"recomposingStatus,omitempty"`
-	LastModificationErrorDescription *string             `json:"lastModificationErrorDescription,omitempty"`
-	Rules                            []SecurityGroupRule `json:"rules,omitempty"`
+	// Security group id
+	Id *int32 `json:"id,omitempty"`
+	// Security group name
+	Name *string `json:"name,omitempty"`
+	// ID of the user who created the security group
+	CreatedById *int32 `json:"createdById,omitempty"`
+	// Name of the user who created the security group
+	CreatedByName *string `json:"createdByName,omitempty"`
+	// ID of the user who last edited the security group
+	ModifiedById *int32 `json:"modifiedById,omitempty"`
+	// Name of the user who last edited the security group
+	ModifiedByName *string `json:"modifiedByName,omitempty"`
+	// Date and time of the security group's creation
+	CreatedAt *string `json:"createdAt,omitempty"`
+	// Date and time of the security group's last update
+	ModifiedAt *string `json:"modifiedAt,omitempty"`
+	// Synchronization status of the security group. When you make changes in the rules the changes are propagated to the respective provider’s security groups. While this is happening the security groups have the status Synchronizing. After it is done the status changes to Synchronized. When another VM is added to the security group it will not be synchronized at first with the other VMs, therefore the status will be Desynchronized.
+	SynchronizationStatus *string `json:"synchronizationStatus,omitempty"`
+	// Recomposing status of the security group. When a new Virtual machine is added to the Security group it starts a synchronization process. During this process the Security group will have a Recomposing status.
+	RecomposingStatus *string `json:"recomposingStatus,omitempty"`
+	// Text of the error when the Security group was last edited
+	LastModificationErrorDescription *string `json:"lastModificationErrorDescription,omitempty"`
+	// List of the inbound and outbound rules in the Security group
+	Rules []SecurityGroupRule `json:"rules,omitempty"`
 }
 
 // NewSecurityGroup instantiates a new SecurityGroup object
@@ -114,36 +126,36 @@ func (o *SecurityGroup) SetName(v string) {
 	o.Name = &v
 }
 
-// GetCreatedBy returns the CreatedBy field value if set, zero value otherwise.
-func (o *SecurityGroup) GetCreatedBy() int32 {
-	if o == nil || IsNil(o.CreatedBy) {
+// GetCreatedById returns the CreatedById field value if set, zero value otherwise.
+func (o *SecurityGroup) GetCreatedById() int32 {
+	if o == nil || IsNil(o.CreatedById) {
 		var ret int32
 		return ret
 	}
-	return *o.CreatedBy
+	return *o.CreatedById
 }
 
-// GetCreatedByOk returns a tuple with the CreatedBy field value if set, nil otherwise
+// GetCreatedByIdOk returns a tuple with the CreatedById field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SecurityGroup) GetCreatedByOk() (*int32, bool) {
-	if o == nil || IsNil(o.CreatedBy) {
+func (o *SecurityGroup) GetCreatedByIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.CreatedById) {
 		return nil, false
 	}
-	return o.CreatedBy, true
+	return o.CreatedById, true
 }
 
-// HasCreatedBy returns a boolean if a field has been set.
-func (o *SecurityGroup) HasCreatedBy() bool {
-	if o != nil && !IsNil(o.CreatedBy) {
+// HasCreatedById returns a boolean if a field has been set.
+func (o *SecurityGroup) HasCreatedById() bool {
+	if o != nil && !IsNil(o.CreatedById) {
 		return true
 	}
 
 	return false
 }
 
-// SetCreatedBy gets a reference to the given int32 and assigns it to the CreatedBy field.
-func (o *SecurityGroup) SetCreatedBy(v int32) {
-	o.CreatedBy = &v
+// SetCreatedById gets a reference to the given int32 and assigns it to the CreatedById field.
+func (o *SecurityGroup) SetCreatedById(v int32) {
+	o.CreatedById = &v
 }
 
 // GetCreatedByName returns the CreatedByName field value if set, zero value otherwise.
@@ -178,36 +190,36 @@ func (o *SecurityGroup) SetCreatedByName(v string) {
 	o.CreatedByName = &v
 }
 
-// GetModifiedBy returns the ModifiedBy field value if set, zero value otherwise.
-func (o *SecurityGroup) GetModifiedBy() int32 {
-	if o == nil || IsNil(o.ModifiedBy) {
+// GetModifiedById returns the ModifiedById field value if set, zero value otherwise.
+func (o *SecurityGroup) GetModifiedById() int32 {
+	if o == nil || IsNil(o.ModifiedById) {
 		var ret int32
 		return ret
 	}
-	return *o.ModifiedBy
+	return *o.ModifiedById
 }
 
-// GetModifiedByOk returns a tuple with the ModifiedBy field value if set, nil otherwise
+// GetModifiedByIdOk returns a tuple with the ModifiedById field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SecurityGroup) GetModifiedByOk() (*int32, bool) {
-	if o == nil || IsNil(o.ModifiedBy) {
+func (o *SecurityGroup) GetModifiedByIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.ModifiedById) {
 		return nil, false
 	}
-	return o.ModifiedBy, true
+	return o.ModifiedById, true
 }
 
-// HasModifiedBy returns a boolean if a field has been set.
-func (o *SecurityGroup) HasModifiedBy() bool {
-	if o != nil && !IsNil(o.ModifiedBy) {
+// HasModifiedById returns a boolean if a field has been set.
+func (o *SecurityGroup) HasModifiedById() bool {
+	if o != nil && !IsNil(o.ModifiedById) {
 		return true
 	}
 
 	return false
 }
 
-// SetModifiedBy gets a reference to the given int32 and assigns it to the ModifiedBy field.
-func (o *SecurityGroup) SetModifiedBy(v int32) {
-	o.ModifiedBy = &v
+// SetModifiedById gets a reference to the given int32 and assigns it to the ModifiedById field.
+func (o *SecurityGroup) SetModifiedById(v int32) {
+	o.ModifiedById = &v
 }
 
 // GetModifiedByName returns the ModifiedByName field value if set, zero value otherwise.
@@ -435,7 +447,7 @@ func (o *SecurityGroup) SetRules(v []SecurityGroupRule) {
 }
 
 func (o SecurityGroup) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -450,14 +462,14 @@ func (o SecurityGroup) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if !IsNil(o.CreatedBy) {
-		toSerialize["createdBy"] = o.CreatedBy
+	if !IsNil(o.CreatedById) {
+		toSerialize["createdById"] = o.CreatedById
 	}
 	if !IsNil(o.CreatedByName) {
 		toSerialize["createdByName"] = o.CreatedByName
 	}
-	if !IsNil(o.ModifiedBy) {
-		toSerialize["modifiedBy"] = o.ModifiedBy
+	if !IsNil(o.ModifiedById) {
+		toSerialize["modifiedById"] = o.ModifiedById
 	}
 	if !IsNil(o.ModifiedByName) {
 		toSerialize["modifiedByName"] = o.ModifiedByName
@@ -518,3 +530,5 @@ func (v *NullableSecurityGroup) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

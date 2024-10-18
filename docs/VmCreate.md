@@ -5,16 +5,18 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Virtual machine name | 
-**DataCenterId** | **string** | Provider&#39;s data center ID | 
-**OsId** | **int32** | Operating system ID | 
-**CloudNetworkType** | **string** | Cloud network type | 
-**VCpuType** | **string** | vCPU type | 
+**DataCenterId** | **string** | ID of the provider&#39;s data center | 
+**OsId** | **int32** | ID of the operating system | 
+**CloudNetworkType** | **string** | Type of the cloud network | 
+**VCpuType** | **string** | Type of virtual Central Processing Units (vCPUs) | 
 **VCpu** | **int32** | Number of virtual Central Processing Units (vCPUs) | 
-**RamGb** | **int32** | Capacity of RAM in gigabytes | 
+**RamGb** | **int32** | Capacity of the RAM in gigabytes | 
 **VolumeType** | **string** | Volume type | 
-**VolumeGb** | **int32** | Capacity of volume in gigabytes | 
+**VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
 **SshKeyId** | **int32** | SSH-key ID | 
-**SecurityGroupId** | Pointer to **int32** | Security group ID | [optional] 
+**SecurityGroupId** | Pointer to **int32** | ID of the security group | [optional] 
+**SubnetworkId** | Pointer to **string** | ID of the subnetwork | [optional] 
+**PrivateIp** | Pointer to **string** | IP address within the subnetwork range | [optional] 
 
 ## Methods
 
@@ -259,6 +261,56 @@ SetSecurityGroupId sets SecurityGroupId field to given value.
 `func (o *VmCreate) HasSecurityGroupId() bool`
 
 HasSecurityGroupId returns a boolean if a field has been set.
+
+### GetSubnetworkId
+
+`func (o *VmCreate) GetSubnetworkId() string`
+
+GetSubnetworkId returns the SubnetworkId field if non-nil, zero value otherwise.
+
+### GetSubnetworkIdOk
+
+`func (o *VmCreate) GetSubnetworkIdOk() (*string, bool)`
+
+GetSubnetworkIdOk returns a tuple with the SubnetworkId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubnetworkId
+
+`func (o *VmCreate) SetSubnetworkId(v string)`
+
+SetSubnetworkId sets SubnetworkId field to given value.
+
+### HasSubnetworkId
+
+`func (o *VmCreate) HasSubnetworkId() bool`
+
+HasSubnetworkId returns a boolean if a field has been set.
+
+### GetPrivateIp
+
+`func (o *VmCreate) GetPrivateIp() string`
+
+GetPrivateIp returns the PrivateIp field if non-nil, zero value otherwise.
+
+### GetPrivateIpOk
+
+`func (o *VmCreate) GetPrivateIpOk() (*string, bool)`
+
+GetPrivateIpOk returns a tuple with the PrivateIp field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPrivateIp
+
+`func (o *VmCreate) SetPrivateIp(v string)`
+
+SetPrivateIp sets PrivateIp field to given value.
+
+### HasPrivateIp
+
+`func (o *VmCreate) HasPrivateIp() bool`
+
+HasPrivateIp returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

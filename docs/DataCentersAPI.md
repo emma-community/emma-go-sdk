@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 Get data center by ID
 
+
+
 ### Example
 
 ```go
@@ -28,7 +30,7 @@ import (
 )
 
 func main() {
-	dataCenterId := "aws-us-west-1" // string | Data center ID
+	dataCenterId := "aws-us-west-1" // string | ID of the cloud provider's data center
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -48,7 +50,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**dataCenterId** | **string** | Data center ID | 
+**dataCenterId** | **string** | ID of the cloud provider&#39;s data center | 
 
 ### Other Parameters
 
@@ -83,6 +85,8 @@ Name | Type | Description  | Notes
 
 Get list of data centers
 
+
+
 ### Example
 
 ```go
@@ -96,9 +100,9 @@ import (
 )
 
 func main() {
-	dataCenterName := "eu-north-1" // string | Data center name (optional)
-	locationId := int32(6) // int32 | Location ID (optional)
-	providerName := "GCP" // string | Provider name (optional)
+	dataCenterName := "eu-north-1" // string | Name of the cloud provider's data center (optional)
+	locationId := int32(6) // int32 | ID of the geographic location (optional)
+	providerName := "GCP" // string | Name of the cloud provider (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -123,9 +127,9 @@ Other parameters are passed through a pointer to a apiGetDataCentersRequest stru
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **dataCenterName** | **string** | Data center name | 
- **locationId** | **int32** | Location ID | 
- **providerName** | **string** | Provider name | 
+ **dataCenterName** | **string** | Name of the cloud provider&#39;s data center | 
+ **locationId** | **int32** | ID of the geographic location | 
+ **providerName** | **string** | Name of the cloud provider | 
 
 ### Return type
 

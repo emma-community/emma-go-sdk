@@ -5,10 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | **string** | Action with a virtual machine | 
-**VCpu** | **int32** |  | 
-**VCpuType** | Pointer to **string** | vCPU type | [optional] 
-**RamGb** | **int32** |  | 
-**VolumeGb** | **int32** |  | 
+**VCpu** | **int32** | Number of virtual Central Processing Units (vCPUs) | 
+**VCpuType** | Pointer to **string** | Type of virtual Central Processing Units (vCPUs) | [optional] 
+**RamGb** | **int32** | Capacity of the RAM in gigabytes | 
+**VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
 
 ## Methods
 

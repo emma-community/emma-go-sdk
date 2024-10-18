@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | **string** | Action with a virtual machine | 
-**DataCenterId** | **string** | Provider&#39;s data center ID | 
-**IsKeepOriginalInstance** | Pointer to **bool** | Keep original instance | [optional] [default to true]
+**DataCenterId** | **string** | ID of the provider&#39;s data center | 
+**IsKeepOriginalInstance** | Pointer to **bool** | Indicate if it is necessary to keep the original instance | [optional] [default to true]
 
 ## Methods
 

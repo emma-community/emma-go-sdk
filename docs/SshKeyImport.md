@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** |  | 
-**Key** | **string** |  | 
+**Name** | **string** | SSH key name | 
+**Key** | **string** | SSH public key | 
 
 ## Methods
 

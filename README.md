@@ -1,26 +1,97 @@
 # Go API client for emma
 
-**Base URL:** *<u>https://api.emma.ms/external</u>*
+### About Infrastructure API
 
-This **Infrastructure API** is for managing the cloud infrastructure within a project.
+**Base URL:** **<u>https://api.emma.ms/external</u>**
 
-To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.
+ This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._
 
-After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.
+ ### Authentication
 
-The Bearer access token is a text string, included in the request header, example:
+ #### 1. Create service application
 
-*-H Authorization: Bearer {token}*
+ To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.
 
-Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
+ - **Read** - only GET methods are allowed in the API.
+
+ - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).
+
+ - **Manage** - full creating, updating, and deleting of the resources is allowed.
+
+
+ #### 2. Get access token
+
+ - Copy the **Client ID** and **Client Secret** in the service application.
+ - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.
+
+ _For Linux / Mac:_
+ ```
+ curl -X POST https://api.emma.ms/external/v1/issue-token \\
+ -H \"Content-Type: application/json\" \\
+ -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'
+ ```
+ _For Windows:_
+ ```
+ curl -X POST https://api.emma.ms/external/v1/issue-token ^
+ -H \"Content-Type: application/json\" ^
+ -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"
+ ```
+
+ #### 3. Use access token in requests
+ The Bearer access token is a text string, included in the request header, for example:
+
+ _For Linux / Mac:_
+ ```
+ curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"
+ ```
+
+ Use this token for the API requests. 
+
+ #### 4. Refresh token
+ The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
+
+ To get a new access token send a request to the **_/refresh-token** endpoint:
+
+
+ _For Linux / Mac:_
+ ```
+ curl -X POST https://api.emma.ms/external/v1/refresh-token \\
+ -H \"Content-Type: application/json\" \\
+ -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'
+ ```    
+
+ ### Possible response status codes
+
+ We use standard HTTP response codes to show the success or failure of requests.
+
+ `2xx` - successful responses.
+
+ `4xx` - client error responses (the response contains an explanation of the error).
+
+ `5xx` - server error responses.
+
+ The API uses the following status codes:
+
+ | Status Code | Description                  | Notes                                                                  |
+ |-------------|------------------------------|------------------------------------------------------------------------|
+ | 200         | OK                           | The request was successful.                                             |
+ | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.
+ | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).  
+ | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |
+ | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |
+ | 403         | Forbidden                   | The client does not have access rights to the content.
+ | 404         | Not Found                    | The requested resource is not found.                                    |
+ | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|
+ | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |
+ | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
 
 
 ## Overview
 This API client was generated by the [OpenAPI Generator](https://openapi-generator.tech) project.  By using the [OpenAPI-spec](https://www.openapis.org/) from a remote server, you can easily generate an API client.
 
-- API version: 0.0.1
-- Package version: 0.0.1
-- Generator version: 7.5.0
+- API version: 1.0.1
+- Package version: 0.0.4
+- Generator version: 7.9.0
 - Build package: org.openapitools.codegen.languages.GoClientCodegen
 
 ## Installation
@@ -93,10 +164,16 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AuthenticationAPI* | [**IssueToken**](docs/AuthenticationAPI.md#issuetoken) | **Post** /v1/issue-token | Issue token
 *AuthenticationAPI* | [**RefreshToken**](docs/AuthenticationAPI.md#refreshtoken) | **Post** /v1/refresh-token | Refresh token
-*ComputeInstancesConfigurationsAPI* | [**GetSpotConfigs**](docs/ComputeInstancesConfigurationsAPI.md#getspotconfigs) | **Get** /v1/spots-configs | Search available configurations for spot instance creation
-*ComputeInstancesConfigurationsAPI* | [**GetVmConfigs**](docs/ComputeInstancesConfigurationsAPI.md#getvmconfigs) | **Get** /v1/vms-configs | Search available configurations for virtual machine creation
+*ComputeInstancesConfigurationsAPI* | [**GetKuberNodesConfigs**](docs/ComputeInstancesConfigurationsAPI.md#getkubernodesconfigs) | **Get** /v1/kubernetes-configs | List of available configurations for Kubernetes cluster node
+*ComputeInstancesConfigurationsAPI* | [**GetSpotConfigs**](docs/ComputeInstancesConfigurationsAPI.md#getspotconfigs) | **Get** /v1/spots-configs | List of available configurations for spot instance creation
+*ComputeInstancesConfigurationsAPI* | [**GetVmConfigs**](docs/ComputeInstancesConfigurationsAPI.md#getvmconfigs) | **Get** /v1/vms-configs | List of available configurations for virtual machine creation
 *DataCentersAPI* | [**GetDataCenter**](docs/DataCentersAPI.md#getdatacenter) | **Get** /v1/data-centers/{dataCenterId} | Get data center by ID
 *DataCentersAPI* | [**GetDataCenters**](docs/DataCentersAPI.md#getdatacenters) | **Get** /v1/data-centers | Get list of data centers
+*KubernetesClustersAPI* | [**CreateKubernetesCluster**](docs/KubernetesClustersAPI.md#createkubernetescluster) | **Post** /v1/kubernetes | Create Kubernetes cluster
+*KubernetesClustersAPI* | [**DeleteKubernetesCluster**](docs/KubernetesClustersAPI.md#deletekubernetescluster) | **Delete** /v1/kubernetes/{kubernetesId} | Delete Kubernetes cluster
+*KubernetesClustersAPI* | [**EditKubernetesCluster**](docs/KubernetesClustersAPI.md#editkubernetescluster) | **Put** /v1/kubernetes/{kubernetesId} | Edit Kubernetes cluster
+*KubernetesClustersAPI* | [**GetKubernetesCluster**](docs/KubernetesClustersAPI.md#getkubernetescluster) | **Get** /v1/kubernetes/{kubernetesId} | Get Kubernetes cluster by id
+*KubernetesClustersAPI* | [**GetKubernetesClusters**](docs/KubernetesClustersAPI.md#getkubernetesclusters) | **Get** /v1/kubernetes | Get list of Kubernetes clusters
 *LocationsAPI* | [**GetLocation**](docs/LocationsAPI.md#getlocation) | **Get** /v1/locations/{locationId} | Get location by ID
 *LocationsAPI* | [**GetLocations**](docs/LocationsAPI.md#getlocations) | **Get** /v1/locations | Get list of locations
 *OperatingSystemsAPI* | [**GetOperatingSystem**](docs/OperatingSystemsAPI.md#getoperatingsystem) | **Get** /v1/operating-systems/{operatingSystemId} | Get operating system by ID
@@ -115,11 +192,17 @@ Class | Method | HTTP request | Description
 *SecurityGroupsAPI* | [**SecurityGroupInstanceAdd**](docs/SecurityGroupsAPI.md#securitygroupinstanceadd) | **Post** /v1/security-groups/{securityGroupId}/instances | Add instance to security group
 *SecurityGroupsAPI* | [**SecurityGroupInstances**](docs/SecurityGroupsAPI.md#securitygroupinstances) | **Get** /v1/security-groups/{securityGroupId}/instances | Get instances in security group
 *SecurityGroupsAPI* | [**SecurityGroupUpdate**](docs/SecurityGroupsAPI.md#securitygroupupdate) | **Put** /v1/security-groups/{securityGroupId} | Update security group
-*SpotInstancesAPI* | [**GetSpot**](docs/SpotInstancesAPI.md#getspot) | **Get** /v1/spot-instances/{spotInstanceId} | Get spot instance by id
+*SpotInstancesAPI* | [**GetSpot**](docs/SpotInstancesAPI.md#getspot) | **Get** /v1/spot-instances/{spotInstanceId} | Get spot instance by ID
 *SpotInstancesAPI* | [**GetSpots**](docs/SpotInstancesAPI.md#getspots) | **Get** /v1/spot-instances | Get list of spot instances
 *SpotInstancesAPI* | [**SpotActions**](docs/SpotInstancesAPI.md#spotactions) | **Post** /v1/spot-instances/{spotInstanceId}/actions | Perform actions with a spot instance
 *SpotInstancesAPI* | [**SpotCreate**](docs/SpotInstancesAPI.md#spotcreate) | **Post** /v1/spot-instances | Create spot instance
 *SpotInstancesAPI* | [**SpotDelete**](docs/SpotInstancesAPI.md#spotdelete) | **Delete** /v1/spot-instances/{spotInstanceId} | Delete spot instance
+*StatisticsAPI* | [**GetStatisticalData**](docs/StatisticsAPI.md#getstatisticaldata) | **Post** /v1/statistics/retrieve | Extract data from the DWH
+*SubnetworksAPI* | [**V1SubnetworksGet**](docs/SubnetworksAPI.md#v1subnetworksget) | **Get** /v1/subnetworks | Get list of subnetworks
+*SubnetworksAPI* | [**V1SubnetworksPost**](docs/SubnetworksAPI.md#v1subnetworkspost) | **Post** /v1/subnetworks | Create subnetwork
+*SubnetworksAPI* | [**V1SubnetworksSubnetworkIdDelete**](docs/SubnetworksAPI.md#v1subnetworkssubnetworkiddelete) | **Delete** /v1/subnetworks/{subnetworkId} | Delete subnetwork
+*SubnetworksAPI* | [**V1SubnetworksSubnetworkIdGet**](docs/SubnetworksAPI.md#v1subnetworkssubnetworkidget) | **Get** /v1/subnetworks/{subnetworkId} | Get subnetwork by ID
+*SubnetworksAPI* | [**V1SubnetworksSubnetworkIdPut**](docs/SubnetworksAPI.md#v1subnetworkssubnetworkidput) | **Put** /v1/subnetworks/{subnetworkId} | Update subnetwork
 *VirtualMachinesAPI* | [**GetVm**](docs/VirtualMachinesAPI.md#getvm) | **Get** /v1/vms/{vmId} | Get virtual machine by id
 *VirtualMachinesAPI* | [**GetVms**](docs/VirtualMachinesAPI.md#getvms) | **Get** /v1/vms | Get list of virtual machines
 *VirtualMachinesAPI* | [**VmActions**](docs/VirtualMachinesAPI.md#vmactions) | **Post** /v1/vms/{vmId}/actions | Perform actions with a virtual machine
@@ -133,15 +216,62 @@ Class | Method | HTTP request | Description
  - [ConflictError](docs/ConflictError.md)
  - [Credentials](docs/Credentials.md)
  - [DataCenter](docs/DataCenter.md)
+ - [ExpenseHistoryQuery](docs/ExpenseHistoryQuery.md)
+ - [ExpenseHistoryQueryFilters](docs/ExpenseHistoryQueryFilters.md)
+ - [ExpenseHistoryResponse](docs/ExpenseHistoryResponse.md)
  - [ForbiddenError](docs/ForbiddenError.md)
+ - [GetStatisticalData200Response](docs/GetStatisticalData200Response.md)
+ - [GetStatisticalDataRequest](docs/GetStatisticalDataRequest.md)
  - [GetVmConfigs200Response](docs/GetVmConfigs200Response.md)
+ - [Kubernetes](docs/Kubernetes.md)
+ - [KubernetesAutoscalingConfigsInner](docs/KubernetesAutoscalingConfigsInner.md)
+ - [KubernetesAutoscalingConfigsInnerConfigurationPrioritiesInner](docs/KubernetesAutoscalingConfigsInnerConfigurationPrioritiesInner.md)
+ - [KubernetesClusterChangingMetricsQuery](docs/KubernetesClusterChangingMetricsQuery.md)
+ - [KubernetesClusterChangingMetricsQueryFilters](docs/KubernetesClusterChangingMetricsQueryFilters.md)
+ - [KubernetesClusterChangingMetricsResponse](docs/KubernetesClusterChangingMetricsResponse.md)
+ - [KubernetesClusterCurrentStateQuery](docs/KubernetesClusterCurrentStateQuery.md)
+ - [KubernetesClusterCurrentStateQueryFilters](docs/KubernetesClusterCurrentStateQueryFilters.md)
+ - [KubernetesClusterCurrentStateResponse](docs/KubernetesClusterCurrentStateResponse.md)
+ - [KubernetesClusterMetricsQuery](docs/KubernetesClusterMetricsQuery.md)
+ - [KubernetesClusterMetricsQueryFilters](docs/KubernetesClusterMetricsQueryFilters.md)
+ - [KubernetesClusterMetricsResponse](docs/KubernetesClusterMetricsResponse.md)
+ - [KubernetesClusterObjectStatesQuery](docs/KubernetesClusterObjectStatesQuery.md)
+ - [KubernetesClusterObjectStatesQueryFilters](docs/KubernetesClusterObjectStatesQueryFilters.md)
+ - [KubernetesClusterObjectStatesResponse](docs/KubernetesClusterObjectStatesResponse.md)
+ - [KubernetesClusterObjectsQuery](docs/KubernetesClusterObjectsQuery.md)
+ - [KubernetesClusterObjectsResponse](docs/KubernetesClusterObjectsResponse.md)
+ - [KubernetesCost](docs/KubernetesCost.md)
+ - [KubernetesCreate](docs/KubernetesCreate.md)
+ - [KubernetesCreateAutoscalingConfigsInner](docs/KubernetesCreateAutoscalingConfigsInner.md)
+ - [KubernetesCreateAutoscalingConfigsInnerConfigurationPrioritiesInner](docs/KubernetesCreateAutoscalingConfigsInnerConfigurationPrioritiesInner.md)
+ - [KubernetesCreateWorkerNodesInner](docs/KubernetesCreateWorkerNodesInner.md)
+ - [KubernetesNodeGroupsInner](docs/KubernetesNodeGroupsInner.md)
+ - [KubernetesNodeGroupsInnerNodesInner](docs/KubernetesNodeGroupsInnerNodesInner.md)
+ - [KubernetesNodeGroupsInnerNodesInnerCost](docs/KubernetesNodeGroupsInnerNodesInnerCost.md)
+ - [KubernetesNodeGroupsInnerNodesInnerDataCenter](docs/KubernetesNodeGroupsInnerNodesInnerDataCenter.md)
+ - [KubernetesNodeGroupsInnerNodesInnerDisksInner](docs/KubernetesNodeGroupsInnerNodesInnerDisksInner.md)
+ - [KubernetesNodeGroupsInnerNodesInnerLocation](docs/KubernetesNodeGroupsInnerNodesInnerLocation.md)
+ - [KubernetesNodeGroupsInnerNodesInnerNetworksInner](docs/KubernetesNodeGroupsInnerNodesInnerNetworksInner.md)
+ - [KubernetesNodeGroupsInnerNodesInnerOs](docs/KubernetesNodeGroupsInnerNodesInnerOs.md)
+ - [KubernetesNodeGroupsInnerNodesInnerProvider](docs/KubernetesNodeGroupsInnerNodesInnerProvider.md)
+ - [KubernetesNodeGroupsInnerNodesInnerSecurityGroup](docs/KubernetesNodeGroupsInnerNodesInnerSecurityGroup.md)
+ - [KubernetesUpdate](docs/KubernetesUpdate.md)
+ - [KubernetesUpdateWorkerNodesInner](docs/KubernetesUpdateWorkerNodesInner.md)
  - [Location](docs/Location.md)
  - [NotFoundError](docs/NotFoundError.md)
  - [OperatingSystem](docs/OperatingSystem.md)
  - [PageableObject](docs/PageableObject.md)
  - [PaginatedResult](docs/PaginatedResult.md)
+ - [ProductStatisticsQuery](docs/ProductStatisticsQuery.md)
+ - [ProductStatisticsQueryFilters](docs/ProductStatisticsQueryFilters.md)
+ - [ProductStatisticsResponse](docs/ProductStatisticsResponse.md)
+ - [ProjectSummaryQuery](docs/ProjectSummaryQuery.md)
+ - [ProjectSummaryResponse](docs/ProjectSummaryResponse.md)
  - [Provider](docs/Provider.md)
  - [RefreshToken](docs/RefreshToken.md)
+ - [ResourceAnalysisQuery](docs/ResourceAnalysisQuery.md)
+ - [ResourceAnalysisQueryFilters](docs/ResourceAnalysisQueryFilters.md)
+ - [ResourceAnalysisResponse](docs/ResourceAnalysisResponse.md)
  - [SecurityGroup](docs/SecurityGroup.md)
  - [SecurityGroupInstanceAdd](docs/SecurityGroupInstanceAdd.md)
  - [SecurityGroupRequest](docs/SecurityGroupRequest.md)
@@ -158,27 +288,36 @@ Class | Method | HTTP request | Description
  - [SshKeyUpdate](docs/SshKeyUpdate.md)
  - [SshKeysCreateImport201Response](docs/SshKeysCreateImport201Response.md)
  - [SshKeysCreateImportRequest](docs/SshKeysCreateImportRequest.md)
+ - [Subnetwork](docs/Subnetwork.md)
+ - [SubnetworkCreate](docs/SubnetworkCreate.md)
+ - [SubnetworkEdit](docs/SubnetworkEdit.md)
+ - [SubnetworkResources](docs/SubnetworkResources.md)
+ - [Tag](docs/Tag.md)
  - [Token](docs/Token.md)
  - [UnauthorizedError](docs/UnauthorizedError.md)
  - [UnprocessableEntityError](docs/UnprocessableEntityError.md)
  - [Vm](docs/Vm.md)
  - [VmActionsRequest](docs/VmActionsRequest.md)
+ - [VmAnalyticsQuery](docs/VmAnalyticsQuery.md)
+ - [VmAnalyticsResponse](docs/VmAnalyticsResponse.md)
  - [VmClone](docs/VmClone.md)
  - [VmConfiguration](docs/VmConfiguration.md)
  - [VmConfigurationCost](docs/VmConfigurationCost.md)
  - [VmCost](docs/VmCost.md)
  - [VmCreate](docs/VmCreate.md)
  - [VmDataCenter](docs/VmDataCenter.md)
- - [VmDisksInner](docs/VmDisksInner.md)
  - [VmEditHardware](docs/VmEditHardware.md)
  - [VmLocation](docs/VmLocation.md)
- - [VmNetworksInner](docs/VmNetworksInner.md)
+ - [VmMonitoringQuery](docs/VmMonitoringQuery.md)
+ - [VmMonitoringQueryFilters](docs/VmMonitoringQueryFilters.md)
+ - [VmMonitoringResponse](docs/VmMonitoringResponse.md)
  - [VmOs](docs/VmOs.md)
  - [VmProvider](docs/VmProvider.md)
  - [VmReboot](docs/VmReboot.md)
  - [VmSecurityGroup](docs/VmSecurityGroup.md)
  - [VmShutdown](docs/VmShutdown.md)
  - [VmStart](docs/VmStart.md)
+ - [VmSubnetwork](docs/VmSubnetwork.md)
  - [VmTransfer](docs/VmTransfer.md)
 
 

@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 Get operating system by ID
 
+
+
 ### Example
 
 ```go
@@ -28,7 +30,7 @@ import (
 )
 
 func main() {
-	operatingSystemId := int32(56) // int32 | Operating system ID
+	operatingSystemId := int32(56) // int32 | ID of the operating system
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -48,7 +50,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**operatingSystemId** | **int32** | Operating system ID | 
+**operatingSystemId** | **int32** | ID of the operating system | 
 
 ### Other Parameters
 
@@ -83,6 +85,8 @@ Name | Type | Description  | Notes
 
 Get list of operating systems
 
+
+
 ### Example
 
 ```go
@@ -96,9 +100,9 @@ import (
 )
 
 func main() {
-	type_ := "Ubuntu" // string | Operating system type (optional)
-	architecture := "x86-64" // string | Operating system architecture (optional)
-	version := "18.04" // string | Operating system version (optional)
+	type_ := "Ubuntu" // string | Type of the operating system (optional)
+	architecture := "x86-64" // string | Architecture of the operating system (optional)
+	version := "18.04" // string | Version of the operating system (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -123,9 +127,9 @@ Other parameters are passed through a pointer to a apiGetOperatingSystemsRequest
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **type_** | **string** | Operating system type | 
- **architecture** | **string** | Operating system architecture | 
- **version** | **string** | Operating system version | 
+ **type_** | **string** | Type of the operating system | 
+ **architecture** | **string** | Architecture of the operating system | 
+ **version** | **string** | Version of the operating system | 
 
 ### Return type
 

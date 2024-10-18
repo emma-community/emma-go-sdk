@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | **string** | Action with a virtual machine | 
-**DataCenterId** | **string** | Provider&#39;s data center ID | 
-**IsKeepOriginalInstance** | Pointer to **bool** | Keep original instance | [optional] [default to true]
-**Name** | **string** | Virtual machine name | 
-**VCpu** | **int32** |  | 
-**VCpuType** | Pointer to **string** | vCPU type | [optional] 
-**RamGb** | **int32** |  | 
-**VolumeGb** | **int32** |  | 
+**DataCenterId** | **string** | ID of the provider&#39;s data center | 
+**IsKeepOriginalInstance** | Pointer to **bool** | Indicate if it is necessary to keep the original instance | [optional] [default to true]
+**Name** | **string** | Name of the virtual machine | 
+**VCpu** | **int32** | Number of virtual Central Processing Units (vCPUs) | 
+**VCpuType** | Pointer to **string** | Type of virtual Central Processing Units (vCPUs) | [optional] 
+**RamGb** | **int32** | Capacity of the RAM in gigabytes | 
+**VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
 
 ## Methods
 

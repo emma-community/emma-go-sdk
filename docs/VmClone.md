@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | **string** | Action with a virtual machine | 
-**Name** | **string** | Virtual machine name | 
+**Name** | **string** | Name of the virtual machine | 
 
 ## Methods
 

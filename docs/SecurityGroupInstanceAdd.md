@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**InstanceId** | Pointer to **int32** |  | [optional] 
+**InstanceId** | Pointer to **int32** | ID of the compute instance to be added to the Security group | [optional] 
 
 ## Methods
 
