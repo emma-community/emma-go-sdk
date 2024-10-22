@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | Pointer to **string** |  | [optional] 
-**Policy** | Pointer to **string** |  | [optional] 
-**Direction** | Pointer to **string** |  | [optional] 
-**Protocol** | Pointer to **string** |  | [optional] 
-**Ports** | Pointer to **string** |  | [optional] 
-**IpRange** | Pointer to **string** |  | [optional] 
-**IsMutable** | Pointer to **bool** |  | [optional] 
+**Type** | Pointer to **string** | Type of the security group rule | [optional] 
+**Policy** | Pointer to **string** | Rule policy (all rules are allowing) | [optional] 
+**Direction** | Pointer to **string** | Direction of the network traffic: inbound or outbound.  | [optional] 
+**Protocol** | Pointer to **string** | Network protocol of the rule | [optional] 
+**Ports** | Pointer to **string** | Allowed port or port range | [optional] 
+**IpRange** | Pointer to **string** | Allowed IP or IP range | [optional] 
+**IsMutable** | Pointer to **bool** | Indicates if the rule can be edited. Some security group rules are added by default, cannot be changed, and are marked as immutable. | [optional] 
 
 ## Methods
 

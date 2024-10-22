@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Empty** | Pointer to **bool** |  | [optional] 
-**Unsorted** | Pointer to **bool** |  | [optional] 
-**Sorted** | Pointer to **bool** |  | [optional] 
+**Empty** | Pointer to **bool** | Indicates if the sorting criteria is empty | [optional] 
+**Unsorted** | Pointer to **bool** | Indicates if the elements are unsorted | [optional] 
+**Sorted** | Pointer to **bool** | Indicates if the elements are sorted | [optional] 
 
 ## Methods
 

@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 Get location by ID
 
+
+
 ### Example
 
 ```go
@@ -28,7 +30,7 @@ import (
 )
 
 func main() {
-	locationId := int32(56) // int32 | Location ID
+	locationId := int32(56) // int32 | ID of the geographic location
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -48,7 +50,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**locationId** | **int32** | Location ID | 
+**locationId** | **int32** | ID of the geographic location | 
 
 ### Other Parameters
 
@@ -83,6 +85,8 @@ Name | Type | Description  | Notes
 
 Get list of locations
 
+
+
 ### Example
 
 ```go
@@ -96,7 +100,7 @@ import (
 )
 
 func main() {
-	name := "Stockholm" // string | Location name (optional)
+	name := "Stockholm" // string | Name of the geographic location (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -121,7 +125,7 @@ Other parameters are passed through a pointer to a apiGetLocationsRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **string** | Location name | 
+ **name** | **string** | Name of the geographic location | 
 
 ### Return type
 

@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
-**Key** | Pointer to **string** |  | [optional] 
-**Fingerprint** | Pointer to **string** |  | [optional] 
-**KeyType** | Pointer to **string** |  | [optional] 
-**PrivateKey** | Pointer to **string** |  | [optional] 
-**CreatedAt** | Pointer to **string** |  | [optional] 
-**CreatedByName** | Pointer to **string** |  | [optional] 
-**CreatedById** | Pointer to **int32** |  | [optional] 
+**Id** | Pointer to **int32** | SSH key ID | [optional] 
+**Name** | Pointer to **string** | SSH key name | [optional] 
+**Key** | Pointer to **string** | SSH public key | [optional] 
+**Fingerprint** | Pointer to **string** | SSH key fingerprint | [optional] 
+**KeyType** | Pointer to **string** | SSH key type (RSA or ED25519) | [optional] 
+**PrivateKey** | Pointer to **string** | SSH private key | [optional] 
+**CreatedAt** | Pointer to **string** | Date and time when the SSH key was created | [optional] 
+**CreatedByName** | Pointer to **string** | Name of the user who created the SSH key | [optional] 
+**CreatedById** | Pointer to **int32** | ID of the user who created the SSH key | [optional] 
 
 ## Methods
 

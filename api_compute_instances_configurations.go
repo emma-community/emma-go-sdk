@@ -1,9 +1,9 @@
 /*
 Public EMMA API
 
-**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
+### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. | 
 
-API version: 0.0.1
+API version: 1.0.1
 */
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
@@ -18,130 +18,447 @@ import (
 	"net/url"
 )
 
+
 // ComputeInstancesConfigurationsAPIService ComputeInstancesConfigurationsAPI service
 type ComputeInstancesConfigurationsAPIService service
 
-type ApiGetSpotConfigsRequest struct {
-	ctx              context.Context
-	ApiService       *ComputeInstancesConfigurationsAPIService
-	providerId       *int32
-	locationId       *int32
-	dataCenterId     *string
-	cloudNetworkType *string
-	vCpuType         *string
-	vCpu             *int32
-	vCpuMin          *int32
-	vCpuMax          *int32
-	ramGb            *int32
-	ramGbMin         *int32
-	ramGbMax         *int32
-	volumeGb         *int32
-	volumeGbMin      *int32
-	volumeGbMax      *int32
-	volumeType       *string
-	priceMin         *float32
-	priceMax         *float32
-	page             *int32
-	size             *int32
+type ApiGetKuberNodesConfigsRequest struct {
+	ctx context.Context
+	ApiService *ComputeInstancesConfigurationsAPIService
+	providerId *int32
+	locationId *int32
+	dataCenterId *string
+	vCpuType *string
+	vCpu *int32
+	vCpuMin *int32
+	vCpuMax *int32
+	ramGb *int32
+	ramGbMin *int32
+	ramGbMax *int32
+	volumeGb *int32
+	volumeGbMin *int32
+	volumeGbMax *int32
+	volumeType *string
+	priceMin *float32
+	priceMax *float32
+	page *int32
+	size *int32
 }
 
-// Provider ID
+// ID of the cloud provider
+func (r ApiGetKuberNodesConfigsRequest) ProviderId(providerId int32) ApiGetKuberNodesConfigsRequest {
+	r.providerId = &providerId
+	return r
+}
+
+// ID of the geographic location
+func (r ApiGetKuberNodesConfigsRequest) LocationId(locationId int32) ApiGetKuberNodesConfigsRequest {
+	r.locationId = &locationId
+	return r
+}
+
+// ID of the cloud provider&#39;s data center
+func (r ApiGetKuberNodesConfigsRequest) DataCenterId(dataCenterId string) ApiGetKuberNodesConfigsRequest {
+	r.dataCenterId = &dataCenterId
+	return r
+}
+
+// Type of vCPUs for the compute instance
+func (r ApiGetKuberNodesConfigsRequest) VCpuType(vCpuType string) ApiGetKuberNodesConfigsRequest {
+	r.vCpuType = &vCpuType
+	return r
+}
+
+// virtual Central Processing Units (vCPUs) for the compute instance
+func (r ApiGetKuberNodesConfigsRequest) VCpu(vCpu int32) ApiGetKuberNodesConfigsRequest {
+	r.vCpu = &vCpu
+	return r
+}
+
+// Minimum number of vCPUs for the compute instance
+func (r ApiGetKuberNodesConfigsRequest) VCpuMin(vCpuMin int32) ApiGetKuberNodesConfigsRequest {
+	r.vCpuMin = &vCpuMin
+	return r
+}
+
+// Maximum number of vCPUs for the compute instance
+func (r ApiGetKuberNodesConfigsRequest) VCpuMax(vCpuMax int32) ApiGetKuberNodesConfigsRequest {
+	r.vCpuMax = &vCpuMax
+	return r
+}
+
+// RAM of the compute instance in gigabytes
+func (r ApiGetKuberNodesConfigsRequest) RamGb(ramGb int32) ApiGetKuberNodesConfigsRequest {
+	r.ramGb = &ramGb
+	return r
+}
+
+// Minimum RAM of the compute instance in gigabytes
+func (r ApiGetKuberNodesConfigsRequest) RamGbMin(ramGbMin int32) ApiGetKuberNodesConfigsRequest {
+	r.ramGbMin = &ramGbMin
+	return r
+}
+
+// Maximum RAM of the compute instance in gigabytes
+func (r ApiGetKuberNodesConfigsRequest) RamGbMax(ramGbMax int32) ApiGetKuberNodesConfigsRequest {
+	r.ramGbMax = &ramGbMax
+	return r
+}
+
+// Volume size of the compute instance in gigabytes
+func (r ApiGetKuberNodesConfigsRequest) VolumeGb(volumeGb int32) ApiGetKuberNodesConfigsRequest {
+	r.volumeGb = &volumeGb
+	return r
+}
+
+// Minimum volume size of the compute instance in gigabytes
+func (r ApiGetKuberNodesConfigsRequest) VolumeGbMin(volumeGbMin int32) ApiGetKuberNodesConfigsRequest {
+	r.volumeGbMin = &volumeGbMin
+	return r
+}
+
+// Maximum volume size of the compute instance in gigabytes
+func (r ApiGetKuberNodesConfigsRequest) VolumeGbMax(volumeGbMax int32) ApiGetKuberNodesConfigsRequest {
+	r.volumeGbMax = &volumeGbMax
+	return r
+}
+
+// Volume type of the compute instance
+func (r ApiGetKuberNodesConfigsRequest) VolumeType(volumeType string) ApiGetKuberNodesConfigsRequest {
+	r.volumeType = &volumeType
+	return r
+}
+
+// Minimum price of the compute instance
+func (r ApiGetKuberNodesConfigsRequest) PriceMin(priceMin float32) ApiGetKuberNodesConfigsRequest {
+	r.priceMin = &priceMin
+	return r
+}
+
+// Maximum price of the compute instance
+func (r ApiGetKuberNodesConfigsRequest) PriceMax(priceMax float32) ApiGetKuberNodesConfigsRequest {
+	r.priceMax = &priceMax
+	return r
+}
+
+// Page number
+func (r ApiGetKuberNodesConfigsRequest) Page(page int32) ApiGetKuberNodesConfigsRequest {
+	r.page = &page
+	return r
+}
+
+// Query size
+func (r ApiGetKuberNodesConfigsRequest) Size(size int32) ApiGetKuberNodesConfigsRequest {
+	r.size = &size
+	return r
+}
+
+func (r ApiGetKuberNodesConfigsRequest) Execute() (*GetVmConfigs200Response, *http.Response, error) {
+	return r.ApiService.GetKuberNodesConfigsExecute(r)
+}
+
+/*
+GetKuberNodesConfigs List of available configurations for Kubernetes cluster node
+
+When creating Kubernetes clusters you need to provide the desired hardware configurations for working nodes. These configurations include CPU, CPU type, RAM, volume size, and volume type. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
+
+Use this endpoint as a reference for available configurations for working nodes. You can search the available configurations by different parameters (provider, location, data center, CPU, CPU type, RAM, volume size, volume type, and price).
+
+When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a Kubernetes cluster.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetKuberNodesConfigsRequest
+*/
+func (a *ComputeInstancesConfigurationsAPIService) GetKuberNodesConfigs(ctx context.Context) ApiGetKuberNodesConfigsRequest {
+	return ApiGetKuberNodesConfigsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetVmConfigs200Response
+func (a *ComputeInstancesConfigurationsAPIService) GetKuberNodesConfigsExecute(r ApiGetKuberNodesConfigsRequest) (*GetVmConfigs200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetVmConfigs200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComputeInstancesConfigurationsAPIService.GetKuberNodesConfigs")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/kubernetes-configs"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.providerId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "providerId", r.providerId, "form", "")
+	}
+	if r.locationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "locationId", r.locationId, "form", "")
+	}
+	if r.dataCenterId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dataCenterId", r.dataCenterId, "form", "")
+	}
+	if r.vCpuType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuType", r.vCpuType, "form", "")
+	}
+	if r.vCpu != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpu", r.vCpu, "form", "")
+	}
+	if r.vCpuMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMin", r.vCpuMin, "form", "")
+	}
+	if r.vCpuMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMax", r.vCpuMax, "form", "")
+	}
+	if r.ramGb != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGb", r.ramGb, "form", "")
+	}
+	if r.ramGbMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMin", r.ramGbMin, "form", "")
+	}
+	if r.ramGbMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMax", r.ramGbMax, "form", "")
+	}
+	if r.volumeGb != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGb", r.volumeGb, "form", "")
+	}
+	if r.volumeGbMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMin", r.volumeGbMin, "form", "")
+	}
+	if r.volumeGbMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMax", r.volumeGbMax, "form", "")
+	}
+	if r.volumeType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeType", r.volumeType, "form", "")
+	}
+	if r.priceMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMin", r.priceMin, "form", "")
+	}
+	if r.priceMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMax", r.priceMax, "form", "")
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	}
+	if r.size != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "size", r.size, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v UnauthorizedError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ForbiddenError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetSpotConfigsRequest struct {
+	ctx context.Context
+	ApiService *ComputeInstancesConfigurationsAPIService
+	providerId *int32
+	locationId *int32
+	dataCenterId *string
+	cloudNetworkType *string
+	vCpuType *string
+	vCpu *int32
+	vCpuMin *int32
+	vCpuMax *int32
+	ramGb *int32
+	ramGbMin *int32
+	ramGbMax *int32
+	volumeGb *int32
+	volumeGbMin *int32
+	volumeGbMax *int32
+	volumeType *string
+	priceMin *float32
+	priceMax *float32
+	page *int32
+	size *int32
+}
+
+// ID of the cloud provider
 func (r ApiGetSpotConfigsRequest) ProviderId(providerId int32) ApiGetSpotConfigsRequest {
 	r.providerId = &providerId
 	return r
 }
 
-// Location ID
+// ID of the geographic location
 func (r ApiGetSpotConfigsRequest) LocationId(locationId int32) ApiGetSpotConfigsRequest {
 	r.locationId = &locationId
 	return r
 }
 
-// Data center ID
+// ID of the cloud provider&#39;s data center
 func (r ApiGetSpotConfigsRequest) DataCenterId(dataCenterId string) ApiGetSpotConfigsRequest {
 	r.dataCenterId = &dataCenterId
 	return r
 }
 
-// Cloud network type
+// Type of cloud network
 func (r ApiGetSpotConfigsRequest) CloudNetworkType(cloudNetworkType string) ApiGetSpotConfigsRequest {
 	r.cloudNetworkType = &cloudNetworkType
 	return r
 }
 
-// Compute instance vCPU type
+// Type of vCPUs for the compute instance
 func (r ApiGetSpotConfigsRequest) VCpuType(vCpuType string) ApiGetSpotConfigsRequest {
 	r.vCpuType = &vCpuType
 	return r
 }
 
-// Compute instance vCPU
+// virtual Central Processing Units (vCPUs) for the compute instance
 func (r ApiGetSpotConfigsRequest) VCpu(vCpu int32) ApiGetSpotConfigsRequest {
 	r.vCpu = &vCpu
 	return r
 }
 
-// Compute instance vCPU minimum
+// Minimum number of vCPUs for the compute instance
 func (r ApiGetSpotConfigsRequest) VCpuMin(vCpuMin int32) ApiGetSpotConfigsRequest {
 	r.vCpuMin = &vCpuMin
 	return r
 }
 
-// Compute instance vCPU maximum
+// Maximum number of vCPUs for the compute instance
 func (r ApiGetSpotConfigsRequest) VCpuMax(vCpuMax int32) ApiGetSpotConfigsRequest {
 	r.vCpuMax = &vCpuMax
 	return r
 }
 
-// Compute instance RAM (GB)
+// RAM of the compute instance in gigabytes
 func (r ApiGetSpotConfigsRequest) RamGb(ramGb int32) ApiGetSpotConfigsRequest {
 	r.ramGb = &ramGb
 	return r
 }
 
-// Compute instance RAM (GB) minimum
+// Minimum RAM of the compute instance in gigabytes
 func (r ApiGetSpotConfigsRequest) RamGbMin(ramGbMin int32) ApiGetSpotConfigsRequest {
 	r.ramGbMin = &ramGbMin
 	return r
 }
 
-// Compute instance RAM (GB) maximum
+// Maximum RAM of the compute instance in gigabytes
 func (r ApiGetSpotConfigsRequest) RamGbMax(ramGbMax int32) ApiGetSpotConfigsRequest {
 	r.ramGbMax = &ramGbMax
 	return r
 }
 
-// Compute instance volume (GB)
+// Volume size of the compute instance in gigabytes
 func (r ApiGetSpotConfigsRequest) VolumeGb(volumeGb int32) ApiGetSpotConfigsRequest {
 	r.volumeGb = &volumeGb
 	return r
 }
 
-// Compute instance volume minimum (GB)
+// Minimum volume size of the compute instance in gigabytes
 func (r ApiGetSpotConfigsRequest) VolumeGbMin(volumeGbMin int32) ApiGetSpotConfigsRequest {
 	r.volumeGbMin = &volumeGbMin
 	return r
 }
 
-// Compute instance volume maximun (GB)
+// Maximum volume size of the compute instance in gigabytes
 func (r ApiGetSpotConfigsRequest) VolumeGbMax(volumeGbMax int32) ApiGetSpotConfigsRequest {
 	r.volumeGbMax = &volumeGbMax
 	return r
 }
 
-// Compute instance volume type
+// Volume type of the compute instance
 func (r ApiGetSpotConfigsRequest) VolumeType(volumeType string) ApiGetSpotConfigsRequest {
 	r.volumeType = &volumeType
 	return r
 }
 
-// Instance price minimum
+// Minimum price of the compute instance
 func (r ApiGetSpotConfigsRequest) PriceMin(priceMin float32) ApiGetSpotConfigsRequest {
 	r.priceMin = &priceMin
 	return r
 }
 
-// Instance price maximum
+// Maximum price of the compute instance
 func (r ApiGetSpotConfigsRequest) PriceMax(priceMax float32) ApiGetSpotConfigsRequest {
 	r.priceMax = &priceMax
 	return r
@@ -164,27 +481,33 @@ func (r ApiGetSpotConfigsRequest) Execute() (*GetVmConfigs200Response, *http.Res
 }
 
 /*
-GetSpotConfigs Search available configurations for spot instance creation
+GetSpotConfigs List of available configurations for spot instance creation
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGetSpotConfigsRequest
+When creating spot instances you need to provide the desired hardware configurations. These configurations include CPU, CPU type, RAM, volume size, and volume type. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
+
+Use this endpoint as a reference for available configurations for spot instances. You can search the available configurations by different parameters (provider, location, data center, cloud network type, CPU, CPU type, RAM, volume size, volume type, and price).
+
+When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a spot instance.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetSpotConfigsRequest
 */
 func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigs(ctx context.Context) ApiGetSpotConfigsRequest {
 	return ApiGetSpotConfigsRequest{
 		ApiService: a,
-		ctx:        ctx,
+		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//
-//	@return GetVmConfigs200Response
+//  @return GetVmConfigs200Response
 func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGetSpotConfigsRequest) (*GetVmConfigs200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *GetVmConfigs200Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetVmConfigs200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComputeInstancesConfigurationsAPIService.GetSpotConfigs")
@@ -199,61 +522,61 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 	localVarFormParams := url.Values{}
 
 	if r.providerId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "providerId", r.providerId, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "providerId", r.providerId, "form", "")
 	}
 	if r.locationId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "locationId", r.locationId, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "locationId", r.locationId, "form", "")
 	}
 	if r.dataCenterId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "dataCenterId", r.dataCenterId, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dataCenterId", r.dataCenterId, "form", "")
 	}
 	if r.cloudNetworkType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cloudNetworkType", r.cloudNetworkType, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cloudNetworkType", r.cloudNetworkType, "form", "")
 	}
 	if r.vCpuType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuType", r.vCpuType, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuType", r.vCpuType, "form", "")
 	}
 	if r.vCpu != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpu", r.vCpu, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpu", r.vCpu, "form", "")
 	}
 	if r.vCpuMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMin", r.vCpuMin, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMin", r.vCpuMin, "form", "")
 	}
 	if r.vCpuMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMax", r.vCpuMax, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMax", r.vCpuMax, "form", "")
 	}
 	if r.ramGb != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGb", r.ramGb, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGb", r.ramGb, "form", "")
 	}
 	if r.ramGbMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMin", r.ramGbMin, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMin", r.ramGbMin, "form", "")
 	}
 	if r.ramGbMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMax", r.ramGbMax, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMax", r.ramGbMax, "form", "")
 	}
 	if r.volumeGb != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGb", r.volumeGb, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGb", r.volumeGb, "form", "")
 	}
 	if r.volumeGbMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMin", r.volumeGbMin, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMin", r.volumeGbMin, "form", "")
 	}
 	if r.volumeGbMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMax", r.volumeGbMax, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMax", r.volumeGbMax, "form", "")
 	}
 	if r.volumeType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeType", r.volumeType, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeType", r.volumeType, "form", "")
 	}
 	if r.priceMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMin", r.priceMin, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMin", r.priceMin, "form", "")
 	}
 	if r.priceMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMax", r.priceMax, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMax", r.priceMax, "form", "")
 	}
 	if r.page != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	}
 	if r.size != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "size", r.size, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "size", r.size, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -301,8 +624,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -312,8 +635,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -323,8 +646,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -342,126 +665,126 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 }
 
 type ApiGetVmConfigsRequest struct {
-	ctx              context.Context
-	ApiService       *ComputeInstancesConfigurationsAPIService
-	providerId       *int32
-	locationId       *int32
-	dataCenterId     *string
+	ctx context.Context
+	ApiService *ComputeInstancesConfigurationsAPIService
+	providerId *int32
+	locationId *int32
+	dataCenterId *string
 	cloudNetworkType *string
-	vCpuType         *string
-	vCpu             *int32
-	vCpuMin          *int32
-	vCpuMax          *int32
-	ramGb            *int32
-	ramGbMin         *int32
-	ramGbMax         *int32
-	volumeGb         *int32
-	volumeGbMin      *int32
-	volumeGbMax      *int32
-	volumeType       *string
-	priceMin         *float32
-	priceMax         *float32
-	page             *int32
-	size             *int32
+	vCpuType *string
+	vCpu *int32
+	vCpuMin *int32
+	vCpuMax *int32
+	ramGb *int32
+	ramGbMin *int32
+	ramGbMax *int32
+	volumeGb *int32
+	volumeGbMin *int32
+	volumeGbMax *int32
+	volumeType *string
+	priceMin *float32
+	priceMax *float32
+	page *int32
+	size *int32
 }
 
-// Provider ID
+// ID of the cloud provider
 func (r ApiGetVmConfigsRequest) ProviderId(providerId int32) ApiGetVmConfigsRequest {
 	r.providerId = &providerId
 	return r
 }
 
-// Location ID
+// ID of the geographic location
 func (r ApiGetVmConfigsRequest) LocationId(locationId int32) ApiGetVmConfigsRequest {
 	r.locationId = &locationId
 	return r
 }
 
-// Data center ID
+// ID of the cloud provider&#39;s data center
 func (r ApiGetVmConfigsRequest) DataCenterId(dataCenterId string) ApiGetVmConfigsRequest {
 	r.dataCenterId = &dataCenterId
 	return r
 }
 
-// Cloud network type
+// Type of cloud network
 func (r ApiGetVmConfigsRequest) CloudNetworkType(cloudNetworkType string) ApiGetVmConfigsRequest {
 	r.cloudNetworkType = &cloudNetworkType
 	return r
 }
 
-// Compute instance vCPU type
+// Type of vCPUs for the compute instance
 func (r ApiGetVmConfigsRequest) VCpuType(vCpuType string) ApiGetVmConfigsRequest {
 	r.vCpuType = &vCpuType
 	return r
 }
 
-// Compute instance vCPU
+// virtual Central Processing Units (vCPUs) for the compute instance
 func (r ApiGetVmConfigsRequest) VCpu(vCpu int32) ApiGetVmConfigsRequest {
 	r.vCpu = &vCpu
 	return r
 }
 
-// Compute instance vCPU minimum
+// Minimum number of vCPUs for the compute instance
 func (r ApiGetVmConfigsRequest) VCpuMin(vCpuMin int32) ApiGetVmConfigsRequest {
 	r.vCpuMin = &vCpuMin
 	return r
 }
 
-// Compute instance vCPU maximum
+// Maximum number of vCPUs for the compute instance
 func (r ApiGetVmConfigsRequest) VCpuMax(vCpuMax int32) ApiGetVmConfigsRequest {
 	r.vCpuMax = &vCpuMax
 	return r
 }
 
-// Compute instance RAM (GB)
+// RAM of the compute instance in gigabytes
 func (r ApiGetVmConfigsRequest) RamGb(ramGb int32) ApiGetVmConfigsRequest {
 	r.ramGb = &ramGb
 	return r
 }
 
-// Compute instance RAM (GB) minimum
+// Minimum RAM of the compute instance in gigabytes
 func (r ApiGetVmConfigsRequest) RamGbMin(ramGbMin int32) ApiGetVmConfigsRequest {
 	r.ramGbMin = &ramGbMin
 	return r
 }
 
-// Compute instance RAM (GB) maximum
+// Maximum RAM of the compute instance in gigabytes
 func (r ApiGetVmConfigsRequest) RamGbMax(ramGbMax int32) ApiGetVmConfigsRequest {
 	r.ramGbMax = &ramGbMax
 	return r
 }
 
-// Compute instance volume (GB)
+// Volume size of the compute instance in gigabytes
 func (r ApiGetVmConfigsRequest) VolumeGb(volumeGb int32) ApiGetVmConfigsRequest {
 	r.volumeGb = &volumeGb
 	return r
 }
 
-// Compute instance volume minimum (GB)
+// Minimum volume size of the compute instance in gigabytes
 func (r ApiGetVmConfigsRequest) VolumeGbMin(volumeGbMin int32) ApiGetVmConfigsRequest {
 	r.volumeGbMin = &volumeGbMin
 	return r
 }
 
-// Compute instance volume maximun (GB)
+// Maximum volume size of the compute instance in gigabytes
 func (r ApiGetVmConfigsRequest) VolumeGbMax(volumeGbMax int32) ApiGetVmConfigsRequest {
 	r.volumeGbMax = &volumeGbMax
 	return r
 }
 
-// Compute instance volume type
+// Volume type of the compute instance
 func (r ApiGetVmConfigsRequest) VolumeType(volumeType string) ApiGetVmConfigsRequest {
 	r.volumeType = &volumeType
 	return r
 }
 
-// Instance price minimum
+// Minimum price of the compute instance
 func (r ApiGetVmConfigsRequest) PriceMin(priceMin float32) ApiGetVmConfigsRequest {
 	r.priceMin = &priceMin
 	return r
 }
 
-// Instance price maximum
+// Maximum price of the compute instance
 func (r ApiGetVmConfigsRequest) PriceMax(priceMax float32) ApiGetVmConfigsRequest {
 	r.priceMax = &priceMax
 	return r
@@ -484,27 +807,33 @@ func (r ApiGetVmConfigsRequest) Execute() (*GetVmConfigs200Response, *http.Respo
 }
 
 /*
-GetVmConfigs Search available configurations for virtual machine creation
+GetVmConfigs List of available configurations for virtual machine creation
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGetVmConfigsRequest
+When creating virtual machines you need to provide the desired hardware configurations. These configurations include CPU, CPU type, RAM, volume size, and volume type. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
+
+Use this endpoint as a reference for available configurations for virtual machines. You can search the available configurations by different parameters (provider, location, data center, cloud network type, CPU, CPU type, RAM, volume size, volume type, and price).
+
+When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a virtual machine.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetVmConfigsRequest
 */
 func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigs(ctx context.Context) ApiGetVmConfigsRequest {
 	return ApiGetVmConfigsRequest{
 		ApiService: a,
-		ctx:        ctx,
+		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//
-//	@return GetVmConfigs200Response
+//  @return GetVmConfigs200Response
 func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetVmConfigsRequest) (*GetVmConfigs200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *GetVmConfigs200Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetVmConfigs200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComputeInstancesConfigurationsAPIService.GetVmConfigs")
@@ -519,61 +848,61 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 	localVarFormParams := url.Values{}
 
 	if r.providerId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "providerId", r.providerId, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "providerId", r.providerId, "form", "")
 	}
 	if r.locationId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "locationId", r.locationId, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "locationId", r.locationId, "form", "")
 	}
 	if r.dataCenterId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "dataCenterId", r.dataCenterId, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dataCenterId", r.dataCenterId, "form", "")
 	}
 	if r.cloudNetworkType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cloudNetworkType", r.cloudNetworkType, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cloudNetworkType", r.cloudNetworkType, "form", "")
 	}
 	if r.vCpuType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuType", r.vCpuType, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuType", r.vCpuType, "form", "")
 	}
 	if r.vCpu != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpu", r.vCpu, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpu", r.vCpu, "form", "")
 	}
 	if r.vCpuMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMin", r.vCpuMin, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMin", r.vCpuMin, "form", "")
 	}
 	if r.vCpuMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMax", r.vCpuMax, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMax", r.vCpuMax, "form", "")
 	}
 	if r.ramGb != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGb", r.ramGb, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGb", r.ramGb, "form", "")
 	}
 	if r.ramGbMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMin", r.ramGbMin, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMin", r.ramGbMin, "form", "")
 	}
 	if r.ramGbMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMax", r.ramGbMax, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMax", r.ramGbMax, "form", "")
 	}
 	if r.volumeGb != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGb", r.volumeGb, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGb", r.volumeGb, "form", "")
 	}
 	if r.volumeGbMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMin", r.volumeGbMin, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMin", r.volumeGbMin, "form", "")
 	}
 	if r.volumeGbMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMax", r.volumeGbMax, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMax", r.volumeGbMax, "form", "")
 	}
 	if r.volumeType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeType", r.volumeType, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeType", r.volumeType, "form", "")
 	}
 	if r.priceMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMin", r.priceMin, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMin", r.priceMin, "form", "")
 	}
 	if r.priceMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMax", r.priceMax, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMax", r.priceMax, "form", "")
 	}
 	if r.page != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	}
 	if r.size != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "size", r.size, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "size", r.size, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -621,8 +950,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -632,8 +961,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -643,8 +972,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

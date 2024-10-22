@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**RefreshToken** | **string** | Refresh token | 
+**RefreshToken** | **string** | Refresh token. You can obtain a refresh token from the &#x60;/v1/issue-token&#x60; endpoint | 
 
 ## Methods
 

@@ -4,7 +4,7 @@ All URIs are relative to *https://api.emma.ms/external*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetSpot**](SpotInstancesAPI.md#GetSpot) | **Get** /v1/spot-instances/{spotInstanceId} | Get spot instance by id
+[**GetSpot**](SpotInstancesAPI.md#GetSpot) | **Get** /v1/spot-instances/{spotInstanceId} | Get spot instance by ID
 [**GetSpots**](SpotInstancesAPI.md#GetSpots) | **Get** /v1/spot-instances | Get list of spot instances
 [**SpotActions**](SpotInstancesAPI.md#SpotActions) | **Post** /v1/spot-instances/{spotInstanceId}/actions | Perform actions with a spot instance
 [**SpotCreate**](SpotInstancesAPI.md#SpotCreate) | **Post** /v1/spot-instances | Create spot instance
@@ -16,7 +16,9 @@ Method | HTTP request | Description
 
 > Vm GetSpot(ctx, spotInstanceId).Execute()
 
-Get spot instance by id
+Get spot instance by ID
+
+
 
 ### Example
 
@@ -31,7 +33,7 @@ import (
 )
 
 func main() {
-	spotInstanceId := int32(56) // int32 | Spot instance id
+	spotInstanceId := int32(56) // int32 | ID of the spot instance
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -51,7 +53,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**spotInstanceId** | **int32** | Spot instance id | 
+**spotInstanceId** | **int32** | ID of the spot instance | 
 
 ### Other Parameters
 
@@ -85,6 +87,8 @@ Name | Type | Description  | Notes
 > []Vm GetSpots(ctx).Execute()
 
 Get list of spot instances
+
+
 
 ### Example
 
@@ -145,6 +149,8 @@ Other parameters are passed through a pointer to a apiGetSpotsRequest struct via
 
 Perform actions with a spot instance
 
+
+
 ### Example
 
 ```go
@@ -158,7 +164,7 @@ import (
 )
 
 func main() {
-	spotInstanceId := int32(56) // int32 | Spot instance id
+	spotInstanceId := int32(56) // int32 | ID of the spot instance
 	spotActionsRequest := openapiclient.SpotActions_request{SpotReboot: openapiclient.NewSpotReboot("reboot")} // SpotActionsRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -179,7 +185,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**spotInstanceId** | **int32** | Spot instance id | 
+**spotInstanceId** | **int32** | ID of the spot instance | 
 
 ### Other Parameters
 
@@ -214,6 +220,8 @@ Name | Type | Description  | Notes
 > Vm SpotCreate(ctx).SpotCreate(spotCreate).Execute()
 
 Create spot instance
+
+
 
 ### Example
 
@@ -279,6 +287,8 @@ Name | Type | Description  | Notes
 
 Delete spot instance
 
+
+
 ### Example
 
 ```go
@@ -292,7 +302,7 @@ import (
 )
 
 func main() {
-	spotInstanceId := int32(56) // int32 | Spot instance id
+	spotInstanceId := int32(56) // int32 | ID of the spot instance
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -312,7 +322,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**spotInstanceId** | **int32** | Spot instance id | 
+**spotInstanceId** | **int32** | ID of the spot instance | 
 
 ### Other Parameters
 

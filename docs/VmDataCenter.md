@@ -4,12 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
-**ProviderId** | Pointer to **int32** |  | [optional] 
-**ProviderName** | Pointer to **string** |  | [optional] 
-**LocationId** | Pointer to **int32** |  | [optional] 
-**LocationName** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **string** | Data center ID | [optional] 
+**Name** | Pointer to **string** | Data center name | [optional] 
+**ProviderId** | Pointer to **int32** | ID of the cloud provider | [optional] 
+**ProviderName** | Pointer to **string** | Name of the cloud provider | [optional] 
+**LocationId** | Pointer to **int32** | ID of the data center location | [optional] 
+**LocationName** | Pointer to **string** | Name of the data center location | [optional] 
 
 ## Methods
 

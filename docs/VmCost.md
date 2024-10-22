@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Unit** | Pointer to **string** |  | [optional] 
-**Currency** | Pointer to **string** |  | [optional] 
-**Price** | Pointer to **float32** |  | [optional] 
+**Unit** | Pointer to **string** | Cost period | [optional] 
+**Currency** | Pointer to **string** | Currency of cost | [optional] 
+**Price** | Pointer to **float32** | Cost of the virtual machine for the period | [optional] 
 
 ## Methods
 

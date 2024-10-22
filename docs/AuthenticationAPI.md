@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 Issue token
 
+
+
 ### Example
 
 ```go
@@ -78,6 +80,8 @@ No authorization required
 > Token RefreshToken(ctx).RefreshToken(refreshToken).Execute()
 
 Refresh token
+
+
 
 ### Example
 

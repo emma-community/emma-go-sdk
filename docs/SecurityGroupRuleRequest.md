@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Direction** | **string** | Direction of network traffic | 
+**Direction** | **string** | Direction of the network traffic | 
 **Protocol** | **string** | Network protocol | 
-**Ports** | **string** | Port | 
-**IpRange** | **string** | Range of IPs for rule | 
+**Ports** | **string** | Allowed port or port range | 
+**IpRange** | **string** | Allowed IP or IP range | 
 
 ## Methods
 

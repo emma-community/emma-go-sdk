@@ -20,6 +20,8 @@ Method | HTTP request | Description
 
 Get security group by ID
 
+
+
 ### Example
 
 ```go
@@ -33,7 +35,7 @@ import (
 )
 
 func main() {
-	securityGroupId := int32(56) // int32 | Security group id
+	securityGroupId := int32(56) // int32 | ID of the security group
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -53,7 +55,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**securityGroupId** | **int32** | Security group id | 
+**securityGroupId** | **int32** | ID of the security group | 
 
 ### Other Parameters
 
@@ -87,6 +89,8 @@ Name | Type | Description  | Notes
 > []SecurityGroup GetSecurityGroups(ctx).Execute()
 
 Get list of security groups
+
+
 
 ### Example
 
@@ -146,6 +150,8 @@ Other parameters are passed through a pointer to a apiGetSecurityGroupsRequest s
 > SecurityGroup SecurityGroupCreate(ctx).SecurityGroupRequest(securityGroupRequest).Execute()
 
 Create security group
+
+
 
 ### Example
 
@@ -211,6 +217,8 @@ Name | Type | Description  | Notes
 
 Delete security group
 
+
+
 ### Example
 
 ```go
@@ -224,7 +232,7 @@ import (
 )
 
 func main() {
-	securityGroupId := int32(56) // int32 | Security group id
+	securityGroupId := int32(56) // int32 | ID of the security group
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -244,7 +252,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**securityGroupId** | **int32** | Security group id | 
+**securityGroupId** | **int32** | ID of the security group | 
 
 ### Other Parameters
 
@@ -279,6 +287,8 @@ Name | Type | Description  | Notes
 
 Add instance to security group
 
+
+
 ### Example
 
 ```go
@@ -292,7 +302,7 @@ import (
 )
 
 func main() {
-	securityGroupId := int32(56) // int32 | Security group id
+	securityGroupId := int32(56) // int32 | ID of the security group
 	securityGroupInstanceAdd := *openapiclient.NewSecurityGroupInstanceAdd() // SecurityGroupInstanceAdd |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -313,7 +323,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**securityGroupId** | **int32** | Security group id | 
+**securityGroupId** | **int32** | ID of the security group | 
 
 ### Other Parameters
 
@@ -349,6 +359,8 @@ Name | Type | Description  | Notes
 
 Get instances in security group
 
+
+
 ### Example
 
 ```go
@@ -362,7 +374,7 @@ import (
 )
 
 func main() {
-	securityGroupId := int32(56) // int32 | Security group id
+	securityGroupId := int32(56) // int32 | ID of the security group
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -382,7 +394,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**securityGroupId** | **int32** | Security group id | 
+**securityGroupId** | **int32** | ID of the security group | 
 
 ### Other Parameters
 
@@ -417,6 +429,8 @@ Name | Type | Description  | Notes
 
 Update security group
 
+
+
 ### Example
 
 ```go
@@ -430,7 +444,7 @@ import (
 )
 
 func main() {
-	securityGroupId := int32(56) // int32 | Security group id
+	securityGroupId := int32(56) // int32 | ID of the security group
 	securityGroupRequest := *openapiclient.NewSecurityGroupRequest("new_default", []openapiclient.SecurityGroupRuleRequest{*openapiclient.NewSecurityGroupRuleRequest("INBOUND", "TCP", "1-30321", "0.0.0.0/0")}) // SecurityGroupRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -451,7 +465,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**securityGroupId** | **int32** | Security group id | 
+**securityGroupId** | **int32** | ID of the security group | 
 
 ### Other Parameters
 

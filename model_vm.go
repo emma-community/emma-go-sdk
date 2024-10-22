@@ -1,9 +1,9 @@
 /*
 Public EMMA API
 
-**Base URL:** *<u>https://api.emma.ms/external</u>*  This **Infrastructure API** is for managing the cloud infrastructure within a project.  To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.  After creating the service application, copy the **Client ID** and **Client Secret**. Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.  The Bearer access token is a text string, included in the request header, example:  *-H Authorization: Bearer {token}*  Use this token for API requests. The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).
+### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. | 
 
-API version: 0.0.1
+API version: 1.0.1
 */
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
@@ -19,32 +19,50 @@ var _ MappedNullable = &Vm{}
 
 // Vm struct for Vm
 type Vm struct {
-	Id             *int32        `json:"id,omitempty"`
-	CreatedAt      *string       `json:"createdAt,omitempty"`
-	CreatedByName  *string       `json:"createdByName,omitempty"`
-	CreatedById    *int32        `json:"createdById,omitempty"`
-	ModifiedAt     *string       `json:"modifiedAt,omitempty"`
-	ModifiedByName *string       `json:"modifiedByName,omitempty"`
-	ModifiedById   *int32        `json:"modifiedById,omitempty"`
-	Name           *string       `json:"name,omitempty"`
-	ProjectId      *int32        `json:"projectId,omitempty"`
-	Status         *string       `json:"status,omitempty"`
-	Provider       *VmProvider   `json:"provider,omitempty"`
-	Location       *VmLocation   `json:"location,omitempty"`
-	DataCenter     *VmDataCenter `json:"dataCenter,omitempty"`
-	Os             *VmOs         `json:"os,omitempty"`
-	VCpu           *int32        `json:"vCpu,omitempty"`
-	// vCPU type
+	// ID of the virtual machine
+	Id *int32 `json:"id,omitempty"`
+	// Date and time when the virtual machine was created
+	CreatedAt *string `json:"createdAt,omitempty"`
+	// Name of the user who created the virtual machine
+	CreatedByName *string `json:"createdByName,omitempty"`
+	// ID of the user who created the virtual machine
+	CreatedById *int32 `json:"createdById,omitempty"`
+	// Date and time when the virtual machine was last edited
+	ModifiedAt *string `json:"modifiedAt,omitempty"`
+	// Name of the user who last edited the virtual machine
+	ModifiedByName *string `json:"modifiedByName,omitempty"`
+	// ID of the user who last edited the virtual machine
+	ModifiedById *int32 `json:"modifiedById,omitempty"`
+	// Name of the virtual machine
+	Name *string `json:"name,omitempty"`
+	// Project ID
+	ProjectId *int32 `json:"projectId,omitempty"`
+	// Status of the virtual machine
+	Status *string `json:"status,omitempty"`
+	Provider *VmProvider `json:"provider,omitempty"`
+	Location *VmLocation `json:"location,omitempty"`
+	DataCenter *VmDataCenter `json:"dataCenter,omitempty"`
+	Os *VmOs `json:"os,omitempty"`
+	// Number of virtual Central Processing Units (vCPUs)
+	VCpu *int32 `json:"vCpu,omitempty"`
+	// Type of virtual Central Processing Units (vCPUs)
 	VCpuType *string `json:"vCpuType,omitempty"`
 	// Cloud network type
-	CloudNetworkType *string           `json:"cloudNetworkType,omitempty"`
-	RamGb            *int32            `json:"ramGb,omitempty"`
-	Disks            []VmDisksInner    `json:"disks,omitempty"`
-	Networks         []VmNetworksInner `json:"networks,omitempty"`
-	SecurityGroup    *VmSecurityGroup  `json:"securityGroup,omitempty"`
-	SshKeyId         *int32            `json:"sshKeyId,omitempty"`
-	UserName         *string           `json:"userName,omitempty"`
-	Cost             *VmCost           `json:"cost,omitempty"`
+	CloudNetworkType *string `json:"cloudNetworkType,omitempty"`
+	// Capacity of the RAM in gigabytes
+	RamGb *int32 `json:"ramGb,omitempty"`
+	// List of volumes
+	Disks []KubernetesNodeGroupsInnerNodesInnerDisksInner `json:"disks,omitempty"`
+	// 
+	Networks []KubernetesNodeGroupsInnerNodesInnerNetworksInner `json:"networks,omitempty"`
+	SecurityGroup *VmSecurityGroup `json:"securityGroup,omitempty"`
+	Subnetwork *VmSubnetwork `json:"subnetwork,omitempty"`
+	// SSH key ID
+	SshKeyId *int32 `json:"sshKeyId,omitempty"`
+	// User name
+	UserName *string `json:"userName,omitempty"`
+	Cost *VmCost `json:"cost,omitempty"`
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewVm instantiates a new Vm object
@@ -641,9 +659,9 @@ func (o *Vm) SetRamGb(v int32) {
 }
 
 // GetDisks returns the Disks field value if set, zero value otherwise.
-func (o *Vm) GetDisks() []VmDisksInner {
+func (o *Vm) GetDisks() []KubernetesNodeGroupsInnerNodesInnerDisksInner {
 	if o == nil || IsNil(o.Disks) {
-		var ret []VmDisksInner
+		var ret []KubernetesNodeGroupsInnerNodesInnerDisksInner
 		return ret
 	}
 	return o.Disks
@@ -651,7 +669,7 @@ func (o *Vm) GetDisks() []VmDisksInner {
 
 // GetDisksOk returns a tuple with the Disks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetDisksOk() ([]VmDisksInner, bool) {
+func (o *Vm) GetDisksOk() ([]KubernetesNodeGroupsInnerNodesInnerDisksInner, bool) {
 	if o == nil || IsNil(o.Disks) {
 		return nil, false
 	}
@@ -667,15 +685,15 @@ func (o *Vm) HasDisks() bool {
 	return false
 }
 
-// SetDisks gets a reference to the given []VmDisksInner and assigns it to the Disks field.
-func (o *Vm) SetDisks(v []VmDisksInner) {
+// SetDisks gets a reference to the given []KubernetesNodeGroupsInnerNodesInnerDisksInner and assigns it to the Disks field.
+func (o *Vm) SetDisks(v []KubernetesNodeGroupsInnerNodesInnerDisksInner) {
 	o.Disks = v
 }
 
 // GetNetworks returns the Networks field value if set, zero value otherwise.
-func (o *Vm) GetNetworks() []VmNetworksInner {
+func (o *Vm) GetNetworks() []KubernetesNodeGroupsInnerNodesInnerNetworksInner {
 	if o == nil || IsNil(o.Networks) {
-		var ret []VmNetworksInner
+		var ret []KubernetesNodeGroupsInnerNodesInnerNetworksInner
 		return ret
 	}
 	return o.Networks
@@ -683,7 +701,7 @@ func (o *Vm) GetNetworks() []VmNetworksInner {
 
 // GetNetworksOk returns a tuple with the Networks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Vm) GetNetworksOk() ([]VmNetworksInner, bool) {
+func (o *Vm) GetNetworksOk() ([]KubernetesNodeGroupsInnerNodesInnerNetworksInner, bool) {
 	if o == nil || IsNil(o.Networks) {
 		return nil, false
 	}
@@ -699,8 +717,8 @@ func (o *Vm) HasNetworks() bool {
 	return false
 }
 
-// SetNetworks gets a reference to the given []VmNetworksInner and assigns it to the Networks field.
-func (o *Vm) SetNetworks(v []VmNetworksInner) {
+// SetNetworks gets a reference to the given []KubernetesNodeGroupsInnerNodesInnerNetworksInner and assigns it to the Networks field.
+func (o *Vm) SetNetworks(v []KubernetesNodeGroupsInnerNodesInnerNetworksInner) {
 	o.Networks = v
 }
 
@@ -734,6 +752,38 @@ func (o *Vm) HasSecurityGroup() bool {
 // SetSecurityGroup gets a reference to the given VmSecurityGroup and assigns it to the SecurityGroup field.
 func (o *Vm) SetSecurityGroup(v VmSecurityGroup) {
 	o.SecurityGroup = &v
+}
+
+// GetSubnetwork returns the Subnetwork field value if set, zero value otherwise.
+func (o *Vm) GetSubnetwork() VmSubnetwork {
+	if o == nil || IsNil(o.Subnetwork) {
+		var ret VmSubnetwork
+		return ret
+	}
+	return *o.Subnetwork
+}
+
+// GetSubnetworkOk returns a tuple with the Subnetwork field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Vm) GetSubnetworkOk() (*VmSubnetwork, bool) {
+	if o == nil || IsNil(o.Subnetwork) {
+		return nil, false
+	}
+	return o.Subnetwork, true
+}
+
+// HasSubnetwork returns a boolean if a field has been set.
+func (o *Vm) HasSubnetwork() bool {
+	if o != nil && !IsNil(o.Subnetwork) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubnetwork gets a reference to the given VmSubnetwork and assigns it to the Subnetwork field.
+func (o *Vm) SetSubnetwork(v VmSubnetwork) {
+	o.Subnetwork = &v
 }
 
 // GetSshKeyId returns the SshKeyId field value if set, zero value otherwise.
@@ -832,8 +882,41 @@ func (o *Vm) SetCost(v VmCost) {
 	o.Cost = &v
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Vm) GetTags() []Tag {
+	if o == nil {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Vm) GetTagsOk() ([]Tag, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *Vm) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *Vm) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 func (o Vm) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -905,6 +988,9 @@ func (o Vm) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SecurityGroup) {
 		toSerialize["securityGroup"] = o.SecurityGroup
 	}
+	if !IsNil(o.Subnetwork) {
+		toSerialize["subnetwork"] = o.Subnetwork
+	}
 	if !IsNil(o.SshKeyId) {
 		toSerialize["sshKeyId"] = o.SshKeyId
 	}
@@ -913,6 +999,9 @@ func (o Vm) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Cost) {
 		toSerialize["cost"] = o.Cost
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	return toSerialize, nil
 }
@@ -952,3 +1041,5 @@ func (v *NullableVm) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

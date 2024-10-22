@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Code** | **string** |  | 
-**Message** | **string** |  | 
+**Code** | **string** | Error code | 
+**Message** | **string** | Error message | 
 
 ## Methods
 

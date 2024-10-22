@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Action** | **string** | Action with spot instance | 
+**Action** | **string** | Action with the spot instance - reboot | 
 
 ## Methods
 

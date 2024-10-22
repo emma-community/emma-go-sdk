@@ -4,30 +4,32 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**CreatedAt** | Pointer to **string** |  | [optional] 
-**CreatedByName** | Pointer to **string** |  | [optional] 
-**CreatedById** | Pointer to **int32** |  | [optional] 
-**ModifiedAt** | Pointer to **string** |  | [optional] 
-**ModifiedByName** | Pointer to **string** |  | [optional] 
-**ModifiedById** | Pointer to **int32** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
-**ProjectId** | Pointer to **int32** |  | [optional] 
-**Status** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **int32** | ID of the virtual machine | [optional] 
+**CreatedAt** | Pointer to **string** | Date and time when the virtual machine was created | [optional] 
+**CreatedByName** | Pointer to **string** | Name of the user who created the virtual machine | [optional] 
+**CreatedById** | Pointer to **int32** | ID of the user who created the virtual machine | [optional] 
+**ModifiedAt** | Pointer to **string** | Date and time when the virtual machine was last edited | [optional] 
+**ModifiedByName** | Pointer to **string** | Name of the user who last edited the virtual machine | [optional] 
+**ModifiedById** | Pointer to **int32** | ID of the user who last edited the virtual machine | [optional] 
+**Name** | Pointer to **string** | Name of the virtual machine | [optional] 
+**ProjectId** | Pointer to **int32** | Project ID | [optional] 
+**Status** | Pointer to **string** | Status of the virtual machine | [optional] 
 **Provider** | Pointer to [**VmProvider**](VmProvider.md) |  | [optional] 
 **Location** | Pointer to [**VmLocation**](VmLocation.md) |  | [optional] 
 **DataCenter** | Pointer to [**VmDataCenter**](VmDataCenter.md) |  | [optional] 
 **Os** | Pointer to [**VmOs**](VmOs.md) |  | [optional] 
-**VCpu** | Pointer to **int32** |  | [optional] 
-**VCpuType** | Pointer to **string** | vCPU type | [optional] 
+**VCpu** | Pointer to **int32** | Number of virtual Central Processing Units (vCPUs) | [optional] 
+**VCpuType** | Pointer to **string** | Type of virtual Central Processing Units (vCPUs) | [optional] 
 **CloudNetworkType** | Pointer to **string** | Cloud network type | [optional] 
-**RamGb** | Pointer to **int32** |  | [optional] 
-**Disks** | Pointer to [**[]VmDisksInner**](VmDisksInner.md) |  | [optional] 
-**Networks** | Pointer to [**[]VmNetworksInner**](VmNetworksInner.md) |  | [optional] 
+**RamGb** | Pointer to **int32** | Capacity of the RAM in gigabytes | [optional] 
+**Disks** | Pointer to [**[]KubernetesNodeGroupsInnerNodesInnerDisksInner**](KubernetesNodeGroupsInnerNodesInnerDisksInner.md) | List of volumes | [optional] 
+**Networks** | Pointer to [**[]KubernetesNodeGroupsInnerNodesInnerNetworksInner**](KubernetesNodeGroupsInnerNodesInnerNetworksInner.md) |  | [optional] 
 **SecurityGroup** | Pointer to [**VmSecurityGroup**](VmSecurityGroup.md) |  | [optional] 
-**SshKeyId** | Pointer to **int32** |  | [optional] 
-**UserName** | Pointer to **string** |  | [optional] 
+**Subnetwork** | Pointer to [**VmSubnetwork**](VmSubnetwork.md) |  | [optional] 
+**SshKeyId** | Pointer to **int32** | SSH key ID | [optional] 
+**UserName** | Pointer to **string** | User name | [optional] 
 **Cost** | Pointer to [**VmCost**](VmCost.md) |  | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
 
@@ -500,20 +502,20 @@ HasRamGb returns a boolean if a field has been set.
 
 ### GetDisks
 
-`func (o *Vm) GetDisks() []VmDisksInner`
+`func (o *Vm) GetDisks() []KubernetesNodeGroupsInnerNodesInnerDisksInner`
 
 GetDisks returns the Disks field if non-nil, zero value otherwise.
 
 ### GetDisksOk
 
-`func (o *Vm) GetDisksOk() (*[]VmDisksInner, bool)`
+`func (o *Vm) GetDisksOk() (*[]KubernetesNodeGroupsInnerNodesInnerDisksInner, bool)`
 
 GetDisksOk returns a tuple with the Disks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDisks
 
-`func (o *Vm) SetDisks(v []VmDisksInner)`
+`func (o *Vm) SetDisks(v []KubernetesNodeGroupsInnerNodesInnerDisksInner)`
 
 SetDisks sets Disks field to given value.
 
@@ -525,20 +527,20 @@ HasDisks returns a boolean if a field has been set.
 
 ### GetNetworks
 
-`func (o *Vm) GetNetworks() []VmNetworksInner`
+`func (o *Vm) GetNetworks() []KubernetesNodeGroupsInnerNodesInnerNetworksInner`
 
 GetNetworks returns the Networks field if non-nil, zero value otherwise.
 
 ### GetNetworksOk
 
-`func (o *Vm) GetNetworksOk() (*[]VmNetworksInner, bool)`
+`func (o *Vm) GetNetworksOk() (*[]KubernetesNodeGroupsInnerNodesInnerNetworksInner, bool)`
 
 GetNetworksOk returns a tuple with the Networks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNetworks
 
-`func (o *Vm) SetNetworks(v []VmNetworksInner)`
+`func (o *Vm) SetNetworks(v []KubernetesNodeGroupsInnerNodesInnerNetworksInner)`
 
 SetNetworks sets Networks field to given value.
 
@@ -572,6 +574,31 @@ SetSecurityGroup sets SecurityGroup field to given value.
 `func (o *Vm) HasSecurityGroup() bool`
 
 HasSecurityGroup returns a boolean if a field has been set.
+
+### GetSubnetwork
+
+`func (o *Vm) GetSubnetwork() VmSubnetwork`
+
+GetSubnetwork returns the Subnetwork field if non-nil, zero value otherwise.
+
+### GetSubnetworkOk
+
+`func (o *Vm) GetSubnetworkOk() (*VmSubnetwork, bool)`
+
+GetSubnetworkOk returns a tuple with the Subnetwork field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubnetwork
+
+`func (o *Vm) SetSubnetwork(v VmSubnetwork)`
+
+SetSubnetwork sets Subnetwork field to given value.
+
+### HasSubnetwork
+
+`func (o *Vm) HasSubnetwork() bool`
+
+HasSubnetwork returns a boolean if a field has been set.
 
 ### GetSshKeyId
 
@@ -648,6 +675,41 @@ SetCost sets Cost field to given value.
 
 HasCost returns a boolean if a field has been set.
 
+### GetTags
+
+`func (o *Vm) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *Vm) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *Vm) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *Vm) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
+### SetTagsNil
+
+`func (o *Vm) SetTagsNil(b bool)`
+
+ SetTagsNil sets the value for Tags to be an explicit nil
+
+### UnsetTags
+`func (o *Vm) UnsetTags()`
+
+UnsetTags ensures that no value is present for Tags, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
