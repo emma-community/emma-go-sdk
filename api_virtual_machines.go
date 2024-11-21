@@ -480,6 +480,13 @@ To create a virtual machine, follow these steps:
 
 5. Choose one of the cloud network types: _multi-cloud, isolated,_ or _default_. Choose the _multi-cloud_ network type if you need to connect compute instances from different providers.
 
+Providers support the following types of networks:
+- AWS - multi-cloud, isolated, default
+- Azure - multi-cloud, isolated, default
+- DigitalOcean - default
+- GCP - multi-cloud, isolated, default
+- Gcore - default
+
 You may choose not to specify a security group. In this case, the virtual machine will be added to the default security group.
 
 

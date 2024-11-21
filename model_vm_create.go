@@ -41,6 +41,8 @@ type VmCreate struct {
 	VolumeGb int32 `json:"volumeGb"`
 	// SSH-key ID
 	SshKeyId int32 `json:"sshKeyId"`
+	// User password
+	UserPassword *string `json:"userPassword,omitempty"`
 	// ID of the security group
 	SecurityGroupId *int32 `json:"securityGroupId,omitempty"`
 	// ID of the subnetwork
@@ -318,6 +320,38 @@ func (o *VmCreate) SetSshKeyId(v int32) {
 	o.SshKeyId = v
 }
 
+// GetUserPassword returns the UserPassword field value if set, zero value otherwise.
+func (o *VmCreate) GetUserPassword() string {
+	if o == nil || IsNil(o.UserPassword) {
+		var ret string
+		return ret
+	}
+	return *o.UserPassword
+}
+
+// GetUserPasswordOk returns a tuple with the UserPassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmCreate) GetUserPasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.UserPassword) {
+		return nil, false
+	}
+	return o.UserPassword, true
+}
+
+// HasUserPassword returns a boolean if a field has been set.
+func (o *VmCreate) HasUserPassword() bool {
+	if o != nil && !IsNil(o.UserPassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserPassword gets a reference to the given string and assigns it to the UserPassword field.
+func (o *VmCreate) SetUserPassword(v string) {
+	o.UserPassword = &v
+}
+
 // GetSecurityGroupId returns the SecurityGroupId field value if set, zero value otherwise.
 func (o *VmCreate) GetSecurityGroupId() int32 {
 	if o == nil || IsNil(o.SecurityGroupId) {
@@ -434,6 +468,9 @@ func (o VmCreate) ToMap() (map[string]interface{}, error) {
 	toSerialize["volumeType"] = o.VolumeType
 	toSerialize["volumeGb"] = o.VolumeGb
 	toSerialize["sshKeyId"] = o.SshKeyId
+	if !IsNil(o.UserPassword) {
+		toSerialize["userPassword"] = o.UserPassword
+	}
 	if !IsNil(o.SecurityGroupId) {
 		toSerialize["securityGroupId"] = o.SecurityGroupId
 	}

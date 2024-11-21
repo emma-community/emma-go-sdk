@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **VolumeType** | **string** | Volume type | 
 **VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
 **SshKeyId** | **int32** | SSH-key ID | 
+**UserPassword** | Pointer to **string** | User password | [optional] 
 **SecurityGroupId** | Pointer to **int32** | ID of the security group | [optional] 
 **Price** | **float32** | Offer price of the spot instance | 
 
@@ -235,6 +236,31 @@ and a boolean to check if the value has been set.
 
 SetSshKeyId sets SshKeyId field to given value.
 
+
+### GetUserPassword
+
+`func (o *SpotCreate) GetUserPassword() string`
+
+GetUserPassword returns the UserPassword field if non-nil, zero value otherwise.
+
+### GetUserPasswordOk
+
+`func (o *SpotCreate) GetUserPasswordOk() (*string, bool)`
+
+GetUserPasswordOk returns a tuple with the UserPassword field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUserPassword
+
+`func (o *SpotCreate) SetUserPassword(v string)`
+
+SetUserPassword sets UserPassword field to given value.
+
+### HasUserPassword
+
+`func (o *SpotCreate) HasUserPassword() bool`
+
+HasUserPassword returns a boolean if a field has been set.
 
 ### GetSecurityGroupId
 

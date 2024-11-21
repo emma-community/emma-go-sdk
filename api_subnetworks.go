@@ -165,7 +165,14 @@ V1SubnetworksPost Create subnetwork
 This method creates a subnetwork.
 To create a subnetwork, consider the following parameters:
 1. Select a data center using the `/v1/data-centers` endpoint. The data center determines the provider and location of the subnetwork.
-2. Specify the IP address range (optional) and network size (required). Subnetwork prefix value must be in ranges: 10.0.0.0 - 10.255.255.255, 172.16.0.0 - 172.31.255.255, 192.168.0.0 - 192.168.255.255, network size must be /28-/16 for DigitalOcean and /24-/16 for Gcore.
+2. Specify the IP address range (optional). Subnetwork prefix values can have exceptions depending on that provider and must be in ranges: 10.0.0.0 - 10.255.255.255, 172.16.0.0 - 172.31.255.255, 192.168.0.0 - 192.168.255.255.
+
+Specific conditions are depending on the provider:
+- GCP: 2 first and 2 last addresses are reserved by the provider. Notice that VMs in different GCP subnetworks can be connected to each other.
+- Azure: 4 first and the last ones are reserved by the provider.
+- AWS: 3 first and the last one are reserved by the provider.
+
+3. Specify the network size (required). Network size must be: for DigitalOcean /28-/16, for Gcore /24-/16, for Azure /29 - /2, for AWS /28 - /16
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

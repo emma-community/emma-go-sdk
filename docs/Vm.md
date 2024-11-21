@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **Subnetwork** | Pointer to [**VmSubnetwork**](VmSubnetwork.md) |  | [optional] 
 **SshKeyId** | Pointer to **int32** | SSH key ID | [optional] 
 **UserName** | Pointer to **string** | User name | [optional] 
+**UserPassword** | Pointer to **string** | User password | [optional] 
 **Cost** | Pointer to [**VmCost**](VmCost.md) |  | [optional] 
 **Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
@@ -649,6 +650,31 @@ SetUserName sets UserName field to given value.
 `func (o *Vm) HasUserName() bool`
 
 HasUserName returns a boolean if a field has been set.
+
+### GetUserPassword
+
+`func (o *Vm) GetUserPassword() string`
+
+GetUserPassword returns the UserPassword field if non-nil, zero value otherwise.
+
+### GetUserPasswordOk
+
+`func (o *Vm) GetUserPasswordOk() (*string, bool)`
+
+GetUserPasswordOk returns a tuple with the UserPassword field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUserPassword
+
+`func (o *Vm) SetUserPassword(v string)`
+
+SetUserPassword sets UserPassword field to given value.
+
+### HasUserPassword
+
+`func (o *Vm) HasUserPassword() bool`
+
+HasUserPassword returns a boolean if a field has been set.
 
 ### GetCost
 

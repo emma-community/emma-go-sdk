@@ -18,7 +18,6 @@ import (
 
 // GetStatisticalData200Response - struct for GetStatisticalData200Response
 type GetStatisticalData200Response struct {
-	ArrayOfExpenseHistoryResponse *[]ExpenseHistoryResponse
 	ArrayOfKubernetesClusterChangingMetricsResponse *[]KubernetesClusterChangingMetricsResponse
 	ArrayOfKubernetesClusterCurrentStateResponse *[]KubernetesClusterCurrentStateResponse
 	ArrayOfKubernetesClusterMetricsResponse *[]KubernetesClusterMetricsResponse
@@ -29,13 +28,6 @@ type GetStatisticalData200Response struct {
 	ArrayOfResourceAnalysisResponse *[]ResourceAnalysisResponse
 	ArrayOfVmAnalyticsResponse *[]VmAnalyticsResponse
 	ArrayOfVmMonitoringResponse *[]VmMonitoringResponse
-}
-
-// []ExpenseHistoryResponseAsGetStatisticalData200Response is a convenience function that returns []ExpenseHistoryResponse wrapped in GetStatisticalData200Response
-func ArrayOfExpenseHistoryResponseAsGetStatisticalData200Response(v *[]ExpenseHistoryResponse) GetStatisticalData200Response {
-	return GetStatisticalData200Response{
-		ArrayOfExpenseHistoryResponse: v,
-	}
 }
 
 // []KubernetesClusterChangingMetricsResponseAsGetStatisticalData200Response is a convenience function that returns []KubernetesClusterChangingMetricsResponse wrapped in GetStatisticalData200Response
@@ -113,23 +105,6 @@ func ArrayOfVmMonitoringResponseAsGetStatisticalData200Response(v *[]VmMonitorin
 func (dst *GetStatisticalData200Response) UnmarshalJSON(data []byte) error {
 	var err error
 	match := 0
-	// try to unmarshal data into ArrayOfExpenseHistoryResponse
-	err = newStrictDecoder(data).Decode(&dst.ArrayOfExpenseHistoryResponse)
-	if err == nil {
-		jsonArrayOfExpenseHistoryResponse, _ := json.Marshal(dst.ArrayOfExpenseHistoryResponse)
-		if string(jsonArrayOfExpenseHistoryResponse) == "{}" { // empty struct
-			dst.ArrayOfExpenseHistoryResponse = nil
-		} else {
-			if err = validator.Validate(dst.ArrayOfExpenseHistoryResponse); err != nil {
-				dst.ArrayOfExpenseHistoryResponse = nil
-			} else {
-				match++
-			}
-		}
-	} else {
-		dst.ArrayOfExpenseHistoryResponse = nil
-	}
-
 	// try to unmarshal data into ArrayOfKubernetesClusterChangingMetricsResponse
 	err = newStrictDecoder(data).Decode(&dst.ArrayOfKubernetesClusterChangingMetricsResponse)
 	if err == nil {
@@ -302,7 +277,6 @@ func (dst *GetStatisticalData200Response) UnmarshalJSON(data []byte) error {
 
 	if match > 1 { // more than 1 match
 		// reset to nil
-		dst.ArrayOfExpenseHistoryResponse = nil
 		dst.ArrayOfKubernetesClusterChangingMetricsResponse = nil
 		dst.ArrayOfKubernetesClusterCurrentStateResponse = nil
 		dst.ArrayOfKubernetesClusterMetricsResponse = nil
@@ -324,10 +298,6 @@ func (dst *GetStatisticalData200Response) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src GetStatisticalData200Response) MarshalJSON() ([]byte, error) {
-	if src.ArrayOfExpenseHistoryResponse != nil {
-		return json.Marshal(&src.ArrayOfExpenseHistoryResponse)
-	}
-
 	if src.ArrayOfKubernetesClusterChangingMetricsResponse != nil {
 		return json.Marshal(&src.ArrayOfKubernetesClusterChangingMetricsResponse)
 	}
@@ -376,10 +346,6 @@ func (obj *GetStatisticalData200Response) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
-	if obj.ArrayOfExpenseHistoryResponse != nil {
-		return obj.ArrayOfExpenseHistoryResponse
-	}
-
 	if obj.ArrayOfKubernetesClusterChangingMetricsResponse != nil {
 		return obj.ArrayOfKubernetesClusterChangingMetricsResponse
 	}

@@ -9,7 +9,8 @@ Name | Type | Description | Notes
 **DataCenterId** | Pointer to **string** | ID of the cloud provider&#39;s data center | [optional] 
 **SubnetworkPrefix** | Pointer to **string** | The prefix for the subnetwork IP address range | [optional] 
 **SubnetworkSize** | Pointer to **int32** | The net mask size for the subnetwork | [optional] 
-**Resources** | Pointer to [**SubnetworkResources**](SubnetworkResources.md) |  | [optional] 
+**Resources** | Pointer to [**[]SubnetworkResourcesInner**](SubnetworkResourcesInner.md) | List of entities in the subnetwork | [optional] 
+**Status** | Pointer to **string** | Subnetwork status | [optional] 
 
 ## Methods
 
@@ -157,20 +158,20 @@ HasSubnetworkSize returns a boolean if a field has been set.
 
 ### GetResources
 
-`func (o *Subnetwork) GetResources() SubnetworkResources`
+`func (o *Subnetwork) GetResources() []SubnetworkResourcesInner`
 
 GetResources returns the Resources field if non-nil, zero value otherwise.
 
 ### GetResourcesOk
 
-`func (o *Subnetwork) GetResourcesOk() (*SubnetworkResources, bool)`
+`func (o *Subnetwork) GetResourcesOk() (*[]SubnetworkResourcesInner, bool)`
 
 GetResourcesOk returns a tuple with the Resources field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetResources
 
-`func (o *Subnetwork) SetResources(v SubnetworkResources)`
+`func (o *Subnetwork) SetResources(v []SubnetworkResourcesInner)`
 
 SetResources sets Resources field to given value.
 
@@ -179,6 +180,31 @@ SetResources sets Resources field to given value.
 `func (o *Subnetwork) HasResources() bool`
 
 HasResources returns a boolean if a field has been set.
+
+### GetStatus
+
+`func (o *Subnetwork) GetStatus() string`
+
+GetStatus returns the Status field if non-nil, zero value otherwise.
+
+### GetStatusOk
+
+`func (o *Subnetwork) GetStatusOk() (*string, bool)`
+
+GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatus
+
+`func (o *Subnetwork) SetStatus(v string)`
+
+SetStatus sets Status field to given value.
+
+### HasStatus
+
+`func (o *Subnetwork) HasStatus() bool`
+
+HasStatus returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

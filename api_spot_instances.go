@@ -480,6 +480,11 @@ To create a spot instance, follow these steps:
 
 5. Choose one of the cloud network types: _multi-cloud, isolated,_ or _default_. Choose the _multi-cloud_ network type if you need to connect compute instances from different providers.
 
+Providers support the following types of networks:
+- AWS - multi-cloud, isolated, default
+- Azure - multi-cloud, isolated, default
+- GCP - multi-cloud, isolated, default
+
 You may choose not to specify a security group. In this case, the spot instance will be added to the default security group.
 
 A `price` field of a spot instance is not required. 

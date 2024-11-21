@@ -5,16 +5,15 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DatasetName** | **string** | Query name | 
-**GroupBy** | **[]string** | List of grouping categories | 
-**Filters** | [**VmMonitoringQueryFilters**](VmMonitoringQueryFilters.md) |  | 
 **CoreClusterId** | **int32** | ID of Kubernetes cluster | 
+**Filters** | [**VmMonitoringQueryFilters**](VmMonitoringQueryFilters.md) |  | 
 **VmId** | **int32** | ID of VM | 
 
 ## Methods
 
 ### NewGetStatisticalDataRequest
 
-`func NewGetStatisticalDataRequest(datasetName string, groupBy []string, filters VmMonitoringQueryFilters, coreClusterId int32, vmId int32, ) *GetStatisticalDataRequest`
+`func NewGetStatisticalDataRequest(datasetName string, coreClusterId int32, filters VmMonitoringQueryFilters, vmId int32, ) *GetStatisticalDataRequest`
 
 NewGetStatisticalDataRequest instantiates a new GetStatisticalDataRequest object
 This constructor will assign default values to properties that have it defined,
@@ -49,24 +48,24 @@ and a boolean to check if the value has been set.
 SetDatasetName sets DatasetName field to given value.
 
 
-### GetGroupBy
+### GetCoreClusterId
 
-`func (o *GetStatisticalDataRequest) GetGroupBy() []string`
+`func (o *GetStatisticalDataRequest) GetCoreClusterId() int32`
 
-GetGroupBy returns the GroupBy field if non-nil, zero value otherwise.
+GetCoreClusterId returns the CoreClusterId field if non-nil, zero value otherwise.
 
-### GetGroupByOk
+### GetCoreClusterIdOk
 
-`func (o *GetStatisticalDataRequest) GetGroupByOk() (*[]string, bool)`
+`func (o *GetStatisticalDataRequest) GetCoreClusterIdOk() (*int32, bool)`
 
-GetGroupByOk returns a tuple with the GroupBy field if it's non-nil, zero value otherwise
+GetCoreClusterIdOk returns a tuple with the CoreClusterId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetGroupBy
+### SetCoreClusterId
 
-`func (o *GetStatisticalDataRequest) SetGroupBy(v []string)`
+`func (o *GetStatisticalDataRequest) SetCoreClusterId(v int32)`
 
-SetGroupBy sets GroupBy field to given value.
+SetCoreClusterId sets CoreClusterId field to given value.
 
 
 ### GetFilters
@@ -87,26 +86,6 @@ and a boolean to check if the value has been set.
 `func (o *GetStatisticalDataRequest) SetFilters(v VmMonitoringQueryFilters)`
 
 SetFilters sets Filters field to given value.
-
-
-### GetCoreClusterId
-
-`func (o *GetStatisticalDataRequest) GetCoreClusterId() int32`
-
-GetCoreClusterId returns the CoreClusterId field if non-nil, zero value otherwise.
-
-### GetCoreClusterIdOk
-
-`func (o *GetStatisticalDataRequest) GetCoreClusterIdOk() (*int32, bool)`
-
-GetCoreClusterIdOk returns a tuple with the CoreClusterId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCoreClusterId
-
-`func (o *GetStatisticalDataRequest) SetCoreClusterId(v int32)`
-
-SetCoreClusterId sets CoreClusterId field to given value.
 
 
 ### GetVmId

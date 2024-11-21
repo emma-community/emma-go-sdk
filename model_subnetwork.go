@@ -29,7 +29,10 @@ type Subnetwork struct {
 	SubnetworkPrefix *string `json:"subnetworkPrefix,omitempty"`
 	// The net mask size for the subnetwork
 	SubnetworkSize *int32 `json:"subnetworkSize,omitempty"`
-	Resources *SubnetworkResources `json:"resources,omitempty"`
+	// List of entities in the subnetwork
+	Resources []SubnetworkResourcesInner `json:"resources,omitempty"`
+	// Subnetwork status
+	Status *string `json:"status,omitempty"`
 }
 
 // NewSubnetwork instantiates a new Subnetwork object
@@ -210,17 +213,17 @@ func (o *Subnetwork) SetSubnetworkSize(v int32) {
 }
 
 // GetResources returns the Resources field value if set, zero value otherwise.
-func (o *Subnetwork) GetResources() SubnetworkResources {
+func (o *Subnetwork) GetResources() []SubnetworkResourcesInner {
 	if o == nil || IsNil(o.Resources) {
-		var ret SubnetworkResources
+		var ret []SubnetworkResourcesInner
 		return ret
 	}
-	return *o.Resources
+	return o.Resources
 }
 
 // GetResourcesOk returns a tuple with the Resources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Subnetwork) GetResourcesOk() (*SubnetworkResources, bool) {
+func (o *Subnetwork) GetResourcesOk() ([]SubnetworkResourcesInner, bool) {
 	if o == nil || IsNil(o.Resources) {
 		return nil, false
 	}
@@ -236,9 +239,41 @@ func (o *Subnetwork) HasResources() bool {
 	return false
 }
 
-// SetResources gets a reference to the given SubnetworkResources and assigns it to the Resources field.
-func (o *Subnetwork) SetResources(v SubnetworkResources) {
-	o.Resources = &v
+// SetResources gets a reference to the given []SubnetworkResourcesInner and assigns it to the Resources field.
+func (o *Subnetwork) SetResources(v []SubnetworkResourcesInner) {
+	o.Resources = v
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *Subnetwork) GetStatus() string {
+	if o == nil || IsNil(o.Status) {
+		var ret string
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Subnetwork) GetStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *Subnetwork) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *Subnetwork) SetStatus(v string) {
+	o.Status = &v
 }
 
 func (o Subnetwork) MarshalJSON() ([]byte, error) {
@@ -268,6 +303,9 @@ func (o Subnetwork) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Resources) {
 		toSerialize["resources"] = o.Resources
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
 	}
 	return toSerialize, nil
 }

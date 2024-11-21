@@ -1,4 +1,4 @@
-# ComputeInstancesConfigurationsAPI
+# \ComputeInstancesConfigurationsAPI
 
 All URIs are relative to *https://api.emma.ms/external*
 

@@ -390,9 +390,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Kubernetes'
-                type: array
+                $ref: '#/components/schemas/Kubernetes'
           description: Successful operation
         "400":
           content:
@@ -1528,14 +1526,16 @@ paths:
         \ an operating system using the `/v1/operating-systems` endpoint.\n\n5. Choose\
         \ one of the cloud network types: _multi-cloud, isolated,_ or _default_. Choose\
         \ the _multi-cloud_ network type if you need to connect compute instances\
-        \ from different providers.\n\nYou may choose not to specify a security group.\
-        \ In this case, the spot instance will be added to the default security group.\n\
-        \nA `price` field of a spot instance is not required. \n\nThe spot instance\
-        \ market operates on a bidding system. Your specified price acts as your bid\
-        \ in this market. If your bid is higher than the current spot price, your\
-        \ instance request will likely be fulfilled. However, if the market price\
-        \ exceeds your bid, your instance may not be launched or could be terminated\
-        \ if already running.\n"
+        \ from different providers.\n\nProviders support the following types of networks:\n\
+        - AWS - multi-cloud, isolated, default\n- Azure - multi-cloud, isolated, default\n\
+        - GCP - multi-cloud, isolated, default\n\nYou may choose not to specify a\
+        \ security group. In this case, the spot instance will be added to the default\
+        \ security group.\n\nA `price` field of a spot instance is not required. \n\
+        \nThe spot instance market operates on a bidding system. Your specified price\
+        \ acts as your bid in this market. If your bid is higher than the current\
+        \ spot price, your instance request will likely be fulfilled. However, if\
+        \ the market price exceeds your bid, your instance may not be launched or\
+        \ could be terminated if already running.\n"
       operationId: SpotCreate
       requestBody:
         content:
@@ -2069,7 +2069,14 @@ paths:
         This method creates a subnetwork.
         To create a subnetwork, consider the following parameters:
         1. Select a data center using the `/v1/data-centers` endpoint. The data center determines the provider and location of the subnetwork.
-        2. Specify the IP address range (optional) and network size (required). Subnetwork prefix value must be in ranges: 10.0.0.0 - 10.255.255.255, 172.16.0.0 - 172.31.255.255, 192.168.0.0 - 192.168.255.255, network size must be /28-/16 for DigitalOcean and /24-/16 for Gcore.
+        2. Specify the IP address range (optional). Subnetwork prefix values can have exceptions depending on that provider and must be in ranges: 10.0.0.0 - 10.255.255.255, 172.16.0.0 - 172.31.255.255, 192.168.0.0 - 192.168.255.255.
+
+        Specific conditions are depending on the provider:
+        - GCP: 2 first and 2 last addresses are reserved by the provider. Notice that VMs in different GCP subnetworks can be connected to each other.
+        - Azure: 4 first and the last ones are reserved by the provider.
+        - AWS: 3 first and the last one are reserved by the provider.
+
+        3. Specify the network size (required). Network size must be: for DigitalOcean /28-/16, for Gcore /24-/16, for Azure /29 - /2, for AWS /28 - /16
       requestBody:
         content:
           application/json:
@@ -2342,6 +2349,13 @@ paths:
         4. Select an operating system using the `/v1/operating-systems` endpoint.
 
         5. Choose one of the cloud network types: _multi-cloud, isolated,_ or _default_. Choose the _multi-cloud_ network type if you need to connect compute instances from different providers.
+
+        Providers support the following types of networks:
+        - AWS - multi-cloud, isolated, default
+        - Azure - multi-cloud, isolated, default
+        - DigitalOcean - default
+        - GCP - multi-cloud, isolated, default
+        - Gcore - default
 
         You may choose not to specify a security group. In this case, the virtual machine will be added to the default security group.
       operationId: VmCreate
@@ -4487,50 +4501,6 @@ components:
           example: 1
           type: integer
       type: object
-    ExpenseHistoryQuery:
-      properties:
-        datasetName:
-          description: Query name
-          enum:
-          - expense_history
-          example: expense_history
-          type: string
-        groupBy:
-          description: List of grouping categories
-          items:
-            enum:
-            - project_id
-            - service
-            - cloud_type
-            example: project_id
-            type: string
-          type: array
-        filters:
-          $ref: '#/components/schemas/ExpenseHistoryQuery_filters'
-      required:
-      - datasetName
-      - filters
-      - groupBy
-      type: object
-    ExpenseHistoryResponse:
-      example:
-        resourceGroup: Amazon EC2
-        expensesPerDay: 123.3
-        timecode: 2024-06-19
-      properties:
-        resourceGroup:
-          description: Resource group name
-          example: Amazon EC2
-          type: string
-        timecode:
-          description: Timecode
-          example: 2024-06-19
-          type: string
-        expensesPerDay:
-          description: Daily group expenses
-          example: 123.3
-          type: number
-      type: object
     ResourceAnalysisQuery:
       properties:
         datasetName:
@@ -4594,6 +4564,50 @@ components:
       - vmId
       type: object
     VmMonitoringResponse:
+      example:
+        avgNetworkInHuman: 10.5
+        maxNetworkInHuman: 10.5
+        avgDiskSpaceUsedGb: 10.5
+        cpuTotalPercent: 200
+        avgCpuUtilizationAverageCores: 54.5
+        networkOutHuman: 10.5
+        avgNetworkOutHuman: 10.5
+        ramUsageAverageGb: 1.5
+        ramDataPresent: 1
+        avgRamUsageAverageGb: 1.5
+        cpuHumanLabel: '%'
+        maxDiskReadHuman: 10.5
+        timecode: 2024-06-19T09:52:00.000+00:00
+        diskReadHuman: 10.5
+        maxCpuUtilizationAverageCores: 54.5
+        diskSpaceHumanLabel: GB
+        ramTotalAmountGb: 2
+        maxDiskSpaceUsedGb: 10.5
+        diskReadHumanLabel: Kbps
+        cpuDataPresent: 1
+        networkOutCoef: 1000
+        ramHumanLabel: GB
+        maxRamUsageAverageGb: 1.5
+        diskWriteHuman: 10.5
+        cpuUtilizationAverageCores: 54.5
+        networkInHumanLabel: Kbps
+        avgDiskReadHuman: 10.5
+        diskReadCoef: 1000
+        networkInDataPresent: 1
+        avgDiskWriteHuman: 10.5
+        maxDiskWriteHuman: 10.5
+        diskWriteDataPresent: 1
+        diskUsedDataPresent: 1
+        networkOutDataPresent: 1
+        networkInCoef: 1000
+        diskSpaceUsedGb: 10.5
+        diskSpaceTotalGb: 16
+        diskWriteHumanLabel: Kbps
+        diskReadDataPresent: 1
+        maxNetworkOutHuman: 10.5
+        diskWriteCoef: 1000
+        networkInHuman: 10.5
+        networkOutHumanLabel: Kbps
       properties:
         timecode:
           example: 2024-06-19T09:52:00.000+00:00
@@ -4640,7 +4654,7 @@ components:
           type: number
         ramTotalAmountGb:
           description: "Total memory, GB"
-          example: 2.0
+          example: 2
           type: number
         ramHumanLabel:
           description: Label
@@ -5404,18 +5418,19 @@ components:
       type: object
     SpotCreate:
       example:
-        securityGroupId: 208
         volumeType: ssd
+        userPassword: m#P52s@ap$V
         vCpu: 4
+        osId: 35
+        ramGb: 1
+        sshKeyId: 124
+        vCpuType: shared
+        securityGroupId: 208
         price: 0.002635
         dataCenterId: aws-us-west-1
         name: spot-default
         volumeGb: 16
-        osId: 35
         cloudNetworkType: multi-cloud
-        ramGb: 1
-        sshKeyId: 124
-        vCpuType: shared
       properties:
         name:
           description: Name of the spot instance
@@ -5468,6 +5483,10 @@ components:
           description: SSH-key ID
           example: 124
           type: integer
+        userPassword:
+          description: User password
+          example: m#P52s@ap$V
+          type: string
         securityGroupId:
           description: ID of the security group
           example: 208
@@ -5637,9 +5656,12 @@ components:
         subnetworkSize: 24
         name: default
         resources:
-          id: 22
+        - id: 22
+          resourceType: vm
+        - id: 22
           resourceType: vm
         id: d6ffb3db-4940-4979-94f3-68b11a018d98
+        status: active
       properties:
         id:
           description: Subnetwork id
@@ -5662,7 +5684,14 @@ components:
           example: 24
           type: integer
         resources:
-          $ref: '#/components/schemas/Subnetwork_resources'
+          description: List of entities in the subnetwork
+          items:
+            $ref: '#/components/schemas/Subnetwork_resources_inner'
+          type: array
+        status:
+          description: Subnetwork status
+          example: active
+          type: string
       type: object
     SubnetworkCreate:
       example:
@@ -5774,6 +5803,7 @@ components:
     Vm:
       example:
         createdByName: Automation User
+        userPassword: m#P52s@ap$V
         disks:
         - sizeGb: 250
           typeId: 2
@@ -5958,6 +5988,10 @@ components:
           description: User name
           example: root
           type: string
+        userPassword:
+          description: User password
+          example: m#P52s@ap$V
+          type: string
         cost:
           $ref: '#/components/schemas/Vm_cost'
         tags:
@@ -5969,6 +6003,7 @@ components:
     VmCreate:
       example:
         volumeType: ssd
+        userPassword: m#P52s@ap$V
         vCpu: 2
         privateIp: 192.168.0.2
         subnetworkId: d6ffb3db-4940-4979-94f3-68b11a018d98
@@ -6033,6 +6068,10 @@ components:
           description: SSH-key ID
           example: 124
           type: integer
+        userPassword:
+          description: User password
+          example: m#P52s@ap$V
+          type: string
         securityGroupId:
           description: ID of the security group
           example: 208
@@ -6555,7 +6594,6 @@ components:
         empty: true
     GetStatisticalData_request:
       oneOf:
-      - $ref: '#/components/schemas/ExpenseHistoryQuery'
       - $ref: '#/components/schemas/KubernetesClusterChangingMetricsQuery'
       - $ref: '#/components/schemas/KubernetesClusterCurrentStateQuery'
       - $ref: '#/components/schemas/KubernetesClusterMetricsQuery'
@@ -6568,9 +6606,6 @@ components:
       - $ref: '#/components/schemas/VmAnalyticsQuery'
     GetStatisticalData_200_response:
       oneOf:
-      - items:
-          $ref: '#/components/schemas/ExpenseHistoryResponse'
-        type: array
       - items:
           $ref: '#/components/schemas/VmMonitoringResponse'
         type: array
@@ -7483,25 +7518,6 @@ components:
       required:
       - serviceFilter
       type: object
-    ExpenseHistoryQuery_filters:
-      description: List of additional parameters
-      properties:
-        projectId:
-          description: Project ID
-          example: 112
-          type: integer
-        periodStart:
-          description: Start date of the requested period of statistics
-          example: 2024-06-19
-          type: string
-        periodEnd:
-          description: End date of the requested period of statistics
-          example: 2024-06-27
-          type: string
-      required:
-      - periodEnd
-      - periodStart
-      type: object
     ResourceAnalysisQuery_filters:
       description: List of aditional parameters
       properties:
@@ -7823,8 +7839,7 @@ components:
       - objectStatesMetrics
       - objectType
       type: object
-    Subnetwork_resources:
-      description: List of entities in the subnetwork
+    Subnetwork_resources_inner:
       example:
         id: 22
         resourceType: vm
