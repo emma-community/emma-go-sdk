@@ -24,9 +24,6 @@ docs/ConflictError.md
 docs/Credentials.md
 docs/DataCenter.md
 docs/DataCentersAPI.md
-docs/ExpenseHistoryQuery.md
-docs/ExpenseHistoryQueryFilters.md
-docs/ExpenseHistoryResponse.md
 docs/ForbiddenError.md
 docs/GetStatisticalData200Response.md
 docs/GetStatisticalDataRequest.md
@@ -107,7 +104,7 @@ docs/StatisticsAPI.md
 docs/Subnetwork.md
 docs/SubnetworkCreate.md
 docs/SubnetworkEdit.md
-docs/SubnetworkResources.md
+docs/SubnetworkResourcesInner.md
 docs/SubnetworksAPI.md
 docs/Tag.md
 docs/Token.md
@@ -142,9 +139,6 @@ model_bad_request_error.go
 model_conflict_error.go
 model_credentials.go
 model_data_center.go
-model_expense_history_query.go
-model_expense_history_query_filters.go
-model_expense_history_response.go
 model_forbidden_error.go
 model_get_statistical_data_200_response.go
 model_get_statistical_data_request.go
@@ -217,7 +211,7 @@ model_ssh_keys_create_import_request.go
 model_subnetwork.go
 model_subnetwork_create.go
 model_subnetwork_edit.go
-model_subnetwork_resources.go
+model_subnetwork_resources_inner.go
 model_tag.go
 model_token.go
 model_unauthorized_error.go
@@ -246,7 +240,17 @@ model_vm_start.go
 model_vm_subnetwork.go
 model_vm_transfer.go
 response.go
+test/api_authentication_test.go
+test/api_compute_instances_configurations_test.go
+test/api_data_centers_test.go
 test/api_kubernetes_clusters_test.go
+test/api_locations_test.go
+test/api_operating_systems_test.go
+test/api_providers_test.go
+test/api_security_groups_test.go
+test/api_spot_instances_test.go
+test/api_ssh_keys_test.go
 test/api_statistics_test.go
 test/api_subnetworks_test.go
+test/api_virtual_machines_test.go
 utils.go

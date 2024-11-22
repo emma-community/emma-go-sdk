@@ -61,6 +61,8 @@ type Vm struct {
 	SshKeyId *int32 `json:"sshKeyId,omitempty"`
 	// User name
 	UserName *string `json:"userName,omitempty"`
+	// User password
+	UserPassword *string `json:"userPassword,omitempty"`
 	Cost *VmCost `json:"cost,omitempty"`
 	Tags []Tag `json:"tags,omitempty"`
 }
@@ -850,6 +852,38 @@ func (o *Vm) SetUserName(v string) {
 	o.UserName = &v
 }
 
+// GetUserPassword returns the UserPassword field value if set, zero value otherwise.
+func (o *Vm) GetUserPassword() string {
+	if o == nil || IsNil(o.UserPassword) {
+		var ret string
+		return ret
+	}
+	return *o.UserPassword
+}
+
+// GetUserPasswordOk returns a tuple with the UserPassword field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Vm) GetUserPasswordOk() (*string, bool) {
+	if o == nil || IsNil(o.UserPassword) {
+		return nil, false
+	}
+	return o.UserPassword, true
+}
+
+// HasUserPassword returns a boolean if a field has been set.
+func (o *Vm) HasUserPassword() bool {
+	if o != nil && !IsNil(o.UserPassword) {
+		return true
+	}
+
+	return false
+}
+
+// SetUserPassword gets a reference to the given string and assigns it to the UserPassword field.
+func (o *Vm) SetUserPassword(v string) {
+	o.UserPassword = &v
+}
+
 // GetCost returns the Cost field value if set, zero value otherwise.
 func (o *Vm) GetCost() VmCost {
 	if o == nil || IsNil(o.Cost) {
@@ -996,6 +1030,9 @@ func (o Vm) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UserName) {
 		toSerialize["userName"] = o.UserName
+	}
+	if !IsNil(o.UserPassword) {
+		toSerialize["userPassword"] = o.UserPassword
 	}
 	if !IsNil(o.Cost) {
 		toSerialize["cost"] = o.Cost

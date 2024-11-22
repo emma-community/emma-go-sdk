@@ -34,7 +34,7 @@ func (r ApiCreateKubernetesClusterRequest) KubernetesCreate(kubernetesCreate Kub
 	return r
 }
 
-func (r ApiCreateKubernetesClusterRequest) Execute() ([]Kubernetes, *http.Response, error) {
+func (r ApiCreateKubernetesClusterRequest) Execute() (*Kubernetes, *http.Response, error) {
 	return r.ApiService.CreateKubernetesClusterExecute(r)
 }
 
@@ -63,13 +63,13 @@ func (a *KubernetesClustersAPIService) CreateKubernetesCluster(ctx context.Conte
 }
 
 // Execute executes the request
-//  @return []Kubernetes
-func (a *KubernetesClustersAPIService) CreateKubernetesClusterExecute(r ApiCreateKubernetesClusterRequest) ([]Kubernetes, *http.Response, error) {
+//  @return Kubernetes
+func (a *KubernetesClustersAPIService) CreateKubernetesClusterExecute(r ApiCreateKubernetesClusterRequest) (*Kubernetes, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []Kubernetes
+		localVarReturnValue  *Kubernetes
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesClustersAPIService.CreateKubernetesCluster")

@@ -29,7 +29,7 @@ import (
 )
 
 func main() {
-	getStatisticalDataRequest := openapiclient.GetStatisticalData_request{ExpenseHistoryQuery: openapiclient.NewExpenseHistoryQuery("expense_history", []string{"project_id"}, *openapiclient.NewExpenseHistoryQueryFilters("2024-06-19", "2024-06-27"))} // GetStatisticalDataRequest |  (optional)
+	getStatisticalDataRequest := openapiclient.GetStatisticalData_request{KubernetesClusterChangingMetricsQuery: openapiclient.NewKubernetesClusterChangingMetricsQuery("k8s_dashboard_changing_metrics", int32(11211), *openapiclient.NewKubernetesClusterChangingMetricsQueryFilters("cluster_id", "10650", "node", []string{"cluster_pods_count_pending"}, "60M", "true", "CustomFilterAvgCpuRule_example", NullableFloat32(50), "less than", NullableFloat32(50), "greater than", NullableFloat32(50), []string{"node_1"}))} // GetStatisticalDataRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

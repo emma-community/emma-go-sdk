@@ -18,7 +18,6 @@ import (
 
 // GetStatisticalDataRequest - struct for GetStatisticalDataRequest
 type GetStatisticalDataRequest struct {
-	ExpenseHistoryQuery *ExpenseHistoryQuery
 	KubernetesClusterChangingMetricsQuery *KubernetesClusterChangingMetricsQuery
 	KubernetesClusterCurrentStateQuery *KubernetesClusterCurrentStateQuery
 	KubernetesClusterMetricsQuery *KubernetesClusterMetricsQuery
@@ -29,13 +28,6 @@ type GetStatisticalDataRequest struct {
 	ResourceAnalysisQuery *ResourceAnalysisQuery
 	VmAnalyticsQuery *VmAnalyticsQuery
 	VmMonitoringQuery *VmMonitoringQuery
-}
-
-// ExpenseHistoryQueryAsGetStatisticalDataRequest is a convenience function that returns ExpenseHistoryQuery wrapped in GetStatisticalDataRequest
-func ExpenseHistoryQueryAsGetStatisticalDataRequest(v *ExpenseHistoryQuery) GetStatisticalDataRequest {
-	return GetStatisticalDataRequest{
-		ExpenseHistoryQuery: v,
-	}
 }
 
 // KubernetesClusterChangingMetricsQueryAsGetStatisticalDataRequest is a convenience function that returns KubernetesClusterChangingMetricsQuery wrapped in GetStatisticalDataRequest
@@ -113,23 +105,6 @@ func VmMonitoringQueryAsGetStatisticalDataRequest(v *VmMonitoringQuery) GetStati
 func (dst *GetStatisticalDataRequest) UnmarshalJSON(data []byte) error {
 	var err error
 	match := 0
-	// try to unmarshal data into ExpenseHistoryQuery
-	err = newStrictDecoder(data).Decode(&dst.ExpenseHistoryQuery)
-	if err == nil {
-		jsonExpenseHistoryQuery, _ := json.Marshal(dst.ExpenseHistoryQuery)
-		if string(jsonExpenseHistoryQuery) == "{}" { // empty struct
-			dst.ExpenseHistoryQuery = nil
-		} else {
-			if err = validator.Validate(dst.ExpenseHistoryQuery); err != nil {
-				dst.ExpenseHistoryQuery = nil
-			} else {
-				match++
-			}
-		}
-	} else {
-		dst.ExpenseHistoryQuery = nil
-	}
-
 	// try to unmarshal data into KubernetesClusterChangingMetricsQuery
 	err = newStrictDecoder(data).Decode(&dst.KubernetesClusterChangingMetricsQuery)
 	if err == nil {
@@ -302,7 +277,6 @@ func (dst *GetStatisticalDataRequest) UnmarshalJSON(data []byte) error {
 
 	if match > 1 { // more than 1 match
 		// reset to nil
-		dst.ExpenseHistoryQuery = nil
 		dst.KubernetesClusterChangingMetricsQuery = nil
 		dst.KubernetesClusterCurrentStateQuery = nil
 		dst.KubernetesClusterMetricsQuery = nil
@@ -324,10 +298,6 @@ func (dst *GetStatisticalDataRequest) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src GetStatisticalDataRequest) MarshalJSON() ([]byte, error) {
-	if src.ExpenseHistoryQuery != nil {
-		return json.Marshal(&src.ExpenseHistoryQuery)
-	}
-
 	if src.KubernetesClusterChangingMetricsQuery != nil {
 		return json.Marshal(&src.KubernetesClusterChangingMetricsQuery)
 	}
@@ -376,10 +346,6 @@ func (obj *GetStatisticalDataRequest) GetActualInstance() (interface{}) {
 	if obj == nil {
 		return nil
 	}
-	if obj.ExpenseHistoryQuery != nil {
-		return obj.ExpenseHistoryQuery
-	}
-
 	if obj.KubernetesClusterChangingMetricsQuery != nil {
 		return obj.KubernetesClusterChangingMetricsQuery
 	}

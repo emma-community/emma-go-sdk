@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## CreateKubernetesCluster
 
-> []Kubernetes CreateKubernetesCluster(ctx).KubernetesCreate(kubernetesCreate).Execute()
+> Kubernetes CreateKubernetesCluster(ctx).KubernetesCreate(kubernetesCreate).Execute()
 
 Create Kubernetes cluster
 
@@ -42,7 +42,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClustersAPI.CreateKubernetesCluster``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CreateKubernetesCluster`: []Kubernetes
+	// response from `CreateKubernetesCluster`: Kubernetes
 	fmt.Fprintf(os.Stdout, "Response from `KubernetesClustersAPI.CreateKubernetesCluster`: %v\n", resp)
 }
 ```
@@ -62,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]Kubernetes**](Kubernetes.md)
+[**Kubernetes**](Kubernetes.md)
 
 ### Authorization
 
