@@ -45,7 +45,7 @@ Creates a Managed Kubernetes cluster. Kubernetes Service provides you with the a
 
 We offer a reliable and highly available infrastructure for your cluster, which is hosted across three cloud providers: **Amazon Web Services (AWS), Microsoft Azure,** and **Google Cloud Platform (GCP)**. The service ensures independence from a single cloud provider. You can deploy your cluster across the networks of three providers.
 
-Currently, you can only place clusters in **European regions** of cloud providers.
+Currently, you can only place clusters in **European** and **North American** regions of cloud providers.
 
 When creating worker nodes, you need to select the appropriate hardware configurations. The configuration depends on the provider and the data center. Use the `/v1/kubernetes-configs` endpoint to find available configurations for worker nodes.
 

@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **RamGb** | **int32** | Capacity of the RAM in gigabytes | 
 **VolumeType** | **string** | Volume type | 
 **VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
-**SshKeyId** | **int32** | SSH-key ID | 
+**SshKeyId** | Pointer to **int32** | SSH-key ID | [optional] 
 **UserPassword** | Pointer to **string** | User password | [optional] 
 **SecurityGroupId** | Pointer to **int32** | ID of the security group | [optional] 
 **Price** | **float32** | Offer price of the spot instance | 
@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewSpotCreate
 
-`func NewSpotCreate(name string, dataCenterId string, osId int32, cloudNetworkType string, vCpuType string, vCpu int32, ramGb int32, volumeType string, volumeGb int32, sshKeyId int32, price float32, ) *SpotCreate`
+`func NewSpotCreate(name string, dataCenterId string, osId int32, cloudNetworkType string, vCpuType string, vCpu int32, ramGb int32, volumeType string, volumeGb int32, price float32, ) *SpotCreate`
 
 NewSpotCreate instantiates a new SpotCreate object
 This constructor will assign default values to properties that have it defined,
@@ -236,6 +236,11 @@ and a boolean to check if the value has been set.
 
 SetSshKeyId sets SshKeyId field to given value.
 
+### HasSshKeyId
+
+`func (o *SpotCreate) HasSshKeyId() bool`
+
+HasSshKeyId returns a boolean if a field has been set.
 
 ### GetUserPassword
 

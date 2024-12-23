@@ -373,11 +373,11 @@ paths:
         \ hosted across three cloud providers: **Amazon Web Services (AWS), Microsoft\
         \ Azure,** and **Google Cloud Platform (GCP)**. The service ensures independence\
         \ from a single cloud provider. You can deploy your cluster across the networks\
-        \ of three providers.\n\nCurrently, you can only place clusters in **European\
-        \ regions** of cloud providers.\n\nWhen creating worker nodes, you need to\
-        \ select the appropriate hardware configurations. The configuration depends\
-        \ on the provider and the data center. Use the `/v1/kubernetes-configs` endpoint\
-        \ to find available configurations for worker nodes.\n\nCluster currently\
+        \ of three providers.\n\nCurrently, you can only place clusters in **European**\
+        \ and **North American** regions of cloud providers.\n\nWhen creating worker\
+        \ nodes, you need to select the appropriate hardware configurations. The configuration\
+        \ depends on the provider and the data center. Use the `/v1/kubernetes-configs`\
+        \ endpoint to find available configurations for worker nodes.\n\nCluster currently\
         \ supports up to 5 autoscaling groups and a total of 16 worker nodes.\n"
       operationId: CreateKubernetesCluster
       requestBody:
@@ -1477,8 +1477,8 @@ paths:
         \ compute instance that allows you to access and utilize unused instance capacity\
         \ at a steeply discounted rate.  Spot price is charged on an hourly basis.\n\
         \nProviders support the following types of networks:\n- AWS - multi-cloud,\
-        \ isolated, default\n- Azure - multi-cloud, isolated, default\n- DigitalOcean\
-        \ - default\n- GCP - multi-cloud, isolated, default\n- Gcore - default\n"
+        \ isolated, default\n- Azure - multi-cloud, isolated, default\n- GCP - multi-cloud,\
+        \ isolated, default\n"
       operationId: GetSpots
       responses:
         "200":
@@ -4082,10 +4082,11 @@ components:
           example: "1.28"
           type: string
         deploymentLocation:
-          description: "Deployment region of the Kubernetes cluster. Currently, only\
-            \ Europe (eu) is available."
+          description: "Deployment region of the Kubernetes cluster. Currently, Europe\
+            \ (eu) and North America (n_america) is available."
           enum:
           - eu
+          - n_america
           example: eu
           type: string
         status:
@@ -4191,10 +4192,11 @@ components:
           example: default-k8s-managed-cluster-name
           type: string
         deploymentLocation:
-          description: "Deployment region of the Kubernetes cluster. Currently, only\
-            \ Europe (eu) is available."
+          description: "Deployment region of the Kubernetes cluster. Currently, Europe\
+            \ (eu) and North America (n_america) is available."
           enum:
           - eu
+          - n_america
           example: eu
           type: string
         workerNodes:
@@ -4581,7 +4583,7 @@ components:
         diskReadHuman: 10.5
         maxCpuUtilizationAverageCores: 54.5
         diskSpaceHumanLabel: GB
-        ramTotalAmountGb: 2
+        ramTotalAmountGb: 2.0
         maxDiskSpaceUsedGb: 10.5
         diskReadHumanLabel: Kbps
         cpuDataPresent: 1
@@ -4654,7 +4656,7 @@ components:
           type: number
         ramTotalAmountGb:
           description: "Total memory, GB"
-          example: 2
+          example: 2.0
           type: number
         ramHumanLabel:
           description: Label
@@ -5502,7 +5504,6 @@ components:
       - osId
       - price
       - ramGb
-      - sshKeyId
       - vCpu
       - vCpuType
       - volumeGb

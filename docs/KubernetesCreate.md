@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Kubernetes cluster name | 
-**DeploymentLocation** | **string** | Deployment region of the Kubernetes cluster. Currently, only Europe (eu) is available. | 
+**DeploymentLocation** | **string** | Deployment region of the Kubernetes cluster. Currently, Europe (eu) and North America (n_america) is available. | 
 **WorkerNodes** | [**[]KubernetesCreateWorkerNodesInner**](KubernetesCreateWorkerNodesInner.md) | List of the worker nodes | 
 **AutoscalingConfigs** | Pointer to [**[]KubernetesCreateAutoscalingConfigsInner**](KubernetesCreateAutoscalingConfigsInner.md) | Configurations of the autoscaling group | [optional] 
 
