@@ -37,7 +37,7 @@ type Kubernetes struct {
 	Name *string `json:"name,omitempty"`
 	// Version of the Kubernetes cluster
 	Version *string `json:"version,omitempty"`
-	// Deployment region of the Kubernetes cluster. Currently, only Europe (eu) is available.
+	// Deployment region of the Kubernetes cluster. Currently, Europe (eu) and North America (n_america) is available.
 	DeploymentLocation *string `json:"deploymentLocation,omitempty"`
 	// Status of the Kubernetes cluster
 	Status *string `json:"status,omitempty"`

@@ -23,7 +23,7 @@ var _ MappedNullable = &KubernetesCreate{}
 type KubernetesCreate struct {
 	// Kubernetes cluster name
 	Name string `json:"name"`
-	// Deployment region of the Kubernetes cluster. Currently, only Europe (eu) is available.
+	// Deployment region of the Kubernetes cluster. Currently, Europe (eu) and North America (n_america) is available.
 	DeploymentLocation string `json:"deploymentLocation"`
 	// List of the worker nodes
 	WorkerNodes []KubernetesCreateWorkerNodesInner `json:"workerNodes"`

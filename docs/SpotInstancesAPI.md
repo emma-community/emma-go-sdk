@@ -236,7 +236,7 @@ import (
 )
 
 func main() {
-	spotCreate := *openapiclient.NewSpotCreate("spot-default", "aws-us-west-1", int32(35), "multi-cloud", "shared", int32(4), int32(1), "ssd", int32(16), int32(124), float32(0.002635)) // SpotCreate |  (optional)
+	spotCreate := *openapiclient.NewSpotCreate("spot-default", "aws-us-west-1", int32(35), "multi-cloud", "shared", int32(4), int32(1), "ssd", int32(16), float32(0.002635)) // SpotCreate |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

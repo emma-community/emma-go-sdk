@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **ModifiedById** | Pointer to **int32** | ID of the user who last edited the Kubernetes cluster | [optional] 
 **Name** | Pointer to **string** | Name of the Kubernetes cluster | [optional] 
 **Version** | Pointer to **string** | Version of the Kubernetes cluster | [optional] 
-**DeploymentLocation** | Pointer to **string** | Deployment region of the Kubernetes cluster. Currently, only Europe (eu) is available. | [optional] 
+**DeploymentLocation** | Pointer to **string** | Deployment region of the Kubernetes cluster. Currently, Europe (eu) and North America (n_america) is available. | [optional] 
 **Status** | Pointer to **string** | Status of the Kubernetes cluster | [optional] 
 **Cost** | Pointer to [**KubernetesCost**](KubernetesCost.md) |  | [optional] 
 **ControlPlaneStatus** | Pointer to **string** | Control Plane Status. The Control Plane status provides information about the health and functionality of various components that are part of the Control Plane. | [optional] 

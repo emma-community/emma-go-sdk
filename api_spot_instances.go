@@ -180,9 +180,7 @@ A Spot Instance is a specialized compute instance that allows you to access and 
 Providers support the following types of networks:
 - AWS - multi-cloud, isolated, default
 - Azure - multi-cloud, isolated, default
-- DigitalOcean - default
 - GCP - multi-cloud, isolated, default
-- Gcore - default
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
