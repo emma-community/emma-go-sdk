@@ -40,7 +40,7 @@ type VmCreate struct {
 	// Capacity of the volume in gigabytes
 	VolumeGb int32 `json:"volumeGb"`
 	// SSH-key ID
-	SshKeyId int32 `json:"sshKeyId"`
+	SshKeyId *int32 `json:"sshKeyId,omitempty"`
 	// User password
 	UserPassword *string `json:"userPassword,omitempty"`
 	// ID of the security group
@@ -57,7 +57,7 @@ type _VmCreate VmCreate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVmCreate(name string, dataCenterId string, osId int32, cloudNetworkType string, vCpuType string, vCpu int32, ramGb int32, volumeType string, volumeGb int32, sshKeyId int32) *VmCreate {
+func NewVmCreate(name string, dataCenterId string, osId int32, cloudNetworkType string, vCpuType string, vCpu int32, ramGb int32, volumeType string, volumeGb int32) *VmCreate {
 	this := VmCreate{}
 	this.Name = name
 	this.DataCenterId = dataCenterId
@@ -68,7 +68,6 @@ func NewVmCreate(name string, dataCenterId string, osId int32, cloudNetworkType 
 	this.RamGb = ramGb
 	this.VolumeType = volumeType
 	this.VolumeGb = volumeGb
-	this.SshKeyId = sshKeyId
 	return &this
 }
 
@@ -296,28 +295,36 @@ func (o *VmCreate) SetVolumeGb(v int32) {
 	o.VolumeGb = v
 }
 
-// GetSshKeyId returns the SshKeyId field value
+// GetSshKeyId returns the SshKeyId field value if set, zero value otherwise.
 func (o *VmCreate) GetSshKeyId() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.SshKeyId) {
 		var ret int32
 		return ret
 	}
-
-	return o.SshKeyId
+	return *o.SshKeyId
 }
 
-// GetSshKeyIdOk returns a tuple with the SshKeyId field value
+// GetSshKeyIdOk returns a tuple with the SshKeyId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VmCreate) GetSshKeyIdOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.SshKeyId) {
 		return nil, false
 	}
-	return &o.SshKeyId, true
+	return o.SshKeyId, true
 }
 
-// SetSshKeyId sets field value
+// HasSshKeyId returns a boolean if a field has been set.
+func (o *VmCreate) HasSshKeyId() bool {
+	if o != nil && !IsNil(o.SshKeyId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSshKeyId gets a reference to the given int32 and assigns it to the SshKeyId field.
 func (o *VmCreate) SetSshKeyId(v int32) {
-	o.SshKeyId = v
+	o.SshKeyId = &v
 }
 
 // GetUserPassword returns the UserPassword field value if set, zero value otherwise.
@@ -467,7 +474,9 @@ func (o VmCreate) ToMap() (map[string]interface{}, error) {
 	toSerialize["ramGb"] = o.RamGb
 	toSerialize["volumeType"] = o.VolumeType
 	toSerialize["volumeGb"] = o.VolumeGb
-	toSerialize["sshKeyId"] = o.SshKeyId
+	if !IsNil(o.SshKeyId) {
+		toSerialize["sshKeyId"] = o.SshKeyId
+	}
 	if !IsNil(o.UserPassword) {
 		toSerialize["userPassword"] = o.UserPassword
 	}
@@ -497,7 +506,6 @@ func (o *VmCreate) UnmarshalJSON(data []byte) (err error) {
 		"ramGb",
 		"volumeType",
 		"volumeGb",
-		"sshKeyId",
 	}
 
 	allProperties := make(map[string]interface{})
