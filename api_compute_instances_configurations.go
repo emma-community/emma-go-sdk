@@ -989,3 +989,252 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
+
+type ApiGetVmResizeConfigsRequest struct {
+	ctx context.Context
+	ApiService *ComputeInstancesConfigurationsAPIService
+	vCpuType *string
+	vCpu *int32
+	vCpuMin *int32
+	vCpuMax *int32
+	ramGb *int32
+	ramGbMin *int32
+	ramGbMax *int32
+	priceMin *float32
+	priceMax *float32
+	page *int32
+	size *int32
+}
+
+// Type of vCPUs for the compute instance
+func (r ApiGetVmResizeConfigsRequest) VCpuType(vCpuType string) ApiGetVmResizeConfigsRequest {
+	r.vCpuType = &vCpuType
+	return r
+}
+
+// virtual Central Processing Units (vCPUs) for the compute instance
+func (r ApiGetVmResizeConfigsRequest) VCpu(vCpu int32) ApiGetVmResizeConfigsRequest {
+	r.vCpu = &vCpu
+	return r
+}
+
+// Minimum number of vCPUs for the compute instance
+func (r ApiGetVmResizeConfigsRequest) VCpuMin(vCpuMin int32) ApiGetVmResizeConfigsRequest {
+	r.vCpuMin = &vCpuMin
+	return r
+}
+
+// Maximum number of vCPUs for the compute instance
+func (r ApiGetVmResizeConfigsRequest) VCpuMax(vCpuMax int32) ApiGetVmResizeConfigsRequest {
+	r.vCpuMax = &vCpuMax
+	return r
+}
+
+// RAM of the compute instance in gigabytes
+func (r ApiGetVmResizeConfigsRequest) RamGb(ramGb int32) ApiGetVmResizeConfigsRequest {
+	r.ramGb = &ramGb
+	return r
+}
+
+// Minimum RAM of the compute instance in gigabytes
+func (r ApiGetVmResizeConfigsRequest) RamGbMin(ramGbMin int32) ApiGetVmResizeConfigsRequest {
+	r.ramGbMin = &ramGbMin
+	return r
+}
+
+// Maximum RAM of the compute instance in gigabytes
+func (r ApiGetVmResizeConfigsRequest) RamGbMax(ramGbMax int32) ApiGetVmResizeConfigsRequest {
+	r.ramGbMax = &ramGbMax
+	return r
+}
+
+// Minimum price of the compute instance
+func (r ApiGetVmResizeConfigsRequest) PriceMin(priceMin float32) ApiGetVmResizeConfigsRequest {
+	r.priceMin = &priceMin
+	return r
+}
+
+// Maximum price of the compute instance
+func (r ApiGetVmResizeConfigsRequest) PriceMax(priceMax float32) ApiGetVmResizeConfigsRequest {
+	r.priceMax = &priceMax
+	return r
+}
+
+// Page number
+func (r ApiGetVmResizeConfigsRequest) Page(page int32) ApiGetVmResizeConfigsRequest {
+	r.page = &page
+	return r
+}
+
+// Query size
+func (r ApiGetVmResizeConfigsRequest) Size(size int32) ApiGetVmResizeConfigsRequest {
+	r.size = &size
+	return r
+}
+
+func (r ApiGetVmResizeConfigsRequest) Execute() (*GetVmResizeConfigs200Response, *http.Response, error) {
+	return r.ApiService.GetVmResizeConfigsExecute(r)
+}
+
+/*
+GetVmResizeConfigs List of available configurations for virtual machine resize
+
+Virtual machines configurations are limited by provider-specific options, which differ across data centers. To resize or modify a compute instance, verify the list of supported configurations for your VM to avoid incompatible changes.
+
+Use this endpoint as a reference for available configurations for a virtual machine resize. 
+You can search the available configurations by different parameters (virtual machine id, CPU, CPU type, RAM, and price).
+
+When you find an appropriate configuration, provide the hardware parameters in the endpoint for editing a virtual machine.
+
+**Note:** To retrieve available configurations for DigitalOcean virtual machines, use the `GET v1/vms-configs` method  
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetVmResizeConfigsRequest
+*/
+func (a *ComputeInstancesConfigurationsAPIService) GetVmResizeConfigs(ctx context.Context) ApiGetVmResizeConfigsRequest {
+	return ApiGetVmResizeConfigsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetVmResizeConfigs200Response
+func (a *ComputeInstancesConfigurationsAPIService) GetVmResizeConfigsExecute(r ApiGetVmResizeConfigsRequest) (*GetVmResizeConfigs200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetVmResizeConfigs200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComputeInstancesConfigurationsAPIService.GetVmResizeConfigs")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/vms-resize-configs"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.vCpuType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuType", r.vCpuType, "form", "")
+	}
+	if r.vCpu != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpu", r.vCpu, "form", "")
+	}
+	if r.vCpuMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMin", r.vCpuMin, "form", "")
+	}
+	if r.vCpuMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMax", r.vCpuMax, "form", "")
+	}
+	if r.ramGb != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGb", r.ramGb, "form", "")
+	}
+	if r.ramGbMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMin", r.ramGbMin, "form", "")
+	}
+	if r.ramGbMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMax", r.ramGbMax, "form", "")
+	}
+	if r.priceMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMin", r.priceMin, "form", "")
+	}
+	if r.priceMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMax", r.priceMax, "form", "")
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	}
+	if r.size != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "size", r.size, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v BadRequestError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v UnauthorizedError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ForbiddenError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}

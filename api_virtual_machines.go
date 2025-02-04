@@ -312,7 +312,8 @@ This method performs several actions with a virtual machine:
   - Reboot a virtual machine
   - Transfer a virtual machine
   - Clone a virtual machine
-  - Edit hardware of a virtual machine
+  - Edit compute resources of a virtual machine
+  - Edit compute resources and system disk of a virtual machine (deprecated)
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

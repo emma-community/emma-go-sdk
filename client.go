@@ -74,6 +74,10 @@ type APIClient struct {
 	SubnetworksAPI *SubnetworksAPIService
 
 	VirtualMachinesAPI *VirtualMachinesAPIService
+
+	VolumesAPI *VolumesAPIService
+
+	VolumesConfigurationsAPI *VolumesConfigurationsAPIService
 }
 
 type service struct {
@@ -105,6 +109,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.StatisticsAPI = (*StatisticsAPIService)(&c.common)
 	c.SubnetworksAPI = (*SubnetworksAPIService)(&c.common)
 	c.VirtualMachinesAPI = (*VirtualMachinesAPIService)(&c.common)
+	c.VolumesAPI = (*VolumesAPIService)(&c.common)
+	c.VolumesConfigurationsAPI = (*VolumesConfigurationsAPIService)(&c.common)
 
 	return c
 }
