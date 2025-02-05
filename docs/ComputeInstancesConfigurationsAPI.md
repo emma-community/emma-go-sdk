@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**GetKuberNodesConfigs**](ComputeInstancesConfigurationsAPI.md#GetKuberNodesConfigs) | **Get** /v1/kubernetes-configs | List of available configurations for Kubernetes cluster node
 [**GetSpotConfigs**](ComputeInstancesConfigurationsAPI.md#GetSpotConfigs) | **Get** /v1/spots-configs | List of available configurations for spot instance creation
 [**GetVmConfigs**](ComputeInstancesConfigurationsAPI.md#GetVmConfigs) | **Get** /v1/vms-configs | List of available configurations for virtual machine creation
+[**GetVmResizeConfigs**](ComputeInstancesConfigurationsAPI.md#GetVmResizeConfigs) | **Get** /v1/vms-resize-configs | List of available configurations for virtual machine resize
 
 
 
@@ -299,6 +300,92 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetVmConfigs200Response**](GetVmConfigs200Response.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetVmResizeConfigs
+
+> GetVmResizeConfigs200Response GetVmResizeConfigs(ctx).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+
+List of available configurations for virtual machine resize
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/emma-community/emma-go-sdk"
+)
+
+func main() {
+	vCpuType := "Standard" // string | Type of vCPUs for the compute instance (optional)
+	vCpu := int32(4) // int32 | virtual Central Processing Units (vCPUs) for the compute instance (optional)
+	vCpuMin := int32(1) // int32 | Minimum number of vCPUs for the compute instance (optional)
+	vCpuMax := int32(8) // int32 | Maximum number of vCPUs for the compute instance (optional)
+	ramGb := int32(16) // int32 | RAM of the compute instance in gigabytes (optional)
+	ramGbMin := int32(8) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
+	ramGbMax := int32(32) // int32 | Maximum RAM of the compute instance in gigabytes (optional)
+	priceMin := float32(8.14) // float32 | Minimum price of the compute instance (optional)
+	priceMax := float32(8.14) // float32 | Maximum price of the compute instance (optional)
+	page := int32(0) // int32 | Page number (optional)
+	size := int32(100) // int32 | Query size (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetVmResizeConfigs(context.Background()).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetVmResizeConfigs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetVmResizeConfigs`: GetVmResizeConfigs200Response
+	fmt.Fprintf(os.Stdout, "Response from `ComputeInstancesConfigurationsAPI.GetVmResizeConfigs`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetVmResizeConfigsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **vCpuType** | **string** | Type of vCPUs for the compute instance | 
+ **vCpu** | **int32** | virtual Central Processing Units (vCPUs) for the compute instance | 
+ **vCpuMin** | **int32** | Minimum number of vCPUs for the compute instance | 
+ **vCpuMax** | **int32** | Maximum number of vCPUs for the compute instance | 
+ **ramGb** | **int32** | RAM of the compute instance in gigabytes | 
+ **ramGbMin** | **int32** | Minimum RAM of the compute instance in gigabytes | 
+ **ramGbMax** | **int32** | Maximum RAM of the compute instance in gigabytes | 
+ **priceMin** | **float32** | Minimum price of the compute instance | 
+ **priceMax** | **float32** | Maximum price of the compute instance | 
+ **page** | **int32** | Page number | 
+ **size** | **int32** | Query size | 
+
+### Return type
+
+[**GetVmResizeConfigs200Response**](GetVmResizeConfigs200Response.md)
 
 ### Authorization
 

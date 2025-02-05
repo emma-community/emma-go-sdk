@@ -21,6 +21,7 @@ type VmActionsRequest struct {
 	VmClone *VmClone
 	VmEditHardware *VmEditHardware
 	VmReboot *VmReboot
+	VmResizeCompute *VmResizeCompute
 	VmShutdown *VmShutdown
 	VmStart *VmStart
 	VmTransfer *VmTransfer
@@ -44,6 +45,13 @@ func VmEditHardwareAsVmActionsRequest(v *VmEditHardware) VmActionsRequest {
 func VmRebootAsVmActionsRequest(v *VmReboot) VmActionsRequest {
 	return VmActionsRequest{
 		VmReboot: v,
+	}
+}
+
+// VmResizeComputeAsVmActionsRequest is a convenience function that returns VmResizeCompute wrapped in VmActionsRequest
+func VmResizeComputeAsVmActionsRequest(v *VmResizeCompute) VmActionsRequest {
+	return VmActionsRequest{
+		VmResizeCompute: v,
 	}
 }
 
@@ -124,6 +132,23 @@ func (dst *VmActionsRequest) UnmarshalJSON(data []byte) error {
 		dst.VmReboot = nil
 	}
 
+	// try to unmarshal data into VmResizeCompute
+	err = newStrictDecoder(data).Decode(&dst.VmResizeCompute)
+	if err == nil {
+		jsonVmResizeCompute, _ := json.Marshal(dst.VmResizeCompute)
+		if string(jsonVmResizeCompute) == "{}" { // empty struct
+			dst.VmResizeCompute = nil
+		} else {
+			if err = validator.Validate(dst.VmResizeCompute); err != nil {
+				dst.VmResizeCompute = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.VmResizeCompute = nil
+	}
+
 	// try to unmarshal data into VmShutdown
 	err = newStrictDecoder(data).Decode(&dst.VmShutdown)
 	if err == nil {
@@ -180,6 +205,7 @@ func (dst *VmActionsRequest) UnmarshalJSON(data []byte) error {
 		dst.VmClone = nil
 		dst.VmEditHardware = nil
 		dst.VmReboot = nil
+		dst.VmResizeCompute = nil
 		dst.VmShutdown = nil
 		dst.VmStart = nil
 		dst.VmTransfer = nil
@@ -204,6 +230,10 @@ func (src VmActionsRequest) MarshalJSON() ([]byte, error) {
 
 	if src.VmReboot != nil {
 		return json.Marshal(&src.VmReboot)
+	}
+
+	if src.VmResizeCompute != nil {
+		return json.Marshal(&src.VmResizeCompute)
 	}
 
 	if src.VmShutdown != nil {
@@ -236,6 +266,10 @@ func (obj *VmActionsRequest) GetActualInstance() (interface{}) {
 
 	if obj.VmReboot != nil {
 		return obj.VmReboot
+	}
+
+	if obj.VmResizeCompute != nil {
+		return obj.VmResizeCompute
 	}
 
 	if obj.VmShutdown != nil {

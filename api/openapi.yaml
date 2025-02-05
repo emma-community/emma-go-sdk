@@ -111,6 +111,12 @@ tags:
 - description: |
     Provides a comprehensive set of endpoints for managing virtual machines (VMs) within the project. These endpoints enable users to create, retrieve, update, and delete virtual machines.
   name: Virtual machines
+- description: |
+    A volume is a block storage resource used by virtual machines to store and retrieve data continuously. The endpoint allows users to increase the storage capacity of existing volumes.
+  name: Volumes
+- description: |
+    Available volume configurations. Use this endpoint to reference configurations for volumes, searchable by the following parameters: provider, location, data center, volume size, and volume type.
+  name: Volumes configurations
 paths:
   /v1/issue-token:
     post:
@@ -2532,7 +2538,8 @@ paths:
           - Reboot a virtual machine
           - Transfer a virtual machine
           - Clone a virtual machine
-          - Edit hardware of a virtual machine
+          - Edit compute resources of a virtual machine
+          - Edit compute resources and system disk of a virtual machine (deprecated)
       operationId: VmActions
       parameters:
       - description: ID of the virtual machine
@@ -2822,6 +2829,325 @@ paths:
           curl --location 'https://api.emma.ms/external/v1/vms-configs' \
           --header 'Accept: application/json' \
           --header 'Authorization: Bearer YOUR-BEARER-TOKEN'
+  /v1/vms-resize-configs:
+    get:
+      description: "Virtual machines configurations are limited by provider-specific\
+        \ options, which differ across data centers. To resize or modify a compute\
+        \ instance, verify the list of supported configurations for your VM to avoid\
+        \ incompatible changes.\n\nUse this endpoint as a reference for available\
+        \ configurations for a virtual machine resize. \nYou can search the available\
+        \ configurations by different parameters (virtual machine id, CPU, CPU type,\
+        \ RAM, and price).\n\nWhen you find an appropriate configuration, provide\
+        \ the hardware parameters in the endpoint for editing a virtual machine.\n\
+        \n**Note:** To retrieve available configurations for DigitalOcean virtual\
+        \ machines, use the `GET v1/vms-configs` method  \n"
+      operationId: GetVmResizeConfigs
+      parameters:
+      - description: Type of vCPUs for the compute instance
+        explode: true
+        in: query
+        name: vCpuType
+        required: false
+        schema:
+          enum:
+          - shared
+          - standard
+          - hpc
+          example: Standard
+          type: string
+        style: form
+      - description: virtual Central Processing Units (vCPUs) for the compute instance
+        explode: true
+        in: query
+        name: vCpu
+        required: false
+        schema:
+          example: 4
+          type: integer
+        style: form
+      - description: Minimum number of vCPUs for the compute instance
+        explode: true
+        in: query
+        name: vCpuMin
+        required: false
+        schema:
+          example: 1
+          type: integer
+        style: form
+      - description: Maximum number of vCPUs for the compute instance
+        explode: true
+        in: query
+        name: vCpuMax
+        required: false
+        schema:
+          example: 8
+          type: integer
+        style: form
+      - description: RAM of the compute instance in gigabytes
+        explode: true
+        in: query
+        name: ramGb
+        required: false
+        schema:
+          example: 16
+          type: integer
+        style: form
+      - description: Minimum RAM of the compute instance in gigabytes
+        explode: true
+        in: query
+        name: ramGbMin
+        required: false
+        schema:
+          example: 8
+          type: integer
+        style: form
+      - description: Maximum RAM of the compute instance in gigabytes
+        explode: true
+        in: query
+        name: ramGbMax
+        required: false
+        schema:
+          example: 32
+          type: integer
+        style: form
+      - description: Minimum price of the compute instance
+        explode: true
+        in: query
+        name: priceMin
+        required: false
+        schema:
+          type: number
+        style: form
+      - description: Maximum price of the compute instance
+        explode: true
+        in: query
+        name: priceMax
+        required: false
+        schema:
+          type: number
+        style: form
+      - description: Page number
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          example: 0
+          type: integer
+        style: form
+      - description: Query size
+        explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          example: 100
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVmResizeConfigs_200_response'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden - Access is denied
+      security:
+      - bearerAuth: []
+      summary: List of available configurations for virtual machine resize
+      tags:
+      - Compute instances configurations
+      x-codeSamples:
+      - lang: CURL
+        label: CURL
+        source: "curl --location 'https://api.emma.ms/external/v1/vms-configs' \\\n\
+          --header 'Accept: application/json' \\\n--header 'Authorization: Bearer\
+          \ YOUR-BEARER-TOKEN'          "
+  /v1/system-volumes-configs:
+    get:
+      description: |
+        When upsizing a system volume you need to provide the desired volume size and verify it matches the virtual machine requirements.
+
+        Use this endpoint as a reference for available configurations for system volumes. You can search the available configurations by
+        different parameters (virtual machine id, volume size, volume type).
+
+        When you find an appropriate configuration, provide its parameters in the endpoint for editing a system volume.
+
+        **Note:** To retrieve available configurations for DigitalOcean system volumes, use the `GET v1/vms-configs` method
+      operationId: GetSystemVolumeConfigs
+      parameters:
+      - description: ID of the linked instance
+        explode: true
+        in: query
+        name: attachedToId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Minimum volume size of the compute instance in gigabytes
+        explode: true
+        in: query
+        name: volumeGbMin
+        required: false
+        schema:
+          example: 250
+          type: integer
+        style: form
+      - description: Volume type of the compute instance
+        explode: true
+        in: query
+        name: volumeType
+        required: false
+        schema:
+          enum:
+          - ssd
+          - ssd-plus
+          example: ssd
+          type: string
+        style: form
+      - description: Page number
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          example: 0
+          type: integer
+        style: form
+      - description: Query size
+        explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          example: 100
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSystemVolumeConfigs_200_response'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden - Access is denied
+      security:
+      - bearerAuth: []
+      summary: List of available configurations for system volumes
+      tags:
+      - Volumes configurations
+      x-codeSamples:
+      - lang: CURL
+        label: CURL
+        source: |-
+          curl --location 'https://api.emma.ms/external/v1/system-volumes-configs' \
+          --header 'Accept: application/json' \
+          --header 'Authorization: Bearer YOUR-BEARER-TOKEN'
+  /v1/volumes/{volumeId}/actions:
+    post:
+      description: |
+        This method increases the size of the specified volume.
+      operationId: VolumeActions
+      parameters:
+      - description: ID of the volume
+        explode: false
+        in: path
+        name: volumeId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolumeActions_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: Forbidden - Access is denied
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: Not found
+      security:
+      - bearerAuth: []
+      summary: Perform actions with a volume
+      tags:
+      - Volumes
+      x-codeSamples:
+      - lang: CURL
+        label: CURL
+        source: |-
+          curl --location 'https://api.emma.ms/external/v1/volumes/{volumeId}/actions'
+          \
+
+          --header 'Content-Type: application/json' \
+
+          --header 'Accept: application/json' \
+
+          --header 'Authorization: Bearer YOUR-BEARER-TOKEN' \
+
+          --data '{
+            "action": "edit"
+          }'
   /v1/spots-configs:
     get:
       description: |
@@ -3326,6 +3652,15 @@ paths:
           }'
 components:
   parameters:
+    attachedToId:
+      description: ID of the linked instance
+      explode: true
+      in: query
+      name: attachedToId
+      required: false
+      schema:
+        type: integer
+      style: form
     cloudNetworkType:
       description: Type of cloud network
       explode: true
@@ -3652,6 +3987,15 @@ components:
         example: 500
         type: integer
       style: form
+    volumeId:
+      description: ID of the volume
+      explode: false
+      in: path
+      name: volumeId
+      required: true
+      schema:
+        type: integer
+      style: simple
     volumeGbMin:
       description: Minimum volume size of the compute instance in gigabytes
       explode: true
@@ -6200,6 +6544,39 @@ components:
       - vCpu
       - volumeGb
       type: object
+    VmResizeCompute:
+      properties:
+        action:
+          description: |
+            Action with a virtual machine.
+
+            **Note:** To retrieve available configurations for DigitalOcean system volumes, use the `edithardware` action
+          enum:
+          - resizecompute
+          example: resizecompute
+          type: string
+        vCpu:
+          description: Number of virtual Central Processing Units (vCPUs)
+          example: 4
+          type: integer
+        vCpuType:
+          description: Type of virtual Central Processing Units (vCPUs)
+          enum:
+          - shared
+          - standard
+          - hpc
+          example: shared
+          type: string
+        ramGb:
+          description: Capacity of the RAM in gigabytes
+          example: 16
+          type: integer
+      required:
+      - action
+      - ramGb
+      - vCpu
+      - vCpuType
+      type: object
     VmConfiguration:
       example:
         volumeType: SSD
@@ -6297,6 +6674,134 @@ components:
           type: string
         cost:
           $ref: '#/components/schemas/VmConfiguration_cost'
+      type: object
+    VmResizeConfiguration:
+      example:
+        cost:
+          unit: MONTHS
+          currency: EUR
+          pricePerUnit: 5.479952
+        vCpu: 4
+        ramGb: 16
+        vCpuType: Standard
+      properties:
+        vCpuType:
+          description: Type of virtual Central Processing Units (vCPUs)
+          example: Standard
+          type: string
+        vCpu:
+          description: Number of virtual Central Processing Units (vCPUs)
+          example: 4
+          type: integer
+        ramGb:
+          description: Capacity of the RAM in gigabytes
+          example: 16
+          type: integer
+        cost:
+          $ref: '#/components/schemas/VmConfiguration_cost'
+      type: object
+    Volume:
+      example:
+        isSystem: true
+        sizeGb: 250
+        id: 5819
+        type: SSD
+        projectId: 933
+        attachedToId: 5806
+      properties:
+        id:
+          description: Volume ID
+          example: 5819
+          type: integer
+        attachedToId:
+          description: Compute instance ID that the volume is currently attached to
+          example: 5806
+          type: integer
+        projectId:
+          description: Project ID
+          example: 933
+          type: integer
+        sizeGb:
+          description: Volume size in gigabytes
+          example: 250
+          type: integer
+        type:
+          description: Volume type
+          example: SSD
+          type: string
+        isSystem:
+          description: Indicates whether the volume contains OS or not
+          example: true
+          type: boolean
+      type: object
+    VolumeConfiguration:
+      example:
+        volumeType: SSD
+        locationName: London
+        cost:
+          unit: MONTHS
+          currency: EUR
+          pricePerUnit: 5.479952
+        providerId: 5
+        locationId: 6
+        dataCenterId: aws-us-west-1
+        volumeGb: 500
+        dataCenterName: europe-west2
+        providerName: GCP
+      properties:
+        providerId:
+          description: ID of the cloud provider
+          example: 5
+          type: integer
+        providerName:
+          description: Name of the cloud provider
+          example: GCP
+          type: string
+        locationId:
+          description: Location ID
+          example: 6
+          type: integer
+        locationName:
+          description: Location name (city or state)
+          example: London
+          type: string
+        dataCenterId:
+          description: ID of the data center
+          example: aws-us-west-1
+          type: string
+        dataCenterName:
+          description: Name of the data center
+          example: europe-west2
+          type: string
+        volumeGb:
+          description: Capacity of the volume in gigabytes
+          example: 500
+          type: integer
+        volumeType:
+          description: Volume type
+          example: SSD
+          type: string
+        cost:
+          $ref: '#/components/schemas/VmConfiguration_cost'
+      type: object
+    VolumeEdit:
+      properties:
+        action:
+          description: |
+            Action with a volume
+
+            **Note:** To retrieve available configurations for DigitalOcean system volumes, use the VM `edithardware` action
+          enum:
+          - edit
+          example: edit
+          type: string
+        volumeGb:
+          description: Capacity of the volume in gigabytes
+          example: 250
+          type: integer
+      required:
+      - action
+      - volumeGb
       type: object
     PaginatedResult:
       properties:
@@ -6512,6 +7017,7 @@ components:
       - $ref: '#/components/schemas/VmReboot'
       - $ref: '#/components/schemas/VmTransfer'
       - $ref: '#/components/schemas/VmClone'
+      - $ref: '#/components/schemas/VmResizeCompute'
       - $ref: '#/components/schemas/VmEditHardware'
     GetVmConfigs_200_response:
       allOf:
@@ -6592,6 +7098,113 @@ components:
         first: true
         totalElements: 6
         empty: true
+    GetVmResizeConfigs_200_response:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResult'
+      - properties:
+          content:
+            items:
+              $ref: '#/components/schemas/VmResizeConfiguration'
+            type: array
+        type: object
+      example:
+        number: 5
+        size: 1
+        last: true
+        numberOfElements: 5
+        totalPages: 0
+        pageable:
+          paged: true
+          pageNumber: 9
+          offset: 2
+          pageSize: 7
+          unpaged: true
+          sort:
+            unsorted: true
+            sorted: true
+            empty: true
+        sort:
+          unsorted: true
+          sorted: true
+          empty: true
+        content:
+        - cost:
+            unit: MONTHS
+            currency: EUR
+            pricePerUnit: 5.479952
+          vCpu: 4
+          ramGb: 16
+          vCpuType: Standard
+        - cost:
+            unit: MONTHS
+            currency: EUR
+            pricePerUnit: 5.479952
+          vCpu: 4
+          ramGb: 16
+          vCpuType: Standard
+        first: true
+        totalElements: 6
+        empty: true
+    GetSystemVolumeConfigs_200_response:
+      allOf:
+      - $ref: '#/components/schemas/PaginatedResult'
+      - properties:
+          content:
+            items:
+              $ref: '#/components/schemas/VolumeConfiguration'
+            type: array
+        type: object
+      example:
+        number: 5
+        size: 1
+        last: true
+        numberOfElements: 5
+        totalPages: 0
+        pageable:
+          paged: true
+          pageNumber: 9
+          offset: 2
+          pageSize: 7
+          unpaged: true
+          sort:
+            unsorted: true
+            sorted: true
+            empty: true
+        sort:
+          unsorted: true
+          sorted: true
+          empty: true
+        content:
+        - volumeType: SSD
+          locationName: London
+          cost:
+            unit: MONTHS
+            currency: EUR
+            pricePerUnit: 5.479952
+          providerId: 5
+          locationId: 6
+          dataCenterId: aws-us-west-1
+          volumeGb: 500
+          dataCenterName: europe-west2
+          providerName: GCP
+        - volumeType: SSD
+          locationName: London
+          cost:
+            unit: MONTHS
+            currency: EUR
+            pricePerUnit: 5.479952
+          providerId: 5
+          locationId: 6
+          dataCenterId: aws-us-west-1
+          volumeGb: 500
+          dataCenterName: europe-west2
+          providerName: GCP
+        first: true
+        totalElements: 6
+        empty: true
+    VolumeActions_request:
+      oneOf:
+      - $ref: '#/components/schemas/VolumeEdit'
     GetStatisticalData_request:
       oneOf:
       - $ref: '#/components/schemas/KubernetesClusterChangingMetricsQuery'
