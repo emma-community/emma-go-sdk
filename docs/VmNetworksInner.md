@@ -4,10 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**Ip** | Pointer to **string** |  | [optional] 
-**NetworkTypeId** | Pointer to **int32** |  | [optional] 
-**NetworkType** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **int32** | Network ID | [optional] 
+**Ip** | Pointer to **string** | IPv4 or IPv6 address | [optional] 
+**IpVersion** | Pointer to **float32** | IP version | [optional] 
+**NetworkTypeId** | Pointer to **int32** | ID of the network type | [optional] 
+**NetworkType** | Pointer to **string** | Network type | [optional] 
 
 ## Methods
 
@@ -77,6 +78,31 @@ SetIp sets Ip field to given value.
 `func (o *VmNetworksInner) HasIp() bool`
 
 HasIp returns a boolean if a field has been set.
+
+### GetIpVersion
+
+`func (o *VmNetworksInner) GetIpVersion() float32`
+
+GetIpVersion returns the IpVersion field if non-nil, zero value otherwise.
+
+### GetIpVersionOk
+
+`func (o *VmNetworksInner) GetIpVersionOk() (*float32, bool)`
+
+GetIpVersionOk returns a tuple with the IpVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIpVersion
+
+`func (o *VmNetworksInner) SetIpVersion(v float32)`
+
+SetIpVersion sets IpVersion field to given value.
+
+### HasIpVersion
+
+`func (o *VmNetworksInner) HasIpVersion() bool`
+
+HasIpVersion returns a boolean if a field has been set.
 
 ### GetNetworkTypeId
 

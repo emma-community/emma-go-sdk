@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TagId** | **string** | tag id | 
 **Key** | **string** | tag key | 
-**Value** | Pointer to **NullableString** | tag key value | [optional] 
+**Value** | Pointer to **string** | tag key value | [optional] 
 
 ## Methods
 
@@ -92,16 +92,6 @@ SetValue sets Value field to given value.
 
 HasValue returns a boolean if a field has been set.
 
-### SetValueNil
-
-`func (o *Tag) SetValueNil(b bool)`
-
- SetValueNil sets the value for Value to be an explicit nil
-
-### UnsetValue
-`func (o *Tag) UnsetValue()`
-
-UnsetValue ensures that no value is present for Value, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

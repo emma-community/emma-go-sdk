@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## GetProvider
 
-> Provider GetProvider(ctx, providerId).Execute()
+> Provider GetProvider(ctx, providerId).ProjectId(projectId).Execute()
 
 Get cloud provider by ID
 
@@ -31,10 +31,11 @@ import (
 
 func main() {
 	providerId := int32(56) // int32 | ID of the cloud provider
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProvidersAPI.GetProvider(context.Background(), providerId).Execute()
+	resp, r, err := apiClient.ProvidersAPI.GetProvider(context.Background(), providerId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ProvidersAPI.GetProvider``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -60,6 +61,7 @@ Other parameters are passed through a pointer to a apiGetProviderRequest struct 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -81,7 +83,7 @@ Name | Type | Description  | Notes
 
 ## GetProviders
 
-> []Provider GetProviders(ctx).ProviderName(providerName).Execute()
+> []Provider GetProviders(ctx).ProviderName(providerName).ProjectId(projectId).Execute()
 
 Get list of cloud providers
 
@@ -101,10 +103,11 @@ import (
 
 func main() {
 	providerName := "GCP" // string | Name of the cloud provider (optional)
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProvidersAPI.GetProviders(context.Background()).ProviderName(providerName).Execute()
+	resp, r, err := apiClient.ProvidersAPI.GetProviders(context.Background()).ProviderName(providerName).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ProvidersAPI.GetProviders``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -126,6 +129,7 @@ Other parameters are passed through a pointer to a apiGetProvidersRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **providerName** | **string** | Name of the cloud provider | 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 

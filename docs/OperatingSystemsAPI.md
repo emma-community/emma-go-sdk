@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## GetOperatingSystem
 
-> OperatingSystem GetOperatingSystem(ctx, operatingSystemId).Execute()
+> OperatingSystem GetOperatingSystem(ctx, operatingSystemId).ProjectId(projectId).Execute()
 
 Get operating system by ID
 
@@ -31,10 +31,11 @@ import (
 
 func main() {
 	operatingSystemId := int32(56) // int32 | ID of the operating system
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OperatingSystemsAPI.GetOperatingSystem(context.Background(), operatingSystemId).Execute()
+	resp, r, err := apiClient.OperatingSystemsAPI.GetOperatingSystem(context.Background(), operatingSystemId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OperatingSystemsAPI.GetOperatingSystem``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -60,6 +61,7 @@ Other parameters are passed through a pointer to a apiGetOperatingSystemRequest 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -81,7 +83,7 @@ Name | Type | Description  | Notes
 
 ## GetOperatingSystems
 
-> []OperatingSystem GetOperatingSystems(ctx).Type_(type_).Architecture(architecture).Version(version).Execute()
+> []OperatingSystem GetOperatingSystems(ctx).Type_(type_).Architecture(architecture).Version(version).ProjectId(projectId).Execute()
 
 Get list of operating systems
 
@@ -103,10 +105,11 @@ func main() {
 	type_ := "Ubuntu" // string | Type of the operating system (optional)
 	architecture := "x86-64" // string | Architecture of the operating system (optional)
 	version := "18.04" // string | Version of the operating system (optional)
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OperatingSystemsAPI.GetOperatingSystems(context.Background()).Type_(type_).Architecture(architecture).Version(version).Execute()
+	resp, r, err := apiClient.OperatingSystemsAPI.GetOperatingSystems(context.Background()).Type_(type_).Architecture(architecture).Version(version).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OperatingSystemsAPI.GetOperatingSystems``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -130,6 +133,7 @@ Name | Type | Description  | Notes
  **type_** | **string** | Type of the operating system | 
  **architecture** | **string** | Architecture of the operating system | 
  **version** | **string** | Version of the operating system | 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 

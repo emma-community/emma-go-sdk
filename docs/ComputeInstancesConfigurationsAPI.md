@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## GetKuberNodesConfigs
 
-> GetVmConfigs200Response GetKuberNodesConfigs(ctx).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+> GetVmConfigs200Response GetKuberNodesConfigs(ctx).K8sConnectionType(k8sConnectionType).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 
 List of available configurations for Kubernetes cluster node
 
@@ -32,6 +32,7 @@ import (
 )
 
 func main() {
+	k8sConnectionType := "internet_connect" // string | Type of Kubernetes cluster network connectivity
 	providerId := int32(5) // int32 | ID of the cloud provider (optional)
 	locationId := int32(6) // int32 | ID of the geographic location (optional)
 	dataCenterId := "aws-us-west-1" // string | ID of the cloud provider's data center (optional)
@@ -50,10 +51,11 @@ func main() {
 	priceMax := float32(8.14) // float32 | Maximum price of the compute instance (optional)
 	page := int32(0) // int32 | Page number (optional)
 	size := int32(100) // int32 | Query size (optional)
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs(context.Background()).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs(context.Background()).K8sConnectionType(k8sConnectionType).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -74,6 +76,7 @@ Other parameters are passed through a pointer to a apiGetKuberNodesConfigsReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **k8sConnectionType** | **string** | Type of Kubernetes cluster network connectivity | 
  **providerId** | **int32** | ID of the cloud provider | 
  **locationId** | **int32** | ID of the geographic location | 
  **dataCenterId** | **string** | ID of the cloud provider&#39;s data center | 
@@ -92,6 +95,7 @@ Name | Type | Description  | Notes
  **priceMax** | **float32** | Maximum price of the compute instance | 
  **page** | **int32** | Page number | 
  **size** | **int32** | Query size | 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -113,7 +117,7 @@ Name | Type | Description  | Notes
 
 ## GetSpotConfigs
 
-> GetVmConfigs200Response GetSpotConfigs(ctx).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+> GetVmConfigs200Response GetSpotConfigs(ctx).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 
 List of available configurations for spot instance creation
 
@@ -151,10 +155,11 @@ func main() {
 	priceMax := float32(8.14) // float32 | Maximum price of the compute instance (optional)
 	page := int32(0) // int32 | Page number (optional)
 	size := int32(100) // int32 | Query size (optional)
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetSpotConfigs(context.Background()).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetSpotConfigs(context.Background()).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetSpotConfigs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -194,6 +199,7 @@ Name | Type | Description  | Notes
  **priceMax** | **float32** | Maximum price of the compute instance | 
  **page** | **int32** | Page number | 
  **size** | **int32** | Query size | 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -215,7 +221,7 @@ Name | Type | Description  | Notes
 
 ## GetVmConfigs
 
-> GetVmConfigs200Response GetVmConfigs(ctx).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+> GetVmConfigs200Response GetVmConfigs(ctx).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 
 List of available configurations for virtual machine creation
 
@@ -253,10 +259,11 @@ func main() {
 	priceMax := float32(8.14) // float32 | Maximum price of the compute instance (optional)
 	page := int32(0) // int32 | Page number (optional)
 	size := int32(100) // int32 | Query size (optional)
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetVmConfigs(context.Background()).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetVmConfigs(context.Background()).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetVmConfigs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -296,6 +303,7 @@ Name | Type | Description  | Notes
  **priceMax** | **float32** | Maximum price of the compute instance | 
  **page** | **int32** | Page number | 
  **size** | **int32** | Query size | 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -317,7 +325,7 @@ Name | Type | Description  | Notes
 
 ## GetVmResizeConfigs
 
-> GetVmResizeConfigs200Response GetVmResizeConfigs(ctx).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+> GetVmResizeConfigs200Response GetVmResizeConfigs(ctx).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 
 List of available configurations for virtual machine resize
 
@@ -347,10 +355,11 @@ func main() {
 	priceMax := float32(8.14) // float32 | Maximum price of the compute instance (optional)
 	page := int32(0) // int32 | Page number (optional)
 	size := int32(100) // int32 | Query size (optional)
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetVmResizeConfigs(context.Background()).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).Execute()
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetVmResizeConfigs(context.Background()).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetVmResizeConfigs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -382,6 +391,7 @@ Name | Type | Description  | Notes
  **priceMax** | **float32** | Maximum price of the compute instance | 
  **page** | **int32** | Page number | 
  **size** | **int32** | Query size | 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 

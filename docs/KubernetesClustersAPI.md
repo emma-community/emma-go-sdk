@@ -33,7 +33,7 @@ import (
 )
 
 func main() {
-	kubernetesCreate := *openapiclient.NewKubernetesCreate("default-k8s-managed-cluster-name", "eu", []openapiclient.KubernetesCreateWorkerNodesInner{*openapiclient.NewKubernetesCreateWorkerNodesInner("default-name", "europe-west1-d", "shared", int32(2), int32(4), "ssd", int32(16))}) // KubernetesCreate |  (optional)
+	kubernetesCreate := *openapiclient.NewKubernetesCreate("default-k8s-managed-cluster-name", "eu", "K8sConnectionType_example", []openapiclient.KubernetesCreateWorkerNodesInner{*openapiclient.NewKubernetesCreateWorkerNodesInner("default-name", "europe-west1-d", "shared", int32(2), int32(4), "ssd", int32(16))}) // KubernetesCreate |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -222,7 +222,7 @@ Name | Type | Description  | Notes
 
 ## GetKubernetesCluster
 
-> Kubernetes GetKubernetesCluster(ctx, kubernetesId).Execute()
+> Kubernetes GetKubernetesCluster(ctx, kubernetesId).ProjectId(projectId).Execute()
 
 Get Kubernetes cluster by id
 
@@ -242,10 +242,11 @@ import (
 
 func main() {
 	kubernetesId := int32(56) // int32 | ID of the Kubernetes cluster
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.KubernetesClustersAPI.GetKubernetesCluster(context.Background(), kubernetesId).Execute()
+	resp, r, err := apiClient.KubernetesClustersAPI.GetKubernetesCluster(context.Background(), kubernetesId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClustersAPI.GetKubernetesCluster``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -271,6 +272,7 @@ Other parameters are passed through a pointer to a apiGetKubernetesClusterReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -292,7 +294,7 @@ Name | Type | Description  | Notes
 
 ## GetKubernetesClusters
 
-> []Kubernetes GetKubernetesClusters(ctx).Execute()
+> []Kubernetes GetKubernetesClusters(ctx).ProjectId(projectId).Execute()
 
 Get list of Kubernetes clusters
 
@@ -311,10 +313,11 @@ import (
 )
 
 func main() {
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.KubernetesClustersAPI.GetKubernetesClusters(context.Background()).Execute()
+	resp, r, err := apiClient.KubernetesClustersAPI.GetKubernetesClusters(context.Background()).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClustersAPI.GetKubernetesClusters``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -326,12 +329,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetKubernetesClustersRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 

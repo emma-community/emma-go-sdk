@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Kubernetes cluster name | 
 **DeploymentLocation** | **string** | Deployment region of the Kubernetes cluster. Currently, Europe (eu) and North America (n_america) is available. | 
+**K8sConnectionType** | **string** | Specifies the network connectivity type for the cluster. | 
 **WorkerNodes** | [**[]KubernetesCreateWorkerNodesInner**](KubernetesCreateWorkerNodesInner.md) | List of the worker nodes | 
 **AutoscalingConfigs** | Pointer to [**[]KubernetesCreateAutoscalingConfigsInner**](KubernetesCreateAutoscalingConfigsInner.md) | Configurations of the autoscaling group | [optional] 
 
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewKubernetesCreate
 
-`func NewKubernetesCreate(name string, deploymentLocation string, workerNodes []KubernetesCreateWorkerNodesInner, ) *KubernetesCreate`
+`func NewKubernetesCreate(name string, deploymentLocation string, k8sConnectionType string, workerNodes []KubernetesCreateWorkerNodesInner, ) *KubernetesCreate`
 
 NewKubernetesCreate instantiates a new KubernetesCreate object
 This constructor will assign default values to properties that have it defined,
@@ -66,6 +67,26 @@ and a boolean to check if the value has been set.
 `func (o *KubernetesCreate) SetDeploymentLocation(v string)`
 
 SetDeploymentLocation sets DeploymentLocation field to given value.
+
+
+### GetK8sConnectionType
+
+`func (o *KubernetesCreate) GetK8sConnectionType() string`
+
+GetK8sConnectionType returns the K8sConnectionType field if non-nil, zero value otherwise.
+
+### GetK8sConnectionTypeOk
+
+`func (o *KubernetesCreate) GetK8sConnectionTypeOk() (*string, bool)`
+
+GetK8sConnectionTypeOk returns a tuple with the K8sConnectionType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetK8sConnectionType
+
+`func (o *KubernetesCreate) SetK8sConnectionType(v string)`
+
+SetK8sConnectionType sets K8sConnectionType field to given value.
 
 
 ### GetWorkerNodes

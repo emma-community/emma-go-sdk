@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## V1SubnetworksGet
 
-> []Subnetwork V1SubnetworksGet(ctx).Execute()
+> []Subnetwork V1SubnetworksGet(ctx).ProjectId(projectId).Execute()
 
 Get list of subnetworks
 
@@ -33,10 +33,11 @@ import (
 )
 
 func main() {
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SubnetworksAPI.V1SubnetworksGet(context.Background()).Execute()
+	resp, r, err := apiClient.SubnetworksAPI.V1SubnetworksGet(context.Background()).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.V1SubnetworksGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -48,12 +49,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiV1SubnetworksGetRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -211,7 +216,7 @@ Name | Type | Description  | Notes
 
 ## V1SubnetworksSubnetworkIdGet
 
-> Subnetwork V1SubnetworksSubnetworkIdGet(ctx, subnetworkId).Execute()
+> Subnetwork V1SubnetworksSubnetworkIdGet(ctx, subnetworkId).ProjectId(projectId).Execute()
 
 Get subnetwork by ID
 
@@ -231,10 +236,11 @@ import (
 
 func main() {
 	subnetworkId := "subnetworkId_example" // string | Subnetwork ID
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SubnetworksAPI.V1SubnetworksSubnetworkIdGet(context.Background(), subnetworkId).Execute()
+	resp, r, err := apiClient.SubnetworksAPI.V1SubnetworksSubnetworkIdGet(context.Background(), subnetworkId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.V1SubnetworksSubnetworkIdGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -260,6 +266,7 @@ Other parameters are passed through a pointer to a apiV1SubnetworksSubnetworkIdG
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 

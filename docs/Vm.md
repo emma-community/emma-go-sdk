@@ -22,8 +22,8 @@ Name | Type | Description | Notes
 **VCpuType** | Pointer to **string** | Type of virtual Central Processing Units (vCPUs) | [optional] 
 **CloudNetworkType** | Pointer to **string** | Cloud network type | [optional] 
 **RamGb** | Pointer to **int32** | Capacity of the RAM in gigabytes | [optional] 
-**Disks** | Pointer to [**[]KubernetesNodeGroupsInnerNodesInnerDisksInner**](KubernetesNodeGroupsInnerNodesInnerDisksInner.md) | List of volumes | [optional] 
-**Networks** | Pointer to [**[]KubernetesNodeGroupsInnerNodesInnerNetworksInner**](KubernetesNodeGroupsInnerNodesInnerNetworksInner.md) |  | [optional] 
+**Disks** | Pointer to [**[]VmDisksInner**](VmDisksInner.md) | List of volumes | [optional] 
+**Networks** | Pointer to [**[]VmNetworksInner**](VmNetworksInner.md) |  | [optional] 
 **SecurityGroup** | Pointer to [**VmSecurityGroup**](VmSecurityGroup.md) |  | [optional] 
 **Subnetwork** | Pointer to [**VmSubnetwork**](VmSubnetwork.md) |  | [optional] 
 **SshKeyId** | Pointer to **int32** | SSH key ID | [optional] 
@@ -503,20 +503,20 @@ HasRamGb returns a boolean if a field has been set.
 
 ### GetDisks
 
-`func (o *Vm) GetDisks() []KubernetesNodeGroupsInnerNodesInnerDisksInner`
+`func (o *Vm) GetDisks() []VmDisksInner`
 
 GetDisks returns the Disks field if non-nil, zero value otherwise.
 
 ### GetDisksOk
 
-`func (o *Vm) GetDisksOk() (*[]KubernetesNodeGroupsInnerNodesInnerDisksInner, bool)`
+`func (o *Vm) GetDisksOk() (*[]VmDisksInner, bool)`
 
 GetDisksOk returns a tuple with the Disks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDisks
 
-`func (o *Vm) SetDisks(v []KubernetesNodeGroupsInnerNodesInnerDisksInner)`
+`func (o *Vm) SetDisks(v []VmDisksInner)`
 
 SetDisks sets Disks field to given value.
 
@@ -528,20 +528,20 @@ HasDisks returns a boolean if a field has been set.
 
 ### GetNetworks
 
-`func (o *Vm) GetNetworks() []KubernetesNodeGroupsInnerNodesInnerNetworksInner`
+`func (o *Vm) GetNetworks() []VmNetworksInner`
 
 GetNetworks returns the Networks field if non-nil, zero value otherwise.
 
 ### GetNetworksOk
 
-`func (o *Vm) GetNetworksOk() (*[]KubernetesNodeGroupsInnerNodesInnerNetworksInner, bool)`
+`func (o *Vm) GetNetworksOk() (*[]VmNetworksInner, bool)`
 
 GetNetworksOk returns a tuple with the Networks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNetworks
 
-`func (o *Vm) SetNetworks(v []KubernetesNodeGroupsInnerNodesInnerNetworksInner)`
+`func (o *Vm) SetNetworks(v []VmNetworksInner)`
 
 SetNetworks sets Networks field to given value.
 
@@ -726,16 +726,6 @@ SetTags sets Tags field to given value.
 
 HasTags returns a boolean if a field has been set.
 
-### SetTagsNil
-
-`func (o *Vm) SetTagsNil(b bool)`
-
- SetTagsNil sets the value for Tags to be an explicit nil
-
-### UnsetTags
-`func (o *Vm) UnsetTags()`
-
-UnsetTags ensures that no value is present for Tags, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

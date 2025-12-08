@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## GetVm
 
-> Vm GetVm(ctx, vmId).Execute()
+> Vm GetVm(ctx, vmId).ProjectId(projectId).Execute()
 
 Get virtual machine by id
 
@@ -34,10 +34,11 @@ import (
 
 func main() {
 	vmId := int32(56) // int32 | ID of the virtual machine
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.VirtualMachinesAPI.GetVm(context.Background(), vmId).Execute()
+	resp, r, err := apiClient.VirtualMachinesAPI.GetVm(context.Background(), vmId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `VirtualMachinesAPI.GetVm``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -63,6 +64,7 @@ Other parameters are passed through a pointer to a apiGetVmRequest struct via th
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -84,7 +86,7 @@ Name | Type | Description  | Notes
 
 ## GetVms
 
-> []Vm GetVms(ctx).Execute()
+> []Vm GetVms(ctx).ProjectId(projectId).Execute()
 
 Get list of virtual machines
 
@@ -103,10 +105,11 @@ import (
 )
 
 func main() {
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.VirtualMachinesAPI.GetVms(context.Background()).Execute()
+	resp, r, err := apiClient.VirtualMachinesAPI.GetVms(context.Background()).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `VirtualMachinesAPI.GetVms``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -118,12 +121,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetVmsRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -217,7 +224,7 @@ Name | Type | Description  | Notes
 
 ## VmCreate
 
-> Vm VmCreate(ctx).VmCreate(vmCreate).Execute()
+> VmNew VmCreate(ctx).VmCreate(vmCreate).Execute()
 
 Create virtual machine
 
@@ -245,7 +252,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VirtualMachinesAPI.VmCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VmCreate`: Vm
+	// response from `VmCreate`: VmNew
 	fmt.Fprintf(os.Stdout, "Response from `VirtualMachinesAPI.VmCreate`: %v\n", resp)
 }
 ```
@@ -265,7 +272,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Vm**](Vm.md)
+[**VmNew**](VmNew.md)
 
 ### Authorization
 
