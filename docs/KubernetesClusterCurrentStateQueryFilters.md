@@ -8,20 +8,20 @@ Name | Type | Description | Notes
 **ObjectName** | **string** | Name of the object for which the user requests a list of metrics | 
 **BreakdownLevel** | **string** | Kubernetes object breakdown | 
 **CurrentStateMetrics** | **[]string** | List of metrics describing the current state | 
-**CustomFilterState** | **NullableString** | State of objects in the custom filter | 
-**CustomFilterAvgCpuRule** | **NullableString** | Rule for object filtering by CPU utilization | 
-**CustomFilterAvgCpuValue** | **NullableFloat32** | CPU utilization in the custom filter | 
-**CustomFilterAvgMemoryRule** | **NullableString** | Rule for object filtering by memory utilization | 
-**CustomFilterAvgMemoryValue** | **NullableFloat32** | Memory utilization in the custom filter | 
-**CustomFilterAvgStorageRule** | **NullableString** | Rule for object filtering by disk utilization | 
-**CustomFilterAvgStorageValue** | **NullableFloat32** | Disk utilization in the custom filter | 
+**CustomFilterState** | **string** | State of objects in the custom filter | 
+**CustomFilterAvgCpuRule** | **string** | Rule for object filtering by CPU utilization | 
+**CustomFilterAvgCpuValue** | **float32** | CPU utilization in the custom filter | 
+**CustomFilterAvgMemoryRule** | **string** | Rule for object filtering by memory utilization | 
+**CustomFilterAvgMemoryValue** | **float32** | Memory utilization in the custom filter | 
+**CustomFilterAvgStorageRule** | **string** | Rule for object filtering by disk utilization | 
+**CustomFilterAvgStorageValue** | **float32** | Disk utilization in the custom filter | 
 **CustomFilterSubobjects** | **[]string** | List of subobject to explore | 
 
 ## Methods
 
 ### NewKubernetesClusterCurrentStateQueryFilters
 
-`func NewKubernetesClusterCurrentStateQueryFilters(objectType string, objectName string, breakdownLevel string, currentStateMetrics []string, customFilterState NullableString, customFilterAvgCpuRule NullableString, customFilterAvgCpuValue NullableFloat32, customFilterAvgMemoryRule NullableString, customFilterAvgMemoryValue NullableFloat32, customFilterAvgStorageRule NullableString, customFilterAvgStorageValue NullableFloat32, customFilterSubobjects []string, ) *KubernetesClusterCurrentStateQueryFilters`
+`func NewKubernetesClusterCurrentStateQueryFilters(objectType string, objectName string, breakdownLevel string, currentStateMetrics []string, customFilterState string, customFilterAvgCpuRule string, customFilterAvgCpuValue float32, customFilterAvgMemoryRule string, customFilterAvgMemoryValue float32, customFilterAvgStorageRule string, customFilterAvgStorageValue float32, customFilterSubobjects []string, ) *KubernetesClusterCurrentStateQueryFilters`
 
 NewKubernetesClusterCurrentStateQueryFilters instantiates a new KubernetesClusterCurrentStateQueryFilters object
 This constructor will assign default values to properties that have it defined,
@@ -136,16 +136,6 @@ and a boolean to check if the value has been set.
 SetCustomFilterState sets CustomFilterState field to given value.
 
 
-### SetCustomFilterStateNil
-
-`func (o *KubernetesClusterCurrentStateQueryFilters) SetCustomFilterStateNil(b bool)`
-
- SetCustomFilterStateNil sets the value for CustomFilterState to be an explicit nil
-
-### UnsetCustomFilterState
-`func (o *KubernetesClusterCurrentStateQueryFilters) UnsetCustomFilterState()`
-
-UnsetCustomFilterState ensures that no value is present for CustomFilterState, not even an explicit nil
 ### GetCustomFilterAvgCpuRule
 
 `func (o *KubernetesClusterCurrentStateQueryFilters) GetCustomFilterAvgCpuRule() string`
@@ -166,16 +156,6 @@ and a boolean to check if the value has been set.
 SetCustomFilterAvgCpuRule sets CustomFilterAvgCpuRule field to given value.
 
 
-### SetCustomFilterAvgCpuRuleNil
-
-`func (o *KubernetesClusterCurrentStateQueryFilters) SetCustomFilterAvgCpuRuleNil(b bool)`
-
- SetCustomFilterAvgCpuRuleNil sets the value for CustomFilterAvgCpuRule to be an explicit nil
-
-### UnsetCustomFilterAvgCpuRule
-`func (o *KubernetesClusterCurrentStateQueryFilters) UnsetCustomFilterAvgCpuRule()`
-
-UnsetCustomFilterAvgCpuRule ensures that no value is present for CustomFilterAvgCpuRule, not even an explicit nil
 ### GetCustomFilterAvgCpuValue
 
 `func (o *KubernetesClusterCurrentStateQueryFilters) GetCustomFilterAvgCpuValue() float32`
@@ -196,16 +176,6 @@ and a boolean to check if the value has been set.
 SetCustomFilterAvgCpuValue sets CustomFilterAvgCpuValue field to given value.
 
 
-### SetCustomFilterAvgCpuValueNil
-
-`func (o *KubernetesClusterCurrentStateQueryFilters) SetCustomFilterAvgCpuValueNil(b bool)`
-
- SetCustomFilterAvgCpuValueNil sets the value for CustomFilterAvgCpuValue to be an explicit nil
-
-### UnsetCustomFilterAvgCpuValue
-`func (o *KubernetesClusterCurrentStateQueryFilters) UnsetCustomFilterAvgCpuValue()`
-
-UnsetCustomFilterAvgCpuValue ensures that no value is present for CustomFilterAvgCpuValue, not even an explicit nil
 ### GetCustomFilterAvgMemoryRule
 
 `func (o *KubernetesClusterCurrentStateQueryFilters) GetCustomFilterAvgMemoryRule() string`
@@ -226,16 +196,6 @@ and a boolean to check if the value has been set.
 SetCustomFilterAvgMemoryRule sets CustomFilterAvgMemoryRule field to given value.
 
 
-### SetCustomFilterAvgMemoryRuleNil
-
-`func (o *KubernetesClusterCurrentStateQueryFilters) SetCustomFilterAvgMemoryRuleNil(b bool)`
-
- SetCustomFilterAvgMemoryRuleNil sets the value for CustomFilterAvgMemoryRule to be an explicit nil
-
-### UnsetCustomFilterAvgMemoryRule
-`func (o *KubernetesClusterCurrentStateQueryFilters) UnsetCustomFilterAvgMemoryRule()`
-
-UnsetCustomFilterAvgMemoryRule ensures that no value is present for CustomFilterAvgMemoryRule, not even an explicit nil
 ### GetCustomFilterAvgMemoryValue
 
 `func (o *KubernetesClusterCurrentStateQueryFilters) GetCustomFilterAvgMemoryValue() float32`
@@ -256,16 +216,6 @@ and a boolean to check if the value has been set.
 SetCustomFilterAvgMemoryValue sets CustomFilterAvgMemoryValue field to given value.
 
 
-### SetCustomFilterAvgMemoryValueNil
-
-`func (o *KubernetesClusterCurrentStateQueryFilters) SetCustomFilterAvgMemoryValueNil(b bool)`
-
- SetCustomFilterAvgMemoryValueNil sets the value for CustomFilterAvgMemoryValue to be an explicit nil
-
-### UnsetCustomFilterAvgMemoryValue
-`func (o *KubernetesClusterCurrentStateQueryFilters) UnsetCustomFilterAvgMemoryValue()`
-
-UnsetCustomFilterAvgMemoryValue ensures that no value is present for CustomFilterAvgMemoryValue, not even an explicit nil
 ### GetCustomFilterAvgStorageRule
 
 `func (o *KubernetesClusterCurrentStateQueryFilters) GetCustomFilterAvgStorageRule() string`
@@ -286,16 +236,6 @@ and a boolean to check if the value has been set.
 SetCustomFilterAvgStorageRule sets CustomFilterAvgStorageRule field to given value.
 
 
-### SetCustomFilterAvgStorageRuleNil
-
-`func (o *KubernetesClusterCurrentStateQueryFilters) SetCustomFilterAvgStorageRuleNil(b bool)`
-
- SetCustomFilterAvgStorageRuleNil sets the value for CustomFilterAvgStorageRule to be an explicit nil
-
-### UnsetCustomFilterAvgStorageRule
-`func (o *KubernetesClusterCurrentStateQueryFilters) UnsetCustomFilterAvgStorageRule()`
-
-UnsetCustomFilterAvgStorageRule ensures that no value is present for CustomFilterAvgStorageRule, not even an explicit nil
 ### GetCustomFilterAvgStorageValue
 
 `func (o *KubernetesClusterCurrentStateQueryFilters) GetCustomFilterAvgStorageValue() float32`
@@ -316,16 +256,6 @@ and a boolean to check if the value has been set.
 SetCustomFilterAvgStorageValue sets CustomFilterAvgStorageValue field to given value.
 
 
-### SetCustomFilterAvgStorageValueNil
-
-`func (o *KubernetesClusterCurrentStateQueryFilters) SetCustomFilterAvgStorageValueNil(b bool)`
-
- SetCustomFilterAvgStorageValueNil sets the value for CustomFilterAvgStorageValue to be an explicit nil
-
-### UnsetCustomFilterAvgStorageValue
-`func (o *KubernetesClusterCurrentStateQueryFilters) UnsetCustomFilterAvgStorageValue()`
-
-UnsetCustomFilterAvgStorageValue ensures that no value is present for CustomFilterAvgStorageValue, not even an explicit nil
 ### GetCustomFilterSubobjects
 
 `func (o *KubernetesClusterCurrentStateQueryFilters) GetCustomFilterSubobjects() []string`
@@ -346,16 +276,6 @@ and a boolean to check if the value has been set.
 SetCustomFilterSubobjects sets CustomFilterSubobjects field to given value.
 
 
-### SetCustomFilterSubobjectsNil
-
-`func (o *KubernetesClusterCurrentStateQueryFilters) SetCustomFilterSubobjectsNil(b bool)`
-
- SetCustomFilterSubobjectsNil sets the value for CustomFilterSubobjects to be an explicit nil
-
-### UnsetCustomFilterSubobjects
-`func (o *KubernetesClusterCurrentStateQueryFilters) UnsetCustomFilterSubobjects()`
-
-UnsetCustomFilterSubobjects ensures that no value is present for CustomFilterSubobjects, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

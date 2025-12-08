@@ -7,17 +7,18 @@ Name | Type | Description | Notes
 **Action** | **string** | Action with a virtual machine | 
 **DataCenterId** | **string** | ID of the provider&#39;s data center | 
 **IsKeepOriginalInstance** | Pointer to **bool** | Indicate if it is necessary to keep the original instance | [optional] [default to true]
-**Name** | **string** | Name of the virtual machine | 
+**Name** | **string** | A new name of the virtual machine | 
 **VCpu** | **int32** | Number of virtual Central Processing Units (vCPUs) | 
 **VCpuType** | **string** | Type of virtual Central Processing Units (vCPUs) | 
 **RamGb** | **int32** | Capacity of the RAM in gigabytes | 
 **VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
+**VolumeId** | **int32** | Volume ID to detach from the virtual machine | 
 
 ## Methods
 
 ### NewVmActionsRequest
 
-`func NewVmActionsRequest(action string, dataCenterId string, name string, vCpu int32, vCpuType string, ramGb int32, volumeGb int32, ) *VmActionsRequest`
+`func NewVmActionsRequest(action string, dataCenterId string, name string, vCpu int32, vCpuType string, ramGb int32, volumeGb int32, volumeId int32, ) *VmActionsRequest`
 
 NewVmActionsRequest instantiates a new VmActionsRequest object
 This constructor will assign default values to properties that have it defined,
@@ -195,6 +196,26 @@ and a boolean to check if the value has been set.
 `func (o *VmActionsRequest) SetVolumeGb(v int32)`
 
 SetVolumeGb sets VolumeGb field to given value.
+
+
+### GetVolumeId
+
+`func (o *VmActionsRequest) GetVolumeId() int32`
+
+GetVolumeId returns the VolumeId field if non-nil, zero value otherwise.
+
+### GetVolumeIdOk
+
+`func (o *VmActionsRequest) GetVolumeIdOk() (*int32, bool)`
+
+GetVolumeIdOk returns a tuple with the VolumeId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVolumeId
+
+`func (o *VmActionsRequest) SetVolumeId(v int32)`
+
+SetVolumeId sets VolumeId field to given value.
 
 
 

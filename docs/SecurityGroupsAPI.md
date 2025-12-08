@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 ## GetSecurityGroup
 
-> SecurityGroup GetSecurityGroup(ctx, securityGroupId).Execute()
+> SecurityGroup GetSecurityGroup(ctx, securityGroupId).ProjectId(projectId).Execute()
 
 Get security group by ID
 
@@ -36,10 +36,11 @@ import (
 
 func main() {
 	securityGroupId := int32(56) // int32 | ID of the security group
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SecurityGroupsAPI.GetSecurityGroup(context.Background(), securityGroupId).Execute()
+	resp, r, err := apiClient.SecurityGroupsAPI.GetSecurityGroup(context.Background(), securityGroupId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SecurityGroupsAPI.GetSecurityGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -65,6 +66,7 @@ Other parameters are passed through a pointer to a apiGetSecurityGroupRequest st
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -86,7 +88,7 @@ Name | Type | Description  | Notes
 
 ## GetSecurityGroups
 
-> []SecurityGroup GetSecurityGroups(ctx).Execute()
+> []SecurityGroup GetSecurityGroups(ctx).ProjectId(projectId).Execute()
 
 Get list of security groups
 
@@ -105,10 +107,11 @@ import (
 )
 
 func main() {
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SecurityGroupsAPI.GetSecurityGroups(context.Background()).Execute()
+	resp, r, err := apiClient.SecurityGroupsAPI.GetSecurityGroups(context.Background()).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SecurityGroupsAPI.GetSecurityGroups``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -120,12 +123,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSecurityGroupsRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -355,7 +362,7 @@ Name | Type | Description  | Notes
 
 ## SecurityGroupInstances
 
-> []Vm SecurityGroupInstances(ctx, securityGroupId).Execute()
+> []Vm SecurityGroupInstances(ctx, securityGroupId).ProjectId(projectId).Execute()
 
 Get instances in security group
 
@@ -375,10 +382,11 @@ import (
 
 func main() {
 	securityGroupId := int32(56) // int32 | ID of the security group
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SecurityGroupsAPI.SecurityGroupInstances(context.Background(), securityGroupId).Execute()
+	resp, r, err := apiClient.SecurityGroupsAPI.SecurityGroupInstances(context.Background(), securityGroupId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SecurityGroupsAPI.SecurityGroupInstances``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -404,6 +412,7 @@ Other parameters are passed through a pointer to a apiSecurityGroupInstancesRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 

@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## GetLocation
 
-> Location GetLocation(ctx, locationId).Execute()
+> Location GetLocation(ctx, locationId).ProjectId(projectId).Execute()
 
 Get location by ID
 
@@ -31,10 +31,11 @@ import (
 
 func main() {
 	locationId := int32(56) // int32 | ID of the geographic location
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LocationsAPI.GetLocation(context.Background(), locationId).Execute()
+	resp, r, err := apiClient.LocationsAPI.GetLocation(context.Background(), locationId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LocationsAPI.GetLocation``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -60,6 +61,7 @@ Other parameters are passed through a pointer to a apiGetLocationRequest struct 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -81,7 +83,7 @@ Name | Type | Description  | Notes
 
 ## GetLocations
 
-> []Location GetLocations(ctx).Name(name).Execute()
+> []Location GetLocations(ctx).Name(name).ProjectId(projectId).Execute()
 
 Get list of locations
 
@@ -101,10 +103,11 @@ import (
 
 func main() {
 	name := "Stockholm" // string | Name of the geographic location (optional)
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LocationsAPI.GetLocations(context.Background()).Name(name).Execute()
+	resp, r, err := apiClient.LocationsAPI.GetLocations(context.Background()).Name(name).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LocationsAPI.GetLocations``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -126,6 +129,7 @@ Other parameters are passed through a pointer to a apiGetLocationsRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string** | Name of the geographic location | 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 

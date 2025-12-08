@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
-**SizeGb** | Pointer to **int32** |  | [optional] 
-**TypeId** | Pointer to **int32** |  | [optional] 
-**Type** | Pointer to **string** |  | [optional] 
-**IsBootable** | Pointer to **bool** |  | [optional] 
+**Id** | Pointer to **int32** | Volume ID | [optional] 
+**SizeGb** | Pointer to **int32** | Volume size in gigabytes | [optional] 
+**TypeId** | Pointer to **int32** | ID of the volume type | [optional] 
+**Type** | Pointer to **string** | Volume type | [optional] 
+**IsBootable** | Pointer to **bool** | Indicates whether the volume is bootable or not | [optional] 
 
 ## Methods
 

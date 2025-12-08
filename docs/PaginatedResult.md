@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **TotalPages** | Pointer to **int32** | Total number of pages available | [optional] 
 **TotalElements** | Pointer to **int64** | Total number of elements across all pages | [optional] 
 **Size** | Pointer to **int32** | Number of elements per page | [optional] 
-**Content** | Pointer to **[]map[string]interface{}** | List of elements on the current page | [optional] 
+**Content** | Pointer to **[]interface{}** | List of elements on the current page | [optional] 
 **Number** | Pointer to **int32** | Current page number (0-based index) | [optional] 
 **Sort** | Pointer to [**SortObject**](SortObject.md) |  | [optional] 
 **Last** | Pointer to **bool** | Indicates if this is the last page | [optional] 
@@ -112,20 +112,20 @@ HasSize returns a boolean if a field has been set.
 
 ### GetContent
 
-`func (o *PaginatedResult) GetContent() []map[string]interface{}`
+`func (o *PaginatedResult) GetContent() []interface{}`
 
 GetContent returns the Content field if non-nil, zero value otherwise.
 
 ### GetContentOk
 
-`func (o *PaginatedResult) GetContentOk() (*[]map[string]interface{}, bool)`
+`func (o *PaginatedResult) GetContentOk() (*[]interface{}, bool)`
 
 GetContentOk returns a tuple with the Content field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetContent
 
-`func (o *PaginatedResult) SetContent(v []map[string]interface{})`
+`func (o *PaginatedResult) SetContent(v []interface{})`
 
 SetContent sets Content field to given value.
 

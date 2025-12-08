@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** | Name of the Kubernetes cluster | [optional] 
 **Version** | Pointer to **string** | Version of the Kubernetes cluster | [optional] 
 **DeploymentLocation** | Pointer to **string** | Deployment region of the Kubernetes cluster. Currently, Europe (eu) and North America (n_america) is available. | [optional] 
+**K8sConnectionType** | Pointer to **string** | Specifies the network connectivity type for the cluster. Immutable: set at creation only. To change, delete and create a new cluster. | [optional] [readonly] 
 **Status** | Pointer to **string** | Status of the Kubernetes cluster | [optional] 
 **Cost** | Pointer to [**KubernetesCost**](KubernetesCost.md) |  | [optional] 
 **ControlPlaneStatus** | Pointer to **string** | Control Plane Status. The Control Plane status provides information about the health and functionality of various components that are part of the Control Plane. | [optional] 
@@ -289,6 +290,31 @@ SetDeploymentLocation sets DeploymentLocation field to given value.
 `func (o *Kubernetes) HasDeploymentLocation() bool`
 
 HasDeploymentLocation returns a boolean if a field has been set.
+
+### GetK8sConnectionType
+
+`func (o *Kubernetes) GetK8sConnectionType() string`
+
+GetK8sConnectionType returns the K8sConnectionType field if non-nil, zero value otherwise.
+
+### GetK8sConnectionTypeOk
+
+`func (o *Kubernetes) GetK8sConnectionTypeOk() (*string, bool)`
+
+GetK8sConnectionTypeOk returns a tuple with the K8sConnectionType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetK8sConnectionType
+
+`func (o *Kubernetes) SetK8sConnectionType(v string)`
+
+SetK8sConnectionType sets K8sConnectionType field to given value.
+
+### HasK8sConnectionType
+
+`func (o *Kubernetes) HasK8sConnectionType() bool`
+
+HasK8sConnectionType returns a boolean if a field has been set.
 
 ### GetStatus
 

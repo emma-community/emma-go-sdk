@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## GetDataCenter
 
-> DataCenter GetDataCenter(ctx, dataCenterId).Execute()
+> DataCenter GetDataCenter(ctx, dataCenterId).ProjectId(projectId).Execute()
 
 Get data center by ID
 
@@ -31,10 +31,11 @@ import (
 
 func main() {
 	dataCenterId := "aws-us-west-1" // string | ID of the cloud provider's data center
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DataCentersAPI.GetDataCenter(context.Background(), dataCenterId).Execute()
+	resp, r, err := apiClient.DataCentersAPI.GetDataCenter(context.Background(), dataCenterId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DataCentersAPI.GetDataCenter``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -60,6 +61,7 @@ Other parameters are passed through a pointer to a apiGetDataCenterRequest struc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
@@ -81,7 +83,7 @@ Name | Type | Description  | Notes
 
 ## GetDataCenters
 
-> []DataCenter GetDataCenters(ctx).DataCenterName(dataCenterName).LocationId(locationId).ProviderName(providerName).Execute()
+> []DataCenter GetDataCenters(ctx).DataCenterName(dataCenterName).LocationId(locationId).ProviderName(providerName).ProjectId(projectId).Execute()
 
 Get list of data centers
 
@@ -103,10 +105,11 @@ func main() {
 	dataCenterName := "eu-north-1" // string | Name of the cloud provider's data center (optional)
 	locationId := int32(6) // int32 | ID of the geographic location (optional)
 	providerName := "GCP" // string | Name of the cloud provider (optional)
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DataCentersAPI.GetDataCenters(context.Background()).DataCenterName(dataCenterName).LocationId(locationId).ProviderName(providerName).Execute()
+	resp, r, err := apiClient.DataCentersAPI.GetDataCenters(context.Background()).DataCenterName(dataCenterName).LocationId(locationId).ProviderName(providerName).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DataCentersAPI.GetDataCenters``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -130,6 +133,7 @@ Name | Type | Description  | Notes
  **dataCenterName** | **string** | Name of the cloud provider&#39;s data center | 
  **locationId** | **int32** | ID of the geographic location | 
  **providerName** | **string** | Name of the cloud provider | 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 

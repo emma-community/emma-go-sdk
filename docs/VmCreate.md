@@ -14,10 +14,11 @@ Name | Type | Description | Notes
 **VolumeType** | **string** | Volume type | 
 **VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
 **SshKeyId** | Pointer to **int32** | SSH-key ID | [optional] 
-**UserPassword** | Pointer to **string** | User password | [optional] 
+**UserPassword** | Pointer to **string** | User password for the Windows virtual machine. Not required for the AWS and GCP virtual machines. | [optional] 
 **SecurityGroupId** | Pointer to **int32** | ID of the security group | [optional] 
 **SubnetworkId** | Pointer to **string** | ID of the subnetwork | [optional] 
 **PrivateIp** | Pointer to **string** | IP address within the subnetwork range | [optional] 
+**IpAddressing** | Pointer to **string** | IP addressing, ipv4 or dual stack (ipv4 + ipv6) | [optional] 
 
 ## Methods
 
@@ -342,6 +343,31 @@ SetPrivateIp sets PrivateIp field to given value.
 `func (o *VmCreate) HasPrivateIp() bool`
 
 HasPrivateIp returns a boolean if a field has been set.
+
+### GetIpAddressing
+
+`func (o *VmCreate) GetIpAddressing() string`
+
+GetIpAddressing returns the IpAddressing field if non-nil, zero value otherwise.
+
+### GetIpAddressingOk
+
+`func (o *VmCreate) GetIpAddressingOk() (*string, bool)`
+
+GetIpAddressingOk returns a tuple with the IpAddressing field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIpAddressing
+
+`func (o *VmCreate) SetIpAddressing(v string)`
+
+SetIpAddressing sets IpAddressing field to given value.
+
+### HasIpAddressing
+
+`func (o *VmCreate) HasIpAddressing() bool`
+
+HasIpAddressing returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **TotalPages** | Pointer to **int32** | Total number of pages available | [optional] 
 **TotalElements** | Pointer to **int64** | Total number of elements across all pages | [optional] 
 **Size** | Pointer to **int32** | Number of elements per page | [optional] 
-**Content** | Pointer to [**[]VolumeConfiguration**](VolumeConfiguration.md) |  | [optional] 
+**Content** | Pointer to [**[]SystemVolumeConfiguration**](SystemVolumeConfiguration.md) |  | [optional] 
 **Number** | Pointer to **int32** | Current page number (0-based index) | [optional] 
 **Sort** | Pointer to [**SortObject**](SortObject.md) |  | [optional] 
 **Last** | Pointer to **bool** | Indicates if this is the last page | [optional] 
@@ -112,20 +112,20 @@ HasSize returns a boolean if a field has been set.
 
 ### GetContent
 
-`func (o *GetSystemVolumeConfigs200Response) GetContent() []VolumeConfiguration`
+`func (o *GetSystemVolumeConfigs200Response) GetContent() []SystemVolumeConfiguration`
 
 GetContent returns the Content field if non-nil, zero value otherwise.
 
 ### GetContentOk
 
-`func (o *GetSystemVolumeConfigs200Response) GetContentOk() (*[]VolumeConfiguration, bool)`
+`func (o *GetSystemVolumeConfigs200Response) GetContentOk() (*[]SystemVolumeConfiguration, bool)`
 
 GetContentOk returns a tuple with the Content field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetContent
 
-`func (o *GetSystemVolumeConfigs200Response) SetContent(v []VolumeConfiguration)`
+`func (o *GetSystemVolumeConfigs200Response) SetContent(v []SystemVolumeConfiguration)`
 
 SetContent sets Content field to given value.
 

@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## GetSpot
 
-> Vm GetSpot(ctx, spotInstanceId).Execute()
+> SpotVm GetSpot(ctx, spotInstanceId).ProjectId(projectId).Execute()
 
 Get spot instance by ID
 
@@ -34,15 +34,16 @@ import (
 
 func main() {
 	spotInstanceId := int32(56) // int32 | ID of the spot instance
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SpotInstancesAPI.GetSpot(context.Background(), spotInstanceId).Execute()
+	resp, r, err := apiClient.SpotInstancesAPI.GetSpot(context.Background(), spotInstanceId).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SpotInstancesAPI.GetSpot``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetSpot`: Vm
+	// response from `GetSpot`: SpotVm
 	fmt.Fprintf(os.Stdout, "Response from `SpotInstancesAPI.GetSpot`: %v\n", resp)
 }
 ```
@@ -63,10 +64,11 @@ Other parameters are passed through a pointer to a apiGetSpotRequest struct via 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
 
 ### Return type
 
-[**Vm**](Vm.md)
+[**SpotVm**](SpotVm.md)
 
 ### Authorization
 
@@ -84,7 +86,7 @@ Name | Type | Description  | Notes
 
 ## GetSpots
 
-> []Vm GetSpots(ctx).Execute()
+> []SpotVm GetSpots(ctx).ProjectId(projectId).Execute()
 
 Get list of spot instances
 
@@ -103,31 +105,36 @@ import (
 )
 
 func main() {
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SpotInstancesAPI.GetSpots(context.Background()).Execute()
+	resp, r, err := apiClient.SpotInstancesAPI.GetSpots(context.Background()).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SpotInstancesAPI.GetSpots``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetSpots`: []Vm
+	// response from `GetSpots`: []SpotVm
 	fmt.Fprintf(os.Stdout, "Response from `SpotInstancesAPI.GetSpots`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetSpotsRequest struct via the builder pattern
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
+
 ### Return type
 
-[**[]Vm**](Vm.md)
+[**[]SpotVm**](SpotVm.md)
 
 ### Authorization
 
@@ -145,7 +152,7 @@ Other parameters are passed through a pointer to a apiGetSpotsRequest struct via
 
 ## SpotActions
 
-> Vm SpotActions(ctx, spotInstanceId).SpotActionsRequest(spotActionsRequest).Execute()
+> SpotVm SpotActions(ctx, spotInstanceId).SpotActionsRequest(spotActionsRequest).Execute()
 
 Perform actions with a spot instance
 
@@ -165,7 +172,7 @@ import (
 
 func main() {
 	spotInstanceId := int32(56) // int32 | ID of the spot instance
-	spotActionsRequest := openapiclient.SpotActions_request{SpotReboot: openapiclient.NewSpotReboot("reboot")} // SpotActionsRequest |  (optional)
+	spotActionsRequest := openapiclient.SpotActions_request{SpotChangePrice: openapiclient.NewSpotChangePrice("changeprice", float32(0.1))} // SpotActionsRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -174,7 +181,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `SpotInstancesAPI.SpotActions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `SpotActions`: Vm
+	// response from `SpotActions`: SpotVm
 	fmt.Fprintf(os.Stdout, "Response from `SpotInstancesAPI.SpotActions`: %v\n", resp)
 }
 ```
@@ -199,7 +206,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Vm**](Vm.md)
+[**SpotVm**](SpotVm.md)
 
 ### Authorization
 
@@ -217,7 +224,7 @@ Name | Type | Description  | Notes
 
 ## SpotCreate
 
-> Vm SpotCreate(ctx).SpotCreate(spotCreate).Execute()
+> SpotVm SpotCreate(ctx).SpotCreate(spotCreate).Execute()
 
 Create spot instance
 
@@ -245,7 +252,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `SpotInstancesAPI.SpotCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `SpotCreate`: Vm
+	// response from `SpotCreate`: SpotVm
 	fmt.Fprintf(os.Stdout, "Response from `SpotInstancesAPI.SpotCreate`: %v\n", resp)
 }
 ```
@@ -265,7 +272,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Vm**](Vm.md)
+[**SpotVm**](SpotVm.md)
 
 ### Authorization
 
@@ -283,7 +290,7 @@ Name | Type | Description  | Notes
 
 ## SpotDelete
 
-> Vm SpotDelete(ctx, spotInstanceId).Execute()
+> SpotVm SpotDelete(ctx, spotInstanceId).Execute()
 
 Delete spot instance
 
@@ -311,7 +318,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `SpotInstancesAPI.SpotDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `SpotDelete`: Vm
+	// response from `SpotDelete`: SpotVm
 	fmt.Fprintf(os.Stdout, "Response from `SpotInstancesAPI.SpotDelete`: %v\n", resp)
 }
 ```
@@ -335,7 +342,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Vm**](Vm.md)
+[**SpotVm**](SpotVm.md)
 
 ### Authorization
 
