@@ -1,9 +1,9 @@
 /*
 Public EMMA API
 
-### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. | 
+### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
 
-API version: 1.0.23
+API version: 1.0.30
 */
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
@@ -19,13 +19,12 @@ import (
 	"strings"
 )
 
-
 // KubernetesClustersAPIService KubernetesClustersAPI service
 type KubernetesClustersAPIService service
 
 type ApiCreateKubernetesClusterRequest struct {
-	ctx context.Context
-	ApiService *KubernetesClustersAPIService
+	ctx              context.Context
+	ApiService       *KubernetesClustersAPIService
 	kubernetesCreate *KubernetesCreate
 }
 
@@ -41,37 +40,37 @@ func (r ApiCreateKubernetesClusterRequest) Execute() (*Kubernetes, *http.Respons
 /*
 CreateKubernetesCluster Create Kubernetes cluster
 
-Creates a Managed Kubernetes cluster. Kubernetes Service provides you with the ability to deploy and manage Kubernetes clusters without worrying about the setup and maintenance of master nodes. emma takes care of managing the Kubernetes control planes, allowing you to focus on deploying and managing your applications. You don't need to create master nodes. 
+Creates a Managed Kubernetes cluster. Kubernetes Service provides you with the ability to deploy and manage Kubernetes clusters without worrying about the setup and maintenance of master nodes. emma takes care of managing the Kubernetes control planes, allowing you to focus on deploying and managing your applications. You don't need to create master nodes.
 
 We offer a reliable and highly available infrastructure for your cluster, which is hosted across three cloud providers: **Amazon Web Services (AWS), Microsoft Azure,** and **Google Cloud Platform (GCP)**. The service ensures independence from a single cloud provider. You can deploy your cluster across the networks of three providers.
 
 Currently, you can only place clusters in **European** and **North American** regions of cloud providers.
 
- Choose the network type: direct connect (requires enabling this option) or internet connect (no additional actions required).
+	Choose the network type: direct connect (requires enabling this option) or internet connect (no additional actions required).
 
 When creating worker nodes, you need to select the appropriate hardware configurations. The configuration depends on the provider and the data center. Use the `/v1/kubernetes-configs` endpoint to find available configurations for worker nodes.
 
 Cluster currently supports up to 5 autoscaling groups and a total of 16 worker nodes.
 
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateKubernetesClusterRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiCreateKubernetesClusterRequest
 */
 func (a *KubernetesClustersAPIService) CreateKubernetesCluster(ctx context.Context) ApiCreateKubernetesClusterRequest {
 	return ApiCreateKubernetesClusterRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Kubernetes
+//
+//	@return Kubernetes
 func (a *KubernetesClustersAPIService) CreateKubernetesClusterExecute(r ApiCreateKubernetesClusterRequest) (*Kubernetes, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Kubernetes
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Kubernetes
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesClustersAPIService.CreateKubernetesCluster")
@@ -133,8 +132,8 @@ func (a *KubernetesClustersAPIService) CreateKubernetesClusterExecute(r ApiCreat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -144,8 +143,8 @@ func (a *KubernetesClustersAPIService) CreateKubernetesClusterExecute(r ApiCreat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -155,8 +154,8 @@ func (a *KubernetesClustersAPIService) CreateKubernetesClusterExecute(r ApiCreat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -174,8 +173,8 @@ func (a *KubernetesClustersAPIService) CreateKubernetesClusterExecute(r ApiCreat
 }
 
 type ApiDeleteKubernetesClusterRequest struct {
-	ctx context.Context
-	ApiService *KubernetesClustersAPIService
+	ctx          context.Context
+	ApiService   *KubernetesClustersAPIService
 	kubernetesId int32
 }
 
@@ -188,27 +187,27 @@ DeleteKubernetesCluster Delete Kubernetes cluster
 
 This method deletes an existing managed Kubernetes cluster. Deleting a cluster will result in the termination of all the worker nodes and the master node that was part of the cluster. All the data stored on the nodes, including the container images, logs, and application data, will also be lost.
 
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param kubernetesId ID of the Kubernetes cluster
- @return ApiDeleteKubernetesClusterRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param kubernetesId ID of the Kubernetes cluster
+	@return ApiDeleteKubernetesClusterRequest
 */
 func (a *KubernetesClustersAPIService) DeleteKubernetesCluster(ctx context.Context, kubernetesId int32) ApiDeleteKubernetesClusterRequest {
 	return ApiDeleteKubernetesClusterRequest{
-		ApiService: a,
-		ctx: ctx,
+		ApiService:   a,
+		ctx:          ctx,
 		kubernetesId: kubernetesId,
 	}
 }
 
 // Execute executes the request
-//  @return Kubernetes
+//
+//	@return Kubernetes
 func (a *KubernetesClustersAPIService) DeleteKubernetesClusterExecute(r ApiDeleteKubernetesClusterRequest) (*Kubernetes, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Kubernetes
+		localVarHTTPMethod  = http.MethodDelete
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Kubernetes
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesClustersAPIService.DeleteKubernetesCluster")
@@ -269,8 +268,8 @@ func (a *KubernetesClustersAPIService) DeleteKubernetesClusterExecute(r ApiDelet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -280,8 +279,8 @@ func (a *KubernetesClustersAPIService) DeleteKubernetesClusterExecute(r ApiDelet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -291,8 +290,8 @@ func (a *KubernetesClustersAPIService) DeleteKubernetesClusterExecute(r ApiDelet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -302,8 +301,8 @@ func (a *KubernetesClustersAPIService) DeleteKubernetesClusterExecute(r ApiDelet
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -321,9 +320,9 @@ func (a *KubernetesClustersAPIService) DeleteKubernetesClusterExecute(r ApiDelet
 }
 
 type ApiEditKubernetesClusterRequest struct {
-	ctx context.Context
-	ApiService *KubernetesClustersAPIService
-	kubernetesId int32
+	ctx              context.Context
+	ApiService       *KubernetesClustersAPIService
+	kubernetesId     int32
 	kubernetesUpdate *KubernetesUpdate
 }
 
@@ -351,27 +350,27 @@ When you delete an autoscaling group with existing worker nodes, the worker node
 
 During the changes, the cluster status will change to "ENV_DEVELOPMENT." Nodes undergoing changes will be displayed with a "BUSY" status. When the changes are successfully applied, the cluster will transition back to the "ACTIVE" status, and the nodes will be in the "ON" status.
 
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param kubernetesId ID of the Kubernetes cluster
- @return ApiEditKubernetesClusterRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param kubernetesId ID of the Kubernetes cluster
+	@return ApiEditKubernetesClusterRequest
 */
 func (a *KubernetesClustersAPIService) EditKubernetesCluster(ctx context.Context, kubernetesId int32) ApiEditKubernetesClusterRequest {
 	return ApiEditKubernetesClusterRequest{
-		ApiService: a,
-		ctx: ctx,
+		ApiService:   a,
+		ctx:          ctx,
 		kubernetesId: kubernetesId,
 	}
 }
 
 // Execute executes the request
-//  @return Kubernetes
+//
+//	@return Kubernetes
 func (a *KubernetesClustersAPIService) EditKubernetesClusterExecute(r ApiEditKubernetesClusterRequest) (*Kubernetes, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Kubernetes
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Kubernetes
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesClustersAPIService.EditKubernetesCluster")
@@ -434,8 +433,8 @@ func (a *KubernetesClustersAPIService) EditKubernetesClusterExecute(r ApiEditKub
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -445,8 +444,8 @@ func (a *KubernetesClustersAPIService) EditKubernetesClusterExecute(r ApiEditKub
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -456,8 +455,8 @@ func (a *KubernetesClustersAPIService) EditKubernetesClusterExecute(r ApiEditKub
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -467,8 +466,8 @@ func (a *KubernetesClustersAPIService) EditKubernetesClusterExecute(r ApiEditKub
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -486,10 +485,10 @@ func (a *KubernetesClustersAPIService) EditKubernetesClusterExecute(r ApiEditKub
 }
 
 type ApiGetKubernetesClusterRequest struct {
-	ctx context.Context
-	ApiService *KubernetesClustersAPIService
+	ctx          context.Context
+	ApiService   *KubernetesClustersAPIService
 	kubernetesId int32
-	projectId *int32
+	projectId    *int32
 }
 
 // Unused, created for future API extention. Will be ignored if used.
@@ -507,27 +506,27 @@ GetKubernetesCluster Get Kubernetes cluster by id
 
 Returns a Managed Kubernetes cluster by cluster ID.
 
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param kubernetesId ID of the Kubernetes cluster
- @return ApiGetKubernetesClusterRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param kubernetesId ID of the Kubernetes cluster
+	@return ApiGetKubernetesClusterRequest
 */
 func (a *KubernetesClustersAPIService) GetKubernetesCluster(ctx context.Context, kubernetesId int32) ApiGetKubernetesClusterRequest {
 	return ApiGetKubernetesClusterRequest{
-		ApiService: a,
-		ctx: ctx,
+		ApiService:   a,
+		ctx:          ctx,
 		kubernetesId: kubernetesId,
 	}
 }
 
 // Execute executes the request
-//  @return Kubernetes
+//
+//	@return Kubernetes
 func (a *KubernetesClustersAPIService) GetKubernetesClusterExecute(r ApiGetKubernetesClusterRequest) (*Kubernetes, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Kubernetes
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Kubernetes
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesClustersAPIService.GetKubernetesCluster")
@@ -591,8 +590,8 @@ func (a *KubernetesClustersAPIService) GetKubernetesClusterExecute(r ApiGetKuber
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -602,8 +601,8 @@ func (a *KubernetesClustersAPIService) GetKubernetesClusterExecute(r ApiGetKuber
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -613,8 +612,8 @@ func (a *KubernetesClustersAPIService) GetKubernetesClusterExecute(r ApiGetKuber
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -624,8 +623,8 @@ func (a *KubernetesClustersAPIService) GetKubernetesClusterExecute(r ApiGetKuber
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -643,9 +642,9 @@ func (a *KubernetesClustersAPIService) GetKubernetesClusterExecute(r ApiGetKuber
 }
 
 type ApiGetKubernetesClustersRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *KubernetesClustersAPIService
-	projectId *int32
+	projectId  *int32
 }
 
 // Unused, created for future API extention. Will be ignored if used.
@@ -663,25 +662,25 @@ GetKubernetesClusters Get list of Kubernetes clusters
 
 Returns a list of created Kubernetes clusters.
 
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetKubernetesClustersRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetKubernetesClustersRequest
 */
 func (a *KubernetesClustersAPIService) GetKubernetesClusters(ctx context.Context) ApiGetKubernetesClustersRequest {
 	return ApiGetKubernetesClustersRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return []Kubernetes
+//
+//	@return []Kubernetes
 func (a *KubernetesClustersAPIService) GetKubernetesClustersExecute(r ApiGetKubernetesClustersRequest) ([]Kubernetes, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []Kubernetes
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Kubernetes
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "KubernetesClustersAPIService.GetKubernetesClusters")
@@ -744,8 +743,8 @@ func (a *KubernetesClustersAPIService) GetKubernetesClustersExecute(r ApiGetKube
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -755,8 +754,8 @@ func (a *KubernetesClustersAPIService) GetKubernetesClustersExecute(r ApiGetKube
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -766,8 +765,8 @@ func (a *KubernetesClustersAPIService) GetKubernetesClustersExecute(r ApiGetKube
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

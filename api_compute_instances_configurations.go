@@ -1,9 +1,9 @@
 /*
 Public EMMA API
 
-### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. | 
+### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
 
-API version: 1.0.23
+API version: 1.0.30
 */
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
@@ -18,33 +18,32 @@ import (
 	"net/url"
 )
 
-
 // ComputeInstancesConfigurationsAPIService ComputeInstancesConfigurationsAPI service
 type ComputeInstancesConfigurationsAPIService service
 
 type ApiGetKuberNodesConfigsRequest struct {
-	ctx context.Context
-	ApiService *ComputeInstancesConfigurationsAPIService
+	ctx               context.Context
+	ApiService        *ComputeInstancesConfigurationsAPIService
 	k8sConnectionType *string
-	providerId *int32
-	locationId *int32
-	dataCenterId *string
-	vCpuType *string
-	vCpu *int32
-	vCpuMin *int32
-	vCpuMax *int32
-	ramGb *int32
-	ramGbMin *int32
-	ramGbMax *int32
-	volumeGb *int32
-	volumeGbMin *int32
-	volumeGbMax *int32
-	volumeType *string
-	priceMin *float32
-	priceMax *float32
-	page *int32
-	size *int32
-	projectId *int32
+	providerId        *int32
+	locationId        *int32
+	dataCenterId      *string
+	vCpuType          *string
+	vCpu              *int32
+	vCpuMin           *int32
+	vCpuMax           *int32
+	ramGb             *int32
+	ramGbMin          *int32
+	ramGbMax          *int32
+	volumeGb          *int32
+	volumeGbMin       *int32
+	volumeGbMax       *int32
+	volumeType        *string
+	priceMin          *float32
+	priceMax          *float32
+	page              *int32
+	size              *int32
+	projectId         *int32
 }
 
 // Type of Kubernetes cluster network connectivity
@@ -180,25 +179,25 @@ Use this endpoint as a reference for available configurations for worker nodes. 
 
 When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a Kubernetes cluster.
 
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetKuberNodesConfigsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetKuberNodesConfigsRequest
 */
 func (a *ComputeInstancesConfigurationsAPIService) GetKuberNodesConfigs(ctx context.Context) ApiGetKuberNodesConfigsRequest {
 	return ApiGetKuberNodesConfigsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetVmConfigs200Response
+//
+//	@return GetVmConfigs200Response
 func (a *ComputeInstancesConfigurationsAPIService) GetKuberNodesConfigsExecute(r ApiGetKuberNodesConfigsRequest) (*GetVmConfigs200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetVmConfigs200Response
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetVmConfigs200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComputeInstancesConfigurationsAPIService.GetKuberNodesConfigs")
@@ -319,8 +318,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetKuberNodesConfigsExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -330,8 +329,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetKuberNodesConfigsExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -341,8 +340,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetKuberNodesConfigsExecute(r
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -360,28 +359,28 @@ func (a *ComputeInstancesConfigurationsAPIService) GetKuberNodesConfigsExecute(r
 }
 
 type ApiGetSpotConfigsRequest struct {
-	ctx context.Context
-	ApiService *ComputeInstancesConfigurationsAPIService
-	providerId *int32
-	locationId *int32
-	dataCenterId *string
+	ctx              context.Context
+	ApiService       *ComputeInstancesConfigurationsAPIService
+	providerId       *int32
+	locationId       *int32
+	dataCenterId     *string
 	cloudNetworkType *string
-	vCpuType *string
-	vCpu *int32
-	vCpuMin *int32
-	vCpuMax *int32
-	ramGb *int32
-	ramGbMin *int32
-	ramGbMax *int32
-	volumeGb *int32
-	volumeGbMin *int32
-	volumeGbMax *int32
-	volumeType *string
-	priceMin *float32
-	priceMax *float32
-	page *int32
-	size *int32
-	projectId *int32
+	vCpuType         *string
+	vCpu             *int32
+	vCpuMin          *int32
+	vCpuMax          *int32
+	ramGb            *int32
+	ramGbMin         *int32
+	ramGbMax         *int32
+	volumeGb         *int32
+	volumeGbMin      *int32
+	volumeGbMax      *int32
+	volumeType       *string
+	priceMin         *float32
+	priceMax         *float32
+	page             *int32
+	size             *int32
+	projectId        *int32
 }
 
 // ID of the cloud provider
@@ -517,25 +516,25 @@ Use this endpoint as a reference for available configurations for spot instances
 
 When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a spot instance.
 
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSpotConfigsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetSpotConfigsRequest
 */
 func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigs(ctx context.Context) ApiGetSpotConfigsRequest {
 	return ApiGetSpotConfigsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetVmConfigs200Response
+//
+//	@return GetVmConfigs200Response
 func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGetSpotConfigsRequest) (*GetVmConfigs200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetVmConfigs200Response
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetVmConfigs200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComputeInstancesConfigurationsAPIService.GetSpotConfigs")
@@ -655,8 +654,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -666,8 +665,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -677,8 +676,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -696,45 +695,48 @@ func (a *ComputeInstancesConfigurationsAPIService) GetSpotConfigsExecute(r ApiGe
 }
 
 type ApiGetVmConfigsRequest struct {
-	ctx context.Context
-	ApiService *ComputeInstancesConfigurationsAPIService
-	providerId *int32
-	locationId *int32
-	dataCenterId *string
-	cloudNetworkType *string
-	vCpuType *string
-	vCpu *int32
-	vCpuMin *int32
-	vCpuMax *int32
-	ramGb *int32
-	ramGbMin *int32
-	ramGbMax *int32
-	volumeGb *int32
-	volumeGbMin *int32
-	volumeGbMax *int32
-	volumeType *string
-	priceMin *float32
-	priceMax *float32
-	page *int32
-	size *int32
-	projectId *int32
+	ctx               context.Context
+	ApiService        *ComputeInstancesConfigurationsAPIService
+	acceleratorTypeId *string
+	acceleratorsMin   *float32
+	acceleratorsMax   *float32
+	cloudNetworkType  *string
+	dataCenterId      *string
+	locationId        *int32
+	priceMax          *float32
+	priceMin          *float32
+	providerId        *int32
+	ramGb             *int32
+	ramGbMax          *int32
+	ramGbMin          *int32
+	vCpu              *int32
+	vCpuMax           *int32
+	vCpuMin           *int32
+	vCpuType          *string
+	volumeGb          *int32
+	volumeGbMax       *int32
+	volumeGbMin       *int32
+	volumeType        *string
+	page              *int32
+	size              *int32
+	projectId         *int32
 }
 
-// ID of the cloud provider
-func (r ApiGetVmConfigsRequest) ProviderId(providerId int32) ApiGetVmConfigsRequest {
-	r.providerId = &providerId
+// GPU accelerator type ID
+func (r ApiGetVmConfigsRequest) AcceleratorTypeId(acceleratorTypeId string) ApiGetVmConfigsRequest {
+	r.acceleratorTypeId = &acceleratorTypeId
 	return r
 }
 
-// ID of the geographic location
-func (r ApiGetVmConfigsRequest) LocationId(locationId int32) ApiGetVmConfigsRequest {
-	r.locationId = &locationId
+// Minimum quantity of GPU accelerators
+func (r ApiGetVmConfigsRequest) AcceleratorsMin(acceleratorsMin float32) ApiGetVmConfigsRequest {
+	r.acceleratorsMin = &acceleratorsMin
 	return r
 }
 
-// ID of the cloud provider&#39;s data center
-func (r ApiGetVmConfigsRequest) DataCenterId(dataCenterId string) ApiGetVmConfigsRequest {
-	r.dataCenterId = &dataCenterId
+// Maximum quantity of GPU accelerators
+func (r ApiGetVmConfigsRequest) AcceleratorsMax(acceleratorsMax float32) ApiGetVmConfigsRequest {
+	r.acceleratorsMax = &acceleratorsMax
 	return r
 }
 
@@ -744,69 +746,21 @@ func (r ApiGetVmConfigsRequest) CloudNetworkType(cloudNetworkType string) ApiGet
 	return r
 }
 
-// Type of vCPUs for the compute instance
-func (r ApiGetVmConfigsRequest) VCpuType(vCpuType string) ApiGetVmConfigsRequest {
-	r.vCpuType = &vCpuType
+// ID of the cloud provider&#39;s data center
+func (r ApiGetVmConfigsRequest) DataCenterId(dataCenterId string) ApiGetVmConfigsRequest {
+	r.dataCenterId = &dataCenterId
 	return r
 }
 
-// virtual Central Processing Units (vCPUs) for the compute instance
-func (r ApiGetVmConfigsRequest) VCpu(vCpu int32) ApiGetVmConfigsRequest {
-	r.vCpu = &vCpu
+// ID of the geographic location
+func (r ApiGetVmConfigsRequest) LocationId(locationId int32) ApiGetVmConfigsRequest {
+	r.locationId = &locationId
 	return r
 }
 
-// Minimum number of vCPUs for the compute instance
-func (r ApiGetVmConfigsRequest) VCpuMin(vCpuMin int32) ApiGetVmConfigsRequest {
-	r.vCpuMin = &vCpuMin
-	return r
-}
-
-// Maximum number of vCPUs for the compute instance
-func (r ApiGetVmConfigsRequest) VCpuMax(vCpuMax int32) ApiGetVmConfigsRequest {
-	r.vCpuMax = &vCpuMax
-	return r
-}
-
-// RAM of the compute instance in gigabytes
-func (r ApiGetVmConfigsRequest) RamGb(ramGb int32) ApiGetVmConfigsRequest {
-	r.ramGb = &ramGb
-	return r
-}
-
-// Minimum RAM of the compute instance in gigabytes
-func (r ApiGetVmConfigsRequest) RamGbMin(ramGbMin int32) ApiGetVmConfigsRequest {
-	r.ramGbMin = &ramGbMin
-	return r
-}
-
-// Maximum RAM of the compute instance in gigabytes
-func (r ApiGetVmConfigsRequest) RamGbMax(ramGbMax int32) ApiGetVmConfigsRequest {
-	r.ramGbMax = &ramGbMax
-	return r
-}
-
-// Volume size of the compute instance in gigabytes
-func (r ApiGetVmConfigsRequest) VolumeGb(volumeGb int32) ApiGetVmConfigsRequest {
-	r.volumeGb = &volumeGb
-	return r
-}
-
-// Minimum volume size of the compute instance in gigabytes
-func (r ApiGetVmConfigsRequest) VolumeGbMin(volumeGbMin int32) ApiGetVmConfigsRequest {
-	r.volumeGbMin = &volumeGbMin
-	return r
-}
-
-// Maximum volume size of the compute instance in gigabytes
-func (r ApiGetVmConfigsRequest) VolumeGbMax(volumeGbMax int32) ApiGetVmConfigsRequest {
-	r.volumeGbMax = &volumeGbMax
-	return r
-}
-
-// Volume type of the compute instance
-func (r ApiGetVmConfigsRequest) VolumeType(volumeType string) ApiGetVmConfigsRequest {
-	r.volumeType = &volumeType
+// Maximum price of the compute instance
+func (r ApiGetVmConfigsRequest) PriceMax(priceMax float32) ApiGetVmConfigsRequest {
+	r.priceMax = &priceMax
 	return r
 }
 
@@ -816,9 +770,75 @@ func (r ApiGetVmConfigsRequest) PriceMin(priceMin float32) ApiGetVmConfigsReques
 	return r
 }
 
-// Maximum price of the compute instance
-func (r ApiGetVmConfigsRequest) PriceMax(priceMax float32) ApiGetVmConfigsRequest {
-	r.priceMax = &priceMax
+// ID of the cloud provider
+func (r ApiGetVmConfigsRequest) ProviderId(providerId int32) ApiGetVmConfigsRequest {
+	r.providerId = &providerId
+	return r
+}
+
+// RAM of the compute instance in gigabytes
+func (r ApiGetVmConfigsRequest) RamGb(ramGb int32) ApiGetVmConfigsRequest {
+	r.ramGb = &ramGb
+	return r
+}
+
+// Maximum RAM of the compute instance in gigabytes
+func (r ApiGetVmConfigsRequest) RamGbMax(ramGbMax int32) ApiGetVmConfigsRequest {
+	r.ramGbMax = &ramGbMax
+	return r
+}
+
+// Minimum RAM of the compute instance in gigabytes
+func (r ApiGetVmConfigsRequest) RamGbMin(ramGbMin int32) ApiGetVmConfigsRequest {
+	r.ramGbMin = &ramGbMin
+	return r
+}
+
+// virtual Central Processing Units (vCPUs) for the compute instance
+func (r ApiGetVmConfigsRequest) VCpu(vCpu int32) ApiGetVmConfigsRequest {
+	r.vCpu = &vCpu
+	return r
+}
+
+// Maximum number of vCPUs for the compute instance
+func (r ApiGetVmConfigsRequest) VCpuMax(vCpuMax int32) ApiGetVmConfigsRequest {
+	r.vCpuMax = &vCpuMax
+	return r
+}
+
+// Minimum number of vCPUs for the compute instance
+func (r ApiGetVmConfigsRequest) VCpuMin(vCpuMin int32) ApiGetVmConfigsRequest {
+	r.vCpuMin = &vCpuMin
+	return r
+}
+
+// Type of vCPUs for the compute instance
+func (r ApiGetVmConfigsRequest) VCpuType(vCpuType string) ApiGetVmConfigsRequest {
+	r.vCpuType = &vCpuType
+	return r
+}
+
+// Volume size of the compute instance in gigabytes
+func (r ApiGetVmConfigsRequest) VolumeGb(volumeGb int32) ApiGetVmConfigsRequest {
+	r.volumeGb = &volumeGb
+	return r
+}
+
+// Maximum volume size of the compute instance in gigabytes
+func (r ApiGetVmConfigsRequest) VolumeGbMax(volumeGbMax int32) ApiGetVmConfigsRequest {
+	r.volumeGbMax = &volumeGbMax
+	return r
+}
+
+// Minimum volume size of the compute instance in gigabytes
+func (r ApiGetVmConfigsRequest) VolumeGbMin(volumeGbMin int32) ApiGetVmConfigsRequest {
+	r.volumeGbMin = &volumeGbMin
+	return r
+}
+
+// Volume type of the compute instance
+func (r ApiGetVmConfigsRequest) VolumeType(volumeType string) ApiGetVmConfigsRequest {
+	r.volumeType = &volumeType
 	return r
 }
 
@@ -853,25 +873,25 @@ Use this endpoint as a reference for available configurations for virtual machin
 
 When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a virtual machine.
 
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetVmConfigsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetVmConfigsRequest
 */
 func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigs(ctx context.Context) ApiGetVmConfigsRequest {
 	return ApiGetVmConfigsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetVmConfigs200Response
+//
+//	@return GetVmConfigs200Response
 func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetVmConfigsRequest) (*GetVmConfigs200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetVmConfigs200Response
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetVmConfigs200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComputeInstancesConfigurationsAPIService.GetVmConfigs")
@@ -885,56 +905,65 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.providerId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "providerId", r.providerId, "form", "")
+	if r.acceleratorTypeId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "acceleratorTypeId", r.acceleratorTypeId, "form", "")
 	}
-	if r.locationId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "locationId", r.locationId, "form", "")
+	if r.acceleratorsMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "acceleratorsMin", r.acceleratorsMin, "form", "")
 	}
-	if r.dataCenterId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "dataCenterId", r.dataCenterId, "form", "")
+	if r.acceleratorsMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "acceleratorsMax", r.acceleratorsMax, "form", "")
 	}
 	if r.cloudNetworkType != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "cloudNetworkType", r.cloudNetworkType, "form", "")
 	}
-	if r.vCpuType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuType", r.vCpuType, "form", "")
+	if r.dataCenterId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dataCenterId", r.dataCenterId, "form", "")
 	}
-	if r.vCpu != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpu", r.vCpu, "form", "")
+	if r.locationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "locationId", r.locationId, "form", "")
 	}
-	if r.vCpuMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMin", r.vCpuMin, "form", "")
-	}
-	if r.vCpuMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMax", r.vCpuMax, "form", "")
-	}
-	if r.ramGb != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGb", r.ramGb, "form", "")
-	}
-	if r.ramGbMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMin", r.ramGbMin, "form", "")
-	}
-	if r.ramGbMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMax", r.ramGbMax, "form", "")
-	}
-	if r.volumeGb != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGb", r.volumeGb, "form", "")
-	}
-	if r.volumeGbMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMin", r.volumeGbMin, "form", "")
-	}
-	if r.volumeGbMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMax", r.volumeGbMax, "form", "")
-	}
-	if r.volumeType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeType", r.volumeType, "form", "")
+	if r.priceMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMax", r.priceMax, "form", "")
 	}
 	if r.priceMin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMin", r.priceMin, "form", "")
 	}
-	if r.priceMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "priceMax", r.priceMax, "form", "")
+	if r.providerId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "providerId", r.providerId, "form", "")
+	}
+	if r.ramGb != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGb", r.ramGb, "form", "")
+	}
+	if r.ramGbMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMax", r.ramGbMax, "form", "")
+	}
+	if r.ramGbMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ramGbMin", r.ramGbMin, "form", "")
+	}
+	if r.vCpu != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpu", r.vCpu, "form", "")
+	}
+	if r.vCpuMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMax", r.vCpuMax, "form", "")
+	}
+	if r.vCpuMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuMin", r.vCpuMin, "form", "")
+	}
+	if r.vCpuType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vCpuType", r.vCpuType, "form", "")
+	}
+	if r.volumeGb != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGb", r.volumeGb, "form", "")
+	}
+	if r.volumeGbMax != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMax", r.volumeGbMax, "form", "")
+	}
+	if r.volumeGbMin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeGbMin", r.volumeGbMin, "form", "")
+	}
+	if r.volumeType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "volumeType", r.volumeType, "form", "")
 	}
 	if r.page != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
@@ -991,8 +1020,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1002,8 +1031,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -1013,8 +1042,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1032,20 +1061,20 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmConfigsExecute(r ApiGetV
 }
 
 type ApiGetVmResizeConfigsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ComputeInstancesConfigurationsAPIService
-	vCpuType *string
-	vCpu *int32
-	vCpuMin *int32
-	vCpuMax *int32
-	ramGb *int32
-	ramGbMin *int32
-	ramGbMax *int32
-	priceMin *float32
-	priceMax *float32
-	page *int32
-	size *int32
-	projectId *int32
+	vCpuType   *string
+	vCpu       *int32
+	vCpuMin    *int32
+	vCpuMax    *int32
+	ramGb      *int32
+	ramGbMin   *int32
+	ramGbMax   *int32
+	priceMin   *float32
+	priceMax   *float32
+	page       *int32
+	size       *int32
+	projectId  *int32
 }
 
 // Type of vCPUs for the compute instance
@@ -1129,32 +1158,32 @@ GetVmResizeConfigs List of available configurations for virtual machine resize
 
 Virtual machines configurations are limited by provider-specific options, which differ across data centers. To resize or modify a compute instance, verify the list of supported configurations for your VM to avoid incompatible changes.
 
-Use this endpoint as a reference for available configurations for a virtual machine resize. 
+Use this endpoint as a reference for available configurations for a virtual machine resize.
 You can search the available configurations by different parameters (virtual machine id, CPU, CPU type, RAM, and price).
 
 When you find an appropriate configuration, provide the hardware parameters in the endpoint for editing a virtual machine.
 
-**Note:** To retrieve available configurations for DigitalOcean virtual machines, use the `GET v1/vms-configs` method  
+**Note:** To retrieve available configurations for DigitalOcean virtual machines, use the `GET v1/vms-configs` method
 
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetVmResizeConfigsRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetVmResizeConfigsRequest
 */
 func (a *ComputeInstancesConfigurationsAPIService) GetVmResizeConfigs(ctx context.Context) ApiGetVmResizeConfigsRequest {
 	return ApiGetVmResizeConfigsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return GetVmResizeConfigs200Response
+//
+//	@return GetVmResizeConfigs200Response
 func (a *ComputeInstancesConfigurationsAPIService) GetVmResizeConfigsExecute(r ApiGetVmResizeConfigsRequest) (*GetVmResizeConfigs200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *GetVmResizeConfigs200Response
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetVmResizeConfigs200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComputeInstancesConfigurationsAPIService.GetVmResizeConfigs")
@@ -1250,8 +1279,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmResizeConfigsExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1261,8 +1290,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmResizeConfigsExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -1272,8 +1301,8 @@ func (a *ComputeInstancesConfigurationsAPIService) GetVmResizeConfigsExecute(r A
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

@@ -59,11 +59,13 @@ info:
     \ server could not return the representation due to an internal server error.\
     \ |\n"
   title: Public EMMA API
-  version: 1.0.23
+  version: 1.0.30
 servers:
 - description: Public EMMA API
   url: https://api.emma.ms/external
 tags:
+- description: GPU accelerator types
+  name: Accelerator types
 - description: |
     Includes two endpoints for obtaining access tokens for authentication in the current API. The first endpoint enables you to get an access token and a refresh token. To send a request, you first need to create a Service application in your project (in the Settings section). After creating the application, you will get a Client ID and a Client Secret. Use them in your API request body to get the access and refresh tokens.
 
@@ -102,8 +104,9 @@ tags:
     Provides endpoints for managing SSH keys within the project. These endpoints allow users to create, retrieve, update, and delete SSH keys, facilitating secure access to cloud resources.
     You can only manage the SSH keys created by the current Service application that you use to authenticate to the API. You can't retrieve a list of SSH keys created by other users. You can't use other user's SSH keys when creating compute instances.
   name: SSH keys
-- description: |
-    The method allows extraction of statistical data from emma's DWH. All queries are predefined; users need to select one and specify additional parameters.
+- description: "The method allows extraction of statistical data from emma's DWH.\
+    \ All queries are predefined; users need to select one and specify additional\
+    \ parameters.\n  \n⚠️ Deprecated — will be removed on 2026-05-13.\n"
   name: Statistics
 - description: |
     Provides endpoints for creating and managing subnetworks at the project level. This feature allows defining IP address ranges for deploying virtual machines within specified subnetworks. Initially available for DigitalOcean and Gcore, it includes additional option for specifying private IP for Gcore virtual machines during deployment.
@@ -201,6 +204,50 @@ paths:
           --data '{
             "refreshToken": "YOUR-REFRESH-TOKEN"
           }'
+  /v1/accelerator-types:
+    get:
+      description: |
+        Returns a list of GPU accelerator types.
+      operationId: GetAcceleratorTypes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/AcceleratorType"
+                type: array
+          description: Successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+          description: Bad request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedError"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenError"
+          description: Forbidden
+      security:
+      - bearerAuth: []
+      summary: Get list of GPU accelerator types
+      tags:
+      - Accelerator types
+      x-codeSamples:
+      - lang: CURL
+        label: CURL
+        source: |-
+          curl --location 'https://api.emma.ms/external/v1/accelerator-types' \
+          --header 'Accept: application/json' \
+          --header 'Authorization: Bearer YOUR-BEARER-TOKEN'
   /v1/data-centers:
     get:
       description: |
@@ -2161,7 +2208,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/VmNew"
+                $ref: "#/components/schemas/Vm"
           description: Virtual machine created
         "400":
           content:
@@ -2390,6 +2437,20 @@ paths:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             "action": "start"
           }'
   /v1/vms-configs:
@@ -2402,23 +2463,26 @@ paths:
         When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a virtual machine.
       operationId: GetVmConfigs
       parameters:
-      - $ref: "#/components/parameters/providerIdQuery"
-      - $ref: "#/components/parameters/locationIdQuery"
-      - $ref: "#/components/parameters/dataCenterIdQuery"
+      - $ref: "#/components/parameters/acceleratorTypeId"
+      - $ref: "#/components/parameters/acceleratorsMin"
+      - $ref: "#/components/parameters/acceleratorsMax"
       - $ref: "#/components/parameters/cloudNetworkType"
-      - $ref: "#/components/parameters/vCpuType"
-      - $ref: "#/components/parameters/vCpu"
-      - $ref: "#/components/parameters/vCpuMin"
-      - $ref: "#/components/parameters/vCpuMax"
-      - $ref: "#/components/parameters/ramGb"
-      - $ref: "#/components/parameters/ramGbMin"
-      - $ref: "#/components/parameters/ramGbMax"
-      - $ref: "#/components/parameters/volumeGb"
-      - $ref: "#/components/parameters/volumeGbMin"
-      - $ref: "#/components/parameters/volumeGbMax"
-      - $ref: "#/components/parameters/volumeType"
-      - $ref: "#/components/parameters/priceMin"
+      - $ref: "#/components/parameters/dataCenterIdQuery"
+      - $ref: "#/components/parameters/locationIdQuery"
       - $ref: "#/components/parameters/priceMax"
+      - $ref: "#/components/parameters/priceMin"
+      - $ref: "#/components/parameters/providerIdQuery"
+      - $ref: "#/components/parameters/ramGb"
+      - $ref: "#/components/parameters/ramGbMax"
+      - $ref: "#/components/parameters/ramGbMin"
+      - $ref: "#/components/parameters/vCpu"
+      - $ref: "#/components/parameters/vCpuMax"
+      - $ref: "#/components/parameters/vCpuMin"
+      - $ref: "#/components/parameters/vCpuType"
+      - $ref: "#/components/parameters/volumeGb"
+      - $ref: "#/components/parameters/volumeGbMax"
+      - $ref: "#/components/parameters/volumeGbMin"
+      - $ref: "#/components/parameters/volumeType"
       - $ref: "#/components/parameters/pageQuery"
       - $ref: "#/components/parameters/sizeQuery"
       - $ref: "#/components/parameters/projectIdQuery"
@@ -2897,6 +2961,20 @@ paths:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             "action": "edit"
           }'
   /v1/spots-configs:
@@ -3035,8 +3113,11 @@ paths:
           --header 'Authorization: Bearer YOUR-BEARER-TOKEN'
   /v1/statistics/retrieve:
     post:
+      deprecated: true
       description: |
         The method allows extraction of statistical data from emma's DWH. All queries are predefined; users need to select one and specify additional parameters.
+
+        ⚠️ Deprecated — will be removed on 2026-05-13.
       operationId: GetStatisticalData
       requestBody:
         content:
@@ -3096,6 +3177,33 @@ paths:
           }'
 components:
   parameters:
+    acceleratorTypeId:
+      description: GPU accelerator type ID
+      explode: true
+      in: query
+      name: acceleratorTypeId
+      required: false
+      schema:
+        type: string
+      style: form
+    acceleratorsMax:
+      description: Maximum quantity of GPU accelerators
+      explode: true
+      in: query
+      name: acceleratorsMax
+      required: false
+      schema:
+        type: number
+      style: form
+    acceleratorsMin:
+      description: Minimum quantity of GPU accelerators
+      explode: true
+      in: query
+      name: acceleratorsMin
+      required: false
+      schema:
+        type: number
+      style: form
     attachedToId:
       description: ID of the linked instance
       explode: true
@@ -3528,6 +3636,19 @@ components:
         type: integer
       style: form
   schemas:
+    AcceleratorType:
+      example:
+        acceleratorType: NVIDIA T4
+        id: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+      properties:
+        id:
+          description: Accelerator type ID
+          example: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+          type: string
+        acceleratorType:
+          description: GPU accelerator type
+          example: NVIDIA T4
+          type: string
     Credentials:
       example:
         clientId: ad6f8c5c-223f-4102-8664-8044b84864e2
@@ -3613,12 +3734,12 @@ components:
             - sizeGb: 250
               typeId: 2
               id: 5819
-              type: SSD
+              type: ssd
               isBootable: true
             - sizeGb: 250
               typeId: 2
               id: 5819
-              type: SSD
+              type: ssd
               isBootable: true
             dataCenter:
               locationName: St. Ghislain
@@ -3671,12 +3792,12 @@ components:
             - sizeGb: 250
               typeId: 2
               id: 5819
-              type: SSD
+              type: ssd
               isBootable: true
             - sizeGb: 250
               typeId: 2
               id: 5819
-              type: SSD
+              type: ssd
               isBootable: true
             dataCenter:
               locationName: St. Ghislain
@@ -3731,12 +3852,12 @@ components:
             - sizeGb: 250
               typeId: 2
               id: 5819
-              type: SSD
+              type: ssd
               isBootable: true
             - sizeGb: 250
               typeId: 2
               id: 5819
-              type: SSD
+              type: ssd
               isBootable: true
             dataCenter:
               locationName: St. Ghislain
@@ -3789,12 +3910,12 @@ components:
             - sizeGb: 250
               typeId: 2
               id: 5819
-              type: SSD
+              type: ssd
               isBootable: true
             - sizeGb: 250
               typeId: 2
               id: 5819
-              type: SSD
+              type: ssd
               isBootable: true
             dataCenter:
               locationName: St. Ghislain
@@ -5671,12 +5792,12 @@ components:
         - sizeGb: 250
           typeId: 2
           id: 5819
-          type: SSD
+          type: ssd
           isBootable: true
         - sizeGb: 250
           typeId: 2
           id: 5819
-          type: SSD
+          type: ssd
           isBootable: true
         modifiedAt: 2021-11-26T14:54:11
         networks:
@@ -5703,6 +5824,11 @@ components:
           id: 22
         id: 8100
         createdById: 123
+        accelerator:
+          acceleratorType: NVIDIA A100
+          acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+          accelerators: 4
+          totalGpuMemoryGb: 320
         cost:
           unit: MONTHS
           price: 5.479952
@@ -5739,6 +5865,13 @@ components:
           name: subnetwork-name
           id: d6ffb3db-4940-4979-94f3-68b11a018d98
         name: vm-default-e08149hp
+        localDisks:
+        - sizeTb: 5
+          typeId: 2
+          type: ssd-plus
+        - sizeTb: 5
+          typeId: 2
+          type: ssd-plus
         location:
           continent: Asia
           latitude: 51.50735
@@ -5833,6 +5966,15 @@ components:
           items:
             $ref: "#/components/schemas/Vm_disks_inner"
           type: array
+        localDisks:
+          description: Local SSD storage directly attached to the host. Data is ephemeral
+            and will be lost when the VM is stopped or deleted.
+          items:
+            $ref: "#/components/schemas/Vm_localDisks_inner"
+          type: array
+          nullable: true
+        accelerator:
+          $ref: "#/components/schemas/Vm_accelerator"
         networks:
           description: ""
           example:
@@ -5886,6 +6028,7 @@ components:
         userPassword: m#P52s@ap$V
         vCpu: 2
         privateIp: 192.168.0.2
+        acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
         subnetworkId: d6ffb3db-4940-4979-94f3-68b11a018d98
         osId: 5
         ramGb: 1
@@ -5895,6 +6038,7 @@ components:
         dataCenterId: aws-us-west-1
         name: vm-test1
         volumeGb: 16
+        accelerators: 4
         cloudNetworkType: multi-cloud
         ipAddressing: ipv4
       properties:
@@ -5945,6 +6089,14 @@ components:
           description: Capacity of the volume in gigabytes
           example: 16
           type: integer
+        acceleratorTypeId:
+          description: GPU accelerator type ID
+          example: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+          type: string
+        accelerators:
+          description: Quantity of GPU accelerators
+          example: 4
+          type: number
         sshKeyId:
           description: SSH-key ID
           example: 124
@@ -5985,223 +6137,6 @@ components:
       - vCpuType
       - volumeGb
       - volumeType
-    VmNew:
-      example:
-        createdByName: Automation User
-        userPassword: m#P52s@ap$V
-        disks:
-        - sizeGb: 250
-          typeId: 2
-          id: 5819
-          type: SSD
-          isBootable: true
-        - sizeGb: 250
-          typeId: 2
-          id: 5819
-          type: SSD
-          isBootable: true
-        modifiedAt: 2021-11-26T14:54:11
-        networks:
-        - id: 9825
-          ip: 10.106.0.2
-          ipVersion: 4
-          networkTypeId: 2
-          networkType: PRIVATE
-        - id: 9826
-          ip: 134.122.100.131
-          ipVersion: 4
-          networkTypeId: 1
-          networkType: PUBLIC
-        - id: 9827
-          ip: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
-          ipVersion: 6
-          networkTypeId: 1
-          networkType: PUBLIC
-        createdAt: 2021-11-26T14:54:11
-        modifiedByName: Automation User
-        modifiedById: 123
-        provider:
-          name: Digital Ocean
-          id: 22
-        id: 8100
-        createdById: 123
-        cost:
-          unit: MONTHS
-          price: 5.479952
-          currency: EUR
-        os:
-          id: 35
-          family: Linux
-          type: Ubuntu
-          version: 22.04
-          architecture: x86-64
-        vCpu: 1
-        dataCenter:
-          locationName: Pune
-          providerId: 5
-          locationId: 35
-          name: eu-north-1
-          id: aws-ap-south-1
-          providerName: DO
-        securityGroup:
-          name: default
-          id: 208
-        userName: root
-        ramGb: 2
-        sshKeyId: 123
-        vCpuType: shared
-        tags:
-        - tagId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          value: dev
-          key: env
-        - tagId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          value: dev
-          key: env
-        subnetwork:
-          name: subnetwork-name
-          id: d6ffb3db-4940-4979-94f3-68b11a018d98
-        name: vm-default-e08149hp
-        location:
-          continent: Asia
-          latitude: 51.50735
-          name: London
-          id: 6
-          region: EMEA
-          longitude: -0.1277583
-        cloudNetworkType: multi-cloud
-        projectId: 933
-        status: POWERED_ON
-      properties:
-        id:
-          description: ID of the virtual machine
-          example: 8100
-          type: integer
-        createdAt:
-          description: Date and time when the virtual machine was created
-          example: 2021-11-26T14:54:11
-          type: string
-        createdByName:
-          description: Name of the user who created the virtual machine
-          example: Automation User
-          type: string
-        createdById:
-          description: ID of the user who created the virtual machine
-          example: 123
-          type: integer
-        modifiedAt:
-          description: Date and time when the virtual machine was last edited
-          example: 2021-11-26T14:54:11
-          type: string
-        modifiedByName:
-          description: Name of the user who last edited the virtual machine
-          example: Automation User
-          type: string
-        modifiedById:
-          description: ID of the user who last edited the virtual machine
-          example: 123
-          type: integer
-        name:
-          description: Name of the virtual machine
-          example: vm-default-e08149hp
-          type: string
-        projectId:
-          description: Project ID
-          example: 933
-          type: integer
-        status:
-          description: Status of the virtual machine
-          enum:
-          - POWERED_ON
-          - POWERED_OFF
-          - BUSY
-          - DRAFT
-          - FAILED_CREATION
-          example: POWERED_ON
-          type: string
-        provider:
-          $ref: "#/components/schemas/Vm_provider"
-        location:
-          $ref: "#/components/schemas/Vm_location"
-        dataCenter:
-          $ref: "#/components/schemas/Vm_dataCenter"
-        os:
-          $ref: "#/components/schemas/Vm_os"
-        vCpu:
-          description: Number of virtual Central Processing Units (vCPUs)
-          example: 1
-          type: integer
-        vCpuType:
-          description: Type of virtual Central Processing Units (vCPUs)
-          enum:
-          - shared
-          - standard
-          - hpc
-          example: shared
-          type: string
-        cloudNetworkType:
-          description: Cloud network type
-          enum:
-          - isolated
-          - multi-cloud
-          - default
-          example: multi-cloud
-          type: string
-        ramGb:
-          description: Capacity of the RAM in gigabytes
-          example: 2
-          type: integer
-        disks:
-          description: List of volumes
-          items:
-            $ref: "#/components/schemas/VmNew_disks_inner"
-          type: array
-        networks:
-          description: ""
-          example:
-          - id: 9825
-            ip: 10.106.0.2
-            ipVersion: 4
-            networkTypeId: 2
-            networkType: PRIVATE
-          - id: 9826
-            ip: 134.122.100.131
-            ipVersion: 4
-            networkTypeId: 1
-            networkType: PUBLIC
-          - id: 9827
-            ip: 2001:0db8:85a3:0000:0000:8a2e:0370:7334
-            ipVersion: 6
-            networkTypeId: 1
-            networkType: PUBLIC
-          items:
-            $ref: "#/components/schemas/Vm_networks_inner"
-          type: array
-        securityGroup:
-          $ref: "#/components/schemas/Vm_securityGroup"
-        subnetwork:
-          $ref: "#/components/schemas/Vm_subnetwork"
-        sshKeyId:
-          description: SSH key ID
-          example: 123
-          type: integer
-          nullable: true
-        userName:
-          description: User name
-          example: root
-          type: string
-          nullable: true
-        userPassword:
-          description: User password
-          example: m#P52s@ap$V
-          type: string
-          nullable: true
-        cost:
-          $ref: "#/components/schemas/Vm_cost"
-        tags:
-          items:
-            $ref: "#/components/schemas/Tag"
-          type: array
-          nullable: true
     VmStart:
       properties:
         action:
@@ -6349,7 +6284,12 @@ components:
       - vCpuType
     VmConfiguration:
       example:
-        volumeType: SSD
+        volumeType: ssd
+        accelerator:
+          acceleratorType: NVIDIA A100
+          acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+          accelerators: 4
+          totalGpuMemoryGb: 320
         locationName: London
         cost:
           unit: MONTHS
@@ -6370,13 +6310,18 @@ components:
         dataCenterId: aws-us-west-1
         osType: Ubuntu
         volumeGb: 500
-        id: 2456
+        localDisks:
+          sizeTb: 25
+          totalSizeTb: 50
+          disks: 2
+          type: SSD+
+        id: 0935c792-a45b-46bb-b42d-4d47956ea1ae
         providerName: GCP
       properties:
         id:
           description: Configuration ID
-          example: 2456
-          type: integer
+          example: 0935c792-a45b-46bb-b42d-4d47956ea1ae
+          type: string
         providerId:
           description: ID of the cloud provider
           example: 5
@@ -6440,8 +6385,12 @@ components:
           type: integer
         volumeType:
           description: Volume type
-          example: SSD
+          example: ssd
           type: string
+        accelerator:
+          $ref: "#/components/schemas/VmConfiguration_accelerator"
+        localDisks:
+          $ref: "#/components/schemas/VmConfiguration_localDisks"
         cost:
           $ref: "#/components/schemas/VmConfiguration_cost"
     SpotVm:
@@ -6453,13 +6402,13 @@ components:
           name: volume-12fg45t
           typeId: 2
           id: 5819
-          type: SSD
+          type: ssd
           isBootable: true
         - sizeGb: 250
           name: volume-12fg45t
           typeId: 2
           id: 5819
-          type: SSD
+          type: ssd
           isBootable: true
         modifiedAt: 2021-11-26T14:54:11
         networks:
@@ -6632,7 +6581,7 @@ components:
           $ref: "#/components/schemas/SpotVm_cost"
     SystemVolumeConfiguration:
       example:
-        volumeType: SSD
+        volumeType: ssd
         locationName: London
         cost:
           unit: MONTHS
@@ -6678,7 +6627,7 @@ components:
           enum:
           - ssd
           - ssd-plus
-          example: SSD
+          example: ssd
           type: string
         cost:
           $ref: "#/components/schemas/VmConfiguration_cost"
@@ -6722,7 +6671,7 @@ components:
           id: aws-eu-west-2
           providerName: AWS
         modifiedAt: 2021-11-26T14:54:11
-        type: SSD
+        type: ssd
         isSystem: true
         createdAt: 2021-11-26T14:54:11
         modifiedByName: Automation User
@@ -6770,7 +6719,7 @@ components:
           - hdd
           - ssd
           - ssd-plus
-          example: SSD
+          example: ssd
           type: string
         isSystem:
           description: Indicates whether the volume contains OS or not
@@ -6821,7 +6770,7 @@ components:
           $ref: "#/components/schemas/Volume_cost"
     VolumeConfiguration:
       example:
-        volumeType: SSD
+        volumeType: ssd
         locationName: London
         cost:
           unit: MONTHS
@@ -6868,13 +6817,13 @@ components:
           - hdd
           - ssd
           - ssd-plus
-          example: SSD
+          example: ssd
           type: string
         cost:
           $ref: "#/components/schemas/VmConfiguration_cost"
     VolumeCreate:
       example:
-        volumeType: SSD
+        volumeType: ssd
         dataCenterId: aws-us-west-1
         volumeGb: 500
         attachedToId: 51080
@@ -6893,7 +6842,7 @@ components:
           - hdd
           - ssd
           - ssd-plus
-          example: SSD
+          example: ssd
           type: string
         attachedToId:
           description: Target virtual machine for attaching the volume
@@ -7250,7 +7199,12 @@ components:
           sorted: true
           empty: true
         content:
-        - volumeType: SSD
+        - volumeType: ssd
+          accelerator:
+            acceleratorType: NVIDIA A100
+            acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+            accelerators: 4
+            totalGpuMemoryGb: 320
           locationName: London
           cost:
             unit: MONTHS
@@ -7271,9 +7225,19 @@ components:
           dataCenterId: aws-us-west-1
           osType: Ubuntu
           volumeGb: 500
-          id: 2456
+          localDisks:
+            sizeTb: 25
+            totalSizeTb: 50
+            disks: 2
+            type: SSD+
+          id: 0935c792-a45b-46bb-b42d-4d47956ea1ae
           providerName: GCP
-        - volumeType: SSD
+        - volumeType: ssd
+          accelerator:
+            acceleratorType: NVIDIA A100
+            acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+            accelerators: 4
+            totalGpuMemoryGb: 320
           locationName: London
           cost:
             unit: MONTHS
@@ -7294,7 +7258,12 @@ components:
           dataCenterId: aws-us-west-1
           osType: Ubuntu
           volumeGb: 500
-          id: 2456
+          localDisks:
+            sizeTb: 25
+            totalSizeTb: 50
+            disks: 2
+            type: SSD+
+          id: 0935c792-a45b-46bb-b42d-4d47956ea1ae
           providerName: GCP
         first: true
         totalElements: 6
@@ -7374,7 +7343,7 @@ components:
           sorted: true
           empty: true
         content:
-        - volumeType: SSD
+        - volumeType: ssd
           locationName: London
           cost:
             unit: MONTHS
@@ -7386,7 +7355,7 @@ components:
           volumeGb: 500
           dataCenterName: europe-west2
           providerName: GCP
-        - volumeType: SSD
+        - volumeType: ssd
           locationName: London
           cost:
             unit: MONTHS
@@ -7430,7 +7399,7 @@ components:
           sorted: true
           empty: true
         content:
-        - volumeType: SSD
+        - volumeType: ssd
           locationName: London
           cost:
             unit: MONTHS
@@ -7442,7 +7411,7 @@ components:
           volumeGb: 500
           dataCenterName: europe-west2
           providerName: GCP
-        - volumeType: SSD
+        - volumeType: ssd
           locationName: London
           cost:
             unit: MONTHS
@@ -7640,7 +7609,7 @@ components:
         sizeGb: 250
         typeId: 2
         id: 5819
-        type: SSD
+        type: ssd
         isBootable: true
       properties:
         id:
@@ -7657,7 +7626,7 @@ components:
           type: integer
         type:
           description: Volume type
-          example: SSD
+          example: ssd
           type: string
         isBootable:
           description: Indicates whether the volume is bootable or not
@@ -7731,12 +7700,12 @@ components:
         - sizeGb: 250
           typeId: 2
           id: 5819
-          type: SSD
+          type: ssd
           isBootable: true
         - sizeGb: 250
           typeId: 2
           id: 5819
-          type: SSD
+          type: ssd
           isBootable: true
         dataCenter:
           locationName: St. Ghislain
@@ -7869,12 +7838,12 @@ components:
           - sizeGb: 250
             typeId: 2
             id: 5819
-            type: SSD
+            type: ssd
             isBootable: true
           - sizeGb: 250
             typeId: 2
             id: 5819
-            type: SSD
+            type: ssd
             isBootable: true
           dataCenter:
             locationName: St. Ghislain
@@ -7927,12 +7896,12 @@ components:
           - sizeGb: 250
             typeId: 2
             id: 5819
-            type: SSD
+            type: ssd
             isBootable: true
           - sizeGb: 250
             typeId: 2
             id: 5819
-            type: SSD
+            type: ssd
             isBootable: true
           dataCenter:
             locationName: St. Ghislain
@@ -8807,7 +8776,7 @@ components:
         sizeGb: 250
         typeId: 2
         id: 5819
-        type: SSD
+        type: ssd
         isBootable: true
       properties:
         id:
@@ -8828,12 +8797,55 @@ components:
           - hdd
           - ssd
           - ssd-plus
-          example: SSD
+          example: ssd
           type: string
         isBootable:
           description: Indicates whether the volume is bootable or not
           example: true
           type: boolean
+    Vm_localDisks_inner:
+      example:
+        sizeTb: 5
+        typeId: 2
+        type: ssd-plus
+      properties:
+        sizeTb:
+          description: Volume size in TB
+          example: 5
+          type: number
+        typeId:
+          description: ID of the volume type
+          example: 2
+          type: integer
+        type:
+          description: Volume type
+          example: ssd-plus
+          type: string
+    Vm_accelerator:
+      description: GPU accelerator
+      example:
+        acceleratorType: NVIDIA A100
+        acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+        accelerators: 4
+        totalGpuMemoryGb: 320
+      properties:
+        acceleratorTypeId:
+          description: GPU accelerator type ID
+          example: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+          type: string
+        acceleratorType:
+          description: GPU accelerator type
+          example: NVIDIA A100
+          type: string
+        accelerators:
+          description: Quantity of GPU accelerators
+          example: 4
+          type: number
+        totalGpuMemoryGb:
+          description: Total GPU memory (GPU)
+          example: 320
+          type: integer
+      nullable: true
     Vm_networks_inner:
       properties:
         id:
@@ -8900,37 +8912,55 @@ components:
           description: Cost of the virtual machine for the period
           example: 5.479952
           type: number
-    VmNew_disks_inner:
+    VmConfiguration_accelerator:
+      description: GPU accelerator
       example:
-        sizeGb: 250
-        typeId: 2
-        id: 5819
-        type: SSD
-        isBootable: true
+        acceleratorType: NVIDIA A100
+        acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+        accelerators: 4
+        totalGpuMemoryGb: 320
       properties:
-        id:
-          description: Volume ID
-          example: 5819
+        acceleratorTypeId:
+          description: Accelerator type ID
+          example: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+          type: string
+        acceleratorType:
+          description: GPU accelerator type
+          example: NVIDIA A100
+          type: string
+        accelerators:
+          description: Quantity of GPU accelerators
+          example: 4
+          type: number
+        totalGpuMemoryGb:
+          description: Total GPU memory (GB)
+          example: 320
           type: integer
-        sizeGb:
-          description: Volume size in gigabytes
-          example: 250
-          type: integer
-        typeId:
-          description: ID of the volume type
+    VmConfiguration_localDisks:
+      description: Local SSD storage directly attached to the host. Data is ephemeral
+        and will be lost when the VM is stopped or deleted.
+      example:
+        sizeTb: 25
+        totalSizeTb: 50
+        disks: 2
+        type: SSD+
+      properties:
+        disks:
+          description: Number of local disks attached to the VM
           example: 2
           type: integer
+        sizeTb:
+          description: Size of a single disk in TB
+          example: 25
+          type: number
+        totalSizeTb:
+          description: "Total capacity (all disks combined), in TB"
+          example: 50
+          type: number
         type:
-          description: Volume type
-          enum:
-          - ssd
-          - ssd-plus
-          example: SSD
+          description: Disk type
+          example: SSD+
           type: string
-        isBootable:
-          description: Indicates whether the volume is bootable or not
-          example: true
-          type: boolean
     VmConfiguration_cost:
       description: Cost of the configuration
       example:
@@ -9030,7 +9060,7 @@ components:
         name: volume-12fg45t
         typeId: 2
         id: 5819
-        type: SSD
+        type: ssd
         isBootable: true
       properties:
         id:
@@ -9051,7 +9081,7 @@ components:
           type: integer
         type:
           description: Volume type
-          example: SSD
+          example: ssd
           type: string
         isBootable:
           description: Indicates whether the volume is bootable or not

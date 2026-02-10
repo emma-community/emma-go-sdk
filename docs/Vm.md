@@ -23,6 +23,8 @@ Name | Type | Description | Notes
 **CloudNetworkType** | Pointer to **string** | Cloud network type | [optional] 
 **RamGb** | Pointer to **int32** | Capacity of the RAM in gigabytes | [optional] 
 **Disks** | Pointer to [**[]VmDisksInner**](VmDisksInner.md) | List of volumes | [optional] 
+**LocalDisks** | Pointer to [**[]VmLocalDisksInner**](VmLocalDisksInner.md) | Local SSD storage directly attached to the host. Data is ephemeral and will be lost when the VM is stopped or deleted. | [optional] 
+**Accelerator** | Pointer to [**VmAccelerator**](VmAccelerator.md) |  | [optional] 
 **Networks** | Pointer to [**[]VmNetworksInner**](VmNetworksInner.md) |  | [optional] 
 **SecurityGroup** | Pointer to [**VmSecurityGroup**](VmSecurityGroup.md) |  | [optional] 
 **Subnetwork** | Pointer to [**VmSubnetwork**](VmSubnetwork.md) |  | [optional] 
@@ -525,6 +527,56 @@ SetDisks sets Disks field to given value.
 `func (o *Vm) HasDisks() bool`
 
 HasDisks returns a boolean if a field has been set.
+
+### GetLocalDisks
+
+`func (o *Vm) GetLocalDisks() []VmLocalDisksInner`
+
+GetLocalDisks returns the LocalDisks field if non-nil, zero value otherwise.
+
+### GetLocalDisksOk
+
+`func (o *Vm) GetLocalDisksOk() (*[]VmLocalDisksInner, bool)`
+
+GetLocalDisksOk returns a tuple with the LocalDisks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLocalDisks
+
+`func (o *Vm) SetLocalDisks(v []VmLocalDisksInner)`
+
+SetLocalDisks sets LocalDisks field to given value.
+
+### HasLocalDisks
+
+`func (o *Vm) HasLocalDisks() bool`
+
+HasLocalDisks returns a boolean if a field has been set.
+
+### GetAccelerator
+
+`func (o *Vm) GetAccelerator() VmAccelerator`
+
+GetAccelerator returns the Accelerator field if non-nil, zero value otherwise.
+
+### GetAcceleratorOk
+
+`func (o *Vm) GetAcceleratorOk() (*VmAccelerator, bool)`
+
+GetAcceleratorOk returns a tuple with the Accelerator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccelerator
+
+`func (o *Vm) SetAccelerator(v VmAccelerator)`
+
+SetAccelerator sets Accelerator field to given value.
+
+### HasAccelerator
+
+`func (o *Vm) HasAccelerator() bool`
+
+HasAccelerator returns a boolean if a field has been set.
 
 ### GetNetworks
 

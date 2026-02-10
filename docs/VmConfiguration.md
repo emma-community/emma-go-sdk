@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** | Configuration ID | [optional] 
+**Id** | Pointer to **string** | Configuration ID | [optional] 
 **ProviderId** | Pointer to **int32** | ID of the cloud provider | [optional] 
 **ProviderName** | Pointer to **string** | Name of the cloud provider | [optional] 
 **LocationId** | Pointer to **int32** | Location ID | [optional] 
@@ -20,6 +20,8 @@ Name | Type | Description | Notes
 **RamGb** | Pointer to **int32** | Capacity of the RAM in gigabytes | [optional] 
 **VolumeGb** | Pointer to **int32** | Capacity of the volume in gigabytes | [optional] 
 **VolumeType** | Pointer to **string** | Volume type | [optional] 
+**Accelerator** | Pointer to [**VmConfigurationAccelerator**](VmConfigurationAccelerator.md) |  | [optional] 
+**LocalDisks** | Pointer to [**VmConfigurationLocalDisks**](VmConfigurationLocalDisks.md) |  | [optional] 
 **Cost** | Pointer to [**VmConfigurationCost**](VmConfigurationCost.md) |  | [optional] 
 
 ## Methods
@@ -43,20 +45,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetId
 
-`func (o *VmConfiguration) GetId() int32`
+`func (o *VmConfiguration) GetId() string`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *VmConfiguration) GetIdOk() (*int32, bool)`
+`func (o *VmConfiguration) GetIdOk() (*string, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *VmConfiguration) SetId(v int32)`
+`func (o *VmConfiguration) SetId(v string)`
 
 SetId sets Id field to given value.
 
@@ -440,6 +442,56 @@ SetVolumeType sets VolumeType field to given value.
 `func (o *VmConfiguration) HasVolumeType() bool`
 
 HasVolumeType returns a boolean if a field has been set.
+
+### GetAccelerator
+
+`func (o *VmConfiguration) GetAccelerator() VmConfigurationAccelerator`
+
+GetAccelerator returns the Accelerator field if non-nil, zero value otherwise.
+
+### GetAcceleratorOk
+
+`func (o *VmConfiguration) GetAcceleratorOk() (*VmConfigurationAccelerator, bool)`
+
+GetAcceleratorOk returns a tuple with the Accelerator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccelerator
+
+`func (o *VmConfiguration) SetAccelerator(v VmConfigurationAccelerator)`
+
+SetAccelerator sets Accelerator field to given value.
+
+### HasAccelerator
+
+`func (o *VmConfiguration) HasAccelerator() bool`
+
+HasAccelerator returns a boolean if a field has been set.
+
+### GetLocalDisks
+
+`func (o *VmConfiguration) GetLocalDisks() VmConfigurationLocalDisks`
+
+GetLocalDisks returns the LocalDisks field if non-nil, zero value otherwise.
+
+### GetLocalDisksOk
+
+`func (o *VmConfiguration) GetLocalDisksOk() (*VmConfigurationLocalDisks, bool)`
+
+GetLocalDisksOk returns a tuple with the LocalDisks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLocalDisks
+
+`func (o *VmConfiguration) SetLocalDisks(v VmConfigurationLocalDisks)`
+
+SetLocalDisks sets LocalDisks field to given value.
+
+### HasLocalDisks
+
+`func (o *VmConfiguration) HasLocalDisks() bool`
+
+HasLocalDisks returns a boolean if a field has been set.
 
 ### GetCost
 

@@ -236,7 +236,7 @@ import (
 )
 
 func main() {
-	volumeCreate := *openapiclient.NewVolumeCreate("aws-us-west-1", int32(500), "SSD") // VolumeCreate |  (optional)
+	volumeCreate := *openapiclient.NewVolumeCreate("aws-us-west-1", int32(500), "ssd") // VolumeCreate |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

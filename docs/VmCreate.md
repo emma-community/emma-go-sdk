@@ -13,6 +13,8 @@ Name | Type | Description | Notes
 **RamGb** | **int32** | Capacity of the RAM in gigabytes | 
 **VolumeType** | **string** | Volume type | 
 **VolumeGb** | **int32** | Capacity of the volume in gigabytes | 
+**AcceleratorTypeId** | Pointer to **string** | GPU accelerator type ID | [optional] 
+**Accelerators** | Pointer to **float32** | Quantity of GPU accelerators | [optional] 
 **SshKeyId** | Pointer to **int32** | SSH-key ID | [optional] 
 **UserPassword** | Pointer to **string** | User password for the Windows virtual machine. Not required for the AWS and GCP virtual machines. | [optional] 
 **SecurityGroupId** | Pointer to **int32** | ID of the security group | [optional] 
@@ -218,6 +220,56 @@ and a boolean to check if the value has been set.
 
 SetVolumeGb sets VolumeGb field to given value.
 
+
+### GetAcceleratorTypeId
+
+`func (o *VmCreate) GetAcceleratorTypeId() string`
+
+GetAcceleratorTypeId returns the AcceleratorTypeId field if non-nil, zero value otherwise.
+
+### GetAcceleratorTypeIdOk
+
+`func (o *VmCreate) GetAcceleratorTypeIdOk() (*string, bool)`
+
+GetAcceleratorTypeIdOk returns a tuple with the AcceleratorTypeId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAcceleratorTypeId
+
+`func (o *VmCreate) SetAcceleratorTypeId(v string)`
+
+SetAcceleratorTypeId sets AcceleratorTypeId field to given value.
+
+### HasAcceleratorTypeId
+
+`func (o *VmCreate) HasAcceleratorTypeId() bool`
+
+HasAcceleratorTypeId returns a boolean if a field has been set.
+
+### GetAccelerators
+
+`func (o *VmCreate) GetAccelerators() float32`
+
+GetAccelerators returns the Accelerators field if non-nil, zero value otherwise.
+
+### GetAcceleratorsOk
+
+`func (o *VmCreate) GetAcceleratorsOk() (*float32, bool)`
+
+GetAcceleratorsOk returns a tuple with the Accelerators field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccelerators
+
+`func (o *VmCreate) SetAccelerators(v float32)`
+
+SetAccelerators sets Accelerators field to given value.
+
+### HasAccelerators
+
+`func (o *VmCreate) HasAccelerators() bool`
+
+HasAccelerators returns a boolean if a field has been set.
 
 ### GetSshKeyId
 
