@@ -1,9 +1,9 @@
 /*
 Public EMMA API
 
-### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. | 
+### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
 
-API version: 1.0.23
+API version: 1.0.30
 */
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
@@ -20,7 +20,7 @@ var _ MappedNullable = &VmConfiguration{}
 // VmConfiguration struct for VmConfiguration
 type VmConfiguration struct {
 	// Configuration ID
-	Id *int32 `json:"id,omitempty"`
+	Id *string `json:"id,omitempty"`
 	// ID of the cloud provider
 	ProviderId *int32 `json:"providerId,omitempty"`
 	// Name of the cloud provider
@@ -50,8 +50,10 @@ type VmConfiguration struct {
 	// Capacity of the volume in gigabytes
 	VolumeGb *int32 `json:"volumeGb,omitempty"`
 	// Volume type
-	VolumeType *string `json:"volumeType,omitempty"`
-	Cost *VmConfigurationCost `json:"cost,omitempty"`
+	VolumeType  *string                     `json:"volumeType,omitempty"`
+	Accelerator *VmConfigurationAccelerator `json:"accelerator,omitempty"`
+	LocalDisks  *VmConfigurationLocalDisks  `json:"localDisks,omitempty"`
+	Cost        *VmConfigurationCost        `json:"cost,omitempty"`
 }
 
 // NewVmConfiguration instantiates a new VmConfiguration object
@@ -72,9 +74,9 @@ func NewVmConfigurationWithDefaults() *VmConfiguration {
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
-func (o *VmConfiguration) GetId() int32 {
+func (o *VmConfiguration) GetId() string {
 	if o == nil || IsNil(o.Id) {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.Id
@@ -82,7 +84,7 @@ func (o *VmConfiguration) GetId() int32 {
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *VmConfiguration) GetIdOk() (*int32, bool) {
+func (o *VmConfiguration) GetIdOk() (*string, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
@@ -98,8 +100,8 @@ func (o *VmConfiguration) HasId() bool {
 	return false
 }
 
-// SetId gets a reference to the given int32 and assigns it to the Id field.
-func (o *VmConfiguration) SetId(v int32) {
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *VmConfiguration) SetId(v string) {
 	o.Id = &v
 }
 
@@ -583,6 +585,70 @@ func (o *VmConfiguration) SetVolumeType(v string) {
 	o.VolumeType = &v
 }
 
+// GetAccelerator returns the Accelerator field value if set, zero value otherwise.
+func (o *VmConfiguration) GetAccelerator() VmConfigurationAccelerator {
+	if o == nil || IsNil(o.Accelerator) {
+		var ret VmConfigurationAccelerator
+		return ret
+	}
+	return *o.Accelerator
+}
+
+// GetAcceleratorOk returns a tuple with the Accelerator field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmConfiguration) GetAcceleratorOk() (*VmConfigurationAccelerator, bool) {
+	if o == nil || IsNil(o.Accelerator) {
+		return nil, false
+	}
+	return o.Accelerator, true
+}
+
+// HasAccelerator returns a boolean if a field has been set.
+func (o *VmConfiguration) HasAccelerator() bool {
+	if o != nil && !IsNil(o.Accelerator) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccelerator gets a reference to the given VmConfigurationAccelerator and assigns it to the Accelerator field.
+func (o *VmConfiguration) SetAccelerator(v VmConfigurationAccelerator) {
+	o.Accelerator = &v
+}
+
+// GetLocalDisks returns the LocalDisks field value if set, zero value otherwise.
+func (o *VmConfiguration) GetLocalDisks() VmConfigurationLocalDisks {
+	if o == nil || IsNil(o.LocalDisks) {
+		var ret VmConfigurationLocalDisks
+		return ret
+	}
+	return *o.LocalDisks
+}
+
+// GetLocalDisksOk returns a tuple with the LocalDisks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmConfiguration) GetLocalDisksOk() (*VmConfigurationLocalDisks, bool) {
+	if o == nil || IsNil(o.LocalDisks) {
+		return nil, false
+	}
+	return o.LocalDisks, true
+}
+
+// HasLocalDisks returns a boolean if a field has been set.
+func (o *VmConfiguration) HasLocalDisks() bool {
+	if o != nil && !IsNil(o.LocalDisks) {
+		return true
+	}
+
+	return false
+}
+
+// SetLocalDisks gets a reference to the given VmConfigurationLocalDisks and assigns it to the LocalDisks field.
+func (o *VmConfiguration) SetLocalDisks(v VmConfigurationLocalDisks) {
+	o.LocalDisks = &v
+}
+
 // GetCost returns the Cost field value if set, zero value otherwise.
 func (o *VmConfiguration) GetCost() VmConfigurationCost {
 	if o == nil || IsNil(o.Cost) {
@@ -616,7 +682,7 @@ func (o *VmConfiguration) SetCost(v VmConfigurationCost) {
 }
 
 func (o VmConfiguration) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -673,6 +739,12 @@ func (o VmConfiguration) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.VolumeType) {
 		toSerialize["volumeType"] = o.VolumeType
 	}
+	if !IsNil(o.Accelerator) {
+		toSerialize["accelerator"] = o.Accelerator
+	}
+	if !IsNil(o.LocalDisks) {
+		toSerialize["localDisks"] = o.LocalDisks
+	}
 	if !IsNil(o.Cost) {
 		toSerialize["cost"] = o.Cost
 	}
@@ -714,5 +786,3 @@ func (v *NullableVmConfiguration) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

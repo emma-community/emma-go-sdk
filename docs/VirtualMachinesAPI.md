@@ -224,7 +224,7 @@ Name | Type | Description  | Notes
 
 ## VmCreate
 
-> VmNew VmCreate(ctx).VmCreate(vmCreate).Execute()
+> Vm VmCreate(ctx).VmCreate(vmCreate).Execute()
 
 Create virtual machine
 
@@ -252,7 +252,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VirtualMachinesAPI.VmCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VmCreate`: VmNew
+	// response from `VmCreate`: Vm
 	fmt.Fprintf(os.Stdout, "Response from `VirtualMachinesAPI.VmCreate`: %v\n", resp)
 }
 ```
@@ -272,7 +272,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**VmNew**](VmNew.md)
+[**Vm**](Vm.md)
 
 ### Authorization
 

@@ -221,7 +221,7 @@ Name | Type | Description  | Notes
 
 ## GetVmConfigs
 
-> GetVmConfigs200Response GetVmConfigs(ctx).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+> GetVmConfigs200Response GetVmConfigs(ctx).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).CloudNetworkType(cloudNetworkType).DataCenterId(dataCenterId).LocationId(locationId).PriceMax(priceMax).PriceMin(priceMin).ProviderId(providerId).RamGb(ramGb).RamGbMax(ramGbMax).RamGbMin(ramGbMin).VCpu(vCpu).VCpuMax(vCpuMax).VCpuMin(vCpuMin).VCpuType(vCpuType).VolumeGb(volumeGb).VolumeGbMax(volumeGbMax).VolumeGbMin(volumeGbMin).VolumeType(volumeType).Page(page).Size(size).ProjectId(projectId).Execute()
 
 List of available configurations for virtual machine creation
 
@@ -240,30 +240,33 @@ import (
 )
 
 func main() {
-	providerId := int32(5) // int32 | ID of the cloud provider (optional)
-	locationId := int32(6) // int32 | ID of the geographic location (optional)
-	dataCenterId := "aws-us-west-1" // string | ID of the cloud provider's data center (optional)
+	acceleratorTypeId := "acceleratorTypeId_example" // string | GPU accelerator type ID (optional)
+	acceleratorsMin := float32(8.14) // float32 | Minimum quantity of GPU accelerators (optional)
+	acceleratorsMax := float32(8.14) // float32 | Maximum quantity of GPU accelerators (optional)
 	cloudNetworkType := "multi-cloud" // string | Type of cloud network (optional)
-	vCpuType := "Standard" // string | Type of vCPUs for the compute instance (optional)
-	vCpu := int32(4) // int32 | virtual Central Processing Units (vCPUs) for the compute instance (optional)
-	vCpuMin := int32(1) // int32 | Minimum number of vCPUs for the compute instance (optional)
-	vCpuMax := int32(8) // int32 | Maximum number of vCPUs for the compute instance (optional)
-	ramGb := int32(16) // int32 | RAM of the compute instance in gigabytes (optional)
-	ramGbMin := int32(8) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
-	ramGbMax := int32(32) // int32 | Maximum RAM of the compute instance in gigabytes (optional)
-	volumeGb := int32(500) // int32 | Volume size of the compute instance in gigabytes (optional)
-	volumeGbMin := int32(250) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
-	volumeGbMax := int32(1000) // int32 | Maximum volume size of the compute instance in gigabytes (optional)
-	volumeType := "ssd" // string | Volume type of the compute instance (optional)
-	priceMin := float32(8.14) // float32 | Minimum price of the compute instance (optional)
+	dataCenterId := "aws-us-west-1" // string | ID of the cloud provider's data center (optional)
+	locationId := int32(6) // int32 | ID of the geographic location (optional)
 	priceMax := float32(8.14) // float32 | Maximum price of the compute instance (optional)
+	priceMin := float32(8.14) // float32 | Minimum price of the compute instance (optional)
+	providerId := int32(5) // int32 | ID of the cloud provider (optional)
+	ramGb := int32(16) // int32 | RAM of the compute instance in gigabytes (optional)
+	ramGbMax := int32(32) // int32 | Maximum RAM of the compute instance in gigabytes (optional)
+	ramGbMin := int32(8) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
+	vCpu := int32(4) // int32 | virtual Central Processing Units (vCPUs) for the compute instance (optional)
+	vCpuMax := int32(8) // int32 | Maximum number of vCPUs for the compute instance (optional)
+	vCpuMin := int32(1) // int32 | Minimum number of vCPUs for the compute instance (optional)
+	vCpuType := "Standard" // string | Type of vCPUs for the compute instance (optional)
+	volumeGb := int32(500) // int32 | Volume size of the compute instance in gigabytes (optional)
+	volumeGbMax := int32(1000) // int32 | Maximum volume size of the compute instance in gigabytes (optional)
+	volumeGbMin := int32(250) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
+	volumeType := "ssd" // string | Volume type of the compute instance (optional)
 	page := int32(0) // int32 | Page number (optional)
 	size := int32(100) // int32 | Query size (optional)
 	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetVmConfigs(context.Background()).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetVmConfigs(context.Background()).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).CloudNetworkType(cloudNetworkType).DataCenterId(dataCenterId).LocationId(locationId).PriceMax(priceMax).PriceMin(priceMin).ProviderId(providerId).RamGb(ramGb).RamGbMax(ramGbMax).RamGbMin(ramGbMin).VCpu(vCpu).VCpuMax(vCpuMax).VCpuMin(vCpuMin).VCpuType(vCpuType).VolumeGb(volumeGb).VolumeGbMax(volumeGbMax).VolumeGbMin(volumeGbMin).VolumeType(volumeType).Page(page).Size(size).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetVmConfigs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -284,23 +287,26 @@ Other parameters are passed through a pointer to a apiGetVmConfigsRequest struct
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **providerId** | **int32** | ID of the cloud provider | 
- **locationId** | **int32** | ID of the geographic location | 
- **dataCenterId** | **string** | ID of the cloud provider&#39;s data center | 
+ **acceleratorTypeId** | **string** | GPU accelerator type ID | 
+ **acceleratorsMin** | **float32** | Minimum quantity of GPU accelerators | 
+ **acceleratorsMax** | **float32** | Maximum quantity of GPU accelerators | 
  **cloudNetworkType** | **string** | Type of cloud network | 
- **vCpuType** | **string** | Type of vCPUs for the compute instance | 
- **vCpu** | **int32** | virtual Central Processing Units (vCPUs) for the compute instance | 
- **vCpuMin** | **int32** | Minimum number of vCPUs for the compute instance | 
- **vCpuMax** | **int32** | Maximum number of vCPUs for the compute instance | 
- **ramGb** | **int32** | RAM of the compute instance in gigabytes | 
- **ramGbMin** | **int32** | Minimum RAM of the compute instance in gigabytes | 
- **ramGbMax** | **int32** | Maximum RAM of the compute instance in gigabytes | 
- **volumeGb** | **int32** | Volume size of the compute instance in gigabytes | 
- **volumeGbMin** | **int32** | Minimum volume size of the compute instance in gigabytes | 
- **volumeGbMax** | **int32** | Maximum volume size of the compute instance in gigabytes | 
- **volumeType** | **string** | Volume type of the compute instance | 
- **priceMin** | **float32** | Minimum price of the compute instance | 
+ **dataCenterId** | **string** | ID of the cloud provider&#39;s data center | 
+ **locationId** | **int32** | ID of the geographic location | 
  **priceMax** | **float32** | Maximum price of the compute instance | 
+ **priceMin** | **float32** | Minimum price of the compute instance | 
+ **providerId** | **int32** | ID of the cloud provider | 
+ **ramGb** | **int32** | RAM of the compute instance in gigabytes | 
+ **ramGbMax** | **int32** | Maximum RAM of the compute instance in gigabytes | 
+ **ramGbMin** | **int32** | Minimum RAM of the compute instance in gigabytes | 
+ **vCpu** | **int32** | virtual Central Processing Units (vCPUs) for the compute instance | 
+ **vCpuMax** | **int32** | Maximum number of vCPUs for the compute instance | 
+ **vCpuMin** | **int32** | Minimum number of vCPUs for the compute instance | 
+ **vCpuType** | **string** | Type of vCPUs for the compute instance | 
+ **volumeGb** | **int32** | Volume size of the compute instance in gigabytes | 
+ **volumeGbMax** | **int32** | Maximum volume size of the compute instance in gigabytes | 
+ **volumeGbMin** | **int32** | Minimum volume size of the compute instance in gigabytes | 
+ **volumeType** | **string** | Volume type of the compute instance | 
  **page** | **int32** | Page number | 
  **size** | **int32** | Query size | 
  **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
