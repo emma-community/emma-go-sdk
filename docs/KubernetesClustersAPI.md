@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## CreateKubernetesCluster
 
-> Kubernetes CreateKubernetesCluster(ctx).KubernetesCreate(kubernetesCreate).Execute()
+> KubernetesCreateResponse CreateKubernetesCluster(ctx).KubernetesCreateRequest(kubernetesCreateRequest).Execute()
 
 Create Kubernetes cluster
 
@@ -33,16 +33,16 @@ import (
 )
 
 func main() {
-	kubernetesCreate := *openapiclient.NewKubernetesCreate("default-k8s-managed-cluster-name", "eu", "K8sConnectionType_example", []openapiclient.KubernetesCreateWorkerNodesInner{*openapiclient.NewKubernetesCreateWorkerNodesInner("default-name", "europe-west1-d", "shared", int32(2), int32(4), "ssd", int32(16))}) // KubernetesCreate |  (optional)
+	kubernetesCreateRequest := *openapiclient.NewKubernetesCreateRequest("eu", "default-k8s-managed-cluster-name", "internet_connect", []openapiclient.KubernetesCreateRequestWorkerNodesInner{*openapiclient.NewKubernetesCreateRequestWorkerNodesInner("vm-automation-co2ep", "gcp-europe-west4-a", "standard", int32(4), int32(16), int32(32), "ssd")}) // KubernetesCreateRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.KubernetesClustersAPI.CreateKubernetesCluster(context.Background()).KubernetesCreate(kubernetesCreate).Execute()
+	resp, r, err := apiClient.KubernetesClustersAPI.CreateKubernetesCluster(context.Background()).KubernetesCreateRequest(kubernetesCreateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClustersAPI.CreateKubernetesCluster``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CreateKubernetesCluster`: Kubernetes
+	// response from `CreateKubernetesCluster`: KubernetesCreateResponse
 	fmt.Fprintf(os.Stdout, "Response from `KubernetesClustersAPI.CreateKubernetesCluster`: %v\n", resp)
 }
 ```
@@ -58,11 +58,11 @@ Other parameters are passed through a pointer to a apiCreateKubernetesClusterReq
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **kubernetesCreate** | [**KubernetesCreate**](KubernetesCreate.md) |  | 
+ **kubernetesCreateRequest** | [**KubernetesCreateRequest**](KubernetesCreateRequest.md) |  | 
 
 ### Return type
 
-[**Kubernetes**](Kubernetes.md)
+[**KubernetesCreateResponse**](KubernetesCreateResponse.md)
 
 ### Authorization
 
@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 
 ## DeleteKubernetesCluster
 
-> Kubernetes DeleteKubernetesCluster(ctx, kubernetesId).Execute()
+> KubernetesDelete DeleteKubernetesCluster(ctx, kubernetesId).Execute()
 
 Delete Kubernetes cluster
 
@@ -108,7 +108,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClustersAPI.DeleteKubernetesCluster``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `DeleteKubernetesCluster`: Kubernetes
+	// response from `DeleteKubernetesCluster`: KubernetesDelete
 	fmt.Fprintf(os.Stdout, "Response from `KubernetesClustersAPI.DeleteKubernetesCluster`: %v\n", resp)
 }
 ```
@@ -132,7 +132,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Kubernetes**](Kubernetes.md)
+[**KubernetesDelete**](KubernetesDelete.md)
 
 ### Authorization
 
@@ -150,7 +150,7 @@ Name | Type | Description  | Notes
 
 ## EditKubernetesCluster
 
-> Kubernetes EditKubernetesCluster(ctx, kubernetesId).KubernetesUpdate(kubernetesUpdate).Execute()
+> KubernetesUpdateResponse EditKubernetesCluster(ctx, kubernetesId).KubernetesUpdateRequest(kubernetesUpdateRequest).Execute()
 
 Edit Kubernetes cluster
 
@@ -170,16 +170,16 @@ import (
 
 func main() {
 	kubernetesId := int32(56) // int32 | ID of the Kubernetes cluster
-	kubernetesUpdate := *openapiclient.NewKubernetesUpdate([]openapiclient.KubernetesUpdateWorkerNodesInner{*openapiclient.NewKubernetesUpdateWorkerNodesInner("default-name", "europe-west1-d", "shared", int32(2), int32(4), "ssd", int32(16))}) // KubernetesUpdate |  (optional)
+	kubernetesUpdateRequest := *openapiclient.NewKubernetesUpdateRequest([]openapiclient.KubernetesUpdateRequestWorkerNodesInner{*openapiclient.NewKubernetesUpdateRequestWorkerNodesInner("lsydyf-node", "gcp-europe-west4-a", "standard", int32(4), int32(16), "ssd", int32(32))}) // KubernetesUpdateRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.KubernetesClustersAPI.EditKubernetesCluster(context.Background(), kubernetesId).KubernetesUpdate(kubernetesUpdate).Execute()
+	resp, r, err := apiClient.KubernetesClustersAPI.EditKubernetesCluster(context.Background(), kubernetesId).KubernetesUpdateRequest(kubernetesUpdateRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClustersAPI.EditKubernetesCluster``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `EditKubernetesCluster`: Kubernetes
+	// response from `EditKubernetesCluster`: KubernetesUpdateResponse
 	fmt.Fprintf(os.Stdout, "Response from `KubernetesClustersAPI.EditKubernetesCluster`: %v\n", resp)
 }
 ```
@@ -200,11 +200,11 @@ Other parameters are passed through a pointer to a apiEditKubernetesClusterReque
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **kubernetesUpdate** | [**KubernetesUpdate**](KubernetesUpdate.md) |  | 
+ **kubernetesUpdateRequest** | [**KubernetesUpdateRequest**](KubernetesUpdateRequest.md) |  | 
 
 ### Return type
 
-[**Kubernetes**](Kubernetes.md)
+[**KubernetesUpdateResponse**](KubernetesUpdateResponse.md)
 
 ### Authorization
 
@@ -222,7 +222,7 @@ Name | Type | Description  | Notes
 
 ## GetKubernetesCluster
 
-> Kubernetes GetKubernetesCluster(ctx, kubernetesId).ProjectId(projectId).Execute()
+> KubernetesGetResponse GetKubernetesCluster(ctx, kubernetesId).ProjectId(projectId).Execute()
 
 Get Kubernetes cluster by id
 
@@ -251,7 +251,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClustersAPI.GetKubernetesCluster``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetKubernetesCluster`: Kubernetes
+	// response from `GetKubernetesCluster`: KubernetesGetResponse
 	fmt.Fprintf(os.Stdout, "Response from `KubernetesClustersAPI.GetKubernetesCluster`: %v\n", resp)
 }
 ```
@@ -276,7 +276,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Kubernetes**](Kubernetes.md)
+[**KubernetesGetResponse**](KubernetesGetResponse.md)
 
 ### Authorization
 
@@ -294,7 +294,7 @@ Name | Type | Description  | Notes
 
 ## GetKubernetesClusters
 
-> []Kubernetes GetKubernetesClusters(ctx).ProjectId(projectId).Execute()
+> []KubernetesListResponseInner GetKubernetesClusters(ctx).ProjectId(projectId).Execute()
 
 Get list of Kubernetes clusters
 
@@ -322,7 +322,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `KubernetesClustersAPI.GetKubernetesClusters``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetKubernetesClusters`: []Kubernetes
+	// response from `GetKubernetesClusters`: []KubernetesListResponseInner
 	fmt.Fprintf(os.Stdout, "Response from `KubernetesClustersAPI.GetKubernetesClusters`: %v\n", resp)
 }
 ```
@@ -342,7 +342,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]Kubernetes**](Kubernetes.md)
+[**[]KubernetesListResponseInner**](KubernetesListResponseInner.md)
 
 ### Authorization
 

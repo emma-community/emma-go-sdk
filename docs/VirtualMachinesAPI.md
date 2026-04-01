@@ -243,7 +243,7 @@ import (
 )
 
 func main() {
-	vmCreate := *openapiclient.NewVmCreate("vm-test1", "aws-us-west-1", int32(5), "multi-cloud", "shared", int32(2), int32(1), "ssd", int32(16)) // VmCreate |  (optional)
+	vmCreate := *openapiclient.NewVmCreate("vm-test1", "aws-us-west-1", int32(5), "multi-cloud", "shared", int32(2), int32(4), "ssd", int32(16)) // VmCreate |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

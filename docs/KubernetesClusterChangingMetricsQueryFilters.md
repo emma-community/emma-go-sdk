@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **ChangingMetrics** | **[]string** | List of metrics describing changes in the cluster | 
 **Timespan** | **string** | Requested period of statistics | 
 **CustomFilterState** | **string** | State of objects in the custom filter | 
-**CustomFilterAvgCpuRule** | **string** | Rule for object filtering by CPU utilization | 
+**CustomFilterAvgCpuRule** | **NullableString** | Rule for object filtering by CPU utilization | 
 **CustomFilterAvgCpuValue** | **float32** | CPU utilization in the custom filter | 
 **CustomFilterAvgMemoryRule** | **string** | Rule for object filtering by memory utilization | 
 **CustomFilterAvgMemoryValue** | **float32** | Memory utilization in the custom filter | 
@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 
 ### NewKubernetesClusterChangingMetricsQueryFilters
 
-`func NewKubernetesClusterChangingMetricsQueryFilters(objectType string, objectName string, breakdownLevel string, changingMetrics []string, timespan string, customFilterState string, customFilterAvgCpuRule string, customFilterAvgCpuValue float32, customFilterAvgMemoryRule string, customFilterAvgMemoryValue float32, customFilterAvgStorageRule string, customFilterAvgStorageValue float32, customFilterSubobjects []string, ) *KubernetesClusterChangingMetricsQueryFilters`
+`func NewKubernetesClusterChangingMetricsQueryFilters(objectType string, objectName string, breakdownLevel string, changingMetrics []string, timespan string, customFilterState string, customFilterAvgCpuRule NullableString, customFilterAvgCpuValue float32, customFilterAvgMemoryRule string, customFilterAvgMemoryValue float32, customFilterAvgStorageRule string, customFilterAvgStorageValue float32, customFilterSubobjects []string, ) *KubernetesClusterChangingMetricsQueryFilters`
 
 NewKubernetesClusterChangingMetricsQueryFilters instantiates a new KubernetesClusterChangingMetricsQueryFilters object
 This constructor will assign default values to properties that have it defined,
@@ -177,6 +177,16 @@ and a boolean to check if the value has been set.
 SetCustomFilterAvgCpuRule sets CustomFilterAvgCpuRule field to given value.
 
 
+### SetCustomFilterAvgCpuRuleNil
+
+`func (o *KubernetesClusterChangingMetricsQueryFilters) SetCustomFilterAvgCpuRuleNil(b bool)`
+
+ SetCustomFilterAvgCpuRuleNil sets the value for CustomFilterAvgCpuRule to be an explicit nil
+
+### UnsetCustomFilterAvgCpuRule
+`func (o *KubernetesClusterChangingMetricsQueryFilters) UnsetCustomFilterAvgCpuRule()`
+
+UnsetCustomFilterAvgCpuRule ensures that no value is present for CustomFilterAvgCpuRule, not even an explicit nil
 ### GetCustomFilterAvgCpuValue
 
 `func (o *KubernetesClusterChangingMetricsQueryFilters) GetCustomFilterAvgCpuValue() float32`

@@ -1,0 +1,186 @@
+# KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Id** | Pointer to **int32** | Location ID of the worker node | [optional] 
+**Name** | Pointer to **string** | Location name of the worker node | [optional] 
+**Continent** | Pointer to **string** | Name of the geographical continent | [optional] 
+**Region** | Pointer to **string** | Name of the geographical region | [optional] 
+**Latitude** | Pointer to **float64** | Approximate latitude of the geographical location | [optional] 
+**Longitude** | Pointer to **float64** | Approximate longitude of the geographical location | [optional] 
+
+## Methods
+
+### NewKubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation
+
+`func NewKubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation() *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation`
+
+NewKubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation instantiates a new KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewKubernetesListResponseInnerNodeGroupsInnerNodesInnerLocationWithDefaults
+
+`func NewKubernetesListResponseInnerNodeGroupsInnerNodesInnerLocationWithDefaults() *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation`
+
+NewKubernetesListResponseInnerNodeGroupsInnerNodesInnerLocationWithDefaults instantiates a new KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetId
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetId() int32`
+
+GetId returns the Id field if non-nil, zero value otherwise.
+
+### GetIdOk
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetIdOk() (*int32, bool)`
+
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetId
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) SetId(v int32)`
+
+SetId sets Id field to given value.
+
+### HasId
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) HasId() bool`
+
+HasId returns a boolean if a field has been set.
+
+### GetName
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) SetName(v string)`
+
+SetName sets Name field to given value.
+
+### HasName
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) HasName() bool`
+
+HasName returns a boolean if a field has been set.
+
+### GetContinent
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetContinent() string`
+
+GetContinent returns the Continent field if non-nil, zero value otherwise.
+
+### GetContinentOk
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetContinentOk() (*string, bool)`
+
+GetContinentOk returns a tuple with the Continent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContinent
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) SetContinent(v string)`
+
+SetContinent sets Continent field to given value.
+
+### HasContinent
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) HasContinent() bool`
+
+HasContinent returns a boolean if a field has been set.
+
+### GetRegion
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetRegion() string`
+
+GetRegion returns the Region field if non-nil, zero value otherwise.
+
+### GetRegionOk
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetRegionOk() (*string, bool)`
+
+GetRegionOk returns a tuple with the Region field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRegion
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) SetRegion(v string)`
+
+SetRegion sets Region field to given value.
+
+### HasRegion
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) HasRegion() bool`
+
+HasRegion returns a boolean if a field has been set.
+
+### GetLatitude
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetLatitude() float64`
+
+GetLatitude returns the Latitude field if non-nil, zero value otherwise.
+
+### GetLatitudeOk
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetLatitudeOk() (*float64, bool)`
+
+GetLatitudeOk returns a tuple with the Latitude field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatitude
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) SetLatitude(v float64)`
+
+SetLatitude sets Latitude field to given value.
+
+### HasLatitude
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) HasLatitude() bool`
+
+HasLatitude returns a boolean if a field has been set.
+
+### GetLongitude
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetLongitude() float64`
+
+GetLongitude returns the Longitude field if non-nil, zero value otherwise.
+
+### GetLongitudeOk
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) GetLongitudeOk() (*float64, bool)`
+
+GetLongitudeOk returns a tuple with the Longitude field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLongitude
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) SetLongitude(v float64)`
+
+SetLongitude sets Longitude field to given value.
+
+### HasLongitude
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocation) HasLongitude() bool`
+
+HasLongitude returns a boolean if a field has been set.
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

@@ -4,7 +4,7 @@ All URIs are relative to *https://api.emma.ms/external*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetKuberNodesConfigs**](ComputeInstancesConfigurationsAPI.md#GetKuberNodesConfigs) | **Get** /v1/kubernetes-configs | List of available configurations for Kubernetes cluster node
+[**GetKuberNodesConfigs**](ComputeInstancesConfigurationsAPI.md#GetKuberNodesConfigs) | **Get** /v1/kubernetes-configs/{k8sConnectionType} | List of available configurations for Kubernetes cluster node
 [**GetSpotConfigs**](ComputeInstancesConfigurationsAPI.md#GetSpotConfigs) | **Get** /v1/spots-configs | List of available configurations for spot instance creation
 [**GetVmConfigs**](ComputeInstancesConfigurationsAPI.md#GetVmConfigs) | **Get** /v1/vms-configs | List of available configurations for virtual machine creation
 [**GetVmResizeConfigs**](ComputeInstancesConfigurationsAPI.md#GetVmResizeConfigs) | **Get** /v1/vms-resize-configs | List of available configurations for virtual machine resize
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## GetKuberNodesConfigs
 
-> GetVmConfigs200Response GetKuberNodesConfigs(ctx).K8sConnectionType(k8sConnectionType).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+> GetKuberNodesConfigs200Response GetKuberNodesConfigs(ctx, k8sConnectionType).ProviderId(providerId).LocationId(locationId).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 
 List of available configurations for Kubernetes cluster node
 
@@ -35,16 +35,19 @@ func main() {
 	k8sConnectionType := "internet_connect" // string | Type of Kubernetes cluster network connectivity
 	providerId := int32(5) // int32 | ID of the cloud provider (optional)
 	locationId := int32(6) // int32 | ID of the geographic location (optional)
+	acceleratorTypeId := "acceleratorTypeId_example" // string | GPU accelerator type ID (optional)
+	acceleratorsMin := float32(8.14) // float32 | Minimum quantity of GPU accelerators (optional)
+	acceleratorsMax := float32(8.14) // float32 | Maximum quantity of GPU accelerators (optional)
 	dataCenterId := "aws-us-west-1" // string | ID of the cloud provider's data center (optional)
-	vCpuType := "Standard" // string | Type of vCPUs for the compute instance (optional)
+	vCpuType := "standard" // string | Type of vCPUs for the compute instance (optional)
 	vCpu := int32(4) // int32 | virtual Central Processing Units (vCPUs) for the compute instance (optional)
-	vCpuMin := int32(1) // int32 | Minimum number of vCPUs for the compute instance (optional)
+	vCpuMin := int32(2) // int32 | Minimum number of vCPUs for the compute instance (optional)
 	vCpuMax := int32(8) // int32 | Maximum number of vCPUs for the compute instance (optional)
 	ramGb := int32(16) // int32 | RAM of the compute instance in gigabytes (optional)
-	ramGbMin := int32(8) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
+	ramGbMin := int32(4) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
 	ramGbMax := int32(32) // int32 | Maximum RAM of the compute instance in gigabytes (optional)
 	volumeGb := int32(500) // int32 | Volume size of the compute instance in gigabytes (optional)
-	volumeGbMin := int32(250) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
+	volumeGbMin := int32(16) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
 	volumeGbMax := int32(1000) // int32 | Maximum volume size of the compute instance in gigabytes (optional)
 	volumeType := "ssd" // string | Volume type of the compute instance (optional)
 	priceMin := float32(8.14) // float32 | Minimum price of the compute instance (optional)
@@ -55,12 +58,12 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs(context.Background()).K8sConnectionType(k8sConnectionType).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs(context.Background(), k8sConnectionType).ProviderId(providerId).LocationId(locationId).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetKuberNodesConfigs`: GetVmConfigs200Response
+	// response from `GetKuberNodesConfigs`: GetKuberNodesConfigs200Response
 	fmt.Fprintf(os.Stdout, "Response from `ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs`: %v\n", resp)
 }
 ```
@@ -68,6 +71,10 @@ func main() {
 ### Path Parameters
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**k8sConnectionType** | **string** | Type of Kubernetes cluster network connectivity | 
 
 ### Other Parameters
 
@@ -76,9 +83,12 @@ Other parameters are passed through a pointer to a apiGetKuberNodesConfigsReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **k8sConnectionType** | **string** | Type of Kubernetes cluster network connectivity | 
+
  **providerId** | **int32** | ID of the cloud provider | 
  **locationId** | **int32** | ID of the geographic location | 
+ **acceleratorTypeId** | **string** | GPU accelerator type ID | 
+ **acceleratorsMin** | **float32** | Minimum quantity of GPU accelerators | 
+ **acceleratorsMax** | **float32** | Maximum quantity of GPU accelerators | 
  **dataCenterId** | **string** | ID of the cloud provider&#39;s data center | 
  **vCpuType** | **string** | Type of vCPUs for the compute instance | 
  **vCpu** | **int32** | virtual Central Processing Units (vCPUs) for the compute instance | 
@@ -99,7 +109,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetVmConfigs200Response**](GetVmConfigs200Response.md)
+[**GetKuberNodesConfigs200Response**](GetKuberNodesConfigs200Response.md)
 
 ### Authorization
 
@@ -140,15 +150,15 @@ func main() {
 	locationId := int32(6) // int32 | ID of the geographic location (optional)
 	dataCenterId := "aws-us-west-1" // string | ID of the cloud provider's data center (optional)
 	cloudNetworkType := "multi-cloud" // string | Type of cloud network (optional)
-	vCpuType := "Standard" // string | Type of vCPUs for the compute instance (optional)
+	vCpuType := "standard" // string | Type of vCPUs for the compute instance (optional)
 	vCpu := int32(4) // int32 | virtual Central Processing Units (vCPUs) for the compute instance (optional)
-	vCpuMin := int32(1) // int32 | Minimum number of vCPUs for the compute instance (optional)
+	vCpuMin := int32(2) // int32 | Minimum number of vCPUs for the compute instance (optional)
 	vCpuMax := int32(8) // int32 | Maximum number of vCPUs for the compute instance (optional)
 	ramGb := int32(16) // int32 | RAM of the compute instance in gigabytes (optional)
-	ramGbMin := int32(8) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
+	ramGbMin := int32(4) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
 	ramGbMax := int32(32) // int32 | Maximum RAM of the compute instance in gigabytes (optional)
 	volumeGb := int32(500) // int32 | Volume size of the compute instance in gigabytes (optional)
-	volumeGbMin := int32(250) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
+	volumeGbMin := int32(16) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
 	volumeGbMax := int32(1000) // int32 | Maximum volume size of the compute instance in gigabytes (optional)
 	volumeType := "ssd" // string | Volume type of the compute instance (optional)
 	priceMin := float32(8.14) // float32 | Minimum price of the compute instance (optional)
@@ -251,14 +261,14 @@ func main() {
 	providerId := int32(5) // int32 | ID of the cloud provider (optional)
 	ramGb := int32(16) // int32 | RAM of the compute instance in gigabytes (optional)
 	ramGbMax := int32(32) // int32 | Maximum RAM of the compute instance in gigabytes (optional)
-	ramGbMin := int32(8) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
+	ramGbMin := int32(4) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
 	vCpu := int32(4) // int32 | virtual Central Processing Units (vCPUs) for the compute instance (optional)
 	vCpuMax := int32(8) // int32 | Maximum number of vCPUs for the compute instance (optional)
-	vCpuMin := int32(1) // int32 | Minimum number of vCPUs for the compute instance (optional)
-	vCpuType := "Standard" // string | Type of vCPUs for the compute instance (optional)
+	vCpuMin := int32(2) // int32 | Minimum number of vCPUs for the compute instance (optional)
+	vCpuType := "standard" // string | Type of vCPUs for the compute instance (optional)
 	volumeGb := int32(500) // int32 | Volume size of the compute instance in gigabytes (optional)
 	volumeGbMax := int32(1000) // int32 | Maximum volume size of the compute instance in gigabytes (optional)
-	volumeGbMin := int32(250) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
+	volumeGbMin := int32(16) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
 	volumeType := "ssd" // string | Volume type of the compute instance (optional)
 	page := int32(0) // int32 | Page number (optional)
 	size := int32(100) // int32 | Query size (optional)
@@ -350,12 +360,12 @@ import (
 )
 
 func main() {
-	vCpuType := "Standard" // string | Type of vCPUs for the compute instance (optional)
+	vCpuType := "standard" // string | Type of vCPUs for the compute instance (optional)
 	vCpu := int32(4) // int32 | virtual Central Processing Units (vCPUs) for the compute instance (optional)
-	vCpuMin := int32(1) // int32 | Minimum number of vCPUs for the compute instance (optional)
+	vCpuMin := int32(2) // int32 | Minimum number of vCPUs for the compute instance (optional)
 	vCpuMax := int32(8) // int32 | Maximum number of vCPUs for the compute instance (optional)
 	ramGb := int32(16) // int32 | RAM of the compute instance in gigabytes (optional)
-	ramGbMin := int32(8) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
+	ramGbMin := int32(4) // int32 | Minimum RAM of the compute instance in gigabytes (optional)
 	ramGbMax := int32(32) // int32 | Maximum RAM of the compute instance in gigabytes (optional)
 	priceMin := float32(8.14) // float32 | Minimum price of the compute instance (optional)
 	priceMax := float32(8.14) // float32 | Maximum price of the compute instance (optional)
