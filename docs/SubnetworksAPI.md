@@ -4,17 +4,89 @@ All URIs are relative to *https://api.emma.ms/external*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**V1SubnetworksGet**](SubnetworksAPI.md#V1SubnetworksGet) | **Get** /v1/subnetworks | Get list of subnetworks
-[**V1SubnetworksPost**](SubnetworksAPI.md#V1SubnetworksPost) | **Post** /v1/subnetworks | Create subnetwork
-[**V1SubnetworksSubnetworkIdDelete**](SubnetworksAPI.md#V1SubnetworksSubnetworkIdDelete) | **Delete** /v1/subnetworks/{subnetworkId} | Delete subnetwork
-[**V1SubnetworksSubnetworkIdGet**](SubnetworksAPI.md#V1SubnetworksSubnetworkIdGet) | **Get** /v1/subnetworks/{subnetworkId} | Get subnetwork by ID
-[**V1SubnetworksSubnetworkIdPut**](SubnetworksAPI.md#V1SubnetworksSubnetworkIdPut) | **Put** /v1/subnetworks/{subnetworkId} | Update subnetwork
+[**GetSubnetwork**](SubnetworksAPI.md#GetSubnetwork) | **Get** /v1/subnetworks/{subnetworkId} | Get subnetwork by ID
+[**GetSubnetworks**](SubnetworksAPI.md#GetSubnetworks) | **Get** /v1/subnetworks | Get list of subnetworks
+[**SubnetworkCreate**](SubnetworksAPI.md#SubnetworkCreate) | **Post** /v1/subnetworks | Create subnetwork
+[**SubnetworkDelete**](SubnetworksAPI.md#SubnetworkDelete) | **Delete** /v1/subnetworks/{subnetworkId} | Delete subnetwork
+[**SubnetworkUpdate**](SubnetworksAPI.md#SubnetworkUpdate) | **Put** /v1/subnetworks/{subnetworkId} | Update subnetwork
 
 
 
-## V1SubnetworksGet
+## GetSubnetwork
 
-> []Subnetwork V1SubnetworksGet(ctx).ProjectId(projectId).Execute()
+> Subnetwork GetSubnetwork(ctx, subnetworkId).ProjectId(projectId).Execute()
+
+Get subnetwork by ID
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/emma-community/emma-go-sdk"
+)
+
+func main() {
+	subnetworkId := "subnetworkId_example" // string | Subnetwork ID
+	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.SubnetworksAPI.GetSubnetwork(context.Background(), subnetworkId).ProjectId(projectId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.GetSubnetwork``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetSubnetwork`: Subnetwork
+	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.GetSubnetwork`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**subnetworkId** | **string** | Subnetwork ID | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetSubnetworkRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
+
+### Return type
+
+[**Subnetwork**](Subnetwork.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSubnetworks
+
+> []Subnetwork GetSubnetworks(ctx).ProjectId(projectId).Execute()
 
 Get list of subnetworks
 
@@ -37,13 +109,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SubnetworksAPI.V1SubnetworksGet(context.Background()).ProjectId(projectId).Execute()
+	resp, r, err := apiClient.SubnetworksAPI.GetSubnetworks(context.Background()).ProjectId(projectId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.V1SubnetworksGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.GetSubnetworks``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `V1SubnetworksGet`: []Subnetwork
-	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.V1SubnetworksGet`: %v\n", resp)
+	// response from `GetSubnetworks`: []Subnetwork
+	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.GetSubnetworks`: %v\n", resp)
 }
 ```
 
@@ -53,7 +125,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiV1SubnetworksGetRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetSubnetworksRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -78,9 +150,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## V1SubnetworksPost
+## SubnetworkCreate
 
-> Subnetwork V1SubnetworksPost(ctx).SubnetworkCreate(subnetworkCreate).Execute()
+> Subnetwork SubnetworkCreate(ctx).SubnetworkCreate(subnetworkCreate).Execute()
 
 Create subnetwork
 
@@ -103,13 +175,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SubnetworksAPI.V1SubnetworksPost(context.Background()).SubnetworkCreate(subnetworkCreate).Execute()
+	resp, r, err := apiClient.SubnetworksAPI.SubnetworkCreate(context.Background()).SubnetworkCreate(subnetworkCreate).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.V1SubnetworksPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.SubnetworkCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `V1SubnetworksPost`: Subnetwork
-	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.V1SubnetworksPost`: %v\n", resp)
+	// response from `SubnetworkCreate`: Subnetwork
+	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.SubnetworkCreate`: %v\n", resp)
 }
 ```
 
@@ -119,7 +191,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiV1SubnetworksPostRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSubnetworkCreateRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -144,9 +216,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## V1SubnetworksSubnetworkIdDelete
+## SubnetworkDelete
 
-> Subnetwork V1SubnetworksSubnetworkIdDelete(ctx, subnetworkId).Execute()
+> Subnetwork SubnetworkDelete(ctx, subnetworkId).Execute()
 
 Delete subnetwork
 
@@ -169,13 +241,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SubnetworksAPI.V1SubnetworksSubnetworkIdDelete(context.Background(), subnetworkId).Execute()
+	resp, r, err := apiClient.SubnetworksAPI.SubnetworkDelete(context.Background(), subnetworkId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.V1SubnetworksSubnetworkIdDelete``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.SubnetworkDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `V1SubnetworksSubnetworkIdDelete`: Subnetwork
-	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.V1SubnetworksSubnetworkIdDelete`: %v\n", resp)
+	// response from `SubnetworkDelete`: Subnetwork
+	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.SubnetworkDelete`: %v\n", resp)
 }
 ```
 
@@ -189,7 +261,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiV1SubnetworksSubnetworkIdDeleteRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSubnetworkDeleteRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -214,81 +286,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## V1SubnetworksSubnetworkIdGet
+## SubnetworkUpdate
 
-> Subnetwork V1SubnetworksSubnetworkIdGet(ctx, subnetworkId).ProjectId(projectId).Execute()
-
-Get subnetwork by ID
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/emma-community/emma-go-sdk"
-)
-
-func main() {
-	subnetworkId := "subnetworkId_example" // string | Subnetwork ID
-	projectId := int32(56) // int32 | Unused, created for future API extention. Will be ignored if used. (optional)
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SubnetworksAPI.V1SubnetworksSubnetworkIdGet(context.Background(), subnetworkId).ProjectId(projectId).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.V1SubnetworksSubnetworkIdGet``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `V1SubnetworksSubnetworkIdGet`: Subnetwork
-	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.V1SubnetworksSubnetworkIdGet`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**subnetworkId** | **string** | Subnetwork ID | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiV1SubnetworksSubnetworkIdGetRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **projectId** | **int32** | Unused, created for future API extention. Will be ignored if used. | 
-
-### Return type
-
-[**Subnetwork**](Subnetwork.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## V1SubnetworksSubnetworkIdPut
-
-> Subnetwork V1SubnetworksSubnetworkIdPut(ctx, subnetworkId).SubnetworkEdit(subnetworkEdit).Execute()
+> Subnetwork SubnetworkUpdate(ctx, subnetworkId).SubnetworkEdit(subnetworkEdit).Execute()
 
 Update subnetwork
 
@@ -312,13 +312,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SubnetworksAPI.V1SubnetworksSubnetworkIdPut(context.Background(), subnetworkId).SubnetworkEdit(subnetworkEdit).Execute()
+	resp, r, err := apiClient.SubnetworksAPI.SubnetworkUpdate(context.Background(), subnetworkId).SubnetworkEdit(subnetworkEdit).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.V1SubnetworksSubnetworkIdPut``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `SubnetworksAPI.SubnetworkUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `V1SubnetworksSubnetworkIdPut`: Subnetwork
-	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.V1SubnetworksSubnetworkIdPut`: %v\n", resp)
+	// response from `SubnetworkUpdate`: Subnetwork
+	fmt.Fprintf(os.Stdout, "Response from `SubnetworksAPI.SubnetworkUpdate`: %v\n", resp)
 }
 ```
 
@@ -332,7 +332,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiV1SubnetworksSubnetworkIdPutRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSubnetworkUpdateRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes

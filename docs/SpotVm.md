@@ -17,13 +17,13 @@ Name | Type | Description | Notes
 **Provider** | Pointer to [**SpotVmProvider**](SpotVmProvider.md) |  | [optional] 
 **Location** | Pointer to [**VmLocation**](VmLocation.md) |  | [optional] 
 **DataCenter** | Pointer to [**SpotVmDataCenter**](SpotVmDataCenter.md) |  | [optional] 
-**Os** | Pointer to [**SpotVmOs**](SpotVmOs.md) |  | [optional] 
+**Os** | Pointer to [**VmOs**](VmOs.md) |  | [optional] 
 **VCpu** | Pointer to **int32** | Number of virtual Central Processing Units (vCPUs) | [optional] 
 **VCpuType** | Pointer to **string** | Type of virtual Central Processing Units (vCPUs) | [optional] 
 **CloudNetworkType** | Pointer to **string** | Cloud network type | [optional] 
 **RamGb** | Pointer to **int32** | Capacity of the RAM in gigabytes | [optional] 
 **Disks** | Pointer to [**[]SpotVmDisksInner**](SpotVmDisksInner.md) | List of volumes | [optional] 
-**Networks** | Pointer to [**[]KubernetesNodeGroupsInnerNodesInnerNetworksInner**](KubernetesNodeGroupsInnerNodesInnerNetworksInner.md) |  | [optional] 
+**Networks** | Pointer to [**[]SpotVmNetworksInner**](SpotVmNetworksInner.md) |  | [optional] 
 **SecurityGroup** | Pointer to [**VmSecurityGroup**](VmSecurityGroup.md) |  | [optional] 
 **SshKeyId** | Pointer to **int32** | SSH key ID | [optional] 
 **UserName** | Pointer to **string** | User name | [optional] 
@@ -376,20 +376,20 @@ HasDataCenter returns a boolean if a field has been set.
 
 ### GetOs
 
-`func (o *SpotVm) GetOs() SpotVmOs`
+`func (o *SpotVm) GetOs() VmOs`
 
 GetOs returns the Os field if non-nil, zero value otherwise.
 
 ### GetOsOk
 
-`func (o *SpotVm) GetOsOk() (*SpotVmOs, bool)`
+`func (o *SpotVm) GetOsOk() (*VmOs, bool)`
 
 GetOsOk returns a tuple with the Os field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOs
 
-`func (o *SpotVm) SetOs(v SpotVmOs)`
+`func (o *SpotVm) SetOs(v VmOs)`
 
 SetOs sets Os field to given value.
 
@@ -526,20 +526,20 @@ HasDisks returns a boolean if a field has been set.
 
 ### GetNetworks
 
-`func (o *SpotVm) GetNetworks() []KubernetesNodeGroupsInnerNodesInnerNetworksInner`
+`func (o *SpotVm) GetNetworks() []SpotVmNetworksInner`
 
 GetNetworks returns the Networks field if non-nil, zero value otherwise.
 
 ### GetNetworksOk
 
-`func (o *SpotVm) GetNetworksOk() (*[]KubernetesNodeGroupsInnerNodesInnerNetworksInner, bool)`
+`func (o *SpotVm) GetNetworksOk() (*[]SpotVmNetworksInner, bool)`
 
 GetNetworksOk returns a tuple with the Networks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNetworks
 
-`func (o *SpotVm) SetNetworks(v []KubernetesNodeGroupsInnerNodesInnerNetworksInner)`
+`func (o *SpotVm) SetNetworks(v []SpotVmNetworksInner)`
 
 SetNetworks sets Networks field to given value.
 

@@ -31,7 +31,7 @@ import (
 
 func main() {
 	attachedToId := int32(56) // int32 | ID of the linked instance (optional)
-	volumeGbMin := int32(250) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
+	volumeGbMin := int32(16) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
 	volumeType := "ssd" // string | Volume type of the compute instance (optional)
 	page := int32(0) // int32 | Page number (optional)
 	size := int32(100) // int32 | Query size (optional)
@@ -111,7 +111,7 @@ func main() {
 	providerId := int32(5) // int32 | ID of the cloud provider (optional)
 	locationId := int32(6) // int32 | ID of the geographic location (optional)
 	dataCenterId := "aws-us-west-1" // string | ID of the cloud provider's data center (optional)
-	volumeGbMin := int32(250) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
+	volumeGbMin := int32(16) // int32 | Minimum volume size of the compute instance in gigabytes (optional)
 	volumeType := "ssd" // string | Volume type of the data volume (optional)
 	page := int32(0) // int32 | Page number (optional)
 	size := int32(100) // int32 | Query size (optional)
