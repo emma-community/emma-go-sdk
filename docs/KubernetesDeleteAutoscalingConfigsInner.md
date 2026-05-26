@@ -6,16 +6,17 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **GroupName** | Pointer to **string** | Group name | [optional] 
 **DataCenterId** | Pointer to **string** | ID of the data center | [optional] 
-**MinimumNodes** | Pointer to **int32** | Minimum number of nodes | [optional] 
-**MaximumNodes** | Pointer to **int32** | Maximum number of nodes | [optional] 
-**TargetNodes** | Pointer to **int32** | Target number of nodes | [optional] 
-**MinimumVCpus** | Pointer to **int32** | Minimum number of vCPUs | [optional] 
-**MaximumVCpus** | Pointer to **int32** | Maximum number of vCPUs | [optional] 
-**TargetVCpus** | Pointer to **int32** | Target number of vCPUs | [optional] 
+**MinimumNodes** | Pointer to **int32** | Minimum number of nodes. Required when using node-count based autoscaling. Must be null if &#x60;minimumVCpus&#x60; is set. | [optional] 
+**MaximumNodes** | Pointer to **int32** | Maximum number of nodes. Required when using node-count based autoscaling. Must be null if &#x60;maximumVCpus&#x60; is set. | [optional] 
+**TargetNodes** | Pointer to **int32** | Target number of nodes. Required when using node-count based autoscaling. Must be null if &#x60;targetVCpus&#x60; is set. | [optional] 
+**MinimumVCpus** | Pointer to **int32** | Minimum number of vCPUs. Required when using vCPU-count based autoscaling. Must be null if &#x60;minimumNodes&#x60; is set. | [optional] 
+**MaximumVCpus** | Pointer to **int32** | Maximum number of vCPUs. Required when using vCPU-count based autoscaling. Must be null if &#x60;maximumNodes&#x60; is set. | [optional] 
+**TargetVCpus** | Pointer to **int32** | Target number of vCPUs. Required when using vCPU-count based autoscaling. Must be null if &#x60;targetNodes&#x60; is set. | [optional] 
 **NodeGroupPriceLimit** | Pointer to **float64** | Price limit of the autoscaling group | [optional] 
 **UseOnDemandInstancesInsteadOfSpots** | Pointer to **bool** | Use on-demand compute instances instead of spot compute instances | [optional] 
 **SpotPercent** | Pointer to **int32** | Percentage of spot instances in the autoscaling group | [optional] 
 **SpotMarkup** | Pointer to **float64** | Extra markup to the spot instance price | [optional] 
+**UserLabels** | Pointer to [**[]KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner**](KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner.md) | ASG labels applied to nodes created by this autoscaling group | [optional] 
 **ConfigurationPriorities** | Pointer to [**[]KubernetesDeleteAutoscalingConfigsInnerConfigurationPrioritiesInner**](KubernetesDeleteAutoscalingConfigsInnerConfigurationPrioritiesInner.md) | Compute instance configurations with priorities | [optional] 
 **LimitsNotice** | Pointer to **string** | Limits notice message | [optional] 
 
@@ -337,6 +338,31 @@ SetSpotMarkup sets SpotMarkup field to given value.
 `func (o *KubernetesDeleteAutoscalingConfigsInner) HasSpotMarkup() bool`
 
 HasSpotMarkup returns a boolean if a field has been set.
+
+### GetUserLabels
+
+`func (o *KubernetesDeleteAutoscalingConfigsInner) GetUserLabels() []KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner`
+
+GetUserLabels returns the UserLabels field if non-nil, zero value otherwise.
+
+### GetUserLabelsOk
+
+`func (o *KubernetesDeleteAutoscalingConfigsInner) GetUserLabelsOk() (*[]KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner, bool)`
+
+GetUserLabelsOk returns a tuple with the UserLabels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUserLabels
+
+`func (o *KubernetesDeleteAutoscalingConfigsInner) SetUserLabels(v []KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner)`
+
+SetUserLabels sets UserLabels field to given value.
+
+### HasUserLabels
+
+`func (o *KubernetesDeleteAutoscalingConfigsInner) HasUserLabels() bool`
+
+HasUserLabels returns a boolean if a field has been set.
 
 ### GetConfigurationPriorities
 

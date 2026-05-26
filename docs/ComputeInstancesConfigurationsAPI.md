@@ -4,7 +4,7 @@ All URIs are relative to *https://api.emma.ms/external*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetKuberNodesConfigs**](ComputeInstancesConfigurationsAPI.md#GetKuberNodesConfigs) | **Get** /v1/kubernetes-configs/{k8sConnectionType} | List of available configurations for Kubernetes cluster node
+[**GetKuberNodesConfigs**](ComputeInstancesConfigurationsAPI.md#GetKuberNodesConfigs) | **Get** /v1/kubernetes-configs | List of available configurations for Kubernetes cluster node
 [**GetSpotConfigs**](ComputeInstancesConfigurationsAPI.md#GetSpotConfigs) | **Get** /v1/spots-configs | List of available configurations for spot instance creation
 [**GetVmConfigs**](ComputeInstancesConfigurationsAPI.md#GetVmConfigs) | **Get** /v1/vms-configs | List of available configurations for virtual machine creation
 [**GetVmResizeConfigs**](ComputeInstancesConfigurationsAPI.md#GetVmResizeConfigs) | **Get** /v1/vms-resize-configs | List of available configurations for virtual machine resize
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## GetKuberNodesConfigs
 
-> GetKuberNodesConfigs200Response GetKuberNodesConfigs(ctx, k8sConnectionType).ProviderId(providerId).LocationId(locationId).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+> GetKuberNodesConfigs200Response GetKuberNodesConfigs(ctx).K8sConnectionType(k8sConnectionType).ProviderId(providerId).LocationId(locationId).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 
 List of available configurations for Kubernetes cluster node
 
@@ -58,7 +58,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs(context.Background(), k8sConnectionType).ProviderId(providerId).LocationId(locationId).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs(context.Background()).K8sConnectionType(k8sConnectionType).ProviderId(providerId).LocationId(locationId).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).DataCenterId(dataCenterId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetKuberNodesConfigs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -71,10 +71,6 @@ func main() {
 ### Path Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**k8sConnectionType** | **string** | Type of Kubernetes cluster network connectivity | 
 
 ### Other Parameters
 
@@ -83,7 +79,7 @@ Other parameters are passed through a pointer to a apiGetKuberNodesConfigsReques
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-
+ **k8sConnectionType** | **string** | Type of Kubernetes cluster network connectivity | 
  **providerId** | **int32** | ID of the cloud provider | 
  **locationId** | **int32** | ID of the geographic location | 
  **acceleratorTypeId** | **string** | GPU accelerator type ID | 
@@ -127,7 +123,7 @@ Name | Type | Description  | Notes
 
 ## GetSpotConfigs
 
-> GetVmConfigs200Response GetSpotConfigs(ctx).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+> GetVmConfigs200Response GetSpotConfigs(ctx).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 
 List of available configurations for spot instance creation
 
@@ -146,6 +142,9 @@ import (
 )
 
 func main() {
+	acceleratorTypeId := "acceleratorTypeId_example" // string | GPU accelerator type ID (optional)
+	acceleratorsMin := float32(8.14) // float32 | Minimum quantity of GPU accelerators (optional)
+	acceleratorsMax := float32(8.14) // float32 | Maximum quantity of GPU accelerators (optional)
 	providerId := int32(5) // int32 | ID of the cloud provider (optional)
 	locationId := int32(6) // int32 | ID of the geographic location (optional)
 	dataCenterId := "aws-us-west-1" // string | ID of the cloud provider's data center (optional)
@@ -169,7 +168,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetSpotConfigs(context.Background()).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetSpotConfigs(context.Background()).AcceleratorTypeId(acceleratorTypeId).AcceleratorsMin(acceleratorsMin).AcceleratorsMax(acceleratorsMax).ProviderId(providerId).LocationId(locationId).DataCenterId(dataCenterId).CloudNetworkType(cloudNetworkType).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).VolumeGb(volumeGb).VolumeGbMin(volumeGbMin).VolumeGbMax(volumeGbMax).VolumeType(volumeType).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetSpotConfigs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -190,6 +189,9 @@ Other parameters are passed through a pointer to a apiGetSpotConfigsRequest stru
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **acceleratorTypeId** | **string** | GPU accelerator type ID | 
+ **acceleratorsMin** | **float32** | Minimum quantity of GPU accelerators | 
+ **acceleratorsMax** | **float32** | Maximum quantity of GPU accelerators | 
  **providerId** | **int32** | ID of the cloud provider | 
  **locationId** | **int32** | ID of the geographic location | 
  **dataCenterId** | **string** | ID of the cloud provider&#39;s data center | 
@@ -341,7 +343,7 @@ Name | Type | Description  | Notes
 
 ## GetVmResizeConfigs
 
-> GetVmResizeConfigs200Response GetVmResizeConfigs(ctx).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+> GetVmResizeConfigs200Response GetVmResizeConfigs(ctx).VmId(vmId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 
 List of available configurations for virtual machine resize
 
@@ -360,6 +362,7 @@ import (
 )
 
 func main() {
+	vmId := int32(56) // int32 | ID of the virtual machine (optional)
 	vCpuType := "standard" // string | Type of vCPUs for the compute instance (optional)
 	vCpu := int32(4) // int32 | virtual Central Processing Units (vCPUs) for the compute instance (optional)
 	vCpuMin := int32(2) // int32 | Minimum number of vCPUs for the compute instance (optional)
@@ -375,7 +378,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetVmResizeConfigs(context.Background()).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
+	resp, r, err := apiClient.ComputeInstancesConfigurationsAPI.GetVmResizeConfigs(context.Background()).VmId(vmId).VCpuType(vCpuType).VCpu(vCpu).VCpuMin(vCpuMin).VCpuMax(vCpuMax).RamGb(ramGb).RamGbMin(ramGbMin).RamGbMax(ramGbMax).PriceMin(priceMin).PriceMax(priceMax).Page(page).Size(size).ProjectId(projectId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ComputeInstancesConfigurationsAPI.GetVmResizeConfigs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -396,6 +399,7 @@ Other parameters are passed through a pointer to a apiGetVmResizeConfigsRequest 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **vmId** | **int32** | ID of the virtual machine | 
  **vCpuType** | **string** | Type of vCPUs for the compute instance | 
  **vCpu** | **int32** | virtual Central Processing Units (vCPUs) for the compute instance | 
  **vCpuMin** | **int32** | Minimum number of vCPUs for the compute instance | 

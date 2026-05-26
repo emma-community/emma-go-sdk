@@ -9,14 +9,14 @@ Name | Type | Description | Notes
 **ProjectName** | Pointer to **string** | Project name | [optional] 
 **Name** | **string** | Kubernetes cluster name | 
 **K8sConnectionType** | **string** | Kubernetes connection type | 
-**WorkerNodes** | [**[]KubernetesCreateRequestWorkerNodesInner**](KubernetesCreateRequestWorkerNodesInner.md) | List of worker nodes | 
-**AutoscalingConfigs** | Pointer to [**[]KubernetesCreateRequestAutoscalingConfigsInner**](KubernetesCreateRequestAutoscalingConfigsInner.md) | Configurations of the autoscaling group | [optional] 
+**WorkerNodes** | Pointer to [**[]KubernetesCreateRequestWorkerNodesInner**](KubernetesCreateRequestWorkerNodesInner.md) | List of worker nodes. | [optional] 
+**AutoscalingConfigs** | Pointer to [**[]KubernetesCreateRequestAutoscalingConfigsInner**](KubernetesCreateRequestAutoscalingConfigsInner.md) | Configurations of the autoscaling group. If &#x60;workerNodes&#x60; is omitted or empty, &#x60;autoscalingConfigs&#x60; must contain at least one group. Each group must have either node-count scaling fields (&#x60;minimumNodes&#x60;, &#x60;maximumNodes&#x60;, &#x60;targetNodes&#x60;) or vCPU-count scaling fields (&#x60;minimumVCpus&#x60;, &#x60;maximumVCpus&#x60;, &#x60;targetVCpus&#x60;) — but not both and not neither. | [optional] 
 
 ## Methods
 
 ### NewKubernetesCreateRequest
 
-`func NewKubernetesCreateRequest(deploymentLocation string, name string, k8sConnectionType string, workerNodes []KubernetesCreateRequestWorkerNodesInner, ) *KubernetesCreateRequest`
+`func NewKubernetesCreateRequest(deploymentLocation string, name string, k8sConnectionType string, ) *KubernetesCreateRequest`
 
 NewKubernetesCreateRequest instantiates a new KubernetesCreateRequest object
 This constructor will assign default values to properties that have it defined,
@@ -160,6 +160,11 @@ and a boolean to check if the value has been set.
 
 SetWorkerNodes sets WorkerNodes field to given value.
 
+### HasWorkerNodes
+
+`func (o *KubernetesCreateRequest) HasWorkerNodes() bool`
+
+HasWorkerNodes returns a boolean if a field has been set.
 
 ### GetAutoscalingConfigs
 

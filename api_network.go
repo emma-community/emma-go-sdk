@@ -1,9 +1,9 @@
 /*
 Public EMMA API
 
-### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
+### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. | 
 
-API version: 1.0.50
+API version: 1.0.72
 */
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
@@ -19,13 +19,14 @@ import (
 	"strings"
 )
 
+
 // NetworkAPIService NetworkAPI service
 type NetworkAPIService service
 
 type ApiGetMultiCloudNetworksRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *NetworkAPIService
-	projectId  *int32
+	projectId *int32
 }
 
 // Unused, created for future API extention. Will be ignored if used.
@@ -43,25 +44,25 @@ GetMultiCloudNetworks Get the Direct Connect multi-cloud network configuration a
 
 Returns the Direct Connect multi-cloud network configuration across the EMEA, AMER, and APAC macro regions.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiGetMultiCloudNetworksRequest
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetMultiCloudNetworksRequest
 */
 func (a *NetworkAPIService) GetMultiCloudNetworks(ctx context.Context) ApiGetMultiCloudNetworksRequest {
 	return ApiGetMultiCloudNetworksRequest{
 		ApiService: a,
-		ctx:        ctx,
+		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//
-//	@return MultiCloudNetwork
+//  @return MultiCloudNetwork
 func (a *NetworkAPIService) GetMultiCloudNetworksExecute(r ApiGetMultiCloudNetworksRequest) (*MultiCloudNetwork, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *MultiCloudNetwork
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *MultiCloudNetwork
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "NetworkAPIService.GetMultiCloudNetworks")
@@ -124,8 +125,8 @@ func (a *NetworkAPIService) GetMultiCloudNetworksExecute(r ApiGetMultiCloudNetwo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -135,8 +136,8 @@ func (a *NetworkAPIService) GetMultiCloudNetworksExecute(r ApiGetMultiCloudNetwo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -146,8 +147,8 @@ func (a *NetworkAPIService) GetMultiCloudNetworksExecute(r ApiGetMultiCloudNetwo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -157,8 +158,8 @@ func (a *NetworkAPIService) GetMultiCloudNetworksExecute(r ApiGetMultiCloudNetwo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -176,9 +177,9 @@ func (a *NetworkAPIService) GetMultiCloudNetworksExecute(r ApiGetMultiCloudNetwo
 }
 
 type ApiGetProjectConnectivityCenterByIdRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *NetworkAPIService
-	id         int32
+	id int32
 }
 
 func (r ApiGetProjectConnectivityCenterByIdRequest) Execute() (*ConnectivityCenter, *http.Response, error) {
@@ -190,27 +191,26 @@ GetProjectConnectivityCenterById Get connectivity center by ID
 
 Returns a single location where connectivity center can be deployed for the direct connect network.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param id Connectivity center ID
-	@return ApiGetProjectConnectivityCenterByIdRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id Connectivity center ID
+ @return ApiGetProjectConnectivityCenterByIdRequest
 */
 func (a *NetworkAPIService) GetProjectConnectivityCenterById(ctx context.Context, id int32) ApiGetProjectConnectivityCenterByIdRequest {
 	return ApiGetProjectConnectivityCenterByIdRequest{
 		ApiService: a,
-		ctx:        ctx,
-		id:         id,
+		ctx: ctx,
+		id: id,
 	}
 }
 
 // Execute executes the request
-//
-//	@return ConnectivityCenter
+//  @return ConnectivityCenter
 func (a *NetworkAPIService) GetProjectConnectivityCenterByIdExecute(r ApiGetProjectConnectivityCenterByIdRequest) (*ConnectivityCenter, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *ConnectivityCenter
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ConnectivityCenter
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "NetworkAPIService.GetProjectConnectivityCenterById")
@@ -271,8 +271,8 @@ func (a *NetworkAPIService) GetProjectConnectivityCenterByIdExecute(r ApiGetProj
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -282,8 +282,8 @@ func (a *NetworkAPIService) GetProjectConnectivityCenterByIdExecute(r ApiGetProj
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -293,8 +293,8 @@ func (a *NetworkAPIService) GetProjectConnectivityCenterByIdExecute(r ApiGetProj
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -304,8 +304,8 @@ func (a *NetworkAPIService) GetProjectConnectivityCenterByIdExecute(r ApiGetProj
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -323,18 +323,18 @@ func (a *NetworkAPIService) GetProjectConnectivityCenterByIdExecute(r ApiGetProj
 }
 
 type ApiListConnectivityCentersRequest struct {
-	ctx           context.Context
-	ApiService    *NetworkAPIService
-	location      *string
-	locationNe    *string
-	locationLike  *string
+	ctx context.Context
+	ApiService *NetworkAPIService
+	location *string
+	locationNe *string
+	locationLike *string
 	locationNlike *string
-	macroRegion   *string
-	networkType   *string
+	macroRegion *string
+	networkType *string
 	networkTypeNe *string
 }
 
-// Filter by location using equality. Can be repeated to apply OR logic. Example: &#x60;?location&#x3D;Frankfurt&amp;location&#x3D;Paris&#x60;
+// Filter by location using equality. Can be repeated to apply OR logic. Example: &#x60;?location&#x3D;Frankfurt&amp;location&#x3D;Paris&#x60; 
 func (r ApiListConnectivityCentersRequest) Location(location string) ApiListConnectivityCentersRequest {
 	r.location = &location
 	return r
@@ -358,7 +358,7 @@ func (r ApiListConnectivityCentersRequest) LocationNlike(locationNlike string) A
 	return r
 }
 
-// Filter by macro region using equality. Can be repeated to apply OR logic.  Example: &#x60;?macroRegion&#x3D;emea&amp;macroRegion&#x3D;amer&#x60;
+// Filter by macro region using equality. Can be repeated to apply OR logic.  Example: &#x60;?macroRegion&#x3D;emea&amp;macroRegion&#x3D;amer&#x60; 
 func (r ApiListConnectivityCentersRequest) MacroRegion(macroRegion string) ApiListConnectivityCentersRequest {
 	r.macroRegion = &macroRegion
 	return r
@@ -385,25 +385,24 @@ ListConnectivityCenters List connectivity centers in direct connect network
 
 Returns a list of locations where connectivity centers can be deployed for the direct connect network.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiListConnectivityCentersRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListConnectivityCentersRequest
 */
 func (a *NetworkAPIService) ListConnectivityCenters(ctx context.Context) ApiListConnectivityCentersRequest {
 	return ApiListConnectivityCentersRequest{
 		ApiService: a,
-		ctx:        ctx,
+		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//
-//	@return []ConnectivityCenter
+//  @return []ConnectivityCenter
 func (a *NetworkAPIService) ListConnectivityCentersExecute(r ApiListConnectivityCentersRequest) ([]ConnectivityCenter, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue []ConnectivityCenter
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []ConnectivityCenter
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "NetworkAPIService.ListConnectivityCenters")
@@ -484,8 +483,8 @@ func (a *NetworkAPIService) ListConnectivityCentersExecute(r ApiListConnectivity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -495,8 +494,8 @@ func (a *NetworkAPIService) ListConnectivityCentersExecute(r ApiListConnectivity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -506,8 +505,8 @@ func (a *NetworkAPIService) ListConnectivityCentersExecute(r ApiListConnectivity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -517,8 +516,8 @@ func (a *NetworkAPIService) ListConnectivityCentersExecute(r ApiListConnectivity
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -536,10 +535,10 @@ func (a *NetworkAPIService) ListConnectivityCentersExecute(r ApiListConnectivity
 }
 
 type ApiPostMultiCloudNetworkActionRequest struct {
-	ctx                                context.Context
-	ApiService                         *NetworkAPIService
+	ctx context.Context
+	ApiService *NetworkAPIService
 	postMultiCloudNetworkActionRequest *PostMultiCloudNetworkActionRequest
-	projectId                          *int32
+	projectId *int32
 }
 
 func (r ApiPostMultiCloudNetworkActionRequest) PostMultiCloudNetworkActionRequest(postMultiCloudNetworkActionRequest PostMultiCloudNetworkActionRequest) ApiPostMultiCloudNetworkActionRequest {
@@ -562,25 +561,25 @@ PostMultiCloudNetworkAction Perform an action on multi-cloud network resources (
 
 Performs an action (enable/disable) over networks, network cloud connections, and cross-region connections.
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiPostMultiCloudNetworkActionRequest
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiPostMultiCloudNetworkActionRequest
 */
 func (a *NetworkAPIService) PostMultiCloudNetworkAction(ctx context.Context) ApiPostMultiCloudNetworkActionRequest {
 	return ApiPostMultiCloudNetworkActionRequest{
 		ApiService: a,
-		ctx:        ctx,
+		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//
-//	@return []MultiCloudNetwork
+//  @return []MultiCloudNetwork
 func (a *NetworkAPIService) PostMultiCloudNetworkActionExecute(r ApiPostMultiCloudNetworkActionRequest) ([]MultiCloudNetwork, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue []MultiCloudNetwork
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []MultiCloudNetwork
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "NetworkAPIService.PostMultiCloudNetworkAction")
@@ -648,8 +647,8 @@ func (a *NetworkAPIService) PostMultiCloudNetworkActionExecute(r ApiPostMultiClo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -659,8 +658,8 @@ func (a *NetworkAPIService) PostMultiCloudNetworkActionExecute(r ApiPostMultiClo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -670,8 +669,8 @@ func (a *NetworkAPIService) PostMultiCloudNetworkActionExecute(r ApiPostMultiClo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -681,8 +680,8 @@ func (a *NetworkAPIService) PostMultiCloudNetworkActionExecute(r ApiPostMultiClo
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

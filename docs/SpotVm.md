@@ -29,6 +29,9 @@ Name | Type | Description | Notes
 **UserName** | Pointer to **string** | User name | [optional] 
 **UserPassword** | Pointer to **string** | Administrator password in the Windows operating system | [optional] 
 **Cost** | Pointer to [**SpotVmCost**](SpotVmCost.md) |  | [optional] 
+**LocalDisks** | Pointer to [**[]VmLocalDisksInner**](VmLocalDisksInner.md) | Local SSD storage directly attached to the host machine. Size is reported in terabytes (TB). Data is ephemeral and will be lost when the spot instance is stopped or deleted. | [optional] 
+**Accelerator** | Pointer to [**SpotVmAccelerator**](SpotVmAccelerator.md) |  | [optional] 
+**Tags** | Pointer to [**[]Tag**](Tag.md) |  | [optional] 
 
 ## Methods
 
@@ -673,6 +676,81 @@ SetCost sets Cost field to given value.
 `func (o *SpotVm) HasCost() bool`
 
 HasCost returns a boolean if a field has been set.
+
+### GetLocalDisks
+
+`func (o *SpotVm) GetLocalDisks() []VmLocalDisksInner`
+
+GetLocalDisks returns the LocalDisks field if non-nil, zero value otherwise.
+
+### GetLocalDisksOk
+
+`func (o *SpotVm) GetLocalDisksOk() (*[]VmLocalDisksInner, bool)`
+
+GetLocalDisksOk returns a tuple with the LocalDisks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLocalDisks
+
+`func (o *SpotVm) SetLocalDisks(v []VmLocalDisksInner)`
+
+SetLocalDisks sets LocalDisks field to given value.
+
+### HasLocalDisks
+
+`func (o *SpotVm) HasLocalDisks() bool`
+
+HasLocalDisks returns a boolean if a field has been set.
+
+### GetAccelerator
+
+`func (o *SpotVm) GetAccelerator() SpotVmAccelerator`
+
+GetAccelerator returns the Accelerator field if non-nil, zero value otherwise.
+
+### GetAcceleratorOk
+
+`func (o *SpotVm) GetAcceleratorOk() (*SpotVmAccelerator, bool)`
+
+GetAcceleratorOk returns a tuple with the Accelerator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccelerator
+
+`func (o *SpotVm) SetAccelerator(v SpotVmAccelerator)`
+
+SetAccelerator sets Accelerator field to given value.
+
+### HasAccelerator
+
+`func (o *SpotVm) HasAccelerator() bool`
+
+HasAccelerator returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *SpotVm) GetTags() []Tag`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *SpotVm) GetTagsOk() (*[]Tag, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *SpotVm) SetTags(v []Tag)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *SpotVm) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

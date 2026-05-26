@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WorkerNodes** | [**[]KubernetesUpdateRequestWorkerNodesInner**](KubernetesUpdateRequestWorkerNodesInner.md) | List of the worker nodes | 
-**AutoscalingConfigs** | Pointer to [**[]KubernetesUpdateRequestAutoscalingConfigsInner**](KubernetesUpdateRequestAutoscalingConfigsInner.md) | Configurations of the autoscaling group | [optional] 
+**WorkerNodes** | Pointer to [**[]KubernetesUpdateRequestWorkerNodesInner**](KubernetesUpdateRequestWorkerNodesInner.md) | List of the worker nodes. May be omitted when the cluster is updated with autoscaling groups only. | [optional] 
+**AutoscalingConfigs** | Pointer to [**[]KubernetesUpdateRequestAutoscalingConfigsInner**](KubernetesUpdateRequestAutoscalingConfigsInner.md) | Configurations of the autoscaling group. If &#x60;workerNodes&#x60; is omitted or empty, &#x60;autoscalingConfigs&#x60; must contain at least one group. Each group must have either node-count scaling fields (&#x60;minimumNodes&#x60;, &#x60;maximumNodes&#x60;, &#x60;targetNodes&#x60;) or vCPU-count scaling fields (&#x60;minimumVCpus&#x60;, &#x60;maximumVCpus&#x60;, &#x60;targetVCpus&#x60;) — but not both and not neither. | [optional] 
 
 ## Methods
 
 ### NewKubernetesUpdateRequest
 
-`func NewKubernetesUpdateRequest(workerNodes []KubernetesUpdateRequestWorkerNodesInner, ) *KubernetesUpdateRequest`
+`func NewKubernetesUpdateRequest() *KubernetesUpdateRequest`
 
 NewKubernetesUpdateRequest instantiates a new KubernetesUpdateRequest object
 This constructor will assign default values to properties that have it defined,
@@ -45,6 +45,11 @@ and a boolean to check if the value has been set.
 
 SetWorkerNodes sets WorkerNodes field to given value.
 
+### HasWorkerNodes
+
+`func (o *KubernetesUpdateRequest) HasWorkerNodes() bool`
+
+HasWorkerNodes returns a boolean if a field has been set.
 
 ### GetAutoscalingConfigs
 

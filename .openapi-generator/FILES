@@ -93,6 +93,7 @@ docs/KubernetesDeleteNodeGroupsInnerNodesInnerOs.md
 docs/KubernetesDeleteNodeGroupsInnerNodesInnerProvider.md
 docs/KubernetesDeleteNodeGroupsInnerNodesInnerSecurityGroup.md
 docs/KubernetesGetResponse.md
+docs/KubernetesGetResponseAutoscalingConfigsInner.md
 docs/KubernetesGetResponseNodeGroupsInner.md
 docs/KubernetesGetResponseNodeGroupsInnerNodesInner.md
 docs/KubernetesGetResponseNodeGroupsInnerNodesInnerAccelerator.md
@@ -105,6 +106,7 @@ docs/KubernetesGetResponseNodeGroupsInnerNodesInnerSecurityGroup.md
 docs/KubernetesListResponseInner.md
 docs/KubernetesListResponseInnerAutoscalingConfigsInner.md
 docs/KubernetesListResponseInnerAutoscalingConfigsInnerConfigurationPrioritiesInner.md
+docs/KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner.md
 docs/KubernetesListResponseInnerCost.md
 docs/KubernetesListResponseInnerNodeGroupsInner.md
 docs/KubernetesListResponseInnerNodeGroupsInnerNodesInner.md
@@ -179,17 +181,15 @@ docs/SecurityGroupRuleRequest.md
 docs/SecurityGroupsAPI.md
 docs/SortObject.md
 docs/SpotActionsRequest.md
-docs/SpotBadRequestError.md
 docs/SpotChangePrice.md
 docs/SpotCreate.md
 docs/SpotInstancesAPI.md
-docs/SpotNotFoundError.md
 docs/SpotReboot.md
 docs/SpotRename.md
 docs/SpotShutdown.md
 docs/SpotStart.md
-docs/SpotUnprocessableEntityError.md
 docs/SpotVm.md
+docs/SpotVmAccelerator.md
 docs/SpotVmCost.md
 docs/SpotVmDataCenter.md
 docs/SpotVmDisksInner.md
@@ -333,6 +333,7 @@ model_kubernetes_delete_node_groups_inner_nodes_inner_os.go
 model_kubernetes_delete_node_groups_inner_nodes_inner_provider.go
 model_kubernetes_delete_node_groups_inner_nodes_inner_security_group.go
 model_kubernetes_get_response.go
+model_kubernetes_get_response_autoscaling_configs_inner.go
 model_kubernetes_get_response_node_groups_inner.go
 model_kubernetes_get_response_node_groups_inner_nodes_inner.go
 model_kubernetes_get_response_node_groups_inner_nodes_inner_accelerator.go
@@ -345,6 +346,7 @@ model_kubernetes_get_response_node_groups_inner_nodes_inner_security_group.go
 model_kubernetes_list_response_inner.go
 model_kubernetes_list_response_inner_autoscaling_configs_inner.go
 model_kubernetes_list_response_inner_autoscaling_configs_inner_configuration_priorities_inner.go
+model_kubernetes_list_response_inner_autoscaling_configs_inner_user_labels_inner.go
 model_kubernetes_list_response_inner_cost.go
 model_kubernetes_list_response_inner_node_groups_inner.go
 model_kubernetes_list_response_inner_node_groups_inner_nodes_inner.go
@@ -413,16 +415,14 @@ model_security_group_rule.go
 model_security_group_rule_request.go
 model_sort_object.go
 model_spot_actions_request.go
-model_spot_bad_request_error.go
 model_spot_change_price.go
 model_spot_create.go
-model_spot_not_found_error.go
 model_spot_reboot.go
 model_spot_rename.go
 model_spot_shutdown.go
 model_spot_start.go
-model_spot_unprocessable_entity_error.go
 model_spot_vm.go
+model_spot_vm_accelerator.go
 model_spot_vm_cost.go
 model_spot_vm_data_center.go
 model_spot_vm_disks_inner.go
@@ -494,6 +494,4 @@ model_workflow_template_create_resource_params_inner.go
 model_workflow_template_create_tags_inner.go
 model_workflow_template_resource_params_inner.go
 response.go
-test/api_network_test.go
-test/api_workflows_test.go
 utils.go

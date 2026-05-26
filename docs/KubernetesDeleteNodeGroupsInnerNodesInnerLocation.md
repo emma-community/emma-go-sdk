@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **int32** | Location ID | [optional] 
 **Name** | Pointer to **string** | Location name | [optional] 
+**Country** | Pointer to **string** | Country | [optional] 
 **Continent** | Pointer to **string** | Continent | [optional] 
 **Region** | Pointer to **string** | Region | [optional] 
 **Latitude** | Pointer to **float64** | Latitude | [optional] 
@@ -79,6 +80,31 @@ SetName sets Name field to given value.
 `func (o *KubernetesDeleteNodeGroupsInnerNodesInnerLocation) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetCountry
+
+`func (o *KubernetesDeleteNodeGroupsInnerNodesInnerLocation) GetCountry() string`
+
+GetCountry returns the Country field if non-nil, zero value otherwise.
+
+### GetCountryOk
+
+`func (o *KubernetesDeleteNodeGroupsInnerNodesInnerLocation) GetCountryOk() (*string, bool)`
+
+GetCountryOk returns a tuple with the Country field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCountry
+
+`func (o *KubernetesDeleteNodeGroupsInnerNodesInnerLocation) SetCountry(v string)`
+
+SetCountry sets Country field to given value.
+
+### HasCountry
+
+`func (o *KubernetesDeleteNodeGroupsInnerNodesInnerLocation) HasCountry() bool`
+
+HasCountry returns a boolean if a field has been set.
 
 ### GetContinent
 
