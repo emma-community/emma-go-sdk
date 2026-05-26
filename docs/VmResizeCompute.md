@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **VCpu** | **int32** | Number of virtual Central Processing Units (vCPUs) | 
 **VCpuType** | **string** | Type of virtual Central Processing Units (vCPUs) | 
 **RamGb** | **int32** | Capacity of the RAM in gigabytes | 
+**Accelerators** | Pointer to **float32** | Quantity of GPU accelerators. Optional for non-GPU virtual machines. Required for GPU virtual machines. | [optional] 
 
 ## Methods
 
@@ -107,6 +108,31 @@ and a boolean to check if the value has been set.
 
 SetRamGb sets RamGb field to given value.
 
+
+### GetAccelerators
+
+`func (o *VmResizeCompute) GetAccelerators() float32`
+
+GetAccelerators returns the Accelerators field if non-nil, zero value otherwise.
+
+### GetAcceleratorsOk
+
+`func (o *VmResizeCompute) GetAcceleratorsOk() (*float32, bool)`
+
+GetAcceleratorsOk returns a tuple with the Accelerators field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccelerators
+
+`func (o *VmResizeCompute) SetAccelerators(v float32)`
+
+SetAccelerators sets Accelerators field to given value.
+
+### HasAccelerators
+
+`func (o *VmResizeCompute) HasAccelerators() bool`
+
+HasAccelerators returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

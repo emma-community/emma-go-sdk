@@ -9,12 +9,13 @@ Name | Type | Description | Notes
 **MinimumNodes** | Pointer to **int32** | Minimum number of nodes | [optional] 
 **MaximumNodes** | Pointer to **int32** | Maximum number of nodes | [optional] 
 **TargetNodes** | Pointer to **int32** | Target number of worker nodes in the autoscaling group | [optional] 
-**MinimumVCpus** | Pointer to **int32** | Minimum number of vCPUs | [optional] 
-**MaximumVCpus** | Pointer to **int32** | Maximum number of vCPUs | [optional] 
-**TargetVCpus** | Pointer to **int32** | Target number of vCPUs in the autoscaling group | [optional] 
+**MinimumVCpus** | Pointer to **int32** | Minimum number of vCPUs.Required when using vCPU-count based autoscaling. Must be null if &#x60;minimumNodes&#x60; is set. | [optional] 
+**MaximumVCpus** | Pointer to **int32** | Maximum number of vCPUs. Required when using vCPU-count based autoscaling. Must be null if &#x60;maximumNodes&#x60; is set. | [optional] 
+**TargetVCpus** | Pointer to **int32** | Target number of vCPUs in the autoscaling group. Required when using vCPU-count based autoscaling. Must be null if &#x60;targetNodes&#x60; is set. | [optional] 
 **UseOnDemandInstancesInsteadOfSpots** | Pointer to **bool** | Use on-demand compute instances instead of spot compute instances | [optional] 
 **SpotPercent** | Pointer to **int32** | Percentage of spot instances in the autoscaling group | [optional] 
 **SpotMarkup** | Pointer to **float32** | Extra markup to the spot instance price | [optional] 
+**UserLabels** | Pointer to [**[]KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner**](KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner.md) | ASG labels applied to nodes created by this autoscaling group | [optional] 
 **ConfigurationPriorities** | Pointer to [**[]KubernetesListResponseInnerAutoscalingConfigsInnerConfigurationPrioritiesInner**](KubernetesListResponseInnerAutoscalingConfigsInnerConfigurationPrioritiesInner.md) | Compute instance configurations with priorities | [optional] 
 
 ## Methods
@@ -310,6 +311,31 @@ SetSpotMarkup sets SpotMarkup field to given value.
 `func (o *KubernetesCreateRequestAutoscalingConfigsInner) HasSpotMarkup() bool`
 
 HasSpotMarkup returns a boolean if a field has been set.
+
+### GetUserLabels
+
+`func (o *KubernetesCreateRequestAutoscalingConfigsInner) GetUserLabels() []KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner`
+
+GetUserLabels returns the UserLabels field if non-nil, zero value otherwise.
+
+### GetUserLabelsOk
+
+`func (o *KubernetesCreateRequestAutoscalingConfigsInner) GetUserLabelsOk() (*[]KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner, bool)`
+
+GetUserLabelsOk returns a tuple with the UserLabels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUserLabels
+
+`func (o *KubernetesCreateRequestAutoscalingConfigsInner) SetUserLabels(v []KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner)`
+
+SetUserLabels sets UserLabels field to given value.
+
+### HasUserLabels
+
+`func (o *KubernetesCreateRequestAutoscalingConfigsInner) HasUserLabels() bool`
+
+HasUserLabels returns a boolean if a field has been set.
 
 ### GetConfigurationPriorities
 

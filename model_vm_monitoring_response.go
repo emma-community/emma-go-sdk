@@ -1,9 +1,9 @@
 /*
 Public EMMA API
 
-### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
+### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. | 
 
-API version: 1.0.50
+API version: 1.0.72
 */
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
@@ -104,6 +104,36 @@ type VmMonitoringResponse struct {
 	MaxNetworkInHuman *float32 `json:"maxNetworkInHuman,omitempty"`
 	// Label
 	NetworkInHumanLabel *string `json:"networkInHumanLabel,omitempty"`
+	// Internal service parameter
+	GpuRamUsageDataPresent *int32 `json:"gpuRamUsageDataPresent,omitempty"`
+	// GPU vRAM Usage
+	GpuRamUsageAvgGb *float32 `json:"gpuRamUsageAvgGb,omitempty"`
+	// Average GPU vRAM usage for the requested period of statistics
+	AvgGpuRamUsageAvgGb *float32 `json:"avgGpuRamUsageAvgGb,omitempty"`
+	// Maximum GPU vRAM usage for the requested period of statistics
+	MaxGpuRamUsageAvgGb *float32 `json:"maxGpuRamUsageAvgGb,omitempty"`
+	// Label
+	GpuRamUsageHumanLabel *string `json:"gpuRamUsageHumanLabel,omitempty"`
+	// Internal service parameter
+	GpuRamUtilizationAvgPresent *int32 `json:"gpuRamUtilizationAvgPresent,omitempty"`
+	// GPU vRAM utilization
+	GpuRamUtilizationAvgPercent *float32 `json:"gpuRamUtilizationAvgPercent,omitempty"`
+	// Average GPU vRAM utilization for the requested period of statistics
+	AvgGpuRamUtilizationAvgPercent *float32 `json:"avgGpuRamUtilizationAvgPercent,omitempty"`
+	// Maximum GPU vRAM utilization for the requested period of statistics
+	MaxGpuRamUtilizationAvgPercent *float32 `json:"maxGpuRamUtilizationAvgPercent,omitempty"`
+	// Label
+	GpuRamUtilizationHumanLabel *string `json:"gpuRamUtilizationHumanLabel,omitempty"`
+	// Internal service parameter
+	GpuUtilizationDataPresent *int32 `json:"gpuUtilizationDataPresent,omitempty"`
+	// GPU utilization
+	GpuUtilizationAvgPercent *float32 `json:"gpuUtilizationAvgPercent,omitempty"`
+	// Average GPU utilization for the requested period of statistics
+	AvgGpuUtilizationAvgPercent *float32 `json:"avgGpuUtilizationAvgPercent,omitempty"`
+	// Maximum GPU utilization for the requested period of statistics
+	MaxGpuUtilizationAvgPercent *float32 `json:"maxGpuUtilizationAvgPercent,omitempty"`
+	// Label
+	GpuUtilizationHumanLabel *string `json:"gpuUtilizationHumanLabel,omitempty"`
 }
 
 // NewVmMonitoringResponse instantiates a new VmMonitoringResponse object
@@ -1499,8 +1529,488 @@ func (o *VmMonitoringResponse) SetNetworkInHumanLabel(v string) {
 	o.NetworkInHumanLabel = &v
 }
 
+// GetGpuRamUsageDataPresent returns the GpuRamUsageDataPresent field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetGpuRamUsageDataPresent() int32 {
+	if o == nil || IsNil(o.GpuRamUsageDataPresent) {
+		var ret int32
+		return ret
+	}
+	return *o.GpuRamUsageDataPresent
+}
+
+// GetGpuRamUsageDataPresentOk returns a tuple with the GpuRamUsageDataPresent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetGpuRamUsageDataPresentOk() (*int32, bool) {
+	if o == nil || IsNil(o.GpuRamUsageDataPresent) {
+		return nil, false
+	}
+	return o.GpuRamUsageDataPresent, true
+}
+
+// HasGpuRamUsageDataPresent returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasGpuRamUsageDataPresent() bool {
+	if o != nil && !IsNil(o.GpuRamUsageDataPresent) {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuRamUsageDataPresent gets a reference to the given int32 and assigns it to the GpuRamUsageDataPresent field.
+func (o *VmMonitoringResponse) SetGpuRamUsageDataPresent(v int32) {
+	o.GpuRamUsageDataPresent = &v
+}
+
+// GetGpuRamUsageAvgGb returns the GpuRamUsageAvgGb field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetGpuRamUsageAvgGb() float32 {
+	if o == nil || IsNil(o.GpuRamUsageAvgGb) {
+		var ret float32
+		return ret
+	}
+	return *o.GpuRamUsageAvgGb
+}
+
+// GetGpuRamUsageAvgGbOk returns a tuple with the GpuRamUsageAvgGb field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetGpuRamUsageAvgGbOk() (*float32, bool) {
+	if o == nil || IsNil(o.GpuRamUsageAvgGb) {
+		return nil, false
+	}
+	return o.GpuRamUsageAvgGb, true
+}
+
+// HasGpuRamUsageAvgGb returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasGpuRamUsageAvgGb() bool {
+	if o != nil && !IsNil(o.GpuRamUsageAvgGb) {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuRamUsageAvgGb gets a reference to the given float32 and assigns it to the GpuRamUsageAvgGb field.
+func (o *VmMonitoringResponse) SetGpuRamUsageAvgGb(v float32) {
+	o.GpuRamUsageAvgGb = &v
+}
+
+// GetAvgGpuRamUsageAvgGb returns the AvgGpuRamUsageAvgGb field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetAvgGpuRamUsageAvgGb() float32 {
+	if o == nil || IsNil(o.AvgGpuRamUsageAvgGb) {
+		var ret float32
+		return ret
+	}
+	return *o.AvgGpuRamUsageAvgGb
+}
+
+// GetAvgGpuRamUsageAvgGbOk returns a tuple with the AvgGpuRamUsageAvgGb field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetAvgGpuRamUsageAvgGbOk() (*float32, bool) {
+	if o == nil || IsNil(o.AvgGpuRamUsageAvgGb) {
+		return nil, false
+	}
+	return o.AvgGpuRamUsageAvgGb, true
+}
+
+// HasAvgGpuRamUsageAvgGb returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasAvgGpuRamUsageAvgGb() bool {
+	if o != nil && !IsNil(o.AvgGpuRamUsageAvgGb) {
+		return true
+	}
+
+	return false
+}
+
+// SetAvgGpuRamUsageAvgGb gets a reference to the given float32 and assigns it to the AvgGpuRamUsageAvgGb field.
+func (o *VmMonitoringResponse) SetAvgGpuRamUsageAvgGb(v float32) {
+	o.AvgGpuRamUsageAvgGb = &v
+}
+
+// GetMaxGpuRamUsageAvgGb returns the MaxGpuRamUsageAvgGb field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetMaxGpuRamUsageAvgGb() float32 {
+	if o == nil || IsNil(o.MaxGpuRamUsageAvgGb) {
+		var ret float32
+		return ret
+	}
+	return *o.MaxGpuRamUsageAvgGb
+}
+
+// GetMaxGpuRamUsageAvgGbOk returns a tuple with the MaxGpuRamUsageAvgGb field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetMaxGpuRamUsageAvgGbOk() (*float32, bool) {
+	if o == nil || IsNil(o.MaxGpuRamUsageAvgGb) {
+		return nil, false
+	}
+	return o.MaxGpuRamUsageAvgGb, true
+}
+
+// HasMaxGpuRamUsageAvgGb returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasMaxGpuRamUsageAvgGb() bool {
+	if o != nil && !IsNil(o.MaxGpuRamUsageAvgGb) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxGpuRamUsageAvgGb gets a reference to the given float32 and assigns it to the MaxGpuRamUsageAvgGb field.
+func (o *VmMonitoringResponse) SetMaxGpuRamUsageAvgGb(v float32) {
+	o.MaxGpuRamUsageAvgGb = &v
+}
+
+// GetGpuRamUsageHumanLabel returns the GpuRamUsageHumanLabel field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetGpuRamUsageHumanLabel() string {
+	if o == nil || IsNil(o.GpuRamUsageHumanLabel) {
+		var ret string
+		return ret
+	}
+	return *o.GpuRamUsageHumanLabel
+}
+
+// GetGpuRamUsageHumanLabelOk returns a tuple with the GpuRamUsageHumanLabel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetGpuRamUsageHumanLabelOk() (*string, bool) {
+	if o == nil || IsNil(o.GpuRamUsageHumanLabel) {
+		return nil, false
+	}
+	return o.GpuRamUsageHumanLabel, true
+}
+
+// HasGpuRamUsageHumanLabel returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasGpuRamUsageHumanLabel() bool {
+	if o != nil && !IsNil(o.GpuRamUsageHumanLabel) {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuRamUsageHumanLabel gets a reference to the given string and assigns it to the GpuRamUsageHumanLabel field.
+func (o *VmMonitoringResponse) SetGpuRamUsageHumanLabel(v string) {
+	o.GpuRamUsageHumanLabel = &v
+}
+
+// GetGpuRamUtilizationAvgPresent returns the GpuRamUtilizationAvgPresent field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetGpuRamUtilizationAvgPresent() int32 {
+	if o == nil || IsNil(o.GpuRamUtilizationAvgPresent) {
+		var ret int32
+		return ret
+	}
+	return *o.GpuRamUtilizationAvgPresent
+}
+
+// GetGpuRamUtilizationAvgPresentOk returns a tuple with the GpuRamUtilizationAvgPresent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetGpuRamUtilizationAvgPresentOk() (*int32, bool) {
+	if o == nil || IsNil(o.GpuRamUtilizationAvgPresent) {
+		return nil, false
+	}
+	return o.GpuRamUtilizationAvgPresent, true
+}
+
+// HasGpuRamUtilizationAvgPresent returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasGpuRamUtilizationAvgPresent() bool {
+	if o != nil && !IsNil(o.GpuRamUtilizationAvgPresent) {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuRamUtilizationAvgPresent gets a reference to the given int32 and assigns it to the GpuRamUtilizationAvgPresent field.
+func (o *VmMonitoringResponse) SetGpuRamUtilizationAvgPresent(v int32) {
+	o.GpuRamUtilizationAvgPresent = &v
+}
+
+// GetGpuRamUtilizationAvgPercent returns the GpuRamUtilizationAvgPercent field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetGpuRamUtilizationAvgPercent() float32 {
+	if o == nil || IsNil(o.GpuRamUtilizationAvgPercent) {
+		var ret float32
+		return ret
+	}
+	return *o.GpuRamUtilizationAvgPercent
+}
+
+// GetGpuRamUtilizationAvgPercentOk returns a tuple with the GpuRamUtilizationAvgPercent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetGpuRamUtilizationAvgPercentOk() (*float32, bool) {
+	if o == nil || IsNil(o.GpuRamUtilizationAvgPercent) {
+		return nil, false
+	}
+	return o.GpuRamUtilizationAvgPercent, true
+}
+
+// HasGpuRamUtilizationAvgPercent returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasGpuRamUtilizationAvgPercent() bool {
+	if o != nil && !IsNil(o.GpuRamUtilizationAvgPercent) {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuRamUtilizationAvgPercent gets a reference to the given float32 and assigns it to the GpuRamUtilizationAvgPercent field.
+func (o *VmMonitoringResponse) SetGpuRamUtilizationAvgPercent(v float32) {
+	o.GpuRamUtilizationAvgPercent = &v
+}
+
+// GetAvgGpuRamUtilizationAvgPercent returns the AvgGpuRamUtilizationAvgPercent field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetAvgGpuRamUtilizationAvgPercent() float32 {
+	if o == nil || IsNil(o.AvgGpuRamUtilizationAvgPercent) {
+		var ret float32
+		return ret
+	}
+	return *o.AvgGpuRamUtilizationAvgPercent
+}
+
+// GetAvgGpuRamUtilizationAvgPercentOk returns a tuple with the AvgGpuRamUtilizationAvgPercent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetAvgGpuRamUtilizationAvgPercentOk() (*float32, bool) {
+	if o == nil || IsNil(o.AvgGpuRamUtilizationAvgPercent) {
+		return nil, false
+	}
+	return o.AvgGpuRamUtilizationAvgPercent, true
+}
+
+// HasAvgGpuRamUtilizationAvgPercent returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasAvgGpuRamUtilizationAvgPercent() bool {
+	if o != nil && !IsNil(o.AvgGpuRamUtilizationAvgPercent) {
+		return true
+	}
+
+	return false
+}
+
+// SetAvgGpuRamUtilizationAvgPercent gets a reference to the given float32 and assigns it to the AvgGpuRamUtilizationAvgPercent field.
+func (o *VmMonitoringResponse) SetAvgGpuRamUtilizationAvgPercent(v float32) {
+	o.AvgGpuRamUtilizationAvgPercent = &v
+}
+
+// GetMaxGpuRamUtilizationAvgPercent returns the MaxGpuRamUtilizationAvgPercent field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetMaxGpuRamUtilizationAvgPercent() float32 {
+	if o == nil || IsNil(o.MaxGpuRamUtilizationAvgPercent) {
+		var ret float32
+		return ret
+	}
+	return *o.MaxGpuRamUtilizationAvgPercent
+}
+
+// GetMaxGpuRamUtilizationAvgPercentOk returns a tuple with the MaxGpuRamUtilizationAvgPercent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetMaxGpuRamUtilizationAvgPercentOk() (*float32, bool) {
+	if o == nil || IsNil(o.MaxGpuRamUtilizationAvgPercent) {
+		return nil, false
+	}
+	return o.MaxGpuRamUtilizationAvgPercent, true
+}
+
+// HasMaxGpuRamUtilizationAvgPercent returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasMaxGpuRamUtilizationAvgPercent() bool {
+	if o != nil && !IsNil(o.MaxGpuRamUtilizationAvgPercent) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxGpuRamUtilizationAvgPercent gets a reference to the given float32 and assigns it to the MaxGpuRamUtilizationAvgPercent field.
+func (o *VmMonitoringResponse) SetMaxGpuRamUtilizationAvgPercent(v float32) {
+	o.MaxGpuRamUtilizationAvgPercent = &v
+}
+
+// GetGpuRamUtilizationHumanLabel returns the GpuRamUtilizationHumanLabel field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetGpuRamUtilizationHumanLabel() string {
+	if o == nil || IsNil(o.GpuRamUtilizationHumanLabel) {
+		var ret string
+		return ret
+	}
+	return *o.GpuRamUtilizationHumanLabel
+}
+
+// GetGpuRamUtilizationHumanLabelOk returns a tuple with the GpuRamUtilizationHumanLabel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetGpuRamUtilizationHumanLabelOk() (*string, bool) {
+	if o == nil || IsNil(o.GpuRamUtilizationHumanLabel) {
+		return nil, false
+	}
+	return o.GpuRamUtilizationHumanLabel, true
+}
+
+// HasGpuRamUtilizationHumanLabel returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasGpuRamUtilizationHumanLabel() bool {
+	if o != nil && !IsNil(o.GpuRamUtilizationHumanLabel) {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuRamUtilizationHumanLabel gets a reference to the given string and assigns it to the GpuRamUtilizationHumanLabel field.
+func (o *VmMonitoringResponse) SetGpuRamUtilizationHumanLabel(v string) {
+	o.GpuRamUtilizationHumanLabel = &v
+}
+
+// GetGpuUtilizationDataPresent returns the GpuUtilizationDataPresent field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetGpuUtilizationDataPresent() int32 {
+	if o == nil || IsNil(o.GpuUtilizationDataPresent) {
+		var ret int32
+		return ret
+	}
+	return *o.GpuUtilizationDataPresent
+}
+
+// GetGpuUtilizationDataPresentOk returns a tuple with the GpuUtilizationDataPresent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetGpuUtilizationDataPresentOk() (*int32, bool) {
+	if o == nil || IsNil(o.GpuUtilizationDataPresent) {
+		return nil, false
+	}
+	return o.GpuUtilizationDataPresent, true
+}
+
+// HasGpuUtilizationDataPresent returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasGpuUtilizationDataPresent() bool {
+	if o != nil && !IsNil(o.GpuUtilizationDataPresent) {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuUtilizationDataPresent gets a reference to the given int32 and assigns it to the GpuUtilizationDataPresent field.
+func (o *VmMonitoringResponse) SetGpuUtilizationDataPresent(v int32) {
+	o.GpuUtilizationDataPresent = &v
+}
+
+// GetGpuUtilizationAvgPercent returns the GpuUtilizationAvgPercent field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetGpuUtilizationAvgPercent() float32 {
+	if o == nil || IsNil(o.GpuUtilizationAvgPercent) {
+		var ret float32
+		return ret
+	}
+	return *o.GpuUtilizationAvgPercent
+}
+
+// GetGpuUtilizationAvgPercentOk returns a tuple with the GpuUtilizationAvgPercent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetGpuUtilizationAvgPercentOk() (*float32, bool) {
+	if o == nil || IsNil(o.GpuUtilizationAvgPercent) {
+		return nil, false
+	}
+	return o.GpuUtilizationAvgPercent, true
+}
+
+// HasGpuUtilizationAvgPercent returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasGpuUtilizationAvgPercent() bool {
+	if o != nil && !IsNil(o.GpuUtilizationAvgPercent) {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuUtilizationAvgPercent gets a reference to the given float32 and assigns it to the GpuUtilizationAvgPercent field.
+func (o *VmMonitoringResponse) SetGpuUtilizationAvgPercent(v float32) {
+	o.GpuUtilizationAvgPercent = &v
+}
+
+// GetAvgGpuUtilizationAvgPercent returns the AvgGpuUtilizationAvgPercent field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetAvgGpuUtilizationAvgPercent() float32 {
+	if o == nil || IsNil(o.AvgGpuUtilizationAvgPercent) {
+		var ret float32
+		return ret
+	}
+	return *o.AvgGpuUtilizationAvgPercent
+}
+
+// GetAvgGpuUtilizationAvgPercentOk returns a tuple with the AvgGpuUtilizationAvgPercent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetAvgGpuUtilizationAvgPercentOk() (*float32, bool) {
+	if o == nil || IsNil(o.AvgGpuUtilizationAvgPercent) {
+		return nil, false
+	}
+	return o.AvgGpuUtilizationAvgPercent, true
+}
+
+// HasAvgGpuUtilizationAvgPercent returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasAvgGpuUtilizationAvgPercent() bool {
+	if o != nil && !IsNil(o.AvgGpuUtilizationAvgPercent) {
+		return true
+	}
+
+	return false
+}
+
+// SetAvgGpuUtilizationAvgPercent gets a reference to the given float32 and assigns it to the AvgGpuUtilizationAvgPercent field.
+func (o *VmMonitoringResponse) SetAvgGpuUtilizationAvgPercent(v float32) {
+	o.AvgGpuUtilizationAvgPercent = &v
+}
+
+// GetMaxGpuUtilizationAvgPercent returns the MaxGpuUtilizationAvgPercent field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetMaxGpuUtilizationAvgPercent() float32 {
+	if o == nil || IsNil(o.MaxGpuUtilizationAvgPercent) {
+		var ret float32
+		return ret
+	}
+	return *o.MaxGpuUtilizationAvgPercent
+}
+
+// GetMaxGpuUtilizationAvgPercentOk returns a tuple with the MaxGpuUtilizationAvgPercent field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetMaxGpuUtilizationAvgPercentOk() (*float32, bool) {
+	if o == nil || IsNil(o.MaxGpuUtilizationAvgPercent) {
+		return nil, false
+	}
+	return o.MaxGpuUtilizationAvgPercent, true
+}
+
+// HasMaxGpuUtilizationAvgPercent returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasMaxGpuUtilizationAvgPercent() bool {
+	if o != nil && !IsNil(o.MaxGpuUtilizationAvgPercent) {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxGpuUtilizationAvgPercent gets a reference to the given float32 and assigns it to the MaxGpuUtilizationAvgPercent field.
+func (o *VmMonitoringResponse) SetMaxGpuUtilizationAvgPercent(v float32) {
+	o.MaxGpuUtilizationAvgPercent = &v
+}
+
+// GetGpuUtilizationHumanLabel returns the GpuUtilizationHumanLabel field value if set, zero value otherwise.
+func (o *VmMonitoringResponse) GetGpuUtilizationHumanLabel() string {
+	if o == nil || IsNil(o.GpuUtilizationHumanLabel) {
+		var ret string
+		return ret
+	}
+	return *o.GpuUtilizationHumanLabel
+}
+
+// GetGpuUtilizationHumanLabelOk returns a tuple with the GpuUtilizationHumanLabel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VmMonitoringResponse) GetGpuUtilizationHumanLabelOk() (*string, bool) {
+	if o == nil || IsNil(o.GpuUtilizationHumanLabel) {
+		return nil, false
+	}
+	return o.GpuUtilizationHumanLabel, true
+}
+
+// HasGpuUtilizationHumanLabel returns a boolean if a field has been set.
+func (o *VmMonitoringResponse) HasGpuUtilizationHumanLabel() bool {
+	if o != nil && !IsNil(o.GpuUtilizationHumanLabel) {
+		return true
+	}
+
+	return false
+}
+
+// SetGpuUtilizationHumanLabel gets a reference to the given string and assigns it to the GpuUtilizationHumanLabel field.
+func (o *VmMonitoringResponse) SetGpuUtilizationHumanLabel(v string) {
+	o.GpuUtilizationHumanLabel = &v
+}
+
 func (o VmMonitoringResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -1638,6 +2148,51 @@ func (o VmMonitoringResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.NetworkInHumanLabel) {
 		toSerialize["networkInHumanLabel"] = o.NetworkInHumanLabel
 	}
+	if !IsNil(o.GpuRamUsageDataPresent) {
+		toSerialize["gpuRamUsageDataPresent"] = o.GpuRamUsageDataPresent
+	}
+	if !IsNil(o.GpuRamUsageAvgGb) {
+		toSerialize["gpuRamUsageAvgGb"] = o.GpuRamUsageAvgGb
+	}
+	if !IsNil(o.AvgGpuRamUsageAvgGb) {
+		toSerialize["avgGpuRamUsageAvgGb"] = o.AvgGpuRamUsageAvgGb
+	}
+	if !IsNil(o.MaxGpuRamUsageAvgGb) {
+		toSerialize["maxGpuRamUsageAvgGb"] = o.MaxGpuRamUsageAvgGb
+	}
+	if !IsNil(o.GpuRamUsageHumanLabel) {
+		toSerialize["gpuRamUsageHumanLabel"] = o.GpuRamUsageHumanLabel
+	}
+	if !IsNil(o.GpuRamUtilizationAvgPresent) {
+		toSerialize["gpuRamUtilizationAvgPresent"] = o.GpuRamUtilizationAvgPresent
+	}
+	if !IsNil(o.GpuRamUtilizationAvgPercent) {
+		toSerialize["gpuRamUtilizationAvgPercent"] = o.GpuRamUtilizationAvgPercent
+	}
+	if !IsNil(o.AvgGpuRamUtilizationAvgPercent) {
+		toSerialize["avgGpuRamUtilizationAvgPercent"] = o.AvgGpuRamUtilizationAvgPercent
+	}
+	if !IsNil(o.MaxGpuRamUtilizationAvgPercent) {
+		toSerialize["maxGpuRamUtilizationAvgPercent"] = o.MaxGpuRamUtilizationAvgPercent
+	}
+	if !IsNil(o.GpuRamUtilizationHumanLabel) {
+		toSerialize["gpuRamUtilizationHumanLabel"] = o.GpuRamUtilizationHumanLabel
+	}
+	if !IsNil(o.GpuUtilizationDataPresent) {
+		toSerialize["gpuUtilizationDataPresent"] = o.GpuUtilizationDataPresent
+	}
+	if !IsNil(o.GpuUtilizationAvgPercent) {
+		toSerialize["gpuUtilizationAvgPercent"] = o.GpuUtilizationAvgPercent
+	}
+	if !IsNil(o.AvgGpuUtilizationAvgPercent) {
+		toSerialize["avgGpuUtilizationAvgPercent"] = o.AvgGpuUtilizationAvgPercent
+	}
+	if !IsNil(o.MaxGpuUtilizationAvgPercent) {
+		toSerialize["maxGpuUtilizationAvgPercent"] = o.MaxGpuUtilizationAvgPercent
+	}
+	if !IsNil(o.GpuUtilizationHumanLabel) {
+		toSerialize["gpuUtilizationHumanLabel"] = o.GpuUtilizationHumanLabel
+	}
 	return toSerialize, nil
 }
 
@@ -1676,3 +2231,5 @@ func (v *NullableVmMonitoringResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

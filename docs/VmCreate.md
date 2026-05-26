@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **SubnetworkId** | Pointer to **string** | ID of the subnetwork | [optional] 
 **PrivateIp** | Pointer to **string** | IP address within the subnetwork range | [optional] 
 **IpAddressing** | Pointer to **string** | IP addressing, ipv4 or dual stack (ipv4 + ipv6) | [optional] 
+**InitScript** | Pointer to **string** | Optional bash script to execute after the virtual machine is created | [optional] 
 
 ## Methods
 
@@ -420,6 +421,31 @@ SetIpAddressing sets IpAddressing field to given value.
 `func (o *VmCreate) HasIpAddressing() bool`
 
 HasIpAddressing returns a boolean if a field has been set.
+
+### GetInitScript
+
+`func (o *VmCreate) GetInitScript() string`
+
+GetInitScript returns the InitScript field if non-nil, zero value otherwise.
+
+### GetInitScriptOk
+
+`func (o *VmCreate) GetInitScriptOk() (*string, bool)`
+
+GetInitScriptOk returns a tuple with the InitScript field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInitScript
+
+`func (o *VmCreate) SetInitScript(v string)`
+
+SetInitScript sets InitScript field to given value.
+
+### HasInitScript
+
+`func (o *VmCreate) HasInitScript() bool`
+
+HasInitScript returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

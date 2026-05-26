@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **int32** | ID of the geographical location | [optional] 
 **Name** | Pointer to **string** | Name of the geographical location (city or state) | [optional] 
+**Country** | Pointer to **string** | Name of the country where the geographical location is situated | [optional] 
 **Continent** | Pointer to **string** | Name of the geographical continent | [optional] 
 **Region** | Pointer to **string** | Name of the geographical region | [optional] 
 **Latitude** | Pointer to **float64** | Approximate latitude of the geographical location | [optional] 
@@ -79,6 +80,31 @@ SetName sets Name field to given value.
 `func (o *Location) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetCountry
+
+`func (o *Location) GetCountry() string`
+
+GetCountry returns the Country field if non-nil, zero value otherwise.
+
+### GetCountryOk
+
+`func (o *Location) GetCountryOk() (*string, bool)`
+
+GetCountryOk returns a tuple with the Country field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCountry
+
+`func (o *Location) SetCountry(v string)`
+
+SetCountry sets Country field to given value.
+
+### HasCountry
+
+`func (o *Location) HasCountry() bool`
+
+HasCountry returns a boolean if a field has been set.
 
 ### GetContinent
 

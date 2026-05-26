@@ -59,7 +59,7 @@ info:
     \ server could not return the representation due to an internal server error.\
     \ |\n"
   title: Public EMMA API
-  version: 1.0.50
+  version: 1.0.72
 servers:
 - description: Public EMMA API
   url: https://api.emma.ms/external
@@ -270,6 +270,8 @@ paths:
           $ref: "#/components/responses/ForbiddenError"
         "500":
           $ref: "#/components/responses/InternalServerError"
+      security:
+      - bearerAuth: []
       summary: List connectivity centers in direct connect network
       tags:
       - Network
@@ -302,6 +304,8 @@ paths:
           $ref: "#/components/responses/ForbiddenError"
         "500":
           $ref: "#/components/responses/InternalServerError"
+      security:
+      - bearerAuth: []
       summary: Get connectivity center by ID
       tags:
       - Network
@@ -423,15 +427,17 @@ paths:
       description: |
         Creates a Managed Kubernetes cluster. Kubernetes Service provides the ability to deploy and manage Kubernetes clusters without worrying about the setup and maintenance of master nodes. emma manages the Kubernetes control plane, so you can focus on deploying and managing your applications. You do not need to create master nodes.
 
-        We offer reliable and highly available infrastructure for your cluster across multiple cloud providers. For **Direct Connect**, clusters can be deployed on **AWS**, **Azure**, and **GCP**. For **Internet Connect**, clusters can be deployed on **AWS**, **Azure**, and **GCP** by default. **DigitalOcean** and **Gcore** are also available for Internet Connect on request.
+        We offer reliable and highly available infrastructure for your cluster across multiple cloud providers. For Direct Connect, clusters can be deployed on AWS, Azure, and GCP. For Internet Connect, clusters can be deployed on AWS, Azure, and GCP by default. DigitalOcean and Gcore are also available for Internet Connect on request.
 
-        By default, clusters can be deployed only in the **European** region. Deployment in the **US** region is available on request.
+        By default, clusters can be deployed only in the European region. Deployment in the US region is available on request.
 
-        Choose the network type: **Direct Connect** or **Internet Connect**. Direct Connect requires this option to be enabled in the **Network** section. Internet Connect does not require any additional actions.
+        Choose the network type: Direct Connect or Internet Connect. Direct Connect requires this option to be enabled in the Network section. Internet Connect does not require any additional actions.
 
-        When creating worker nodes, you need to select the appropriate hardware configuration. The available configuration depends on the provider and the data center. Use the `/v1/kubernetes-configs/{k8sConnectionType}` endpoint to find available worker node configurations.
+        When creating worker nodes, you need to select the appropriate hardware configuration. The available configuration depends on the provider and the data center. Use the `/v1/kubernetes-configs` endpoint to find available worker node configurations.
 
-        A cluster currently supports up to **5 autoscaling groups** and a total of **16 worker nodes**.
+        If workerNodes is not provided, at least one autoscaling group must have targetNodes >= 1.
+
+        A cluster currently supports up to 5 autoscaling groups and a total of 16 worker nodes.
       operationId: CreateKubernetesCluster
       requestBody:
         content:
@@ -467,7 +473,7 @@ paths:
           --header 'Content-Type: application/json' \\\n--header 'Accept: application/json'\
           \ \\\n--header 'Authorization: Bearer YOUR-BEARER-TOKEN' \\\n--data '{\n\
           \  \"name\": \"default-k8s-managed-cluster-name\",\n  \"deploymentLocation\"\
-          : \"eu\", \n  \"k8sConnectionType\": \"internet_connect\"\n  \"workerNodes\"\
+          : \"eu\", \n  \"k8sConnectionType\": \"internet_connect\",\n  \"workerNodes\"\
           : [\n    {\n      \"name\": \"default-name\",\n      \"dataCenterId\": \"\
           europe-west1-d\",\n      \"vCpuType\": \"shared\",\n      \"vCpu\": 2,\n\
           \      \"ramGb\": 4,\n      \"volumeType\": \"ssd\",\n      \"volumeGb\"\
@@ -476,11 +482,12 @@ paths:
           : 1,\n      \"maximumNodes\": 2,\n      \"targetNodes\": 1,\n      \"minimumVCpus\"\
           : 1,\n      \"maximumVCpus\": 5,\n      \"targetVCpus\": 1,\n      \"nodeGroupPriceLimit\"\
           : 5,\n      \"useOnDemandInstancesInsteadOfSpots\": true,\n      \"spotPercent\"\
-          : 50,\n      \"spotMarkup\": 5,\n      \"configurationPriorities\": [\n\
-          \        {\n          \"vCpuType\": \"shared\",\n          \"vCpu\": 2,\n\
-          \          \"ramGb\": 2,\n          \"volumeGb\": 16,\n          \"volumeType\"\
-          : \"ssd\",\n          \"priority\": \"high\"\n        }\n      ]\n    }\n\
-          \  ]\n}'"
+          : 50,\n      \"spotMarkup\": 5,\n      \"userLabels\": [\n        {\n  \
+          \        \"key\": \"workload\",\n          \"value\": \"batch\"\n      \
+          \  }\n      ],\n      \"configurationPriorities\": [\n        {\n      \
+          \    \"vCpuType\": \"shared\",\n          \"vCpu\": 2,\n          \"ramGb\"\
+          : 2,\n          \"volumeGb\": 16,\n          \"volumeType\": \"ssd\",\n\
+          \          \"priority\": \"high\"\n        }\n      ]\n    }\n  ]\n}'"
   /v1/kubernetes/{kubernetesId}:
     delete:
       description: |
@@ -554,18 +561,26 @@ paths:
           --header 'Accept: application/json' \
           --header 'Authorization: Bearer YOUR-BEARER-TOKEN'
     put:
-      description: |
-        The method for editing a Managed Kubernetes cluster enables you to delete and add new worker nodes and autoscaling groups, as well as change the settings of existing autoscaling groups. You can only edit a cluster when it is in "ACTIVE" status. To select hardware configurations for worker nodes, use the /v1/kubernetes-configs/{k8sConnectionType} endpoint.
-
-        When editing a Kubernetes cluster, you can only add or delete worker nodes, but you cannot change the name or configuration of existing worker nodes. If you want to keep a node when editing a cluster, simply specify its ID in the 'workerNodes' object. All other fields in 'workerNodes' are ignored for existing nodes and are not required. If you want to delete a node, remove its ID.
-
-        When you create a new node, all fields in the 'workerNodes' object (except ID) are required. Do not add the ID field for a new node.
-
-        Please note that the spotMarkup field is ignored for the GCP provider.
-
-        When you delete an autoscaling group with existing worker nodes, the worker nodes are also deleted.
-
-        During the changes, the cluster status will change to "ENV_DEVELOPMENT." Nodes undergoing changes will be displayed with a "BUSY" status. When the changes are successfully applied, the cluster will transition back to the "ACTIVE" status, and the nodes will be in the "ON" status.
+      description: "The method for editing a Managed Kubernetes cluster enables you\
+        \ to delete and add new worker nodes and autoscaling groups, as well as change\
+        \ the settings of existing autoscaling groups. You can only edit a cluster\
+        \ when it is in \"ACTIVE\" status. To select hardware configurations for worker\
+        \ nodes, use the /v1/kubernetes-configs endpoint.\n\nWhen editing a Kubernetes\
+        \ cluster, you can only add or delete worker nodes, but you cannot change\
+        \ the name or configuration of existing worker nodes. If you want to keep\
+        \ a node when editing a cluster, simply specify its ID in the 'workerNodes'\
+        \ object. All other fields in 'workerNodes' are ignored for existing nodes\
+        \ and are not required. If you want to delete a node, remove its ID.\n\nWhen\
+        \ you create a new node, all fields in the 'workerNodes' object (except ID)\
+        \ are required. Do not add the ID field for a new node.\n\nPlease note that\
+        \ the spotMarkup field is ignored for the GCP provider.\n\nIf workerNodes\
+        \ is not provided, at least one autoscaling group must have targetNodes >=\
+        \ 1. \n\nWhen you delete an autoscaling group with existing worker nodes,\
+        \ the worker nodes are also deleted.\n\nDuring the changes, the cluster status\
+        \ will change to \"ENV_DEVELOPMENT.\" Nodes undergoing changes will be displayed\
+        \ with a \"BUSY\" status. When the changes are successfully applied, the cluster\
+        \ will transition back to the \"ACTIVE\" status, and the nodes will be in\
+        \ the \"ON\" status.\n"
       operationId: EditKubernetesCluster
       parameters:
       - $ref: "#/components/parameters/kubernetesId"
@@ -626,10 +641,19 @@ paths:
                 "minimumNodes": 1,
                 "maximumNodes": 2,
                 "targetNodes": 1,
+                "minimumVCpus": null,
+                "maximumVCpus": null,
+                "targetVCpus": null,
                 "nodeGroupPriceLimit": 5,
                 "useOnDemandInstancesInsteadOfSpots": true,
                 "spotPercent": 50,
                 "spotMarkup": 5,
+                "userLabels": [
+                 {
+                  "key": "workload",
+                  "value": "batch"
+                 }
+                ],
                 "configurationPriorities": [
                   {
                     "vCpuType": "shared",
@@ -1182,7 +1206,7 @@ paths:
                 "direction": "INBOUND",
                 "protocol": "TCP",
                 "ipRange": "1-30321",
-                "ports": "0.0.0.0/0",
+                "ports": "0.0.0.0/0"
               }
             ]
           }'
@@ -1326,19 +1350,21 @@ paths:
         \ follow these steps:\n\n1. Select a data center using the `/v1/data-centers`\
         \ endpoint. The data center determines the provider and location of the spot\
         \ instance.\n\n2. Select an available hardware configuration for the spot\
-        \ instance using the `/v1/spots-configs` endpoint.\n\n3. Select an SSH key\
-        \ for the Linux spot instance using the `/v1/ssh-keys` endpoint.\n\n4. Select\
-        \ an operating system using the `/v1/operating-systems` endpoint.\n\n5. Choose\
-        \ one of the cloud network types: _multi-cloud_, _isolated,_ or _default_.\
-        \ Choose the _multi-cloud_ network type if you need to connect compute instances\
-        \ from different providers.\n       \nYou may choose not to specify a security\
-        \ group. In this case, the spot instance will be added to the default security\
-        \ group.\n        \nA `price` field of a spot instance is required. \n\nThe\
-        \ spot instance market operates on a bidding system. Your specified price\
-        \ acts as your bid in this market. If your bid is higher than the current\
-        \ spot price, your instance request will likely be fulfilled. However, if\
-        \ the market price exceeds your bid, your instance may not be launched or\
-        \ could be terminated if already running.\n"
+        \ instance using the `/v1/spots-configs` endpoint.\n\nTo create a GPU spot\
+        \ instance, include `acceleratorTypeId` and `accelerators` fields in the request\
+        \ body. Obtain these values from the selected configuration in the GET /v1/spots-configs\
+        \ response.\n\n3. Select an SSH key for the Linux spot instance using the\
+        \ `/v1/ssh-keys` endpoint.\n\n4. Select an operating system using the `/v1/operating-systems`\
+        \ endpoint.\n\n5. Choose one of the cloud network types: _multi-cloud_, _isolated,_\
+        \ or _default_. Choose the _multi-cloud_ network type if you need to connect\
+        \ compute instances from different providers.\n       \nYou may choose not\
+        \ to specify a security group. In this case, the spot instance will be added\
+        \ to the default security group.\n        \nA `price` field of a spot instance\
+        \ is required. \n\nThe spot instance market operates on a bidding system.\
+        \ Your specified price acts as your bid in this market. If your bid is higher\
+        \ than the current spot price, your instance request will likely be fulfilled.\
+        \ However, if the market price exceeds your bid, your instance may not be\
+        \ launched or could be terminated if already running.\n"
       operationId: SpotCreate
       requestBody:
         content:
@@ -1391,6 +1417,29 @@ paths:
             "volumeGb": "16",
             "sshKeyId": "124",
             "securityGroupId": "208",
+            "price": "0.002635"
+          }'
+      - lang: CURL
+        label: CURL (GPU)
+        source: |-
+          curl --location 'https://api.emma.ms/external/v1/spot-instances' \
+          --header 'Content-Type: application/json' \
+          --header 'Accept: application/json' \
+          --header 'Authorization: Bearer YOUR-BEARER-TOKEN' \
+          --data '{
+            "name": "spot-gpu-default",
+            "dataCenterId": "aws-us-west-1",
+            "osId": "35",
+            "cloudNetworkType": "multi-cloud",
+            "vCpuType": "shared",
+            "vCpu": "4",
+            "ramGb": "1",
+            "volumeType": "ssd",
+            "volumeGb": "16",
+            "sshKeyId": "124",
+            "securityGroupId": "208",
+            "acceleratorTypeId": "7bf9d828-e3e8-496f-9901-9045640bb287",
+            "accelerators": 1,
             "price": "0.002635"
           }'
   /v1/spot-instances/{spotInstanceId}:
@@ -1496,11 +1545,7 @@ paths:
                 $ref: "#/components/schemas/SpotVm"
           description: Successful operation
         "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpotBadRequestError"
-          description: Bad request
+          $ref: "#/components/responses/BadRequestError"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "403":
@@ -1510,9 +1555,9 @@ paths:
                 $ref: "#/components/schemas/ForbiddenError"
           description: Forbidden - Access is denied
         "404":
-          $ref: "#/components/responses/SpotNotFoundError"
+          $ref: "#/components/responses/NotFoundError"
         "422":
-          $ref: "#/components/responses/SpotUnprocessableEntityError"
+          $ref: "#/components/responses/UnprocessableEntityError"
         "500":
           $ref: "#/components/responses/InternalServerError"
       security:
@@ -2176,6 +2221,8 @@ paths:
           description: Forbidden - Access is denied
         "404":
           $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntityError"
         "500":
           $ref: "#/components/responses/InternalServerError"
       security:
@@ -2270,6 +2317,7 @@ paths:
         \ machines, use the `GET v1/vms-configs` method  \n"
       operationId: GetVmResizeConfigs
       parameters:
+      - $ref: "#/components/parameters/vmIdQuery"
       - $ref: "#/components/parameters/vCpuType"
       - $ref: "#/components/parameters/vCpu"
       - $ref: "#/components/parameters/vCpuMin"
@@ -2309,8 +2357,8 @@ paths:
       x-codeSamples:
       - lang: CURL
         label: CURL
-        source: "curl --location 'https://api.emma.ms/external/v1/vms-configs' \\\n\
-          --header 'Accept: application/json' \\\n--header 'Authorization: Bearer\
+        source: "curl --location 'https://api.emma.ms/external/v1/vms-resize-configs'\
+          \ \\\n--header 'Accept: application/json' \\\n--header 'Authorization: Bearer\
           \ YOUR-BEARER-TOKEN'          "
   /v1/volume-configs:
     get:
@@ -2632,18 +2680,63 @@ paths:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             "action": "edit"
           }'
   /v1/spots-configs:
     get:
       description: |
-        When creating spot instances you need to provide the desired hardware configurations. These configurations include CPU, CPU type, RAM, volume size, and volume type. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
+        When creating spot instances you need to provide the desired hardware configurations. These configurations include CPU, CPU type, RAM, volume size, volume type, and optionally GPU accelerator. Different cloud providers offer various configurations in different data centers. Therefore, before creating any compute instance, you need to verify the available configurations.
 
-        Use this endpoint as a reference for available configurations for spot instances. You can search the available configurations by different parameters (provider, location, data center, cloud network type, CPU, CPU type, RAM, volume size, volume type, and price).
+        Use this endpoint as a reference for available configurations for spot instances. You can search the available configurations by different parameters (provider, location, data center, cloud network type, CPU, CPU type, RAM, volume size, volume type, price, and GPU accelerator type).
 
         When you find an appropriate configuration, provide the hardware parameters in the endpoint for creating or editing a spot instance.
       operationId: GetSpotConfigs
       parameters:
+      - $ref: "#/components/parameters/acceleratorTypeId"
+      - $ref: "#/components/parameters/acceleratorsMin"
+      - $ref: "#/components/parameters/acceleratorsMax"
       - $ref: "#/components/parameters/providerIdQuery"
       - $ref: "#/components/parameters/locationIdQuery"
       - $ref: "#/components/parameters/dataCenterIdQuery"
@@ -2695,7 +2788,7 @@ paths:
           curl --location 'https://api.emma.ms/external/v1/spots-configs' \
           --header 'Accept: application/json' \
           --header 'Authorization: Bearer YOUR-BEARER-TOKEN'
-  /v1/kubernetes-configs/{k8sConnectionType}:
+  /v1/kubernetes-configs:
     get:
       description: |
         Returns the list of available hardware configurations that can be used for Kubernetes cluster worker nodes.
@@ -2766,7 +2859,7 @@ paths:
       - lang: CURL
         label: CURL
         source: |-
-          curl --location 'https://api.emma.ms/external/v1/kubernetes-configs/{k8sConnectionType}' \
+          curl --location 'https://api.emma.ms/external/v1/kubernetes-configs' \
           --header 'Accept: application/json' \
           --header 'Authorization: Bearer YOUR-BEARER-TOKEN'
   /v1/statistics/retrieve:
@@ -2867,6 +2960,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/NotFoundError"
           description: Not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
         "504":
           content:
             application/json:
@@ -2931,6 +3026,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/NotFoundError"
           description: Not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
         "504":
           content:
             application/json:
@@ -3031,6 +3128,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/NotFoundError"
           description: Not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
         "504":
           content:
             application/json:
@@ -3092,6 +3191,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/NotFoundError"
           description: Not found
+        "500":
+          $ref: "#/components/responses/InternalServerError"
         "504":
           content:
             application/json:
@@ -3158,6 +3259,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/NotFoundError"
           description: Not found
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityError"
+          description: Unprocessable entity
+        "500":
+          $ref: "#/components/responses/InternalServerError"
         "504":
           content:
             application/json:
@@ -3264,8 +3373,8 @@ components:
       style: form
     k8sConnectionType:
       description: Type of Kubernetes cluster network connectivity
-      explode: false
-      in: path
+      explode: true
+      in: query
       name: k8sConnectionType
       required: true
       schema:
@@ -3274,7 +3383,7 @@ components:
         - internet_connect
         example: internet_connect
         type: string
-      style: simple
+      style: form
     cloudNetworkType:
       description: Type of cloud network
       explode: true
@@ -3918,12 +4027,6 @@ components:
           schema:
             $ref: "#/components/schemas/NotFoundError"
       description: Not found
-    SpotNotFoundError:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/SpotNotFoundError"
-      description: Not found
     ConflictError:
       content:
         application/json:
@@ -3936,12 +4039,6 @@ components:
           schema:
             $ref: "#/components/schemas/UnprocessableEntityError"
       description: Unprocessable entity
-    SpotUnprocessableEntityError:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/SpotUnprocessableEntityError"
-      description: Unprocessable Content
     InternalServerError:
       content:
         application/json:
@@ -4007,6 +4104,7 @@ components:
           description: "Type of the resource, in this case COMPUTE"
           enum:
           - COMPUTE
+          - SPOT_COMPUTE
           example: COMPUTE
           type: string
         resourceParams:
@@ -4121,6 +4219,7 @@ components:
           description: "Type of the resource, in this case COMPUTE"
           enum:
           - COMPUTE
+          - SPOT_COMPUTE
           example: COMPUTE
           type: string
         resourceParams:
@@ -4267,6 +4366,7 @@ components:
             location:
               id: 6
               name: London
+              country: United Kingdom
               continent: Europe
               region: EMEA
               latitude: 51.50735
@@ -4335,6 +4435,9 @@ components:
           useOnDemandInstancesInsteadOfSpots: true
           spotPercent: 50
           spotMarkup: 5
+          userLabels:
+          - key: workload
+            value: batch
           configurationPriorities:
           - vCpuType: shared
             vCpu: 2
@@ -4379,6 +4482,7 @@ components:
             location:
               id: 6
               name: London
+              country: United Kingdom
               continent: Europe
               region: EMEA
               latitude: 51.50735
@@ -4447,6 +4551,9 @@ components:
           useOnDemandInstancesInsteadOfSpots: false
           spotPercent: 50
           spotMarkup: 5
+          userLabels:
+          - key: workload
+            value: batch
           configurationPriorities:
           - vCpuType: shared
             vCpu: 2
@@ -4530,8 +4637,9 @@ components:
           description: Configurations of the autoscaling group
           example: []
           items:
-            $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner"
+            $ref: "#/components/schemas/KubernetesGetResponse_autoscalingConfigs_inner"
           type: array
+          nullable: true
     KubernetesCreateRequest:
       example:
         deploymentLocation: eu
@@ -4565,6 +4673,9 @@ components:
           useOnDemandInstancesInsteadOfSpots: false
           spotPercent: 50
           spotMarkup: 5
+          userLabels:
+          - key: workload
+            value: batch
           configurationPriorities:
           - ramGb: 4
             volumeGb: 16
@@ -4600,20 +4711,25 @@ components:
           example: internet_connect
           type: string
         workerNodes:
-          description: List of worker nodes
+          description: List of worker nodes.
           items:
             $ref: "#/components/schemas/KubernetesCreateRequest_workerNodes_inner"
           type: array
+          nullable: true
         autoscalingConfigs:
-          description: Configurations of the autoscaling group
+          description: "Configurations of the autoscaling group. If `workerNodes`\
+            \ is omitted or empty, `autoscalingConfigs` must contain at least one\
+            \ group. Each group must have either node-count scaling fields (`minimumNodes`,\
+            \ `maximumNodes`, `targetNodes`) or vCPU-count scaling fields (`minimumVCpus`,\
+            \ `maximumVCpus`, `targetVCpus`) — but not both and not neither."
           items:
             $ref: "#/components/schemas/KubernetesCreateRequest_autoscalingConfigs_inner"
           type: array
+          nullable: true
       required:
       - deploymentLocation
       - k8sConnectionType
       - name
-      - workerNodes
     KubernetesCreateResponse:
       example:
         id: 108301
@@ -4647,6 +4763,7 @@ components:
             location:
               id: 78
               name: Eemshaven
+              country: Netherlands
               continent: Europe
               region: EMEA
               latitude: 53.442333
@@ -4700,6 +4817,9 @@ components:
           useOnDemandInstancesInsteadOfSpots: false
           spotPercent: 50
           spotMarkup: 5
+          userLabels:
+          - key: workload
+            value: batch
           configurationPriorities:
           - vCpuType: shared
             vCpu: 2
@@ -4790,6 +4910,7 @@ components:
           items:
             $ref: "#/components/schemas/KubernetesCreateResponse_autoscalingConfigs_inner"
           type: array
+          nullable: true
     KubernetesUpdateRequest:
       example:
         workerNodes:
@@ -4814,8 +4935,7 @@ components:
           ramGb: 16
           vCpuType: standard
         autoscalingConfigs:
-        - spotPercent: 50
-          configurationPriorities:
+        - configurationPriorities:
           - volumeType: ssd
             vCpu: 2
             volumeGb: 16
@@ -4828,16 +4948,24 @@ components:
             priority: high
             ramGb: 4
             vCpuType: shared
+          minimumNodes: 1
+          userLabels:
+          - value: batch
+            key: workload
+          - value: batch
+            key: workload
+          targetNodes: 1
+          spotPercent: 50
           groupName: autonodegroup
           maximumNodes: 2
+          minimumVCpus: 0
           useOnDemandInstancesInsteadOfSpots: true
           dataCenterId: gcp-europe-west1-b
           nodeGroupPriceLimit: 50
-          minimumNodes: 1
-          targetNodes: 1
+          targetVCpus: 1
+          maximumVCpus: 6
           spotMarkup: 5
-        - spotPercent: 50
-          configurationPriorities:
+        - configurationPriorities:
           - volumeType: ssd
             vCpu: 2
             volumeGb: 16
@@ -4850,27 +4978,40 @@ components:
             priority: high
             ramGb: 4
             vCpuType: shared
+          minimumNodes: 1
+          userLabels:
+          - value: batch
+            key: workload
+          - value: batch
+            key: workload
+          targetNodes: 1
+          spotPercent: 50
           groupName: autonodegroup
           maximumNodes: 2
+          minimumVCpus: 0
           useOnDemandInstancesInsteadOfSpots: true
           dataCenterId: gcp-europe-west1-b
           nodeGroupPriceLimit: 50
-          minimumNodes: 1
-          targetNodes: 1
+          targetVCpus: 1
+          maximumVCpus: 6
           spotMarkup: 5
       properties:
         workerNodes:
-          description: List of the worker nodes
+          description: List of the worker nodes. May be omitted when the cluster is
+            updated with autoscaling groups only.
           items:
             $ref: "#/components/schemas/KubernetesUpdateRequest_workerNodes_inner"
           type: array
         autoscalingConfigs:
-          description: Configurations of the autoscaling group
+          description: "Configurations of the autoscaling group. If `workerNodes`\
+            \ is omitted or empty, `autoscalingConfigs` must contain at least one\
+            \ group. Each group must have either node-count scaling fields (`minimumNodes`,\
+            \ `maximumNodes`, `targetNodes`) or vCPU-count scaling fields (`minimumVCpus`,\
+            \ `maximumVCpus`, `targetVCpus`) — but not both and not neither."
           items:
             $ref: "#/components/schemas/KubernetesUpdateRequest_autoscalingConfigs_inner"
           type: array
-      required:
-      - workerNodes
+          nullable: true
     KubernetesUpdateResponse:
       example:
         id: 108379
@@ -4904,6 +5045,7 @@ components:
             location:
               id: 77
               name: St. Ghislain
+              country: Belgium
               continent: Europe
               region: EMEA
               latitude: 50.44816
@@ -4952,6 +5094,7 @@ components:
             location:
               id: 77
               name: St. Ghislain
+              country: Belgium
               continent: Europe
               region: EMEA
               latitude: 50.44816
@@ -5001,6 +5144,9 @@ components:
           useOnDemandInstancesInsteadOfSpots: true
           spotPercent: 50
           spotMarkup: 0
+          userLabels:
+          - key: workload
+            value: batch
           configurationPriorities:
           - vCpuType: shared
             vCpu: 2
@@ -5120,6 +5266,7 @@ components:
             location:
               id: 77
               name: St. Ghislain
+              country: Belgium
               continent: Europe
               region: EMEA
               latitude: 50.44816
@@ -5180,6 +5327,7 @@ components:
             location:
               id: 77
               name: St. Ghislain
+              country: Belgium
               continent: Europe
               region: EMEA
               latitude: 50.44816
@@ -5241,6 +5389,9 @@ components:
           useOnDemandInstancesInsteadOfSpots: true
           spotPercent: 50
           spotMarkup: 0
+          userLabels:
+          - key: workload
+            value: batch
           configurationPriorities:
           - vCpuType: shared
             vCpu: 2
@@ -5313,6 +5464,7 @@ components:
     Location:
       example:
         continent: Asia
+        country: United Kingdom
         latitude: 51.50735
         name: London
         id: 18
@@ -5326,6 +5478,10 @@ components:
         name:
           description: Name of the geographical location (city or state)
           example: London
+          type: string
+        country:
+          description: Name of the country where the geographical location is situated
+          example: United Kingdom
           type: string
         continent:
           description: Name of the geographical continent
@@ -5824,46 +5980,61 @@ components:
       example:
         avgNetworkInHuman: 10.5
         maxNetworkInHuman: 10.5
-        avgDiskSpaceUsedGb: 10.5
+        maxGpuRamUsageAvgGb: 10.5
         cpuTotalPercent: 200
+        gpuUtilizationDataPresent: 1
         avgCpuUtilizationAverageCores: 54.5
-        networkOutHuman: 10.5
-        avgNetworkOutHuman: 10.5
-        ramUsageAverageGb: 1.5
         ramDataPresent: 1
-        avgRamUsageAverageGb: 1.5
+        maxGpuRamUtilizationAvgPercent: 10.5
         cpuHumanLabel: '%'
         maxDiskReadHuman: 10.5
         timecode: 2024-06-19T09:52:00.000+00:00
-        diskReadHuman: 10.5
         maxCpuUtilizationAverageCores: 54.5
         diskSpaceHumanLabel: GB
         ramTotalAmountGb: 2.0
-        maxDiskSpaceUsedGb: 10.5
         diskReadHumanLabel: Kbps
         cpuDataPresent: 1
         networkOutCoef: 1000
+        gpuRamUsageDataPresent: 1
         ramHumanLabel: GB
         maxRamUsageAverageGb: 1.5
-        diskWriteHuman: 10.5
-        cpuUtilizationAverageCores: 54.5
         networkInHumanLabel: Kbps
-        avgDiskReadHuman: 10.5
-        diskReadCoef: 1000
-        networkInDataPresent: 1
-        avgDiskWriteHuman: 10.5
         maxDiskWriteHuman: 10.5
-        diskWriteDataPresent: 1
         diskUsedDataPresent: 1
         networkOutDataPresent: 1
         networkInCoef: 1000
         diskSpaceUsedGb: 10.5
         diskSpaceTotalGb: 16
         diskWriteHumanLabel: Kbps
-        diskReadDataPresent: 1
         maxNetworkOutHuman: 10.5
-        diskWriteCoef: 1000
         networkInHuman: 10.5
+        maxGpuUtilizationAvgPercent: 10.5
+        avgDiskSpaceUsedGb: 10.5
+        networkOutHuman: 10.5
+        avgNetworkOutHuman: 10.5
+        ramUsageAverageGb: 1.5
+        avgGpuRamUsageAvgGb: 10.5
+        avgRamUsageAverageGb: 1.5
+        gpuRamUsageHumanLabel: GB
+        gpuUtilizationHumanLabel: '%'
+        diskReadHuman: 10.5
+        gpuRamUtilizationAvgPercent: 10.5
+        gpuRamUtilizationHumanLabel: GB
+        maxDiskSpaceUsedGb: 10.5
+        avgGpuRamUtilizationAvgPercent: 10.5
+        diskWriteHuman: 10.5
+        cpuUtilizationAverageCores: 54.5
+        avgDiskReadHuman: 10.5
+        diskReadCoef: 1000
+        networkInDataPresent: 1
+        gpuRamUtilizationAvgPresent: 1
+        avgDiskWriteHuman: 10.5
+        gpuUtilizationAvgPercent: 10.5
+        diskWriteDataPresent: 1
+        gpuRamUsageAvgGb: 10.5
+        diskReadDataPresent: 1
+        diskWriteCoef: 1000
+        avgGpuUtilizationAvgPercent: 10.5
         networkOutHumanLabel: Kbps
       properties:
         timecode:
@@ -6036,6 +6207,66 @@ components:
         networkInHumanLabel:
           description: Label
           example: Kbps
+          type: string
+        gpuRamUsageDataPresent:
+          description: Internal service parameter
+          example: 1
+          type: integer
+        gpuRamUsageAvgGb:
+          description: GPU vRAM Usage
+          example: 10.5
+          type: number
+        avgGpuRamUsageAvgGb:
+          description: Average GPU vRAM usage for the requested period of statistics
+          example: 10.5
+          type: number
+        maxGpuRamUsageAvgGb:
+          description: Maximum GPU vRAM usage for the requested period of statistics
+          example: 10.5
+          type: number
+        gpuRamUsageHumanLabel:
+          description: Label
+          example: GB
+          type: string
+        gpuRamUtilizationAvgPresent:
+          description: Internal service parameter
+          example: 1
+          type: integer
+        gpuRamUtilizationAvgPercent:
+          description: GPU vRAM utilization
+          example: 10.5
+          type: number
+        avgGpuRamUtilizationAvgPercent:
+          description: Average GPU vRAM utilization for the requested period of statistics
+          example: 10.5
+          type: number
+        maxGpuRamUtilizationAvgPercent:
+          description: Maximum GPU vRAM utilization for the requested period of statistics
+          example: 10.5
+          type: number
+        gpuRamUtilizationHumanLabel:
+          description: Label
+          example: GB
+          type: string
+        gpuUtilizationDataPresent:
+          description: Internal service parameter
+          example: 1
+          type: integer
+        gpuUtilizationAvgPercent:
+          description: GPU utilization
+          example: 10.5
+          type: number
+        avgGpuUtilizationAvgPercent:
+          description: Average GPU utilization for the requested period of statistics
+          example: 10.5
+          type: number
+        maxGpuUtilizationAvgPercent:
+          description: Maximum GPU utilization for the requested period of statistics
+          example: 10.5
+          type: number
+        gpuUtilizationHumanLabel:
+          description: Label
+          example: '%'
           type: string
     VmAnalyticsQuery:
       properties:
@@ -6216,6 +6447,78 @@ components:
         networkInHumanLabel:
           description: Label
           example: Kbps
+          type: string
+        gpuDataPresent:
+          description: Internal service parameter
+          example: 1
+          type: integer
+        gpuUtilizationAvgPercent:
+          description: GPU utilization
+          example: 10.5
+          type: number
+        gpuUtilizationAvgPercentQ10:
+          description: 10th percentile of GPU utilization
+          example: 10.0
+          type: number
+        gpuUtilizationAvgPercentQ90:
+          description: 90th percentile of GPU utilization
+          example: 112.3
+          type: number
+        gpuTotalPercent:
+          description: "Total GPU, %"
+          example: 100
+          type: integer
+        gpuHumanLabel:
+          description: Label
+          example: '%'
+          type: string
+        gpuRamDataPresent:
+          description: Internal service parameter
+          example: 1
+          type: integer
+        gpuRamUsageAvgGb:
+          description: GPU vRAM usage
+          example: 10.5
+          type: number
+        gpuRamUsageAvgGbQ10:
+          description: 10th percentile of GPU vRAM usage
+          example: 10.0
+          type: number
+        gpuRamUsageAvgGbQ90:
+          description: 90th percentile of GPU vRAM usage
+          example: 112.3
+          type: number
+        gpuRamTotalGb:
+          description: "Total GPU vRAM, GB"
+          example: 2.0
+          type: number
+        gpuRamHumanLabel:
+          description: Label
+          example: '%'
+          type: string
+        gpuRamUtilizationDataPresent:
+          description: Internal service parameter
+          example: 1
+          type: integer
+        gpuRamUtilizationAvgPercent:
+          description: GPU vRAM utilization
+          example: 10.5
+          type: number
+        gpuRamUtilizationAvgPercentQ10:
+          description: 10th percentile of GPU vRAM utilization
+          example: 10.0
+          type: number
+        gpuRamUtilizationAvgPercentQ90:
+          description: 90th percentile of GPU vRAM utilization
+          example: 112.3
+          type: number
+        gpuRamUtilizationTotalPercent:
+          description: "Total GPU utilization, %"
+          example: 100
+          type: integer
+        gpuRamUtilizationHumanLabel:
+          description: Label
+          example: '%'
           type: string
         isShownShort:
           description: Internal service parameter
@@ -6655,6 +6958,7 @@ components:
         volumeType: ssd
         userPassword: m#P52s@ap$V
         vCpu: 4
+        acceleratorTypeId: 7bf9d828-e3e8-496f-9901-9045640bb287
         osId: 35
         ramGb: 2
         sshKeyId: 124
@@ -6664,6 +6968,7 @@ components:
         dataCenterId: aws-us-west-1
         name: spot-default
         volumeGb: 16
+        accelerators: 1
         cloudNetworkType: multi-cloud
       properties:
         name:
@@ -6727,6 +7032,20 @@ components:
           description: ID of the security group
           example: 208
           type: integer
+        acceleratorTypeId:
+          description: GPU accelerator type identifier. Obtain from the acceleratorTypeId
+            field in the GET /v1/spots-configs response. Required when creating a
+            GPU spot instance.
+          example: 7bf9d828-e3e8-496f-9901-9045640bb287
+          type: string
+          nullable: true
+        accelerators:
+          description: Number of GPU accelerators. Must match the value from the selected
+            configuration in GET /v1/spots-configs. Required when acceleratorTypeId
+            is specified.
+          example: 1
+          type: number
+          nullable: true
         price:
           description: Offer price of the spot instance
           example: 0.002635
@@ -7164,6 +7483,7 @@ components:
           type: ssd-plus
         location:
           continent: Asia
+          country: United Kingdom
           latitude: 51.50735
           name: London
           id: 6
@@ -7330,6 +7650,9 @@ components:
         volumeGb: 16
         accelerators: 4
         cloudNetworkType: multi-cloud
+        initScript: |-
+          #!/bin/bash
+          apt-get update && apt-get install -y curl
         ipAddressing: ipv4
       properties:
         name:
@@ -7417,6 +7740,15 @@ components:
           - dual_stack
           example: ipv4
           type: string
+        initScript:
+          description: Optional bash script to execute after the virtual machine is
+            created
+          example: |-
+            #!/bin/bash
+            apt-get update && apt-get install -y curl
+          maxLength: 10000
+          type: string
+          nullable: true
       required:
       - cloudNetworkType
       - dataCenterId
@@ -7567,6 +7899,11 @@ components:
           description: Capacity of the RAM in gigabytes
           example: 16
           type: integer
+        accelerators:
+          description: Quantity of GPU accelerators. Optional for non-GPU virtual
+            machines. Required for GPU virtual machines.
+          example: 4
+          type: number
       required:
       - action
       - ramGb
@@ -7604,7 +7941,7 @@ components:
           sizeTb: 25
           totalSizeTb: 50
           disks: 2
-          type: SSD+
+          type: ssd-plus
         id: 0935c792-a45b-46bb-b42d-4d47956ea1ae
         providerName: GCP
       properties:
@@ -7713,7 +8050,7 @@ components:
           sizeTb: 0.125
           totalSizeTb: 0.125
           disks: 1
-          type: SSD+
+          type: ssd-plus
         id: 0935c792-a45b-46bb-b42d-4d47956ea1ae
         providerName: AWS
       properties:
@@ -7825,6 +8162,11 @@ components:
           id: 22
         id: 8100
         createdById: 123
+        accelerator:
+          acceleratorType: T4
+          acceleratorTypeId: 53b7db26-4a1b-42f7-97a5-592edd685c5a
+          accelerators: 1
+          totalGpuMemoryGb: 16
         cost:
           unit: HOURS
           price: 0.002952
@@ -7852,9 +8194,24 @@ components:
         ramGb: 2
         sshKeyId: 123
         vCpuType: shared
+        tags:
+        - tagId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          value: dev
+          key: env
+        - tagId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          value: dev
+          key: env
         name: vm-default-e08149hp
+        localDisks:
+        - sizeTb: 5
+          typeId: 2
+          type: ssd-plus
+        - sizeTb: 5
+          typeId: 2
+          type: ssd-plus
         location:
           continent: Asia
+          country: United Kingdom
           latitude: 51.50735
           name: London
           id: 6
@@ -7976,6 +8333,21 @@ components:
           type: string
         cost:
           $ref: "#/components/schemas/SpotVm_cost"
+        localDisks:
+          description: Local SSD storage directly attached to the host machine. Size
+            is reported in terabytes (TB). Data is ephemeral and will be lost when
+            the spot instance is stopped or deleted.
+          items:
+            $ref: "#/components/schemas/Vm_localDisks_inner"
+          type: array
+          nullable: true
+        accelerator:
+          $ref: "#/components/schemas/SpotVm_accelerator"
+        tags:
+          items:
+            $ref: "#/components/schemas/Tag"
+          type: array
+          nullable: true
     SystemVolumeConfiguration:
       example:
         volumeType: ssd
@@ -8030,6 +8402,11 @@ components:
           $ref: "#/components/schemas/VmConfiguration_cost"
     VmResizeConfiguration:
       example:
+        accelerator:
+          acceleratorType: NVIDIA A100
+          acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+          accelerators: 4
+          totalGpuMemoryGb: 320
         cost:
           unit: MONTHS
           currency: EUR
@@ -8037,6 +8414,7 @@ components:
         vCpu: 4
         ramGb: 16
         vCpuType: Standard
+        providerComputeType: Standard_D4s_v3
       properties:
         vCpuType:
           description: Type of virtual Central Processing Units (vCPUs)
@@ -8050,6 +8428,12 @@ components:
           description: Capacity of the RAM in gigabytes
           example: 16
           type: integer
+        providerComputeType:
+          description: Provider-specific compute type identifier
+          example: Standard_D4s_v3
+          type: string
+        accelerator:
+          $ref: "#/components/schemas/VmConfiguration_accelerator"
         cost:
           $ref: "#/components/schemas/VmConfiguration_cost"
     Volume:
@@ -8079,6 +8463,7 @@ components:
         name: volume-1ay48j
         location:
           continent: Europe
+          country: United Kingdom
           latitude: 51.50735
           name: London
           id: 6
@@ -8553,60 +8938,6 @@ components:
       required:
       - code
       - message
-    SpotBadRequestError:
-      example:
-        code: BAD_REQUEST
-        message: "Action rejected: Incorrect spot instance ID"
-      properties:
-        code:
-          description: Error code
-          example: BAD_REQUEST
-          type: string
-        message:
-          description: Error message
-          enum:
-          - "Action rejected: Incorrect spot instance ID"
-          - "Action rejected: Required field is missing: action"
-          - "Action rejected: Invalid field value: <>"
-          example: "Action rejected: Incorrect spot instance ID"
-          type: string
-      required:
-      - code
-      - message
-    SpotNotFoundError:
-      example:
-        code: NOT_FOUND
-        message: Spot instance not found
-      properties:
-        code:
-          description: Error code
-          example: NOT_FOUND
-          type: string
-        message:
-          description: Error message
-          example: Spot instance not found
-          type: string
-      required:
-      - code
-      - message
-    SpotUnprocessableEntityError:
-      example:
-        code: UNPROCESSABLE_ENTITY
-        message: "Action rejected: inappropriate compute instance state for the action.\
-          \ Wait for a while and try again or perform another action."
-      properties:
-        code:
-          description: Error code
-          example: UNPROCESSABLE_ENTITY
-          type: string
-        message:
-          description: Error message
-          example: "Action rejected: inappropriate compute instance state for the\
-            \ action. Wait for a while and try again or perform another action."
-          type: string
-      required:
-      - code
-      - message
     InternalServerError:
       example:
         code: INTERNAL_SERVER_ERROR
@@ -8715,7 +9046,7 @@ components:
             sizeTb: 25
             totalSizeTb: 50
             disks: 2
-            type: SSD+
+            type: ssd-plus
           id: 0935c792-a45b-46bb-b42d-4d47956ea1ae
           providerName: GCP
         - volumeType: ssd
@@ -8748,7 +9079,7 @@ components:
             sizeTb: 25
             totalSizeTb: 50
             disks: 2
-            type: SSD+
+            type: ssd-plus
           id: 0935c792-a45b-46bb-b42d-4d47956ea1ae
           providerName: GCP
         first: true
@@ -8783,20 +9114,32 @@ components:
           sorted: true
           empty: true
         content:
-        - cost:
+        - accelerator:
+            acceleratorType: NVIDIA A100
+            acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+            accelerators: 4
+            totalGpuMemoryGb: 320
+          cost:
             unit: MONTHS
             currency: EUR
             pricePerUnit: 5.479952
           vCpu: 4
           ramGb: 16
           vCpuType: Standard
-        - cost:
+          providerComputeType: Standard_D4s_v3
+        - accelerator:
+            acceleratorType: NVIDIA A100
+            acceleratorTypeId: b3f5a4cb-4e3c-4c63-8c68-e1bd96b7ae1a
+            accelerators: 4
+            totalGpuMemoryGb: 320
+          cost:
             unit: MONTHS
             currency: EUR
             pricePerUnit: 5.479952
           vCpu: 4
           ramGb: 16
           vCpuType: Standard
+          providerComputeType: Standard_D4s_v3
         first: true
         totalElements: 6
         empty: true
@@ -8969,7 +9312,7 @@ components:
             sizeTb: 0.125
             totalSizeTb: 0.125
             disks: 1
-            type: SSD+
+            type: ssd-plus
           id: 0935c792-a45b-46bb-b42d-4d47956ea1ae
           providerName: AWS
         - volumeType: ssd
@@ -9000,7 +9343,7 @@ components:
             sizeTb: 0.125
             totalSizeTb: 0.125
             disks: 1
-            type: SSD+
+            type: ssd-plus
           id: 0935c792-a45b-46bb-b42d-4d47956ea1ae
           providerName: AWS
         first: true
@@ -9255,6 +9598,10 @@ components:
         name:
           description: Location name of the worker node
           example: London
+          type: string
+        country:
+          description: Country of the worker node location
+          example: United Kingdom
           type: string
         continent:
           description: Name of the geographical continent
@@ -9517,6 +9864,22 @@ components:
           items:
             $ref: "#/components/schemas/KubernetesListResponse_inner_nodeGroups_inner_nodes_inner"
           type: array
+    KubernetesListResponse_inner_autoscalingConfigs_inner_userLabels_inner:
+      example:
+        value: batch
+        key: workload
+      properties:
+        key:
+          description: ASG label key
+          example: workload
+          type: string
+        value:
+          description: ASG label value
+          example: batch
+          type: string
+      required:
+      - key
+      - value
     KubernetesListResponse_inner_autoscalingConfigs_inner_configurationPriorities_inner:
       example:
         volumeType: ssd
@@ -9572,29 +9935,36 @@ components:
           example: aws-us-west-1
           type: string
         minimumNodes:
-          description: Minimum number of nodes
+          description: Minimum number of nodes. Required when using node-count based
+            autoscaling. Must be null if `minimumVCpus` is set.
           example: 1
           type: integer
         maximumNodes:
-          description: Maximum number of nodes
+          description: Maximum number of nodes. Required when using node-count based
+            autoscaling. Must be null if `maximumVCpus` is set.
           example: 2
           type: integer
         targetNodes:
-          description: Target number of worker nodes in the autoscaling group
+          description: Target number of worker nodes in the autoscaling group. Required
+            when using node-count based autoscaling. Must be null if `targetVCpus`
+            is set.
           example: 1
           type: integer
         minimumVCpus:
-          description: Minimum number of vCPUs
+          description: Minimum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `minimumNodes` is set.
           type: integer
           nullable: true
           example: null
         maximumVCpus:
-          description: Maximum number of vCPUs
+          description: Maximum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `maximumNodes` is set.
           type: integer
           nullable: true
           example: null
         targetVCpus:
-          description: Target number of vCPUs in the autoscaling group
+          description: Target number of vCPUs in the autoscaling group. Required when
+            using vCPU-count based autoscaling. Must be null if `targetNodes` is set.
           type: integer
           nullable: true
         nodeGroupPriceLimit:
@@ -9613,6 +9983,12 @@ components:
           description: Extra markup to the spot instance price
           example: 5
           type: number
+        userLabels:
+          description: ASG label applied to nodes created by this autoscaling group
+          items:
+            $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner_userLabels_inner"
+          type: array
+          nullable: true
         configurationPriorities:
           description: Compute instance configurations with priorities
           items:
@@ -9700,6 +10076,7 @@ components:
           items:
             $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner"
           type: array
+          nullable: true
     KubernetesGetResponse_nodeGroups_inner_nodes_inner_provider:
       description: Cloud provider of the worker node
       properties:
@@ -9721,6 +10098,10 @@ components:
         name:
           description: Location name of the worker node
           example: London
+          type: string
+        country:
+          description: Country of the worker node location
+          example: United Kingdom
           type: string
         continent:
           description: Name of the geographical continent
@@ -9924,6 +10305,83 @@ components:
           items:
             $ref: "#/components/schemas/KubernetesGetResponse_nodeGroups_inner_nodes_inner"
           type: array
+    KubernetesGetResponse_autoscalingConfigs_inner:
+      properties:
+        groupName:
+          description: Name of the autoscaling group
+          example: nodegroup
+          type: string
+        dataCenterId:
+          description: ID of the data center
+          example: aws-us-west-1
+          type: string
+        minimumNodes:
+          description: Minimum number of nodes. Required when using node-count based
+            autoscaling. Must be null if `minimumVCpus` is set.
+          example: 1
+          type: integer
+          nullable: true
+        maximumNodes:
+          description: Maximum number of nodes.Required when using node-count based
+            autoscaling. Must be null if `maximumVCpus` is set.
+          example: 2
+          type: integer
+          nullable: true
+        targetNodes:
+          description: Target number of nodes. Required when using node-count based
+            autoscaling. Must be null if `targetVCpus` is set.
+          example: 1
+          type: integer
+          nullable: true
+        minimumVCpus:
+          description: Minimum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `minimumNodes` is set.
+          type: integer
+          nullable: true
+          example: null
+        maximumVCpus:
+          description: Maximum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `maximumNodes` is set.
+          type: integer
+          nullable: true
+          example: null
+        targetVCpus:
+          description: Target number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `targetNodes` is set.
+          type: integer
+          nullable: true
+          example: null
+        nodeGroupPriceLimit:
+          description: Price limit of the autoscaling group
+          example: 5
+          type: number
+        useOnDemandInstancesInsteadOfSpots:
+          description: Use on-demand compute instances instead of spot compute instances
+          example: true
+          type: boolean
+        spotPercent:
+          description: Percentage of spot instances in the autoscaling group
+          example: 5
+          type: integer
+        spotMarkup:
+          description: Extra markup to the spot instance price
+          example: 5
+          type: number
+        userLabels:
+          description: ASG labels applied to nodes created by this autoscaling group
+          items:
+            $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner_userLabels_inner"
+          type: array
+          nullable: true
+        configurationPriorities:
+          description: Compute instance configurations with priorities
+          items:
+            $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner_configurationPriorities_inner"
+          type: array
+        limitsNotice:
+          description: Limits notice message
+          type: string
+          nullable: true
     KubernetesCreateRequest_workerNodes_inner:
       properties:
         name:
@@ -10026,17 +10484,20 @@ components:
           example: 1
           type: integer
         minimumVCpus:
-          description: Minimum number of vCPUs
+          description: Minimum number of vCPUs.Required when using vCPU-count based
+            autoscaling. Must be null if `minimumNodes` is set.
           type: integer
           nullable: true
           example: null
         maximumVCpus:
-          description: Maximum number of vCPUs
+          description: Maximum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `maximumNodes` is set.
           type: integer
           nullable: true
           example: null
         targetVCpus:
-          description: Target number of vCPUs in the autoscaling group
+          description: Target number of vCPUs in the autoscaling group. Required when
+            using vCPU-count based autoscaling. Must be null if `targetNodes` is set.
           type: integer
           nullable: true
         useOnDemandInstancesInsteadOfSpots:
@@ -10051,6 +10512,12 @@ components:
           description: Extra markup to the spot instance price
           example: 5
           type: number
+        userLabels:
+          description: ASG labels applied to nodes created by this autoscaling group
+          items:
+            $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner_userLabels_inner"
+          type: array
+          nullable: true
         configurationPriorities:
           description: Compute instance configurations with priorities
           items:
@@ -10092,6 +10559,10 @@ components:
         name:
           description: Location name (city or state) of the worker node
           example: Eemshaven
+          type: string
+        country:
+          description: Country of the worker node location
+          example: Netherlands
           type: string
         continent:
           description: Name of the geographical continent
@@ -10364,12 +10835,14 @@ components:
           example: 1
           type: integer
         minimumVCpus:
-          description: Minimum number of vCPUs
+          description: Minimum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `minimumNodes` is set.
           type: integer
           nullable: true
           example: null
         maximumVCpus:
-          description: Maximum number of vCPUs
+          description: Maximum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `maximumNodes` is set.
           type: integer
           nullable: true
           example: null
@@ -10395,6 +10868,12 @@ components:
           description: Extra markup to the spot instance price
           example: 5
           type: number
+        userLabels:
+          description: ASG labels applied to nodes created by this autoscaling group
+          items:
+            $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner_userLabels_inner"
+          type: array
+          nullable: true
         configurationPriorities:
           description: Compute instance configurations with priorities
           items:
@@ -10475,7 +10954,6 @@ components:
       - volumeType
     KubernetesUpdateRequest_autoscalingConfigs_inner:
       example:
-        spotPercent: 50
         configurationPriorities:
         - volumeType: ssd
           vCpu: 2
@@ -10489,13 +10967,22 @@ components:
           priority: high
           ramGb: 4
           vCpuType: shared
+        minimumNodes: 1
+        userLabels:
+        - value: batch
+          key: workload
+        - value: batch
+          key: workload
+        targetNodes: 1
+        spotPercent: 50
         groupName: autonodegroup
         maximumNodes: 2
+        minimumVCpus: 0
         useOnDemandInstancesInsteadOfSpots: true
         dataCenterId: gcp-europe-west1-b
         nodeGroupPriceLimit: 50
-        minimumNodes: 1
-        targetNodes: 1
+        targetVCpus: 1
+        maximumVCpus: 6
         spotMarkup: 5
       properties:
         groupName:
@@ -10507,17 +10994,38 @@ components:
           example: gcp-europe-west1-b
           type: string
         minimumNodes:
-          description: Minimum number of nodes
+          description: Minimum number of nodes. Required when using node-count based
+            autoscaling. Must be null if `minimumVCpus` is set.
           example: 1
           type: integer
         maximumNodes:
-          description: Maximum number of nodes
+          description: Maximum number of nodes. Required when using node-count based
+            autoscaling. Must be null if `maximumVCpus` is set.
           example: 2
           type: integer
         targetNodes:
-          description: Target number of worker nodes in the autoscaling group
+          description: Target number of worker nodes in the autoscaling group. Required
+            when using node-count based autoscaling. Must be null if `targetVCpus`
+            is set.
           example: 1
           type: integer
+        minimumVCpus:
+          description: Minimum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `minimumNodes` is set.
+          type: integer
+          nullable: true
+          example: null
+        maximumVCpus:
+          description: Maximum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `maximumNodes` is set.
+          type: integer
+          nullable: true
+          example: null
+        targetVCpus:
+          description: Target number of vCPUs in the autoscaling group. Required when
+            using vCPU-count based autoscaling. Must be null if `targetNodes` is set.
+          type: integer
+          nullable: true
         nodeGroupPriceLimit:
           description: Price limit of the autoscaling group
           example: 50
@@ -10534,6 +11042,12 @@ components:
           description: Extra markup to the spot instance price
           example: 5
           type: number
+        userLabels:
+          description: ASG label applied to nodes created by this autoscaling group
+          items:
+            $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner_userLabels_inner"
+          type: array
+          nullable: true
         configurationPriorities:
           description: Compute instance configurations with priorities
           items:
@@ -10579,6 +11093,9 @@ components:
         name:
           description: Location name
           type: string
+        country:
+          description: Country
+          type: string
         continent:
           description: Continent
           type: string
@@ -10595,6 +11112,7 @@ components:
           type: number
       required:
       - continent
+      - country
       - id
       - latitude
       - longitude
@@ -10833,12 +11351,14 @@ components:
           description: Target number of nodes
           type: integer
         minimumVCpus:
-          description: Minimum number of vCPUs
+          description: Minimum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `minimumNodes` is set.
           type: integer
           nullable: true
           example: null
         maximumVCpus:
-          description: Maximum number of vCPUs
+          description: Maximum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `maximumNodes` is set.
           type: integer
           nullable: true
           example: null
@@ -10861,6 +11381,12 @@ components:
           description: Extra markup to the spot instance price
           format: double
           type: number
+        userLabels:
+          description: ASG labels applied to nodes created by this autoscaling group
+          items:
+            $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner_userLabels_inner"
+          type: array
+          nullable: true
         configurationPriorities:
           description: Compute instance configurations with priorities
           items:
@@ -10908,6 +11434,9 @@ components:
           type: integer
         name:
           description: Location name
+          type: string
+        country:
+          description: Country
           type: string
         continent:
           description: Continent
@@ -11127,26 +11656,32 @@ components:
           description: ID of the data center
           type: string
         minimumNodes:
-          description: Minimum number of nodes
+          description: Minimum number of nodes. Required when using node-count based
+            autoscaling. Must be null if `minimumVCpus` is set.
           type: integer
         maximumNodes:
-          description: Maximum number of nodes
+          description: Maximum number of nodes. Required when using node-count based
+            autoscaling. Must be null if `maximumVCpus` is set.
           type: integer
         targetNodes:
-          description: Target number of nodes
+          description: Target number of nodes. Required when using node-count based
+            autoscaling. Must be null if `targetVCpus` is set.
           type: integer
         minimumVCpus:
-          description: Minimum number of vCPUs
+          description: Minimum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `minimumNodes` is set.
           type: integer
           nullable: true
           example: null
         maximumVCpus:
-          description: Maximum number of vCPUs
+          description: Maximum number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `maximumNodes` is set.
           type: integer
           nullable: true
           example: null
         targetVCpus:
-          description: Target number of vCPUs
+          description: Target number of vCPUs. Required when using vCPU-count based
+            autoscaling. Must be null if `targetNodes` is set.
           type: integer
           nullable: true
           example: null
@@ -11164,6 +11699,12 @@ components:
           description: Extra markup to the spot instance price
           format: double
           type: number
+        userLabels:
+          description: ASG labels applied to nodes created by this autoscaling group
+          items:
+            $ref: "#/components/schemas/KubernetesListResponse_inner_autoscalingConfigs_inner_userLabels_inner"
+          type: array
+          nullable: true
         configurationPriorities:
           description: Compute instance configurations with priorities
           items:
@@ -11960,6 +12501,7 @@ components:
     Vm_location:
       example:
         continent: Asia
+        country: United Kingdom
         latitude: 51.50735
         name: London
         id: 6
@@ -11973,6 +12515,10 @@ components:
         name:
           description: Name of the data center location (city or state)
           example: London
+          type: string
+        country:
+          description: Country of the data center location
+          example: United Kingdom
           type: string
         continent:
           description: Name of the geographical continent
@@ -12225,7 +12771,7 @@ components:
         sizeTb: 25
         totalSizeTb: 50
         disks: 2
-        type: SSD+
+        type: ssd-plus
       properties:
         disks:
           description: Number of local disks attached to the VM
@@ -12241,7 +12787,7 @@ components:
           type: number
         type:
           description: Disk type
-          example: SSD+
+          example: ssd-plus
           type: string
     VmConfiguration_cost:
       description: Cost of the configuration
@@ -12293,7 +12839,7 @@ components:
         sizeTb: 0.125
         totalSizeTb: 0.125
         disks: 1
-        type: SSD+
+        type: ssd-plus
       properties:
         disks:
           description: Number of local disks attached to the VM
@@ -12309,7 +12855,7 @@ components:
           type: number
         type:
           description: Disk type
-          example: SSD+
+          example: ssd-plus
           type: string
     K8sNodeConfiguration_cost:
       description: Cost of the configuration
@@ -12455,6 +13001,32 @@ components:
           description: Maximal cost of the spot instance for the period
           example: 0.003152
           type: number
+    SpotVm_accelerator:
+      description: GPU accelerator attached to the spot instance. Present only for
+        GPU-enabled spot instances. null for standard (non-GPU) instances.
+      example:
+        acceleratorType: T4
+        acceleratorTypeId: 53b7db26-4a1b-42f7-97a5-592edd685c5a
+        accelerators: 1
+        totalGpuMemoryGb: 16
+      properties:
+        acceleratorTypeId:
+          description: GPU accelerator type ID
+          example: 53b7db26-4a1b-42f7-97a5-592edd685c5a
+          type: string
+        acceleratorType:
+          description: GPU accelerator type
+          example: T4
+          type: string
+        accelerators:
+          description: Quantity of GPU accelerators
+          example: 1
+          type: number
+        totalGpuMemoryGb:
+          description: Total GPU memory
+          example: 16
+          type: integer
+      nullable: true
     Volume_provider:
       example:
         name: AWS
@@ -12471,6 +13043,7 @@ components:
     Volume_location:
       example:
         continent: Europe
+        country: United Kingdom
         latitude: 51.50735
         name: London
         id: 6
@@ -12484,6 +13057,10 @@ components:
         name:
           description: Name of the data center location (city or state)
           example: London
+          type: string
+        country:
+          description: Country of the data center location
+          example: United Kingdom
           type: string
         continent:
           description: Name of the geographical continent

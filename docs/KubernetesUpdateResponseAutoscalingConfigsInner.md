@@ -9,13 +9,14 @@ Name | Type | Description | Notes
 **MinimumNodes** | **int32** | Minimum number of nodes | 
 **MaximumNodes** | **int32** | Maximum number of nodes | 
 **TargetNodes** | **int32** | Target number of nodes | 
-**MinimumVCpus** | Pointer to **int32** | Minimum number of vCPUs | [optional] 
-**MaximumVCpus** | Pointer to **int32** | Maximum number of vCPUs | [optional] 
+**MinimumVCpus** | Pointer to **int32** | Minimum number of vCPUs. Required when using vCPU-count based autoscaling. Must be null if &#x60;minimumNodes&#x60; is set. | [optional] 
+**MaximumVCpus** | Pointer to **int32** | Maximum number of vCPUs. Required when using vCPU-count based autoscaling. Must be null if &#x60;maximumNodes&#x60; is set. | [optional] 
 **TargetVCpus** | Pointer to **int32** | Target number of vCPUs | [optional] 
 **NodeGroupPriceLimit** | **float64** | Price limit of the autoscaling group | 
 **UseOnDemandInstancesInsteadOfSpots** | **bool** | Use on-demand compute instances instead of spot compute instances | 
 **SpotPercent** | **int32** | Percentage of spot instances in the autoscaling group | 
 **SpotMarkup** | **float64** | Extra markup to the spot instance price | 
+**UserLabels** | Pointer to [**[]KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner**](KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner.md) | ASG labels applied to nodes created by this autoscaling group | [optional] 
 **ConfigurationPriorities** | [**[]KubernetesUpdateResponseAutoscalingConfigsInnerConfigurationPrioritiesInner**](KubernetesUpdateResponseAutoscalingConfigsInnerConfigurationPrioritiesInner.md) | Compute instance configurations with priorities | 
 **LimitsNotice** | Pointer to **string** | Limits notice message | [optional] 
 
@@ -292,6 +293,31 @@ and a boolean to check if the value has been set.
 
 SetSpotMarkup sets SpotMarkup field to given value.
 
+
+### GetUserLabels
+
+`func (o *KubernetesUpdateResponseAutoscalingConfigsInner) GetUserLabels() []KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner`
+
+GetUserLabels returns the UserLabels field if non-nil, zero value otherwise.
+
+### GetUserLabelsOk
+
+`func (o *KubernetesUpdateResponseAutoscalingConfigsInner) GetUserLabelsOk() (*[]KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner, bool)`
+
+GetUserLabelsOk returns a tuple with the UserLabels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUserLabels
+
+`func (o *KubernetesUpdateResponseAutoscalingConfigsInner) SetUserLabels(v []KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner)`
+
+SetUserLabels sets UserLabels field to given value.
+
+### HasUserLabels
+
+`func (o *KubernetesUpdateResponseAutoscalingConfigsInner) HasUserLabels() bool`
+
+HasUserLabels returns a boolean if a field has been set.
 
 ### GetConfigurationPriorities
 

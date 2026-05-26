@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **VCpuType** | Pointer to **string** | Type of virtual Central Processing Units (vCPUs) | [optional] 
 **VCpu** | Pointer to **int32** | Number of virtual Central Processing Units (vCPUs) | [optional] 
 **RamGb** | Pointer to **int32** | Capacity of the RAM in gigabytes | [optional] 
+**ProviderComputeType** | Pointer to **string** | Provider-specific compute type identifier | [optional] 
+**Accelerator** | Pointer to [**VmConfigurationAccelerator**](VmConfigurationAccelerator.md) |  | [optional] 
 **Cost** | Pointer to [**VmConfigurationCost**](VmConfigurationCost.md) |  | [optional] 
 
 ## Methods
@@ -102,6 +104,56 @@ SetRamGb sets RamGb field to given value.
 `func (o *VmResizeConfiguration) HasRamGb() bool`
 
 HasRamGb returns a boolean if a field has been set.
+
+### GetProviderComputeType
+
+`func (o *VmResizeConfiguration) GetProviderComputeType() string`
+
+GetProviderComputeType returns the ProviderComputeType field if non-nil, zero value otherwise.
+
+### GetProviderComputeTypeOk
+
+`func (o *VmResizeConfiguration) GetProviderComputeTypeOk() (*string, bool)`
+
+GetProviderComputeTypeOk returns a tuple with the ProviderComputeType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProviderComputeType
+
+`func (o *VmResizeConfiguration) SetProviderComputeType(v string)`
+
+SetProviderComputeType sets ProviderComputeType field to given value.
+
+### HasProviderComputeType
+
+`func (o *VmResizeConfiguration) HasProviderComputeType() bool`
+
+HasProviderComputeType returns a boolean if a field has been set.
+
+### GetAccelerator
+
+`func (o *VmResizeConfiguration) GetAccelerator() VmConfigurationAccelerator`
+
+GetAccelerator returns the Accelerator field if non-nil, zero value otherwise.
+
+### GetAcceleratorOk
+
+`func (o *VmResizeConfiguration) GetAcceleratorOk() (*VmConfigurationAccelerator, bool)`
+
+GetAcceleratorOk returns a tuple with the Accelerator field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccelerator
+
+`func (o *VmResizeConfiguration) SetAccelerator(v VmConfigurationAccelerator)`
+
+SetAccelerator sets Accelerator field to given value.
+
+### HasAccelerator
+
+`func (o *VmResizeConfiguration) HasAccelerator() bool`
+
+HasAccelerator returns a boolean if a field has been set.
 
 ### GetCost
 

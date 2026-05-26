@@ -33,7 +33,7 @@ import (
 )
 
 func main() {
-	kubernetesCreateRequest := *openapiclient.NewKubernetesCreateRequest("eu", "default-k8s-managed-cluster-name", "internet_connect", []openapiclient.KubernetesCreateRequestWorkerNodesInner{*openapiclient.NewKubernetesCreateRequestWorkerNodesInner("vm-automation-co2ep", "gcp-europe-west4-a", "standard", int32(4), int32(16), int32(32), "ssd")}) // KubernetesCreateRequest |  (optional)
+	kubernetesCreateRequest := *openapiclient.NewKubernetesCreateRequest("eu", "default-k8s-managed-cluster-name", "internet_connect") // KubernetesCreateRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -170,7 +170,7 @@ import (
 
 func main() {
 	kubernetesId := int32(56) // int32 | ID of the Kubernetes cluster
-	kubernetesUpdateRequest := *openapiclient.NewKubernetesUpdateRequest([]openapiclient.KubernetesUpdateRequestWorkerNodesInner{*openapiclient.NewKubernetesUpdateRequestWorkerNodesInner("lsydyf-node", "gcp-europe-west4-a", "standard", int32(4), int32(16), "ssd", int32(32))}) // KubernetesUpdateRequest |  (optional)
+	kubernetesUpdateRequest := *openapiclient.NewKubernetesUpdateRequest() // KubernetesUpdateRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

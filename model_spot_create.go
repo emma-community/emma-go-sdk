@@ -1,9 +1,9 @@
 /*
 Public EMMA API
 
-### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. |
+### About Infrastructure API  **Base URL:** **<u>https://api.emma.ms/external</u>**   This **Infrastructure API** is for managing the emma cloud infrastructure within a project. The API enables you to view, create, edit, and delete _Virtual machines, Spot instances, Applications, Kubernetes clusters, SSH keys, Security groups, and Backup policies_. For creating the resources you can use the endpoints with the dictionaries: _Data centers, Locations, Providers, Operating systems, Virtual machines configurations, Spot instances configurations, Kubernetes clusters configurations._   ### Authentication   #### 1. Create service application   To access the API, enter your project, navigate to **Settings** > **Service Apps**, and create a service application. Select the access level **Read**, **Operate**, or **Manage**.   - **Read** - only GET methods are allowed in the API.   - **Operate** - some operations are allowed with the resources (e.g. _Start, Reboot,_ and _Shutdown_ of the Virtual machines).   - **Manage** - full creating, updating, and deleting of the resources is allowed.    #### 2. Get access token   - Copy the **Client ID** and **Client Secret** in the service application.  - Send an API request to the endpoint **_/issue-token** as specified in the **Authentication** section of the API documentation. You will receive access and refresh tokens in the response.   _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token \\  -H \"Content-Type: application/json\" \\  -d '{\"clientId\": \"YOUR-CLIENT-ID\", \"clientSecret\": \"YOUR-CLIENT-SECRET\"}'  ```  _For Windows:_  ```  curl -X POST https://api.emma.ms/external/v1/issue-token ^  -H \"Content-Type: application/json\" ^  -d \"{\\\"clientId\\\": \\\"YOUR-CLIENT-ID\\\", \\\"clientSecret\\\": \\\"YOUR-CLIENT-SECRET\\\"}\"  ```   #### 3. Use access token in requests  The Bearer access token is a text string, included in the request header, for example:   _For Linux / Mac:_  ```  curl -X GET https://api.emma.ms/external/v1/locations -H \"Authorization: Bearer YOUR-ACCESS-TOKEN-HERE\"  ```   Use this token for the API requests.    #### 4. Refresh token  The access token will expire in 10 minutes. A new access token may be created using the refresh token (without Client ID and Client Secret).   To get a new access token send a request to the **_/refresh-token** endpoint:    _For Linux / Mac:_  ```  curl -X POST https://api.emma.ms/external/v1/refresh-token \\  -H \"Content-Type: application/json\" \\  -d '{\"refreshToken\": \"YOUR-REFRESH-TOKEN\"}'  ```       ### Possible response status codes   We use standard HTTP response codes to show the success or failure of requests.   `2xx` - successful responses.   `4xx` - client error responses (the response contains an explanation of the error).   `5xx` - server error responses.   The API uses the following status codes:   | Status Code | Description                  | Notes                                                                  |  |-------------|------------------------------|------------------------------------------------------------------------|  | 200         | OK                           | The request was successful.                                             |  | 201         | Created                      | The object was successfully created. This code is only used with objects that are created immediately.  | 204         | No content                   | A successful request, but there is no additional information to send back in the response body (in a case when the object was deleted).    | 400         | Bad Request                  | The request could not be understood by the server. Incoming parameters might not be valid. |  | 401         | Unauthorized            | The client is unauthenticated. The client must authenticate itself to get the requested response. |  | 403         | Forbidden                   | The client does not have access rights to the content.  | 404         | Not Found                    | The requested resource is not found.                                    |  | 409         | Conflict | This response is sent when a request conflicts with the current state of the object (e.g. deleting the security group with the compute instances in it).|  | 422         | Unprocessable Content   | The request was well-formed but was unable to be followed due to incorrect field values (e.g. creation of a virtual machine in the non-existent data center).  |  | 500         | Internal server Error                 | The server could not return the representation due to an internal server error. | 
 
-API version: 1.0.50
+API version: 1.0.72
 */
 
 // Code generated by OpenAPI Generator (https://openapi-generator.tech); DO NOT EDIT.
@@ -11,8 +11,8 @@ API version: 1.0.50
 package emma
 
 import (
-	"bytes"
 	"encoding/json"
+	"bytes"
 	"fmt"
 )
 
@@ -45,6 +45,10 @@ type SpotCreate struct {
 	UserPassword *string `json:"userPassword,omitempty"`
 	// ID of the security group
 	SecurityGroupId *int32 `json:"securityGroupId,omitempty"`
+	// GPU accelerator type identifier. Obtain from the acceleratorTypeId field in the GET /v1/spots-configs response. Required when creating a GPU spot instance.
+	AcceleratorTypeId *string `json:"acceleratorTypeId,omitempty"`
+	// Number of GPU accelerators. Must match the value from the selected configuration in GET /v1/spots-configs. Required when acceleratorTypeId is specified.
+	Accelerators *float32 `json:"accelerators,omitempty"`
 	// Offer price of the spot instance
 	Price float32 `json:"price"`
 }
@@ -390,6 +394,70 @@ func (o *SpotCreate) SetSecurityGroupId(v int32) {
 	o.SecurityGroupId = &v
 }
 
+// GetAcceleratorTypeId returns the AcceleratorTypeId field value if set, zero value otherwise.
+func (o *SpotCreate) GetAcceleratorTypeId() string {
+	if o == nil || IsNil(o.AcceleratorTypeId) {
+		var ret string
+		return ret
+	}
+	return *o.AcceleratorTypeId
+}
+
+// GetAcceleratorTypeIdOk returns a tuple with the AcceleratorTypeId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SpotCreate) GetAcceleratorTypeIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AcceleratorTypeId) {
+		return nil, false
+	}
+	return o.AcceleratorTypeId, true
+}
+
+// HasAcceleratorTypeId returns a boolean if a field has been set.
+func (o *SpotCreate) HasAcceleratorTypeId() bool {
+	if o != nil && !IsNil(o.AcceleratorTypeId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAcceleratorTypeId gets a reference to the given string and assigns it to the AcceleratorTypeId field.
+func (o *SpotCreate) SetAcceleratorTypeId(v string) {
+	o.AcceleratorTypeId = &v
+}
+
+// GetAccelerators returns the Accelerators field value if set, zero value otherwise.
+func (o *SpotCreate) GetAccelerators() float32 {
+	if o == nil || IsNil(o.Accelerators) {
+		var ret float32
+		return ret
+	}
+	return *o.Accelerators
+}
+
+// GetAcceleratorsOk returns a tuple with the Accelerators field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SpotCreate) GetAcceleratorsOk() (*float32, bool) {
+	if o == nil || IsNil(o.Accelerators) {
+		return nil, false
+	}
+	return o.Accelerators, true
+}
+
+// HasAccelerators returns a boolean if a field has been set.
+func (o *SpotCreate) HasAccelerators() bool {
+	if o != nil && !IsNil(o.Accelerators) {
+		return true
+	}
+
+	return false
+}
+
+// SetAccelerators gets a reference to the given float32 and assigns it to the Accelerators field.
+func (o *SpotCreate) SetAccelerators(v float32) {
+	o.Accelerators = &v
+}
+
 // GetPrice returns the Price field value
 func (o *SpotCreate) GetPrice() float32 {
 	if o == nil {
@@ -415,7 +483,7 @@ func (o *SpotCreate) SetPrice(v float32) {
 }
 
 func (o SpotCreate) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -441,6 +509,12 @@ func (o SpotCreate) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SecurityGroupId) {
 		toSerialize["securityGroupId"] = o.SecurityGroupId
+	}
+	if !IsNil(o.AcceleratorTypeId) {
+		toSerialize["acceleratorTypeId"] = o.AcceleratorTypeId
+	}
+	if !IsNil(o.Accelerators) {
+		toSerialize["accelerators"] = o.Accelerators
 	}
 	toSerialize["price"] = o.Price
 	return toSerialize, nil
@@ -468,10 +542,10 @@ func (o *SpotCreate) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err
+		return err;
 	}
 
-	for _, requiredProperty := range requiredProperties {
+	for _, requiredProperty := range(requiredProperties) {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -527,3 +601,5 @@ func (v *NullableSpotCreate) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

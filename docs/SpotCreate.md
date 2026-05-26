@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **SshKeyId** | Pointer to **int32** | SSH-key ID | [optional] 
 **UserPassword** | Pointer to **string** | User password | [optional] 
 **SecurityGroupId** | Pointer to **int32** | ID of the security group | [optional] 
+**AcceleratorTypeId** | Pointer to **string** | GPU accelerator type identifier. Obtain from the acceleratorTypeId field in the GET /v1/spots-configs response. Required when creating a GPU spot instance. | [optional] 
+**Accelerators** | Pointer to **float32** | Number of GPU accelerators. Must match the value from the selected configuration in GET /v1/spots-configs. Required when acceleratorTypeId is specified. | [optional] 
 **Price** | **float32** | Offer price of the spot instance | 
 
 ## Methods
@@ -291,6 +293,56 @@ SetSecurityGroupId sets SecurityGroupId field to given value.
 `func (o *SpotCreate) HasSecurityGroupId() bool`
 
 HasSecurityGroupId returns a boolean if a field has been set.
+
+### GetAcceleratorTypeId
+
+`func (o *SpotCreate) GetAcceleratorTypeId() string`
+
+GetAcceleratorTypeId returns the AcceleratorTypeId field if non-nil, zero value otherwise.
+
+### GetAcceleratorTypeIdOk
+
+`func (o *SpotCreate) GetAcceleratorTypeIdOk() (*string, bool)`
+
+GetAcceleratorTypeIdOk returns a tuple with the AcceleratorTypeId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAcceleratorTypeId
+
+`func (o *SpotCreate) SetAcceleratorTypeId(v string)`
+
+SetAcceleratorTypeId sets AcceleratorTypeId field to given value.
+
+### HasAcceleratorTypeId
+
+`func (o *SpotCreate) HasAcceleratorTypeId() bool`
+
+HasAcceleratorTypeId returns a boolean if a field has been set.
+
+### GetAccelerators
+
+`func (o *SpotCreate) GetAccelerators() float32`
+
+GetAccelerators returns the Accelerators field if non-nil, zero value otherwise.
+
+### GetAcceleratorsOk
+
+`func (o *SpotCreate) GetAcceleratorsOk() (*float32, bool)`
+
+GetAcceleratorsOk returns a tuple with the Accelerators field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAccelerators
+
+`func (o *SpotCreate) SetAccelerators(v float32)`
+
+SetAccelerators sets Accelerators field to given value.
+
+### HasAccelerators
+
+`func (o *SpotCreate) HasAccelerators() bool`
+
+HasAccelerators returns a boolean if a field has been set.
 
 ### GetPrice
 

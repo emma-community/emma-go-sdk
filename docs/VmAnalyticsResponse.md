@@ -45,6 +45,24 @@ Name | Type | Description | Notes
 **NetworkInBps** | Pointer to **float32** | Network in, bps | [optional] 
 **NetworkInHuman** | Pointer to **float32** | Network in | [optional] 
 **NetworkInHumanLabel** | Pointer to **string** | Label | [optional] 
+**GpuDataPresent** | Pointer to **int32** | Internal service parameter | [optional] 
+**GpuUtilizationAvgPercent** | Pointer to **float32** | GPU utilization | [optional] 
+**GpuUtilizationAvgPercentQ10** | Pointer to **float32** | 10th percentile of GPU utilization | [optional] 
+**GpuUtilizationAvgPercentQ90** | Pointer to **float32** | 90th percentile of GPU utilization | [optional] 
+**GpuTotalPercent** | Pointer to **int32** | Total GPU, % | [optional] 
+**GpuHumanLabel** | Pointer to **string** | Label | [optional] 
+**GpuRamDataPresent** | Pointer to **int32** | Internal service parameter | [optional] 
+**GpuRamUsageAvgGb** | Pointer to **float32** | GPU vRAM usage | [optional] 
+**GpuRamUsageAvgGbQ10** | Pointer to **float32** | 10th percentile of GPU vRAM usage | [optional] 
+**GpuRamUsageAvgGbQ90** | Pointer to **float32** | 90th percentile of GPU vRAM usage | [optional] 
+**GpuRamTotalGb** | Pointer to **float32** | Total GPU vRAM, GB | [optional] 
+**GpuRamHumanLabel** | Pointer to **string** | Label | [optional] 
+**GpuRamUtilizationDataPresent** | Pointer to **int32** | Internal service parameter | [optional] 
+**GpuRamUtilizationAvgPercent** | Pointer to **float32** | GPU vRAM utilization | [optional] 
+**GpuRamUtilizationAvgPercentQ10** | Pointer to **float32** | 10th percentile of GPU vRAM utilization | [optional] 
+**GpuRamUtilizationAvgPercentQ90** | Pointer to **float32** | 90th percentile of GPU vRAM utilization | [optional] 
+**GpuRamUtilizationTotalPercent** | Pointer to **int32** | Total GPU utilization, % | [optional] 
+**GpuRamUtilizationHumanLabel** | Pointer to **string** | Label | [optional] 
 **IsShownShort** | Pointer to **int32** | Internal service parameter | [optional] 
 **Type** | Pointer to **string** | Dataset type | [optional] 
 
@@ -1091,6 +1109,456 @@ SetNetworkInHumanLabel sets NetworkInHumanLabel field to given value.
 `func (o *VmAnalyticsResponse) HasNetworkInHumanLabel() bool`
 
 HasNetworkInHumanLabel returns a boolean if a field has been set.
+
+### GetGpuDataPresent
+
+`func (o *VmAnalyticsResponse) GetGpuDataPresent() int32`
+
+GetGpuDataPresent returns the GpuDataPresent field if non-nil, zero value otherwise.
+
+### GetGpuDataPresentOk
+
+`func (o *VmAnalyticsResponse) GetGpuDataPresentOk() (*int32, bool)`
+
+GetGpuDataPresentOk returns a tuple with the GpuDataPresent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuDataPresent
+
+`func (o *VmAnalyticsResponse) SetGpuDataPresent(v int32)`
+
+SetGpuDataPresent sets GpuDataPresent field to given value.
+
+### HasGpuDataPresent
+
+`func (o *VmAnalyticsResponse) HasGpuDataPresent() bool`
+
+HasGpuDataPresent returns a boolean if a field has been set.
+
+### GetGpuUtilizationAvgPercent
+
+`func (o *VmAnalyticsResponse) GetGpuUtilizationAvgPercent() float32`
+
+GetGpuUtilizationAvgPercent returns the GpuUtilizationAvgPercent field if non-nil, zero value otherwise.
+
+### GetGpuUtilizationAvgPercentOk
+
+`func (o *VmAnalyticsResponse) GetGpuUtilizationAvgPercentOk() (*float32, bool)`
+
+GetGpuUtilizationAvgPercentOk returns a tuple with the GpuUtilizationAvgPercent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuUtilizationAvgPercent
+
+`func (o *VmAnalyticsResponse) SetGpuUtilizationAvgPercent(v float32)`
+
+SetGpuUtilizationAvgPercent sets GpuUtilizationAvgPercent field to given value.
+
+### HasGpuUtilizationAvgPercent
+
+`func (o *VmAnalyticsResponse) HasGpuUtilizationAvgPercent() bool`
+
+HasGpuUtilizationAvgPercent returns a boolean if a field has been set.
+
+### GetGpuUtilizationAvgPercentQ10
+
+`func (o *VmAnalyticsResponse) GetGpuUtilizationAvgPercentQ10() float32`
+
+GetGpuUtilizationAvgPercentQ10 returns the GpuUtilizationAvgPercentQ10 field if non-nil, zero value otherwise.
+
+### GetGpuUtilizationAvgPercentQ10Ok
+
+`func (o *VmAnalyticsResponse) GetGpuUtilizationAvgPercentQ10Ok() (*float32, bool)`
+
+GetGpuUtilizationAvgPercentQ10Ok returns a tuple with the GpuUtilizationAvgPercentQ10 field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuUtilizationAvgPercentQ10
+
+`func (o *VmAnalyticsResponse) SetGpuUtilizationAvgPercentQ10(v float32)`
+
+SetGpuUtilizationAvgPercentQ10 sets GpuUtilizationAvgPercentQ10 field to given value.
+
+### HasGpuUtilizationAvgPercentQ10
+
+`func (o *VmAnalyticsResponse) HasGpuUtilizationAvgPercentQ10() bool`
+
+HasGpuUtilizationAvgPercentQ10 returns a boolean if a field has been set.
+
+### GetGpuUtilizationAvgPercentQ90
+
+`func (o *VmAnalyticsResponse) GetGpuUtilizationAvgPercentQ90() float32`
+
+GetGpuUtilizationAvgPercentQ90 returns the GpuUtilizationAvgPercentQ90 field if non-nil, zero value otherwise.
+
+### GetGpuUtilizationAvgPercentQ90Ok
+
+`func (o *VmAnalyticsResponse) GetGpuUtilizationAvgPercentQ90Ok() (*float32, bool)`
+
+GetGpuUtilizationAvgPercentQ90Ok returns a tuple with the GpuUtilizationAvgPercentQ90 field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuUtilizationAvgPercentQ90
+
+`func (o *VmAnalyticsResponse) SetGpuUtilizationAvgPercentQ90(v float32)`
+
+SetGpuUtilizationAvgPercentQ90 sets GpuUtilizationAvgPercentQ90 field to given value.
+
+### HasGpuUtilizationAvgPercentQ90
+
+`func (o *VmAnalyticsResponse) HasGpuUtilizationAvgPercentQ90() bool`
+
+HasGpuUtilizationAvgPercentQ90 returns a boolean if a field has been set.
+
+### GetGpuTotalPercent
+
+`func (o *VmAnalyticsResponse) GetGpuTotalPercent() int32`
+
+GetGpuTotalPercent returns the GpuTotalPercent field if non-nil, zero value otherwise.
+
+### GetGpuTotalPercentOk
+
+`func (o *VmAnalyticsResponse) GetGpuTotalPercentOk() (*int32, bool)`
+
+GetGpuTotalPercentOk returns a tuple with the GpuTotalPercent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuTotalPercent
+
+`func (o *VmAnalyticsResponse) SetGpuTotalPercent(v int32)`
+
+SetGpuTotalPercent sets GpuTotalPercent field to given value.
+
+### HasGpuTotalPercent
+
+`func (o *VmAnalyticsResponse) HasGpuTotalPercent() bool`
+
+HasGpuTotalPercent returns a boolean if a field has been set.
+
+### GetGpuHumanLabel
+
+`func (o *VmAnalyticsResponse) GetGpuHumanLabel() string`
+
+GetGpuHumanLabel returns the GpuHumanLabel field if non-nil, zero value otherwise.
+
+### GetGpuHumanLabelOk
+
+`func (o *VmAnalyticsResponse) GetGpuHumanLabelOk() (*string, bool)`
+
+GetGpuHumanLabelOk returns a tuple with the GpuHumanLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuHumanLabel
+
+`func (o *VmAnalyticsResponse) SetGpuHumanLabel(v string)`
+
+SetGpuHumanLabel sets GpuHumanLabel field to given value.
+
+### HasGpuHumanLabel
+
+`func (o *VmAnalyticsResponse) HasGpuHumanLabel() bool`
+
+HasGpuHumanLabel returns a boolean if a field has been set.
+
+### GetGpuRamDataPresent
+
+`func (o *VmAnalyticsResponse) GetGpuRamDataPresent() int32`
+
+GetGpuRamDataPresent returns the GpuRamDataPresent field if non-nil, zero value otherwise.
+
+### GetGpuRamDataPresentOk
+
+`func (o *VmAnalyticsResponse) GetGpuRamDataPresentOk() (*int32, bool)`
+
+GetGpuRamDataPresentOk returns a tuple with the GpuRamDataPresent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamDataPresent
+
+`func (o *VmAnalyticsResponse) SetGpuRamDataPresent(v int32)`
+
+SetGpuRamDataPresent sets GpuRamDataPresent field to given value.
+
+### HasGpuRamDataPresent
+
+`func (o *VmAnalyticsResponse) HasGpuRamDataPresent() bool`
+
+HasGpuRamDataPresent returns a boolean if a field has been set.
+
+### GetGpuRamUsageAvgGb
+
+`func (o *VmAnalyticsResponse) GetGpuRamUsageAvgGb() float32`
+
+GetGpuRamUsageAvgGb returns the GpuRamUsageAvgGb field if non-nil, zero value otherwise.
+
+### GetGpuRamUsageAvgGbOk
+
+`func (o *VmAnalyticsResponse) GetGpuRamUsageAvgGbOk() (*float32, bool)`
+
+GetGpuRamUsageAvgGbOk returns a tuple with the GpuRamUsageAvgGb field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamUsageAvgGb
+
+`func (o *VmAnalyticsResponse) SetGpuRamUsageAvgGb(v float32)`
+
+SetGpuRamUsageAvgGb sets GpuRamUsageAvgGb field to given value.
+
+### HasGpuRamUsageAvgGb
+
+`func (o *VmAnalyticsResponse) HasGpuRamUsageAvgGb() bool`
+
+HasGpuRamUsageAvgGb returns a boolean if a field has been set.
+
+### GetGpuRamUsageAvgGbQ10
+
+`func (o *VmAnalyticsResponse) GetGpuRamUsageAvgGbQ10() float32`
+
+GetGpuRamUsageAvgGbQ10 returns the GpuRamUsageAvgGbQ10 field if non-nil, zero value otherwise.
+
+### GetGpuRamUsageAvgGbQ10Ok
+
+`func (o *VmAnalyticsResponse) GetGpuRamUsageAvgGbQ10Ok() (*float32, bool)`
+
+GetGpuRamUsageAvgGbQ10Ok returns a tuple with the GpuRamUsageAvgGbQ10 field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamUsageAvgGbQ10
+
+`func (o *VmAnalyticsResponse) SetGpuRamUsageAvgGbQ10(v float32)`
+
+SetGpuRamUsageAvgGbQ10 sets GpuRamUsageAvgGbQ10 field to given value.
+
+### HasGpuRamUsageAvgGbQ10
+
+`func (o *VmAnalyticsResponse) HasGpuRamUsageAvgGbQ10() bool`
+
+HasGpuRamUsageAvgGbQ10 returns a boolean if a field has been set.
+
+### GetGpuRamUsageAvgGbQ90
+
+`func (o *VmAnalyticsResponse) GetGpuRamUsageAvgGbQ90() float32`
+
+GetGpuRamUsageAvgGbQ90 returns the GpuRamUsageAvgGbQ90 field if non-nil, zero value otherwise.
+
+### GetGpuRamUsageAvgGbQ90Ok
+
+`func (o *VmAnalyticsResponse) GetGpuRamUsageAvgGbQ90Ok() (*float32, bool)`
+
+GetGpuRamUsageAvgGbQ90Ok returns a tuple with the GpuRamUsageAvgGbQ90 field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamUsageAvgGbQ90
+
+`func (o *VmAnalyticsResponse) SetGpuRamUsageAvgGbQ90(v float32)`
+
+SetGpuRamUsageAvgGbQ90 sets GpuRamUsageAvgGbQ90 field to given value.
+
+### HasGpuRamUsageAvgGbQ90
+
+`func (o *VmAnalyticsResponse) HasGpuRamUsageAvgGbQ90() bool`
+
+HasGpuRamUsageAvgGbQ90 returns a boolean if a field has been set.
+
+### GetGpuRamTotalGb
+
+`func (o *VmAnalyticsResponse) GetGpuRamTotalGb() float32`
+
+GetGpuRamTotalGb returns the GpuRamTotalGb field if non-nil, zero value otherwise.
+
+### GetGpuRamTotalGbOk
+
+`func (o *VmAnalyticsResponse) GetGpuRamTotalGbOk() (*float32, bool)`
+
+GetGpuRamTotalGbOk returns a tuple with the GpuRamTotalGb field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamTotalGb
+
+`func (o *VmAnalyticsResponse) SetGpuRamTotalGb(v float32)`
+
+SetGpuRamTotalGb sets GpuRamTotalGb field to given value.
+
+### HasGpuRamTotalGb
+
+`func (o *VmAnalyticsResponse) HasGpuRamTotalGb() bool`
+
+HasGpuRamTotalGb returns a boolean if a field has been set.
+
+### GetGpuRamHumanLabel
+
+`func (o *VmAnalyticsResponse) GetGpuRamHumanLabel() string`
+
+GetGpuRamHumanLabel returns the GpuRamHumanLabel field if non-nil, zero value otherwise.
+
+### GetGpuRamHumanLabelOk
+
+`func (o *VmAnalyticsResponse) GetGpuRamHumanLabelOk() (*string, bool)`
+
+GetGpuRamHumanLabelOk returns a tuple with the GpuRamHumanLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamHumanLabel
+
+`func (o *VmAnalyticsResponse) SetGpuRamHumanLabel(v string)`
+
+SetGpuRamHumanLabel sets GpuRamHumanLabel field to given value.
+
+### HasGpuRamHumanLabel
+
+`func (o *VmAnalyticsResponse) HasGpuRamHumanLabel() bool`
+
+HasGpuRamHumanLabel returns a boolean if a field has been set.
+
+### GetGpuRamUtilizationDataPresent
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationDataPresent() int32`
+
+GetGpuRamUtilizationDataPresent returns the GpuRamUtilizationDataPresent field if non-nil, zero value otherwise.
+
+### GetGpuRamUtilizationDataPresentOk
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationDataPresentOk() (*int32, bool)`
+
+GetGpuRamUtilizationDataPresentOk returns a tuple with the GpuRamUtilizationDataPresent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamUtilizationDataPresent
+
+`func (o *VmAnalyticsResponse) SetGpuRamUtilizationDataPresent(v int32)`
+
+SetGpuRamUtilizationDataPresent sets GpuRamUtilizationDataPresent field to given value.
+
+### HasGpuRamUtilizationDataPresent
+
+`func (o *VmAnalyticsResponse) HasGpuRamUtilizationDataPresent() bool`
+
+HasGpuRamUtilizationDataPresent returns a boolean if a field has been set.
+
+### GetGpuRamUtilizationAvgPercent
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationAvgPercent() float32`
+
+GetGpuRamUtilizationAvgPercent returns the GpuRamUtilizationAvgPercent field if non-nil, zero value otherwise.
+
+### GetGpuRamUtilizationAvgPercentOk
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationAvgPercentOk() (*float32, bool)`
+
+GetGpuRamUtilizationAvgPercentOk returns a tuple with the GpuRamUtilizationAvgPercent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamUtilizationAvgPercent
+
+`func (o *VmAnalyticsResponse) SetGpuRamUtilizationAvgPercent(v float32)`
+
+SetGpuRamUtilizationAvgPercent sets GpuRamUtilizationAvgPercent field to given value.
+
+### HasGpuRamUtilizationAvgPercent
+
+`func (o *VmAnalyticsResponse) HasGpuRamUtilizationAvgPercent() bool`
+
+HasGpuRamUtilizationAvgPercent returns a boolean if a field has been set.
+
+### GetGpuRamUtilizationAvgPercentQ10
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationAvgPercentQ10() float32`
+
+GetGpuRamUtilizationAvgPercentQ10 returns the GpuRamUtilizationAvgPercentQ10 field if non-nil, zero value otherwise.
+
+### GetGpuRamUtilizationAvgPercentQ10Ok
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationAvgPercentQ10Ok() (*float32, bool)`
+
+GetGpuRamUtilizationAvgPercentQ10Ok returns a tuple with the GpuRamUtilizationAvgPercentQ10 field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamUtilizationAvgPercentQ10
+
+`func (o *VmAnalyticsResponse) SetGpuRamUtilizationAvgPercentQ10(v float32)`
+
+SetGpuRamUtilizationAvgPercentQ10 sets GpuRamUtilizationAvgPercentQ10 field to given value.
+
+### HasGpuRamUtilizationAvgPercentQ10
+
+`func (o *VmAnalyticsResponse) HasGpuRamUtilizationAvgPercentQ10() bool`
+
+HasGpuRamUtilizationAvgPercentQ10 returns a boolean if a field has been set.
+
+### GetGpuRamUtilizationAvgPercentQ90
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationAvgPercentQ90() float32`
+
+GetGpuRamUtilizationAvgPercentQ90 returns the GpuRamUtilizationAvgPercentQ90 field if non-nil, zero value otherwise.
+
+### GetGpuRamUtilizationAvgPercentQ90Ok
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationAvgPercentQ90Ok() (*float32, bool)`
+
+GetGpuRamUtilizationAvgPercentQ90Ok returns a tuple with the GpuRamUtilizationAvgPercentQ90 field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamUtilizationAvgPercentQ90
+
+`func (o *VmAnalyticsResponse) SetGpuRamUtilizationAvgPercentQ90(v float32)`
+
+SetGpuRamUtilizationAvgPercentQ90 sets GpuRamUtilizationAvgPercentQ90 field to given value.
+
+### HasGpuRamUtilizationAvgPercentQ90
+
+`func (o *VmAnalyticsResponse) HasGpuRamUtilizationAvgPercentQ90() bool`
+
+HasGpuRamUtilizationAvgPercentQ90 returns a boolean if a field has been set.
+
+### GetGpuRamUtilizationTotalPercent
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationTotalPercent() int32`
+
+GetGpuRamUtilizationTotalPercent returns the GpuRamUtilizationTotalPercent field if non-nil, zero value otherwise.
+
+### GetGpuRamUtilizationTotalPercentOk
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationTotalPercentOk() (*int32, bool)`
+
+GetGpuRamUtilizationTotalPercentOk returns a tuple with the GpuRamUtilizationTotalPercent field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamUtilizationTotalPercent
+
+`func (o *VmAnalyticsResponse) SetGpuRamUtilizationTotalPercent(v int32)`
+
+SetGpuRamUtilizationTotalPercent sets GpuRamUtilizationTotalPercent field to given value.
+
+### HasGpuRamUtilizationTotalPercent
+
+`func (o *VmAnalyticsResponse) HasGpuRamUtilizationTotalPercent() bool`
+
+HasGpuRamUtilizationTotalPercent returns a boolean if a field has been set.
+
+### GetGpuRamUtilizationHumanLabel
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationHumanLabel() string`
+
+GetGpuRamUtilizationHumanLabel returns the GpuRamUtilizationHumanLabel field if non-nil, zero value otherwise.
+
+### GetGpuRamUtilizationHumanLabelOk
+
+`func (o *VmAnalyticsResponse) GetGpuRamUtilizationHumanLabelOk() (*string, bool)`
+
+GetGpuRamUtilizationHumanLabelOk returns a tuple with the GpuRamUtilizationHumanLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGpuRamUtilizationHumanLabel
+
+`func (o *VmAnalyticsResponse) SetGpuRamUtilizationHumanLabel(v string)`
+
+SetGpuRamUtilizationHumanLabel sets GpuRamUtilizationHumanLabel field to given value.
+
+### HasGpuRamUtilizationHumanLabel
+
+`func (o *VmAnalyticsResponse) HasGpuRamUtilizationHumanLabel() bool`
+
+HasGpuRamUtilizationHumanLabel returns a boolean if a field has been set.
 
 ### GetIsShownShort
 

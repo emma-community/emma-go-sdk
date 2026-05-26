@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** | Location ID | 
 **Name** | **string** | Location name | 
+**Country** | **string** | Country | 
 **Continent** | **string** | Continent | 
 **Region** | **string** | Region | 
 **Latitude** | **float64** | Latitude | 
@@ -15,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewKubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation
 
-`func NewKubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation(id int32, name string, continent string, region string, latitude float64, longitude float64, ) *KubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation`
+`func NewKubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation(id int32, name string, country string, continent string, region string, latitude float64, longitude float64, ) *KubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation`
 
 NewKubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation instantiates a new KubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation object
 This constructor will assign default values to properties that have it defined,
@@ -68,6 +69,26 @@ and a boolean to check if the value has been set.
 `func (o *KubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation) SetName(v string)`
 
 SetName sets Name field to given value.
+
+
+### GetCountry
+
+`func (o *KubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation) GetCountry() string`
+
+GetCountry returns the Country field if non-nil, zero value otherwise.
+
+### GetCountryOk
+
+`func (o *KubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation) GetCountryOk() (*string, bool)`
+
+GetCountryOk returns a tuple with the Country field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCountry
+
+`func (o *KubernetesUpdateResponseNodeGroupsInnerNodesInnerLocation) SetCountry(v string)`
+
+SetCountry sets Country field to given value.
 
 
 ### GetContinent

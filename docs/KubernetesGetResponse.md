@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **ControlPlaneStatus** | Pointer to **string** | Control plane status | [optional] 
 **Cost** | Pointer to [**KubernetesListResponseInnerCost**](KubernetesListResponseInnerCost.md) |  | [optional] 
 **NodeGroups** | Pointer to [**[]KubernetesGetResponseNodeGroupsInner**](KubernetesGetResponseNodeGroupsInner.md) | List of the worker node groups | [optional] 
-**AutoscalingConfigs** | Pointer to [**[]KubernetesListResponseInnerAutoscalingConfigsInner**](KubernetesListResponseInnerAutoscalingConfigsInner.md) | Configurations of the autoscaling group | [optional] 
+**AutoscalingConfigs** | Pointer to [**[]KubernetesGetResponseAutoscalingConfigsInner**](KubernetesGetResponseAutoscalingConfigsInner.md) | Configurations of the autoscaling group | [optional] 
 
 ## Methods
 
@@ -443,20 +443,20 @@ HasNodeGroups returns a boolean if a field has been set.
 
 ### GetAutoscalingConfigs
 
-`func (o *KubernetesGetResponse) GetAutoscalingConfigs() []KubernetesListResponseInnerAutoscalingConfigsInner`
+`func (o *KubernetesGetResponse) GetAutoscalingConfigs() []KubernetesGetResponseAutoscalingConfigsInner`
 
 GetAutoscalingConfigs returns the AutoscalingConfigs field if non-nil, zero value otherwise.
 
 ### GetAutoscalingConfigsOk
 
-`func (o *KubernetesGetResponse) GetAutoscalingConfigsOk() (*[]KubernetesListResponseInnerAutoscalingConfigsInner, bool)`
+`func (o *KubernetesGetResponse) GetAutoscalingConfigsOk() (*[]KubernetesGetResponseAutoscalingConfigsInner, bool)`
 
 GetAutoscalingConfigsOk returns a tuple with the AutoscalingConfigs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAutoscalingConfigs
 
-`func (o *KubernetesGetResponse) SetAutoscalingConfigs(v []KubernetesListResponseInnerAutoscalingConfigsInner)`
+`func (o *KubernetesGetResponse) SetAutoscalingConfigs(v []KubernetesGetResponseAutoscalingConfigsInner)`
 
 SetAutoscalingConfigs sets AutoscalingConfigs field to given value.
 

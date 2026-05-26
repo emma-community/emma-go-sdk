@@ -6,13 +6,17 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **GroupName** | **string** | Group name | 
 **DataCenterId** | **string** | ID of the data center | 
-**MinimumNodes** | Pointer to **int32** | Minimum number of nodes | [optional] 
-**MaximumNodes** | Pointer to **int32** | Maximum number of nodes | [optional] 
-**TargetNodes** | Pointer to **int32** | Target number of worker nodes in the autoscaling group | [optional] 
+**MinimumNodes** | Pointer to **int32** | Minimum number of nodes. Required when using node-count based autoscaling. Must be null if &#x60;minimumVCpus&#x60; is set. | [optional] 
+**MaximumNodes** | Pointer to **int32** | Maximum number of nodes. Required when using node-count based autoscaling. Must be null if &#x60;maximumVCpus&#x60; is set. | [optional] 
+**TargetNodes** | Pointer to **int32** | Target number of worker nodes in the autoscaling group. Required when using node-count based autoscaling. Must be null if &#x60;targetVCpus&#x60; is set. | [optional] 
+**MinimumVCpus** | Pointer to **int32** | Minimum number of vCPUs. Required when using vCPU-count based autoscaling. Must be null if &#x60;minimumNodes&#x60; is set. | [optional] 
+**MaximumVCpus** | Pointer to **int32** | Maximum number of vCPUs. Required when using vCPU-count based autoscaling. Must be null if &#x60;maximumNodes&#x60; is set. | [optional] 
+**TargetVCpus** | Pointer to **int32** | Target number of vCPUs in the autoscaling group. Required when using vCPU-count based autoscaling. Must be null if &#x60;targetNodes&#x60; is set. | [optional] 
 **NodeGroupPriceLimit** | Pointer to **float32** | Price limit of the autoscaling group | [optional] 
 **UseOnDemandInstancesInsteadOfSpots** | **bool** | Use on-demand compute instances instead of spot compute instances | 
 **SpotPercent** | Pointer to **int32** | Percentage of spot instances in the autoscaling group | [optional] 
 **SpotMarkup** | Pointer to **float32** | Extra markup to the spot instance price | [optional] 
+**UserLabels** | Pointer to [**[]KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner**](KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner.md) | ASG label applied to nodes created by this autoscaling group | [optional] 
 **ConfigurationPriorities** | [**[]KubernetesListResponseInnerAutoscalingConfigsInnerConfigurationPrioritiesInner**](KubernetesListResponseInnerAutoscalingConfigsInnerConfigurationPrioritiesInner.md) | Compute instance configurations with priorities | 
 
 ## Methods
@@ -149,6 +153,81 @@ SetTargetNodes sets TargetNodes field to given value.
 
 HasTargetNodes returns a boolean if a field has been set.
 
+### GetMinimumVCpus
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) GetMinimumVCpus() int32`
+
+GetMinimumVCpus returns the MinimumVCpus field if non-nil, zero value otherwise.
+
+### GetMinimumVCpusOk
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) GetMinimumVCpusOk() (*int32, bool)`
+
+GetMinimumVCpusOk returns a tuple with the MinimumVCpus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMinimumVCpus
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) SetMinimumVCpus(v int32)`
+
+SetMinimumVCpus sets MinimumVCpus field to given value.
+
+### HasMinimumVCpus
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) HasMinimumVCpus() bool`
+
+HasMinimumVCpus returns a boolean if a field has been set.
+
+### GetMaximumVCpus
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) GetMaximumVCpus() int32`
+
+GetMaximumVCpus returns the MaximumVCpus field if non-nil, zero value otherwise.
+
+### GetMaximumVCpusOk
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) GetMaximumVCpusOk() (*int32, bool)`
+
+GetMaximumVCpusOk returns a tuple with the MaximumVCpus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaximumVCpus
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) SetMaximumVCpus(v int32)`
+
+SetMaximumVCpus sets MaximumVCpus field to given value.
+
+### HasMaximumVCpus
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) HasMaximumVCpus() bool`
+
+HasMaximumVCpus returns a boolean if a field has been set.
+
+### GetTargetVCpus
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) GetTargetVCpus() int32`
+
+GetTargetVCpus returns the TargetVCpus field if non-nil, zero value otherwise.
+
+### GetTargetVCpusOk
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) GetTargetVCpusOk() (*int32, bool)`
+
+GetTargetVCpusOk returns a tuple with the TargetVCpus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTargetVCpus
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) SetTargetVCpus(v int32)`
+
+SetTargetVCpus sets TargetVCpus field to given value.
+
+### HasTargetVCpus
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) HasTargetVCpus() bool`
+
+HasTargetVCpus returns a boolean if a field has been set.
+
 ### GetNodeGroupPriceLimit
 
 `func (o *KubernetesUpdateRequestAutoscalingConfigsInner) GetNodeGroupPriceLimit() float32`
@@ -243,6 +322,31 @@ SetSpotMarkup sets SpotMarkup field to given value.
 `func (o *KubernetesUpdateRequestAutoscalingConfigsInner) HasSpotMarkup() bool`
 
 HasSpotMarkup returns a boolean if a field has been set.
+
+### GetUserLabels
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) GetUserLabels() []KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner`
+
+GetUserLabels returns the UserLabels field if non-nil, zero value otherwise.
+
+### GetUserLabelsOk
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) GetUserLabelsOk() (*[]KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner, bool)`
+
+GetUserLabelsOk returns a tuple with the UserLabels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUserLabels
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) SetUserLabels(v []KubernetesListResponseInnerAutoscalingConfigsInnerUserLabelsInner)`
+
+SetUserLabels sets UserLabels field to given value.
+
+### HasUserLabels
+
+`func (o *KubernetesUpdateRequestAutoscalingConfigsInner) HasUserLabels() bool`
+
+HasUserLabels returns a boolean if a field has been set.
 
 ### GetConfigurationPriorities
 
