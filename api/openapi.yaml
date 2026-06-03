@@ -4260,7 +4260,6 @@ components:
       required:
       - content
       - contentType
-      - createdAt
       - createdById
       - createdByName
       - id
@@ -5220,15 +5219,9 @@ components:
       - autoscalingConfigs
       - controlPlaneStatus
       - cost
-      - createdAt
-      - createdById
-      - createdByName
       - deploymentLocation
       - id
       - k8sConnectionType
-      - modifiedAt
-      - modifiedById
-      - modifiedByName
       - name
       - nodeGroups
       - status

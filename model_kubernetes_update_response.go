@@ -25,17 +25,17 @@ type KubernetesUpdateResponse struct {
 	// Kubernetes cluster ID
 	Id int32 `json:"id"`
 	// Cluster creation date and time
-	CreatedAt time.Time `json:"createdAt"`
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	// ID of the user who created the cluster
-	CreatedById int32 `json:"createdById"`
+	CreatedById *int32 `json:"createdById,omitempty"`
 	// Name of the user who created the cluster
-	CreatedByName string `json:"createdByName"`
+	CreatedByName *string `json:"createdByName,omitempty"`
 	// Cluster last modification date and time
-	ModifiedAt time.Time `json:"modifiedAt"`
+	ModifiedAt *time.Time `json:"modifiedAt,omitempty"`
 	// Name of the user who last modified the cluster
-	ModifiedByName string `json:"modifiedByName"`
+	ModifiedByName *string `json:"modifiedByName,omitempty"`
 	// ID of the user who last modified the cluster
-	ModifiedById int32 `json:"modifiedById"`
+	ModifiedById *int32 `json:"modifiedById,omitempty"`
 	// Cluster name
 	Name string `json:"name"`
 	// Kubernetes version
@@ -63,15 +63,9 @@ type _KubernetesUpdateResponse KubernetesUpdateResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewKubernetesUpdateResponse(id int32, createdAt time.Time, createdById int32, createdByName string, modifiedAt time.Time, modifiedByName string, modifiedById int32, name string, version string, deploymentLocation string, k8sConnectionType string, status string, controlPlaneStatus string, cost KubernetesUpdateResponseCost, nodeGroups []KubernetesUpdateResponseNodeGroupsInner, autoscalingConfigs []KubernetesUpdateResponseAutoscalingConfigsInner) *KubernetesUpdateResponse {
+func NewKubernetesUpdateResponse(id int32, name string, version string, deploymentLocation string, k8sConnectionType string, status string, controlPlaneStatus string, cost KubernetesUpdateResponseCost, nodeGroups []KubernetesUpdateResponseNodeGroupsInner, autoscalingConfigs []KubernetesUpdateResponseAutoscalingConfigsInner) *KubernetesUpdateResponse {
 	this := KubernetesUpdateResponse{}
 	this.Id = id
-	this.CreatedAt = createdAt
-	this.CreatedById = createdById
-	this.CreatedByName = createdByName
-	this.ModifiedAt = modifiedAt
-	this.ModifiedByName = modifiedByName
-	this.ModifiedById = modifiedById
 	this.Name = name
 	this.Version = version
 	this.DeploymentLocation = deploymentLocation
@@ -116,148 +110,196 @@ func (o *KubernetesUpdateResponse) SetId(v int32) {
 	o.Id = v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *KubernetesUpdateResponse) GetCreatedAt() time.Time {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret time.Time
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *KubernetesUpdateResponse) GetCreatedAtOk() (*time.Time, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *KubernetesUpdateResponse) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
 func (o *KubernetesUpdateResponse) SetCreatedAt(v time.Time) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
-// GetCreatedById returns the CreatedById field value
+// GetCreatedById returns the CreatedById field value if set, zero value otherwise.
 func (o *KubernetesUpdateResponse) GetCreatedById() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedById) {
 		var ret int32
 		return ret
 	}
-
-	return o.CreatedById
+	return *o.CreatedById
 }
 
-// GetCreatedByIdOk returns a tuple with the CreatedById field value
+// GetCreatedByIdOk returns a tuple with the CreatedById field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *KubernetesUpdateResponse) GetCreatedByIdOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedById) {
 		return nil, false
 	}
-	return &o.CreatedById, true
+	return o.CreatedById, true
 }
 
-// SetCreatedById sets field value
+// HasCreatedById returns a boolean if a field has been set.
+func (o *KubernetesUpdateResponse) HasCreatedById() bool {
+	if o != nil && !IsNil(o.CreatedById) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedById gets a reference to the given int32 and assigns it to the CreatedById field.
 func (o *KubernetesUpdateResponse) SetCreatedById(v int32) {
-	o.CreatedById = v
+	o.CreatedById = &v
 }
 
-// GetCreatedByName returns the CreatedByName field value
+// GetCreatedByName returns the CreatedByName field value if set, zero value otherwise.
 func (o *KubernetesUpdateResponse) GetCreatedByName() string {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedByName) {
 		var ret string
 		return ret
 	}
-
-	return o.CreatedByName
+	return *o.CreatedByName
 }
 
-// GetCreatedByNameOk returns a tuple with the CreatedByName field value
+// GetCreatedByNameOk returns a tuple with the CreatedByName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *KubernetesUpdateResponse) GetCreatedByNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedByName) {
 		return nil, false
 	}
-	return &o.CreatedByName, true
+	return o.CreatedByName, true
 }
 
-// SetCreatedByName sets field value
+// HasCreatedByName returns a boolean if a field has been set.
+func (o *KubernetesUpdateResponse) HasCreatedByName() bool {
+	if o != nil && !IsNil(o.CreatedByName) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedByName gets a reference to the given string and assigns it to the CreatedByName field.
 func (o *KubernetesUpdateResponse) SetCreatedByName(v string) {
-	o.CreatedByName = v
+	o.CreatedByName = &v
 }
 
-// GetModifiedAt returns the ModifiedAt field value
+// GetModifiedAt returns the ModifiedAt field value if set, zero value otherwise.
 func (o *KubernetesUpdateResponse) GetModifiedAt() time.Time {
-	if o == nil {
+	if o == nil || IsNil(o.ModifiedAt) {
 		var ret time.Time
 		return ret
 	}
-
-	return o.ModifiedAt
+	return *o.ModifiedAt
 }
 
-// GetModifiedAtOk returns a tuple with the ModifiedAt field value
+// GetModifiedAtOk returns a tuple with the ModifiedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *KubernetesUpdateResponse) GetModifiedAtOk() (*time.Time, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ModifiedAt) {
 		return nil, false
 	}
-	return &o.ModifiedAt, true
+	return o.ModifiedAt, true
 }
 
-// SetModifiedAt sets field value
+// HasModifiedAt returns a boolean if a field has been set.
+func (o *KubernetesUpdateResponse) HasModifiedAt() bool {
+	if o != nil && !IsNil(o.ModifiedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetModifiedAt gets a reference to the given time.Time and assigns it to the ModifiedAt field.
 func (o *KubernetesUpdateResponse) SetModifiedAt(v time.Time) {
-	o.ModifiedAt = v
+	o.ModifiedAt = &v
 }
 
-// GetModifiedByName returns the ModifiedByName field value
+// GetModifiedByName returns the ModifiedByName field value if set, zero value otherwise.
 func (o *KubernetesUpdateResponse) GetModifiedByName() string {
-	if o == nil {
+	if o == nil || IsNil(o.ModifiedByName) {
 		var ret string
 		return ret
 	}
-
-	return o.ModifiedByName
+	return *o.ModifiedByName
 }
 
-// GetModifiedByNameOk returns a tuple with the ModifiedByName field value
+// GetModifiedByNameOk returns a tuple with the ModifiedByName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *KubernetesUpdateResponse) GetModifiedByNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ModifiedByName) {
 		return nil, false
 	}
-	return &o.ModifiedByName, true
+	return o.ModifiedByName, true
 }
 
-// SetModifiedByName sets field value
+// HasModifiedByName returns a boolean if a field has been set.
+func (o *KubernetesUpdateResponse) HasModifiedByName() bool {
+	if o != nil && !IsNil(o.ModifiedByName) {
+		return true
+	}
+
+	return false
+}
+
+// SetModifiedByName gets a reference to the given string and assigns it to the ModifiedByName field.
 func (o *KubernetesUpdateResponse) SetModifiedByName(v string) {
-	o.ModifiedByName = v
+	o.ModifiedByName = &v
 }
 
-// GetModifiedById returns the ModifiedById field value
+// GetModifiedById returns the ModifiedById field value if set, zero value otherwise.
 func (o *KubernetesUpdateResponse) GetModifiedById() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.ModifiedById) {
 		var ret int32
 		return ret
 	}
-
-	return o.ModifiedById
+	return *o.ModifiedById
 }
 
-// GetModifiedByIdOk returns a tuple with the ModifiedById field value
+// GetModifiedByIdOk returns a tuple with the ModifiedById field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *KubernetesUpdateResponse) GetModifiedByIdOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ModifiedById) {
 		return nil, false
 	}
-	return &o.ModifiedById, true
+	return o.ModifiedById, true
 }
 
-// SetModifiedById sets field value
+// HasModifiedById returns a boolean if a field has been set.
+func (o *KubernetesUpdateResponse) HasModifiedById() bool {
+	if o != nil && !IsNil(o.ModifiedById) {
+		return true
+	}
+
+	return false
+}
+
+// SetModifiedById gets a reference to the given int32 and assigns it to the ModifiedById field.
 func (o *KubernetesUpdateResponse) SetModifiedById(v int32) {
-	o.ModifiedById = v
+	o.ModifiedById = &v
 }
 
 // GetName returns the Name field value
@@ -519,12 +561,24 @@ func (o KubernetesUpdateResponse) MarshalJSON() ([]byte, error) {
 func (o KubernetesUpdateResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
-	toSerialize["createdAt"] = o.CreatedAt
-	toSerialize["createdById"] = o.CreatedById
-	toSerialize["createdByName"] = o.CreatedByName
-	toSerialize["modifiedAt"] = o.ModifiedAt
-	toSerialize["modifiedByName"] = o.ModifiedByName
-	toSerialize["modifiedById"] = o.ModifiedById
+	if !IsNil(o.CreatedAt) {
+		toSerialize["createdAt"] = o.CreatedAt
+	}
+	if !IsNil(o.CreatedById) {
+		toSerialize["createdById"] = o.CreatedById
+	}
+	if !IsNil(o.CreatedByName) {
+		toSerialize["createdByName"] = o.CreatedByName
+	}
+	if !IsNil(o.ModifiedAt) {
+		toSerialize["modifiedAt"] = o.ModifiedAt
+	}
+	if !IsNil(o.ModifiedByName) {
+		toSerialize["modifiedByName"] = o.ModifiedByName
+	}
+	if !IsNil(o.ModifiedById) {
+		toSerialize["modifiedById"] = o.ModifiedById
+	}
 	toSerialize["name"] = o.Name
 	toSerialize["version"] = o.Version
 	toSerialize["deploymentLocation"] = o.DeploymentLocation
@@ -546,12 +600,6 @@ func (o *KubernetesUpdateResponse) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
-		"createdAt",
-		"createdById",
-		"createdByName",
-		"modifiedAt",
-		"modifiedByName",
-		"modifiedById",
 		"name",
 		"version",
 		"deploymentLocation",
