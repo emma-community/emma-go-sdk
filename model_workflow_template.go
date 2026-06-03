@@ -28,7 +28,7 @@ type WorkflowTemplate struct {
 	// Description of the workflow template
 	Description *string `json:"description,omitempty"`
 	// Date and time of the workflow template creation
-	CreatedAt string `json:"createdAt"`
+	CreatedAt *string `json:"createdAt,omitempty"`
 	// Name of the user who created the workflow template
 	CreatedByName string `json:"createdByName"`
 	// ID of the user who created the workflow template
@@ -65,11 +65,10 @@ type _WorkflowTemplate WorkflowTemplate
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowTemplate(id int32, name string, createdAt string, createdByName string, createdById int32, modifiedAt string, modifiedByName string, modifiedById int32, isDeleted bool, status string, resourceType string, contentType string, content string) *WorkflowTemplate {
+func NewWorkflowTemplate(id int32, name string, createdByName string, createdById int32, modifiedAt string, modifiedByName string, modifiedById int32, isDeleted bool, status string, resourceType string, contentType string, content string) *WorkflowTemplate {
 	this := WorkflowTemplate{}
 	this.Id = id
 	this.Name = name
-	this.CreatedAt = createdAt
 	this.CreatedByName = createdByName
 	this.CreatedById = createdById
 	this.ModifiedAt = modifiedAt
@@ -171,28 +170,36 @@ func (o *WorkflowTemplate) SetDescription(v string) {
 	o.Description = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
 func (o *WorkflowTemplate) GetCreatedAt() string {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		var ret string
 		return ret
 	}
-
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *WorkflowTemplate) GetCreatedAtOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
-// SetCreatedAt sets field value
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *WorkflowTemplate) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
 func (o *WorkflowTemplate) SetCreatedAt(v string) {
-	o.CreatedAt = v
+	o.CreatedAt = &v
 }
 
 // GetCreatedByName returns the CreatedByName field value
@@ -578,7 +585,9 @@ func (o WorkflowTemplate) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	toSerialize["createdAt"] = o.CreatedAt
+	if !IsNil(o.CreatedAt) {
+		toSerialize["createdAt"] = o.CreatedAt
+	}
 	toSerialize["createdByName"] = o.CreatedByName
 	toSerialize["createdById"] = o.CreatedById
 	toSerialize["modifiedAt"] = o.ModifiedAt
@@ -611,7 +620,6 @@ func (o *WorkflowTemplate) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"id",
 		"name",
-		"createdAt",
 		"createdByName",
 		"createdById",
 		"modifiedAt",
