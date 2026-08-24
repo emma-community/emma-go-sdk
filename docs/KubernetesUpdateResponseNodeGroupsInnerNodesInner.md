@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **SecurityGroup** | Pointer to **map[string]interface{}** | Security group attached to the node | [optional] 
 **Accelerator** | Pointer to **map[string]interface{}** | Accelerator attached to the node | [optional] 
 **LocalDisks** | Pointer to **[]map[string]interface{}** | Local disks attached to the node | [optional] 
+**InstanceType** | Pointer to **string** | How the node's VM was purchased. A `spot` node is cheaper, but the provider may reclaim it at any time and the platform then recreates it. Absent when the purchase mode cannot be resolved — read that as `on_demand`. | [optional] 
 
 ## Methods
 
@@ -421,6 +422,32 @@ SetLocalDisks sets LocalDisks field to given value.
 `func (o *KubernetesUpdateResponseNodeGroupsInnerNodesInner) HasLocalDisks() bool`
 
 HasLocalDisks returns a boolean if a field has been set.
+
+
+### GetInstanceType
+
+`func (o *KubernetesUpdateResponseNodeGroupsInnerNodesInner) GetInstanceType() string`
+
+GetInstanceType returns the InstanceType field if non-nil, zero value otherwise.
+
+### GetInstanceTypeOk
+
+`func (o *KubernetesUpdateResponseNodeGroupsInnerNodesInner) GetInstanceTypeOk() (*string, bool)`
+
+GetInstanceTypeOk returns a tuple with the InstanceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInstanceType
+
+`func (o *KubernetesUpdateResponseNodeGroupsInnerNodesInner) SetInstanceType(v string)`
+
+SetInstanceType sets InstanceType field to given value.
+
+### HasInstanceType
+
+`func (o *KubernetesUpdateResponseNodeGroupsInnerNodesInner) HasInstanceType() bool`
+
+HasInstanceType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

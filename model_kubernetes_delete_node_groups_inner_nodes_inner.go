@@ -50,6 +50,8 @@ type KubernetesDeleteNodeGroupsInnerNodesInner struct {
 	Accelerator map[string]interface{} `json:"accelerator,omitempty"`
 	// Local disks attached to the node
 	LocalDisks []map[string]interface{} `json:"localDisks,omitempty"`
+	// How the node's VM was purchased. A `spot` node is cheaper, but the provider may reclaim it at any time and the platform then recreates it. Absent when the purchase mode cannot be resolved — read that as `on_demand`.
+	InstanceType *string `json:"instanceType,omitempty"`
 }
 
 // NewKubernetesDeleteNodeGroupsInnerNodesInner instantiates a new KubernetesDeleteNodeGroupsInnerNodesInner object
@@ -645,6 +647,38 @@ func (o *KubernetesDeleteNodeGroupsInnerNodesInner) SetLocalDisks(v []map[string
 	o.LocalDisks = v
 }
 
+// GetInstanceType returns the InstanceType field value if set, zero value otherwise.
+func (o *KubernetesDeleteNodeGroupsInnerNodesInner) GetInstanceType() string {
+	if o == nil || IsNil(o.InstanceType) {
+		var ret string
+		return ret
+	}
+	return *o.InstanceType
+}
+
+// GetInstanceTypeOk returns a tuple with the InstanceType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *KubernetesDeleteNodeGroupsInnerNodesInner) GetInstanceTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.InstanceType) {
+		return nil, false
+	}
+	return o.InstanceType, true
+}
+
+// HasInstanceType returns a boolean if a field has been set.
+func (o *KubernetesDeleteNodeGroupsInnerNodesInner) HasInstanceType() bool {
+	if o != nil && !IsNil(o.InstanceType) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceType gets a reference to the given string and assigns it to the InstanceType field.
+func (o *KubernetesDeleteNodeGroupsInnerNodesInner) SetInstanceType(v string) {
+	o.InstanceType = &v
+}
+
 func (o KubernetesDeleteNodeGroupsInnerNodesInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -708,6 +742,9 @@ func (o KubernetesDeleteNodeGroupsInnerNodesInner) ToMap() (map[string]interface
 	}
 	if !IsNil(o.LocalDisks) {
 		toSerialize["localDisks"] = o.LocalDisks
+	}
+	if !IsNil(o.InstanceType) {
+		toSerialize["instanceType"] = o.InstanceType
 	}
 	return toSerialize, nil
 }

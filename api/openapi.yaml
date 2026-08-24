@@ -9846,6 +9846,13 @@ components:
             $ref: "#/components/schemas/KubernetesListResponse_inner_nodeGroups_inner_nodes_inner_localDisks_inner"
           type: array
           nullable: true
+        instanceType:
+          description: How the node's VM was purchased. A `spot` node is cheaper, but the provider may reclaim it at any time and the platform then recreates it. Absent when the purchase mode cannot be resolved — read that as `on_demand`.
+          enum:
+          - on_demand
+          - spot
+          example: on_demand
+          type: string
     KubernetesListResponse_inner_nodeGroups_inner:
       properties:
         name:
@@ -10287,6 +10294,13 @@ components:
             $ref: "#/components/schemas/KubernetesListResponse_inner_nodeGroups_inner_nodes_inner_localDisks_inner"
           type: array
           nullable: true
+        instanceType:
+          description: How the node's VM was purchased. A `spot` node is cheaper, but the provider may reclaim it at any time and the platform then recreates it. Absent when the purchase mode cannot be resolved — read that as `on_demand`.
+          enum:
+          - on_demand
+          - spot
+          example: on_demand
+          type: string
     KubernetesGetResponse_nodeGroups_inner:
       properties:
         name:
@@ -10446,6 +10460,13 @@ components:
           description: Number of GPUs for the node configuration
           example: 1
           type: integer
+        instanceType:
+          description: How the node's VM is purchased. A spot instance is cheaper, but the provider may reclaim it at any time and the platform then recreates the node. At least one `on_demand` node is required per cluster.
+          enum:
+          - on_demand
+          - spot
+          example: on_demand
+          type: string
       required:
       - dataCenterId
       - name
@@ -10794,6 +10815,13 @@ components:
           $ref: "#/components/schemas/KubernetesCreateResponse_nodeGroups_inner_nodes_inner_accelerator"
         cost:
           $ref: "#/components/schemas/KubernetesCreateResponse_nodeGroups_inner_nodes_inner_cost"
+        instanceType:
+          description: How the node's VM was purchased. A `spot` node is cheaper, but the provider may reclaim it at any time and the platform then recreates it. Absent when the purchase mode cannot be resolved — read that as `on_demand`.
+          enum:
+          - on_demand
+          - spot
+          example: on_demand
+          type: string
     KubernetesCreateResponse_nodeGroups_inner:
       properties:
         name:
@@ -10937,6 +10965,13 @@ components:
           example: 1
           format: double
           type: number
+        instanceType:
+          description: How the node's VM is purchased. A spot instance is cheaper, but the provider may reclaim it at any time and the platform then recreates the node. At least one `on_demand` node is required per cluster.
+          enum:
+          - on_demand
+          - spot
+          example: on_demand
+          type: string
       required:
       - dataCenterId
       - name
@@ -11260,6 +11295,13 @@ components:
             type: object
           type: array
           nullable: true
+        instanceType:
+          description: How the node's VM was purchased. A `spot` node is cheaper, but the provider may reclaim it at any time and the platform then recreates it. Absent when the purchase mode cannot be resolved — read that as `on_demand`.
+          enum:
+          - on_demand
+          - spot
+          example: on_demand
+          type: string
       required:
       - cloudNetworkType
       - cost
@@ -11599,6 +11641,13 @@ components:
             type: object
           type: array
           nullable: true
+        instanceType:
+          description: How the node's VM was purchased. A `spot` node is cheaper, but the provider may reclaim it at any time and the platform then recreates it. Absent when the purchase mode cannot be resolved — read that as `on_demand`.
+          enum:
+          - on_demand
+          - spot
+          example: on_demand
+          type: string
     KubernetesDelete_nodeGroups_inner:
       properties:
         name:
