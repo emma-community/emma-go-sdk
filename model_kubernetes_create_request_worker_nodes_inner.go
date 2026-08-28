@@ -51,6 +51,8 @@ type KubernetesCreateRequestWorkerNodesInner struct {
 	AcceleratorTypeId *string `json:"acceleratorTypeId,omitempty"`
 	// Number of GPUs for the node configuration
 	Accelerators *int32 `json:"accelerators,omitempty"`
+	// How the node's VM is purchased. A spot instance is cheaper, but the provider may reclaim it at any time and the platform then recreates the node. At least one `on_demand` node is required per cluster.
+	InstanceType *string `json:"instanceType,omitempty"`
 }
 
 type _KubernetesCreateRequestWorkerNodesInner KubernetesCreateRequestWorkerNodesInner
@@ -503,6 +505,38 @@ func (o *KubernetesCreateRequestWorkerNodesInner) SetAccelerators(v int32) {
 	o.Accelerators = &v
 }
 
+// GetInstanceType returns the InstanceType field value if set, zero value otherwise.
+func (o *KubernetesCreateRequestWorkerNodesInner) GetInstanceType() string {
+	if o == nil || IsNil(o.InstanceType) {
+		var ret string
+		return ret
+	}
+	return *o.InstanceType
+}
+
+// GetInstanceTypeOk returns a tuple with the InstanceType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *KubernetesCreateRequestWorkerNodesInner) GetInstanceTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.InstanceType) {
+		return nil, false
+	}
+	return o.InstanceType, true
+}
+
+// HasInstanceType returns a boolean if a field has been set.
+func (o *KubernetesCreateRequestWorkerNodesInner) HasInstanceType() bool {
+	if o != nil && !IsNil(o.InstanceType) {
+		return true
+	}
+
+	return false
+}
+
+// SetInstanceType gets a reference to the given string and assigns it to the InstanceType field.
+func (o *KubernetesCreateRequestWorkerNodesInner) SetInstanceType(v string) {
+	o.InstanceType = &v
+}
+
 func (o KubernetesCreateRequestWorkerNodesInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -543,6 +577,9 @@ func (o KubernetesCreateRequestWorkerNodesInner) ToMap() (map[string]interface{}
 	}
 	if !IsNil(o.Accelerators) {
 		toSerialize["accelerators"] = o.Accelerators
+	}
+	if !IsNil(o.InstanceType) {
+		toSerialize["instanceType"] = o.InstanceType
 	}
 	return toSerialize, nil
 }

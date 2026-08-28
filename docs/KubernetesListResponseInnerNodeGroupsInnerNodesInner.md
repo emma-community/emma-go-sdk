@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **SecurityGroup** | Pointer to [**KubernetesListResponseInnerNodeGroupsInnerNodesInnerSecurityGroup**](KubernetesListResponseInnerNodeGroupsInnerNodesInnerSecurityGroup.md) |  | [optional] 
 **Accelerator** | Pointer to [**KubernetesListResponseInnerNodeGroupsInnerNodesInnerAccelerator**](KubernetesListResponseInnerNodeGroupsInnerNodesInnerAccelerator.md) |  | [optional] 
 **LocalDisks** | Pointer to [**[]KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocalDisksInner**](KubernetesListResponseInnerNodeGroupsInnerNodesInnerLocalDisksInner.md) | Local SSD storage directly attached to the host | [optional] 
+**InstanceType** | Pointer to **string** | How the node's VM was purchased. A `spot` node is cheaper, but the provider may reclaim it at any time and the platform then recreates it. Absent when the purchase mode cannot be resolved — read that as `on_demand`. | [optional] 
 
 ## Methods
 
@@ -491,6 +492,32 @@ SetLocalDisks sets LocalDisks field to given value.
 `func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInner) HasLocalDisks() bool`
 
 HasLocalDisks returns a boolean if a field has been set.
+
+
+### GetInstanceType
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInner) GetInstanceType() string`
+
+GetInstanceType returns the InstanceType field if non-nil, zero value otherwise.
+
+### GetInstanceTypeOk
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInner) GetInstanceTypeOk() (*string, bool)`
+
+GetInstanceTypeOk returns a tuple with the InstanceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInstanceType
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInner) SetInstanceType(v string)`
+
+SetInstanceType sets InstanceType field to given value.
+
+### HasInstanceType
+
+`func (o *KubernetesListResponseInnerNodeGroupsInnerNodesInner) HasInstanceType() bool`
+
+HasInstanceType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

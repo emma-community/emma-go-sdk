@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **VolumeType** | **string** | Volume type | 
 **AcceleratorTypeId** | Pointer to **string** | GPU accelerator type identifier | [optional] 
 **Accelerators** | Pointer to **int32** | Number of GPUs for the node configuration | [optional] 
+**InstanceType** | Pointer to **string** | How the node's VM is purchased. A spot instance is cheaper, but the provider may reclaim it at any time and the platform then recreates the node. At least one `on_demand` node is required per cluster. | [optional] 
 
 ## Methods
 
@@ -378,6 +379,32 @@ SetAccelerators sets Accelerators field to given value.
 `func (o *KubernetesCreateRequestWorkerNodesInner) HasAccelerators() bool`
 
 HasAccelerators returns a boolean if a field has been set.
+
+
+### GetInstanceType
+
+`func (o *KubernetesCreateRequestWorkerNodesInner) GetInstanceType() string`
+
+GetInstanceType returns the InstanceType field if non-nil, zero value otherwise.
+
+### GetInstanceTypeOk
+
+`func (o *KubernetesCreateRequestWorkerNodesInner) GetInstanceTypeOk() (*string, bool)`
+
+GetInstanceTypeOk returns a tuple with the InstanceType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInstanceType
+
+`func (o *KubernetesCreateRequestWorkerNodesInner) SetInstanceType(v string)`
+
+SetInstanceType sets InstanceType field to given value.
+
+### HasInstanceType
+
+`func (o *KubernetesCreateRequestWorkerNodesInner) HasInstanceType() bool`
+
+HasInstanceType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
